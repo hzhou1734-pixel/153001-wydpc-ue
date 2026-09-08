@@ -44,11 +44,11 @@ export const buildingTree = [
 ]
 
 export const roomList = [
-    { id: 1, name: '101', unit_id: 101, building_id: 1, area: '89.5㎡', owner: '张伟', phone: '138****1001' },
-    { id: 2, name: '102', unit_id: 101, building_id: 1, area: '112.0㎡', owner: '李娜', phone: '138****1002' },
-    { id: 3, name: '201', unit_id: 101, building_id: 1, area: '89.5㎡', owner: '王强', phone: '138****1003' },
-    { id: 4, name: '101', unit_id: 102, building_id: 1, area: '98.0㎡', owner: '赵敏', phone: '138****1004' },
-    { id: 5, name: '201', unit_id: 201, building_id: 2, area: '126.0㎡', owner: '陈晨', phone: '138****1005' },
+    { id: 1, name: '101', unit_id: 101, building_id: 1, owner: '张伟', phone: '138****1001', certified: 0 },
+    { id: 2, name: '102', unit_id: 101, building_id: 1, owner: '李娜', phone: '138****1002', certified: 1 },
+    { id: 3, name: '201', unit_id: 101, building_id: 1, owner: '王强', phone: '138****1003', certified: 0 },
+    { id: 4, name: '101', unit_id: 102, building_id: 1, owner: '赵敏', phone: '138****1004', certified: 0 },
+    { id: 5, name: '201', unit_id: 201, building_id: 2, owner: '陈晨', phone: '138****1005', certified: 1 },
 ]
 
 // ==================== 认证列表 ====================
