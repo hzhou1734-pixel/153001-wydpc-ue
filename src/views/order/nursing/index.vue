@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts" name="orderNursing">
-import { getNursingOrderList, getStaffList } from '@/mock/api'
+import { getNursingOrderList } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 import { Search } from '@element-plus/icons-vue'
 import { staffList } from '@/mock/data'
