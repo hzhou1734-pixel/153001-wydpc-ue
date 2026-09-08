@@ -1,0 +1,225 @@
+<script setup lang="ts" name="staffLists">
+import { getStaffList, getBuildingTree } from '@/mock/api'
+import { usePaging } from '@/hooks/usePaging'
+
+const roleOptions = [
+    { value: 1, label: '托管员' },
+    { value: 2, label: '配送员' },
+    { value: 3, label: '陪诊员' },
+    { value: 4, label: '楼栋管理员' }
+]
+const communityOptions = ['颐景园·江南里', '绿城·桂语江南', '保利·天悦湾', '万科·未来城三期']
+const buildingOptions: any[] = []
+
+const { pager, getLists, resetPage } = usePaging({ fetchFun: getStaffList, firstLoading: true })
+
+// 楼栋树（用于楼栋管理员选择）
+const buildingTreeData = ref<any[]>([])
+onMounted(async () => {
+    getLists()
+    try {
+        buildingTreeData.value = await getBuildingTree()
+        buildOptions(buildingTreeData.value, '')
+    } catch (e) {
+        buildingTreeData.value = []
+    }
+})
+function buildOptions(list: any[], prefix: string) {
+    list.forEach((item: any) => {
+        buildingOptions.push({ value: item.name, label: prefix ? `${prefix} / ${item.name}` : item.name })
+        if (item.children?.length) buildOptions(item.children, item.name)
+    })
+}
+
+// 新增/编辑
+const showEdit = ref(false)
+const editTitle = ref('新增员工')
+const editingId = ref<number | null>(null)
+const editForm = reactive({
+    name: '',
+    avatar: '',
+    mobile: '',
+    role_id: 1,
+    community: '',
+    buildings: [] as string[]
+})
+
+function openAdd() {
+    editTitle.value = '新增员工'
+    editingId.value = null
+    Object.assign(editForm, { name: '', avatar: '', mobile: '', role_id: 1, community: '', buildings: [] })
+    showEdit.value = true
+}
+
+function openEdit(row: any) {
+    editTitle.value = '编辑员工'
+    editingId.value = row.id
+    Object.assign(editForm, {
+        name: row.name,
+        avatar: row.avatar,
+        mobile: row.mobile,
+        role_id: row.role_id,
+        community: row.community,
+        buildings: row.buildings && row.buildings !== '-' ? row.buildings.split('、') : []
+    })
+    showEdit.value = true
+}
+
+function submitEdit() {
+    if (!editForm.name) return ElMessage.warning('请输入员工姓名')
+    if (!editForm.mobile) return ElMessage.warning('请输入联系手机号')
+    if (editForm.role_id === 4 && !editForm.buildings.length) return ElMessage.warning('楼栋管理员必须选择负责楼栋')
+    const list = pager.lists as any[]
+    const roleName = roleOptions.find((r) => r.value === editForm.role_id)?.label || ''
+    if (editingId.value === null) {
+        list.unshift({
+            id: Date.now(),
+            name: editForm.name,
+            avatar: `https://picsum.photos/seed/ghj-staff-${Date.now() % 100}/100/100`,
+            mobile: editForm.mobile,
+            role: roleName,
+            role_id: editForm.role_id,
+            community: editForm.community || communityOptions[0],
+            buildings: editForm.buildings.join('、') || '-',
+            orders: 0,
+            earnings: '0.00',
+            status: 1,
+            create_time: new Date().toLocaleDateString('zh-CN')
+        })
+        ElMessage.success('新增成功')
+    } else {
+        const row = list.find((i) => i.id === editingId.value)
+        if (row) {
+            row.name = editForm.name
+            row.mobile = editForm.mobile
+            row.role = roleName
+            row.role_id = editForm.role_id
+            row.community = editForm.community
+            row.buildings = editForm.buildings.join('、') || '-'
+        }
+        ElMessage.success('保存成功')
+    }
+    showEdit.value = false
+}
+
+function toggleStatus(row: any) {
+    row.status = row.status === 1 ? 0 : 1
+    ElMessage.success(row.status === 1 ? '已启用' : '已停用')
+}
+
+function handleDelete(row: any) {
+    ElMessageBox.confirm(`确定删除员工「${row.name}」吗？删除后不可恢复。`, '删除确认', {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消',
+        type: 'warning'
+    })
+        .then(() => {
+            const list = pager.lists as any[]
+            const idx = list.findIndex((i) => i.id === row.id)
+            if (idx > -1) list.splice(idx, 1)
+            ElMessage.success('删除成功')
+        })
+        .catch(() => {})
+}
+</script>
+
+<template>
+    <div class="staff-lists" v-loading="pager.loading">
+        <el-card class="!border-none" shadow="never">
+            <template #header>
+                <div class="flex items-center justify-between">
+                    <span class="card-title">员工列表</span>
+                    <el-button type="primary" @click="openAdd">
+                        <icon name="el-icon-Plus" :size="14" class="mr-1" />新增员工
+                    </el-button>
+                </div>
+            </template>
+            <el-table :data="pager.lists" stripe>
+                <el-table-column label="员工" min-width="180">
+                    <template #default="{ row }">
+                        <div class="flex items-center">
+                            <el-avatar :size="36" :src="row.avatar" />
+                            <div class="ml-2 leading-tight">
+                                <div class="font-medium">{{ row.name }}</div>
+                                <div class="text-xs text-tx-secondary">{{ row.mobile }}</div>
+                            </div>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="角色" width="110">
+                    <template #default="{ row }">
+                        <el-tag :type="[1, 2, 3, 4].includes(row.role_id) ? ['primary', 'success', 'warning', 'danger'][row.role_id - 1] : 'info'" effect="light">
+                            {{ row.role }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="community" label="所属社区" min-width="140" show-overflow-tooltip />
+                <el-table-column label="负责楼栋" min-width="120">
+                    <template #default="{ row }">
+                        <span v-if="row.buildings === '-'" class="text-tx-secondary">--</span>
+                        <span v-else>{{ row.buildings }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="orders" label="累计订单" width="90" align="center" />
+                <el-table-column label="累计收益（元）" width="120" align="right">
+                    <template #default="{ row }">¥{{ row.earnings }}</template>
+                </el-table-column>
+                <el-table-column label="状态" width="90" align="center">
+                    <template #default="{ row }">
+                        <el-switch :model-value="row.status === 1" @change="toggleStatus(row)" />
+                    </template>
+                </el-table-column>
+                <el-table-column prop="create_time" label="入职时间" width="120" />
+                <el-table-column label="操作" width="140" fixed="right">
+                    <template #default="{ row }">
+                        <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
+                        <el-button link type="danger" @click="handleDelete(row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="flex justify-end mt-4">
+                <el-pagination
+                    v-model:current-page="pager.page"
+                    v-model:page-size="pager.size"
+                    :total="pager.count"
+                    :page-sizes="[10, 15, 20]"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    @current-change="getLists"
+                    @size-change="resetPage"
+                />
+            </div>
+        </el-card>
+
+        <el-dialog v-model="showEdit" :title="editTitle" width="560px">
+            <el-form label-width="90px">
+                <el-form-item label="员工姓名" required>
+                    <el-input v-model="editForm.name" placeholder="请输入员工姓名" maxlength="20" />
+                </el-form-item>
+                <el-form-item label="联系手机" required>
+                    <el-input v-model="editForm.mobile" placeholder="请输入联系手机号" maxlength="11" />
+                </el-form-item>
+                <el-form-item label="员工角色" required>
+                    <el-select v-model="editForm.role_id" placeholder="请选择角色" class="w-full">
+                        <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="所属社区">
+                    <el-select v-model="editForm.community" placeholder="请选择所属社区" class="w-full">
+                        <el-option v-for="item in communityOptions" :key="item" :label="item" :value="item" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item v-if="editForm.role_id === 4" label="负责楼栋" required>
+                    <el-select v-model="editForm.buildings" multiple placeholder="请选择负责楼栋（必选）" class="w-full">
+                        <el-option v-for="item in buildingOptions" :key="item.value" :label="item.label" :value="item.value" />
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="showEdit = false">取消</el-button>
+                <el-button type="primary" @click="submitEdit">确定</el-button>
+            </template>
+        </el-dialog>
+    </div>
+</template>
+
+<style lang="scss" scoped></style>
