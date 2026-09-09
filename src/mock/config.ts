@@ -2,13 +2,15 @@
  * Mock 站点配置数据
  * 对应接口 /config/getConfig
  */
+import ghjLogo from '@/assets/images/ghj-logo.png'
+
 export function mockConfig() {
     return Promise.resolve({
         web_name: '顾好家物业管理后台',
-        web_favicon: 'https://picsum.photos/seed/ghj-favicon/64/64',
-        web_logo: 'https://picsum.photos/seed/ghj-logo/200/60',
-        login_logo: 'https://picsum.photos/seed/ghj-login/200/60',
-        login_image: 'https://picsum.photos/seed/ghj-login-banner/800/800',
+        web_favicon: ghjLogo,
+        web_logo: ghjLogo,
+        login_logo: ghjLogo,
+        login_image: ghjLogo,
         copyright: '顾好家物业服务集团有限公司',
     })
 }
