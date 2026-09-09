@@ -9,7 +9,13 @@ const roleOptions = [
     { value: 4, label: '楼栋管理员' }
 ]
 const communityOptions = ['颐景园·江南里', '绿城·桂语江南', '保利·天悦湾', '万科·未来城三期']
-const buildingOptions: any[] = []
+// 社区名 → 小区ID 映射（用于负责楼栋联动过滤）
+const communityIdMap: Record<string, number> = {
+    '颐景园·江南里': 1,
+    '绿城·桂语江南': 2,
+    '保利·天悦湾': 3,
+    '万科·未来城三期': 4
+}
 
 const { pager, getLists, resetPage } = usePaging({ fetchFun: getStaffList, firstLoading: true })
 
@@ -19,17 +25,10 @@ onMounted(async () => {
     getLists()
     try {
         buildingTreeData.value = await getBuildingTree()
-        buildOptions(buildingTreeData.value, '')
     } catch (e) {
         buildingTreeData.value = []
     }
 })
-function buildOptions(list: any[], prefix: string) {
-    list.forEach((item: any) => {
-        buildingOptions.push({ value: item.name, label: prefix ? `${prefix} / ${item.name}` : item.name })
-        if (item.children?.length) buildOptions(item.children, item.name)
-    })
-}
 
 // 新增/编辑
 const showEdit = ref(false)
@@ -43,6 +42,20 @@ const editForm = reactive({
     community: '',
     buildings: [] as string[]
 })
+
+// 负责楼栋选项：仅取楼栋层级（不含单元），并按所属社区联动过滤
+const buildingOptions = computed(() => {
+    const cid = communityIdMap[editForm.community]
+    if (!cid) return []
+    return buildingTreeData.value
+        .filter((item: any) => item.community_id === cid)
+        .map((item: any) => ({ value: item.name, label: item.name }))
+})
+
+function onCommunityChange() {
+    // 切换所属社区后清空已选楼栋，避免跨社区脏数据
+    editForm.buildings = []
+}
 
 function openAdd() {
     editTitle.value = '新增员工'
@@ -71,6 +84,8 @@ function submitEdit() {
     if (editForm.role_id === 4 && !editForm.buildings.length) return ElMessage.warning('楼栋管理员必须选择负责楼栋')
     const list = pager.lists as any[]
     const roleName = roleOptions.find((r) => r.value === editForm.role_id)?.label || ''
+    // 仅楼栋管理员保存楼栋，其他角色强制清空
+    const buildingStr = editForm.role_id === 4 ? editForm.buildings.join('、') || '-' : '-'
     if (editingId.value === null) {
         list.unshift({
             id: Date.now(),
@@ -80,7 +95,7 @@ function submitEdit() {
             role: roleName,
             role_id: editForm.role_id,
             community: editForm.community || communityOptions[0],
-            buildings: editForm.buildings.join('、') || '-',
+            buildings: buildingStr,
             orders: 0,
             earnings: '0.00',
             status: 1,
@@ -95,7 +110,7 @@ function submitEdit() {
             row.role = roleName
             row.role_id = editForm.role_id
             row.community = editForm.community
-            row.buildings = editForm.buildings.join('、') || '-'
+            row.buildings = buildingStr
         }
         ElMessage.success('保存成功')
     }
@@ -204,7 +219,7 @@ function handleDelete(row: any) {
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属社区">
-                    <el-select v-model="editForm.community" placeholder="请选择所属社区" class="w-full">
+                    <el-select v-model="editForm.community" placeholder="请选择所属社区" class="w-full" @change="onCommunityChange">
                         <el-option v-for="item in communityOptions" :key="item" :label="item" :value="item" />
                     </el-select>
                 </el-form-item>

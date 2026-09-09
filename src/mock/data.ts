@@ -23,23 +23,82 @@ export const communityList = [
 
 // ==================== 楼栋房号（二级树） ====================
 export const buildingTree = [
+    // 颐景园·江南里
     {
-        id: 1, name: '1栋', community_id: 1,
+        id: 1, name: '1栋', community_id: 1, community_name: '颐景园·江南里',
         children: [
             { id: 101, name: '1单元', parent_id: 1, type: 'unit' },
             { id: 102, name: '2单元', parent_id: 1, type: 'unit' },
         ],
     },
     {
-        id: 2, name: '2栋', community_id: 1,
+        id: 2, name: '2栋', community_id: 1, community_name: '颐景园·江南里',
         children: [
             { id: 201, name: '1单元', parent_id: 2, type: 'unit' },
             { id: 202, name: '2单元', parent_id: 2, type: 'unit' },
         ],
     },
     {
-        id: 3, name: '3栋', community_id: 1,
+        id: 3, name: '3栋', community_id: 1, community_name: '颐景园·江南里',
         children: [{ id: 301, name: '1单元', parent_id: 3, type: 'unit' }],
+    },
+    // 绿城·桂语江南
+    {
+        id: 11, name: '1栋', community_id: 2, community_name: '绿城·桂语江南',
+        children: [
+            { id: 1101, name: '1单元', parent_id: 11, type: 'unit' },
+            { id: 1102, name: '2单元', parent_id: 11, type: 'unit' },
+        ],
+    },
+    {
+        id: 12, name: '2栋', community_id: 2, community_name: '绿城·桂语江南',
+        children: [
+            { id: 1201, name: '1单元', parent_id: 12, type: 'unit' },
+            { id: 1202, name: '2单元', parent_id: 12, type: 'unit' },
+        ],
+    },
+    // 保利·天悦湾
+    {
+        id: 21, name: '1栋', community_id: 3, community_name: '保利·天悦湾',
+        children: [{ id: 2101, name: '1单元', parent_id: 21, type: 'unit' }],
+    },
+    {
+        id: 22, name: '2栋', community_id: 3, community_name: '保利·天悦湾',
+        children: [
+            { id: 2201, name: '1单元', parent_id: 22, type: 'unit' },
+            { id: 2202, name: '2单元', parent_id: 22, type: 'unit' },
+        ],
+    },
+    {
+        id: 23, name: '3栋', community_id: 3, community_name: '保利·天悦湾',
+        children: [
+            { id: 2301, name: '1单元', parent_id: 23, type: 'unit' },
+            { id: 2302, name: '2单元', parent_id: 23, type: 'unit' },
+        ],
+    },
+    // 万科·未来城三期
+    {
+        id: 35, name: '5栋', community_id: 4, community_name: '万科·未来城三期',
+        children: [
+            { id: 3501, name: '1单元', parent_id: 35, type: 'unit' },
+            { id: 3502, name: '2单元', parent_id: 35, type: 'unit' },
+        ],
+    },
+    {
+        id: 36, name: '6栋', community_id: 4, community_name: '万科·未来城三期',
+        children: [{ id: 3601, name: '1单元', parent_id: 36, type: 'unit' }],
+    },
+    // 融创·金成府
+    {
+        id: 41, name: '1栋', community_id: 5, community_name: '融创·金成府',
+        children: [
+            { id: 4101, name: '1单元', parent_id: 41, type: 'unit' },
+            { id: 4102, name: '2单元', parent_id: 41, type: 'unit' },
+        ],
+    },
+    {
+        id: 42, name: '2栋', community_id: 5, community_name: '融创·金成府',
+        children: [{ id: 4201, name: '1单元', parent_id: 42, type: 'unit' }],
     },
 ]
 
