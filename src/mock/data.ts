@@ -853,37 +853,196 @@ export const bannerList = [
 ]
 
 // ==================== 财务 ====================
-export const financeOverview = {
-    today_income: '12680.50',
-    month_income: '286450.00',
-    total_income: '1863290.00',
-    today_refund: '150.00',
-    month_refund: '4820.00',
-    total_refund: '32680.00',
-    month_settle: '152300.00',
-    total_settle: '986500.00',
-}
-
+/** 订单流水：由三张订单表中「已支付且未取消」的订单派生（即已结算账单对应的订单流水） */
 export const financeFlow = [
-    { id: 1, sn: 'FL20260908001', type: '服务收入', from: '张伟-全日托管', amount: '+150.00', pay_type: '微信支付', create_time: daysAgo(0, ' 09:15:00') },
-    { id: 2, sn: 'FL20260908002', type: '服务收入', from: '陈晨-专家门诊陪诊', amount: '+540.00', pay_type: '微信支付', create_time: daysAgo(0, ' 08:10:00') },
-    { id: 3, sn: 'FL20260907003', type: '退款支出', from: '刘洋-全日托管', amount: '-150.00', pay_type: '原路退回', create_time: daysAgo(1, ' 15:30:00') },
-    { id: 4, sn: 'FL20260907004', type: '服务收入', from: '李娜-清蒸鲈鱼套餐', amount: '+28.00', pay_type: '微信支付', create_time: daysAgo(1, ' 11:25:00') },
-    { id: 5, sn: 'FL20260906005', type: '员工结算', from: '周建国-8月收益', amount: '-8632.00', pay_type: '银行转账', create_time: daysAgo(2, ' 10:00:00') },
+    ...nursingOrders
+        .filter((o: any) => o.pay_status === 1 && o.status !== 4)
+        .map((o: any) => ({
+            id: o.id,
+            sn: `FL${o.sn.slice(2)}`,
+            order_sn: o.sn,
+            order_type: 1,
+            order_type_name: '托管服务',
+            service: o.service,
+            avatar: o.avatar,
+            nickname: o.nickname,
+            mobile: o.mobile,
+            order_amount: o.amount,
+            pay_amount: o.amount,
+            create_time: o.create_time,
+            pay_time: o.pay_time,
+            pay_type: o.pay_type,
+        })),
+    ...mealOrders
+        .filter((o: any) => o.pay_status === 1 && o.status !== 4)
+        .map((o: any) => ({
+            id: o.id + 5000,
+            sn: `FL${o.sn.slice(2)}`,
+            order_sn: o.sn,
+            order_type: 2,
+            order_type_name: '膳食服务',
+            service: `${o.combo} ×${o.quantity}`,
+            avatar: o.avatar,
+            nickname: o.nickname,
+            mobile: o.mobile,
+            order_amount: o.amount,
+            pay_amount: o.amount,
+            create_time: o.create_time,
+            pay_time: o.pay_time,
+            pay_type: o.pay_type,
+        })),
+    ...escortOrders
+        .filter((o: any) => o.pay_status === 1 && o.status !== 4)
+        .map((o: any) => ({
+            id: o.id + 9000,
+            sn: `FL${o.sn.slice(2)}`,
+            order_sn: o.sn,
+            order_type: 3,
+            order_type_name: '陪诊服务',
+            service: o.service,
+            avatar: o.avatar,
+            nickname: o.nickname,
+            mobile: o.mobile,
+            order_amount: o.amount,
+            pay_amount: o.amount,
+            create_time: o.create_time,
+            pay_time: o.pay_time,
+            pay_type: o.pay_type,
+        })),
 ]
 
+/** 账单结算：按用户维度生成账单，明细包含托管单与膳食单 */
 export const financeBill = [
-    { id: 1, sn: 'JS20260901001', community: '颐景园·江南里', income: '86230.00', refund: '320.00', settle: '76580.00', status: 1, bill_time: '2026-08-01 ~ 2026-08-31', create_time: daysAgo(8) },
-    { id: 2, sn: 'JS20260901002', community: '绿城·桂语江南', income: '52100.00', refund: '0.00', settle: '46890.00', status: 1, bill_time: '2026-08-01 ~ 2026-08-31', create_time: daysAgo(8) },
-    { id: 3, sn: 'JS20260901003', community: '保利·天悦湾', income: '73450.00', refund: '150.00', settle: '63105.00', status: 0, bill_time: '2026-09-01 ~ 2026-09-30', create_time: daysAgo(0) },
+    {
+        id: 1,
+        sn: 'ZD20260801001',
+        avatar: 'https://picsum.photos/seed/ghj-user-1/100/100',
+        nickname: '张伟',
+        mobile: '13812341001',
+        status: 1,
+        update_time: daysAgo(9, ' 10:20:00'),
+        settle_time: daysAgo(9, ' 10:20:00'),
+        orders: [
+            { order_sn: 'TG20260805011', order_type_name: '托管服务', service: '日托·8月第一期', amount: '80.00', pay_time: daysAgo(35, ' 09:12:00'), status_name: '已完成' },
+            { order_sn: 'SC20260812012', order_type_name: '膳食服务', service: 'ABC 经典午餐组合 ×8', amount: '440.00', pay_time: daysAgo(28, ' 11:05:00'), status_name: '已完成' },
+            { order_sn: 'SC20260820013', order_type_name: '膳食服务', service: '双荤商务午餐组合 ×5', amount: '225.00', pay_time: daysAgo(20, ' 11:40:00'), status_name: '已完成' },
+        ],
+    },
+    {
+        id: 2,
+        sn: 'ZD20260801002',
+        avatar: 'https://picsum.photos/seed/ghj-user-2/100/100',
+        nickname: '李娜',
+        mobile: '13812341002',
+        status: 1,
+        update_time: daysAgo(9, ' 10:22:00'),
+        settle_time: daysAgo(9, ' 10:22:00'),
+        orders: [
+            { order_sn: 'TG20260803014', order_type_name: '托管服务', service: '日托·8月第一期', amount: '80.00', pay_time: daysAgo(37, ' 08:30:00'), status_name: '已完成' },
+            { order_sn: 'SC20260815015', order_type_name: '膳食服务', service: '清淡养身晚餐组合 ×10', amount: '280.00', pay_time: daysAgo(25, ' 17:20:00'), status_name: '已完成' },
+        ],
+    },
+    {
+        id: 3,
+        sn: 'ZD20260801003',
+        avatar: 'https://picsum.photos/seed/ghj-user-5/100/100',
+        nickname: '陈晨',
+        mobile: '13812341005',
+        status: 1,
+        update_time: daysAgo(9, ' 10:25:00'),
+        settle_time: daysAgo(9, ' 10:25:00'),
+        orders: [
+            { order_sn: 'TG20260801016', order_type_name: '托管服务', service: '学期每日托·2026秋季', amount: '2600.00', pay_time: daysAgo(39, ' 16:06:00'), status_name: '服务中' },
+            { order_sn: 'SC20260818017', order_type_name: '膳食服务', service: '全日三餐组合 ×6', amount: '312.00', pay_time: daysAgo(22, ' 12:00:00'), status_name: '已完成' },
+        ],
+    },
+    {
+        id: 4,
+        sn: 'ZD20260801004',
+        avatar: 'https://picsum.photos/seed/ghj-user-4/100/100',
+        nickname: '赵敏',
+        mobile: '13812341004',
+        status: 0,
+        update_time: daysAgo(2, ' 15:10:00'),
+        settle_time: '',
+        orders: [
+            { order_sn: 'TG20260822018', order_type_name: '托管服务', service: '日托·暑期托管班', amount: '90.00', pay_time: daysAgo(18, ' 09:05:00'), status_name: '已完成' },
+            { order_sn: 'SC20260824019', order_type_name: '膳食服务', service: '低糖轻食组合 ×4', amount: '96.00', pay_time: daysAgo(16, ' 08:20:00'), status_name: '已完成' },
+        ],
+    },
+    {
+        id: 5,
+        sn: 'ZD20260801005',
+        avatar: 'https://picsum.photos/seed/ghj-user-6/100/100',
+        nickname: '刘洋',
+        mobile: '13812341006',
+        status: 0,
+        update_time: daysAgo(1, ' 09:30:00'),
+        settle_time: '',
+        orders: [
+            { order_sn: 'SC20260826020', order_type_name: '膳食服务', service: 'ABC 经典午餐组合 ×3', amount: '165.00', pay_time: daysAgo(14, ' 11:50:00'), status_name: '已完成' },
+        ],
+    },
+    {
+        id: 6,
+        sn: 'ZD20260801006',
+        avatar: 'https://picsum.photos/seed/ghj-user-3/100/100',
+        nickname: '王强',
+        mobile: '13812341003',
+        status: 0,
+        update_time: daysAgo(0, ' 16:40:00'),
+        settle_time: '',
+        orders: [
+            { order_sn: 'TG20260828021', order_type_name: '托管服务', service: '学期周末托·周六班', amount: '1200.00', pay_time: daysAgo(12, ' 10:01:00'), status_name: '服务中' },
+            { order_sn: 'SC20260829022', order_type_name: '膳食服务', service: '早餐 + 午餐全天组合 ×6', amount: '174.00', pay_time: daysAgo(11, ' 07:30:00'), status_name: '已完成' },
+        ],
+    },
+    {
+        id: 7,
+        sn: 'ZD20260701007',
+        avatar: 'https://picsum.photos/seed/ghj-user-1/100/100',
+        nickname: '张伟',
+        mobile: '13812341001',
+        status: 1,
+        update_time: daysAgo(40, ' 10:05:00'),
+        settle_time: daysAgo(40, ' 10:05:00'),
+        orders: [
+            { order_sn: 'TG20260705023', order_type_name: '托管服务', service: '日托·暑期托管班', amount: '90.00', pay_time: daysAgo(65, ' 09:00:00'), status_name: '已完成' },
+            { order_sn: 'SC20260710024', order_type_name: '膳食服务', service: '清淡养身晚餐组合 ×12', amount: '336.00', pay_time: daysAgo(60, ' 17:40:00'), status_name: '已完成' },
+        ],
+    },
+    {
+        id: 8,
+        sn: 'ZD20260701008',
+        avatar: 'https://picsum.photos/seed/ghj-user-2/100/100',
+        nickname: '李娜',
+        mobile: '13812341002',
+        status: 1,
+        update_time: daysAgo(40, ' 10:08:00'),
+        settle_time: daysAgo(40, ' 10:08:00'),
+        orders: [
+            { order_sn: 'TG20260708025', order_type_name: '托管服务', service: '日托·暑期托管班', amount: '90.00', pay_time: daysAgo(62, ' 08:45:00'), status_name: '已完成' },
+        ],
+    },
 ]
 
-export const staffEarnings = [
-    { id: 1, staff: '周建国', role: '托管员', orders: 156, income: '11218.00', settled: '8632.00', un_settled: '2586.00', month: '2026-08' },
-    { id: 2, staff: '吴秀兰', role: '配送员', orders: 342, income: '13650.00', settled: '10240.50', un_settled: '3409.50', month: '2026-08' },
-    { id: 3, staff: '郑海涛', role: '陪诊员', orders: 87, income: '9300.00', settled: '6976.00', un_settled: '2324.00', month: '2026-08' },
-    { id: 4, staff: '孙丽华', role: '楼栋管理员', orders: 0, income: '4200.00', settled: '4200.00', un_settled: '0.00', month: '2026-08' },
-]
+/** 员工收益：按员工维度统计陪诊 / 配送 / 托管三类收益 */
+export const staffEarnings = staffList.map((item: any) => {
+    const total = Number(item.earnings) || 0
+    return {
+        id: item.id,
+        staff_id: item.id,
+        name: item.name,
+        avatar: item.avatar,
+        mobile: item.mobile,
+        role: item.role,
+        role_id: item.role_id,
+        escort_income: item.role_id === 3 ? total.toFixed(2) : '0.00',
+        delivery_income: item.role_id === 2 ? total.toFixed(2) : '0.00',
+        nursing_income: item.role_id === 1 || item.role_id === 4 ? total.toFixed(2) : '0.00',
+        create_time: item.create_time,
+    }
+})
 
 // ==================== 系统设置 ====================
 export const propertyInfo = {

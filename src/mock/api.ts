@@ -27,7 +27,6 @@ import {
     helperList,
     barComments,
     bannerList,
-    financeOverview,
     financeFlow,
     financeBill,
     staffEarnings,
@@ -359,17 +358,115 @@ export function getBannerList(params?: Record<string, any>) {
 }
 
 // ============ 财务管理 ============
+/** 财务概况：全部金额由订单 mock 数据实时计算，不硬编码 */
 export function getFinanceOverview() {
-    return Promise.resolve(financeOverview)
+    const all: any[] = [
+        ...nursingOrders.map((o: any) => ({ ...o, _type: 'nursing' })),
+        ...mealOrders.map((o: any) => ({ ...o, _type: 'meal' })),
+        ...escortOrders.map((o: any) => ({ ...o, _type: 'escort' })),
+    ]
+    const sum = (arr: any[]) => arr.reduce((s, o) => s + (Number(o.amount) || 0), 0)
+    const money = (v: number) => v.toFixed(2)
+    // 有效订单：已支付且未取消；待结算＝有效且未完成，已结算＝有效且已完成
+    const valid = all.filter((o: any) => o.pay_status === 1 && o.status !== 4)
+    const canceled = all.filter((o: any) => o.status === 4)
+    const pending = valid.filter((o: any) => o.status !== 3)
+    const settled = valid.filter((o: any) => o.status === 3)
+    const pick = (arr: any[], t: string) => arr.filter((o: any) => o._type === t)
+    const stat = (t: string) => ({
+        total: money(sum(pick(all, t))),
+        valid: money(sum(pick(valid, t))),
+        cancel: money(sum(pick(canceled, t))),
+        pending: money(sum(pick(pending, t))),
+        settled: money(sum(pick(settled, t))),
+    })
+    return Promise.resolve({
+        order_total: money(sum(all)),
+        order_valid: money(sum(valid)),
+        order_refund: money(sum(canceled)),
+        nursing: stat('nursing'),
+        meal: stat('meal'),
+        escort: stat('escort'),
+        settle_pending: money(sum(pending)),
+        settle_done: money(sum(settled)),
+        staff_earnings_total: money(
+            staffEarnings.reduce(
+                (s, o: any) =>
+                    s + Number(o.escort_income) + Number(o.delivery_income) + Number(o.nursing_income),
+                0
+            )
+        ),
+    })
 }
+
+/** 订单流水：流水号 / 服务名称 / 昵称 / 手机号搜索；提交时间、支付时间、支付方式筛选 */
 export function getFinanceFlow(params?: Record<string, any>) {
-    return page(financeFlow, params)
+    let lists: any[] = financeFlow as any[]
+    if (params?.pay_type) lists = lists.filter((o: any) => o.pay_type === params.pay_type)
+    if (params?.order_type) lists = lists.filter((o: any) => Number(o.order_type) === Number(params.order_type))
+    if (params?.pay_start) lists = lists.filter((o: any) => dayOf(o.pay_time) >= params.pay_start)
+    if (params?.pay_end) lists = lists.filter((o: any) => dayOf(o.pay_time) <= params.pay_end)
+    const result = filterList(lists, params, {
+        keywordFields: ['sn', 'service', 'nickname', 'mobile'],
+        timeField: 'create_time',
+    })
+    return page(result, params)
 }
+/** 订单流水导出：返回筛选后的全部数据（不分页） */
+export function getFinanceFlowAll(params?: Record<string, any>) {
+    return getFinanceFlow({ ...params, page_no: 1, page_size: 9999 }).then((res: any) => res.lists)
+}
+
+/** 账单结算：账单号 / 昵称 / 手机号搜索 */
 export function getFinanceBill(params?: Record<string, any>) {
-    return page(financeBill, params)
+    let lists: any[] = (financeBill as any[]).map((item: any) => ({
+        ...item,
+        amount: item.orders
+            .reduce((s: number, o: any) => s + (Number(o.amount) || 0), 0)
+            .toFixed(2),
+        order_count: item.orders.length,
+    }))
+    if (params?.status !== '' && params?.status !== undefined && params?.status !== null) {
+        lists = lists.filter((o: any) => Number(o.status) === Number(params.status))
+    }
+    const result = filterList(lists, params, { keywordFields: ['sn', 'nickname', 'mobile'] })
+    return page(result, params)
 }
+
+/** 员工收益：员工名称 / 手机号搜索；角色、添加时间筛选 */
 export function getStaffEarnings(params?: Record<string, any>) {
-    return page(staffEarnings, params)
+    let lists: any[] = (staffEarnings as any[]).map((item: any) => ({
+        ...item,
+        total_income: (
+            Number(item.escort_income) +
+            Number(item.delivery_income) +
+            Number(item.nursing_income)
+        ).toFixed(2),
+    }))
+    if (params?.role_id) lists = lists.filter((o: any) => Number(o.role_id) === Number(params.role_id))
+    const result = filterList(lists, params, { keywordFields: ['name', 'mobile'] })
+    return page(result, params)
+}
+/** 员工收益导出：返回筛选后的全部数据（不分页） */
+export function getStaffEarningsAll(params?: Record<string, any>) {
+    return getStaffEarnings({ ...params, page_no: 1, page_size: 9999 }).then((res: any) => res.lists)
+}
+/** 添加员工收益：按员工累加三类收益 */
+export function addStaffEarning(params?: Record<string, any>) {
+    const row: any = (staffEarnings as any[]).find((o: any) => Number(o.staff_id) === Number(params?.staff_id))
+    if (!row) return Promise.reject(new Error('员工不存在'))
+    row.escort_income = (Number(row.escort_income) + (Number(params?.escort_income) || 0)).toFixed(2)
+    row.delivery_income = (Number(row.delivery_income) + (Number(params?.delivery_income) || 0)).toFixed(2)
+    row.nursing_income = (Number(row.nursing_income) + (Number(params?.nursing_income) || 0)).toFixed(2)
+    const staff: any = (staffList as any[]).find((o: any) => Number(o.id) === Number(params?.staff_id))
+    if (staff) {
+        staff.earnings = (
+            Number(row.escort_income) +
+            Number(row.delivery_income) +
+            Number(row.nursing_income)
+        ).toFixed(2)
+    }
+    return Promise.resolve({ ...row })
 }
 
 // ============ 系统设置 ============
