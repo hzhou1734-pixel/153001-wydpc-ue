@@ -103,37 +103,37 @@ export const buildingTree = [
 ]
 
 export const roomList = [
-    { id: 1, name: '101', unit_id: 101, building_id: 1, owner: '张伟', phone: '138****1001', certified: 0 },
-    { id: 2, name: '102', unit_id: 101, building_id: 1, owner: '李娜', phone: '138****1002', certified: 1 },
-    { id: 3, name: '201', unit_id: 101, building_id: 1, owner: '王强', phone: '138****1003', certified: 0 },
-    { id: 4, name: '101', unit_id: 102, building_id: 1, owner: '赵敏', phone: '138****1004', certified: 0 },
-    { id: 5, name: '201', unit_id: 201, building_id: 2, owner: '陈晨', phone: '138****1005', certified: 1 },
+    { id: 1, name: '101', unit_id: 101, building_id: 1, owner: '张伟', phone: '13812341001', certified: 0 },
+    { id: 2, name: '102', unit_id: 101, building_id: 1, owner: '李娜', phone: '13812341002', certified: 1 },
+    { id: 3, name: '201', unit_id: 101, building_id: 1, owner: '王强', phone: '13812341003', certified: 0 },
+    { id: 4, name: '101', unit_id: 102, building_id: 1, owner: '赵敏', phone: '13812341004', certified: 0 },
+    { id: 5, name: '201', unit_id: 201, building_id: 2, owner: '陈晨', phone: '13812341005', certified: 1 },
 ]
 
 // ==================== 认证列表（仅业主认证，家属/租户不做认证） ====================
 export const certifyList = [
-    { id: 1, user_id: 1, nickname: '张伟', mobile: '138****1001', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 0, create_time: daysAgo(1) },
-    { id: 2, user_id: 2, nickname: '李娜', mobile: '138****1002', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '102', type: '业主', status: 1, create_time: daysAgo(3) },
-    { id: 3, user_id: 5, nickname: '陈晨', mobile: '138****1005', community: '保利·天悦湾', building: '3栋', unit: '2单元', room: '502', type: '业主', status: 1, create_time: daysAgo(7) },
+    { id: 1, user_id: 1, nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 0, create_time: daysAgo(1) },
+    { id: 2, user_id: 2, nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '102', type: '业主', status: 1, create_time: daysAgo(3) },
+    { id: 3, user_id: 5, nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋', unit: '2单元', room: '502', type: '业主', status: 1, create_time: daysAgo(7) },
 ]
 
 // ==================== 用户 ====================
 export const consumerList = [
-    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '138****1001', community: '颐景园·江南里', room: '1栋1单元101', certified: 1, balance: '1286.00', orders: 23, status: 1, create_time: daysAgo(180) },
-    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '138****1002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, balance: '356.50', orders: 15, status: 1, create_time: daysAgo(165) },
-    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '138****1003', community: '颐景园·江南里', room: '1栋1单元201', certified: 1, balance: '0.00', orders: 8, status: 1, create_time: daysAgo(120) },
-    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '138****1004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, balance: '58.00', orders: 3, status: 1, create_time: daysAgo(90) },
-    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '138****1005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, balance: '2680.00', orders: 46, status: 0, create_time: daysAgo(60) },
-    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '138****1006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, balance: '92.30', orders: 12, status: 1, create_time: daysAgo(30) },
+    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 1, balance: '1286.00', orders: 23, status: 1, create_time: daysAgo(180) },
+    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, balance: '356.50', orders: 15, status: 1, create_time: daysAgo(165) },
+    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 1, balance: '0.00', orders: 8, status: 1, create_time: daysAgo(120) },
+    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, balance: '58.00', orders: 3, status: 1, create_time: daysAgo(90) },
+    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, balance: '2680.00', orders: 46, status: 0, create_time: daysAgo(60) },
+    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, balance: '92.30', orders: 12, status: 1, create_time: daysAgo(30) },
 ]
 
 // ==================== 员工 ====================
 export const staffList = [
-    { id: 1, name: '周建国', avatar: 'https://picsum.photos/seed/ghj-staff-1/100/100', mobile: '139****2001', role: '托管员', role_id: 1, community: '颐景园·江南里', buildings: '1栋、2栋', orders: 156, earnings: '8632.00', status: 1, create_time: daysAgo(200) },
-    { id: 2, name: '吴秀兰', avatar: 'https://picsum.photos/seed/ghj-staff-2/100/100', mobile: '139****2002', role: '配送员', role_id: 2, community: '颐景园·江南里', buildings: '-', orders: 342, earnings: '10240.50', status: 1, create_time: daysAgo(190) },
-    { id: 3, name: '郑海涛', avatar: 'https://picsum.photos/seed/ghj-staff-3/100/100', mobile: '139****2003', role: '陪诊员', role_id: 3, community: '绿城·桂语江南', buildings: '-', orders: 87, earnings: '6976.00', status: 1, create_time: daysAgo(150) },
-    { id: 4, name: '孙丽华', avatar: 'https://picsum.photos/seed/ghj-staff-4/100/100', mobile: '139****2004', role: '楼栋管理员', role_id: 4, community: '保利·天悦湾', buildings: '3栋', orders: 0, earnings: '4200.00', status: 1, create_time: daysAgo(100) },
-    { id: 5, name: '马长顺', avatar: 'https://picsum.photos/seed/ghj-staff-5/100/100', mobile: '139****2005', role: '托管员', role_id: 1, community: '万科·未来城三期', buildings: '5栋、6栋', orders: 203, earnings: '11218.00', status: 0, create_time: daysAgo(80) },
+    { id: 1, name: '周建国', avatar: 'https://picsum.photos/seed/ghj-staff-1/100/100', mobile: '13912342001', role: '托管员', role_id: 1, community: '颐景园·江南里', buildings: '1栋、2栋', orders: 156, earnings: '8632.00', status: 1, create_time: daysAgo(200) },
+    { id: 2, name: '吴秀兰', avatar: 'https://picsum.photos/seed/ghj-staff-2/100/100', mobile: '13912342002', role: '配送员', role_id: 2, community: '颐景园·江南里', buildings: '-', orders: 342, earnings: '10240.50', status: 1, create_time: daysAgo(190) },
+    { id: 3, name: '郑海涛', avatar: 'https://picsum.photos/seed/ghj-staff-3/100/100', mobile: '13912342003', role: '陪诊员', role_id: 3, community: '绿城·桂语江南', buildings: '-', orders: 87, earnings: '6976.00', status: 1, create_time: daysAgo(150) },
+    { id: 4, name: '孙丽华', avatar: 'https://picsum.photos/seed/ghj-staff-4/100/100', mobile: '13912342004', role: '楼栋管理员', role_id: 4, community: '保利·天悦湾', buildings: '3栋', orders: 0, earnings: '4200.00', status: 1, create_time: daysAgo(100) },
+    { id: 5, name: '马长顺', avatar: 'https://picsum.photos/seed/ghj-staff-5/100/100', mobile: '13912342005', role: '托管员', role_id: 1, community: '万科·未来城三期', buildings: '5栋、6栋', orders: 203, earnings: '11218.00', status: 0, create_time: daysAgo(80) },
 ]
 
 // ==================== 服务 ====================
@@ -311,22 +311,22 @@ export const activityList = [
 // ==================== 社区活动报名列表（按活动分组的报名用户） ====================
 export const activitySignupList = [
     // 活动 1：中秋游园会
-    { id: 101, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', phone: '138****1001', room: '1栋1单元101', signup_count: 3, signup_time: daysAgo(2, ' 09:12:00'), remark: '一家三口参加' },
-    { id: 102, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李慧', phone: '139****3284', room: '2栋2单元802', signup_count: 2, signup_time: daysAgo(2, ' 10:35:00'), remark: '' },
-    { id: 103, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王建国', phone: '137****7656', room: '3栋1单元501', signup_count: 4, signup_time: daysAgo(1, ' 14:20:00'), remark: '带父母一起参加' },
-    { id: 104, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '刘芳', phone: '136****5012', room: '1栋2单元1103', signup_count: 2, signup_time: daysAgo(1, ' 16:48:00'), remark: '' },
-    { id: 105, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈明辉', phone: '135****8890', room: '5栋1单元201', signup_count: 1, signup_time: daysAgo(0, ' 08:05:00'), remark: '' },
-    { id: 106, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '赵秀英', phone: '134****3327', room: '4栋2单元604', signup_count: 2, signup_time: daysAgo(0, ' 11:30:00'), remark: '希望安排靠前座位' },
+    { id: 101, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', phone: '13812341001', room: '1栋1单元101', signup_count: 3, signup_time: daysAgo(2, ' 09:12:00'), remark: '一家三口参加' },
+    { id: 102, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李慧', phone: '13912343284', room: '2栋2单元802', signup_count: 2, signup_time: daysAgo(2, ' 10:35:00'), remark: '' },
+    { id: 103, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王建国', phone: '13712347656', room: '3栋1单元501', signup_count: 4, signup_time: daysAgo(1, ' 14:20:00'), remark: '带父母一起参加' },
+    { id: 104, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '刘芳', phone: '13612345012', room: '1栋2单元1103', signup_count: 2, signup_time: daysAgo(1, ' 16:48:00'), remark: '' },
+    { id: 105, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈明辉', phone: '13512348890', room: '5栋1单元201', signup_count: 1, signup_time: daysAgo(0, ' 08:05:00'), remark: '' },
+    { id: 106, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '赵秀英', phone: '13412343327', room: '4栋2单元604', signup_count: 2, signup_time: daysAgo(0, ' 11:30:00'), remark: '希望安排靠前座位' },
     // 活动 2：老年健康义诊
-    { id: 201, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', phone: '133****6612', room: '2栋1单元301', signup_count: 1, signup_time: daysAgo(4, ' 09:40:00'), remark: '68岁，需测血糖' },
-    { id: 202, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周桂兰', phone: '132****9045', room: '3栋2单元1502', signup_count: 2, signup_time: daysAgo(4, ' 10:15:00'), remark: '' },
-    { id: 203, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-9/100/100', nickname: '吴建军', phone: '131****4478', room: '6栋1单元101', signup_count: 1, signup_time: daysAgo(3, ' 15:22:00'), remark: '颈肩腰腿痛咨询' },
-    { id: 204, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '130****2265', room: '5栋2单元903', signup_count: 3, signup_time: daysAgo(3, ' 17:50:00'), remark: '替父母报名' },
+    { id: 201, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', phone: '13312346612', room: '2栋1单元301', signup_count: 1, signup_time: daysAgo(4, ' 09:40:00'), remark: '68岁，需测血糖' },
+    { id: 202, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周桂兰', phone: '13212349045', room: '3栋2单元1502', signup_count: 2, signup_time: daysAgo(4, ' 10:15:00'), remark: '' },
+    { id: 203, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-9/100/100', nickname: '吴建军', phone: '13112344478', room: '6栋1单元101', signup_count: 1, signup_time: daysAgo(3, ' 15:22:00'), remark: '颈肩腰腿痛咨询' },
+    { id: 204, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '13012342265', room: '5栋2单元903', signup_count: 3, signup_time: daysAgo(3, ' 17:50:00'), remark: '替父母报名' },
     // 活动 3：周末亲子手工课
-    { id: 301, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-11/100/100', nickname: '林晓梅', phone: '159****7412', room: '1栋1单元202', signup_count: 2, signup_time: daysAgo(15, ' 20:10:00'), remark: '孩子5岁' },
-    { id: 302, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-12/100/100', nickname: '郑凯', phone: '158****3856', room: '2栋2单元1104', signup_count: 2, signup_time: daysAgo(14, ' 12:45:00'), remark: '' },
-    { id: 303, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '157****6690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(12, ' 18:30:00'), remark: '希望多开自然主题' },
-    { id: 304, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-14/100/100', nickname: '罗文杰', phone: '156****5033', room: '6栋2单元1301', signup_count: 2, signup_time: daysAgo(10, ' 09:55:00'), remark: '' },
+    { id: 301, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-11/100/100', nickname: '林晓梅', phone: '15912347412', room: '1栋1单元202', signup_count: 2, signup_time: daysAgo(15, ' 20:10:00'), remark: '孩子5岁' },
+    { id: 302, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-12/100/100', nickname: '郑凯', phone: '15812343856', room: '2栋2单元1104', signup_count: 2, signup_time: daysAgo(14, ' 12:45:00'), remark: '' },
+    { id: 303, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(12, ' 18:30:00'), remark: '希望多开自然主题' },
+    { id: 304, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-14/100/100', nickname: '罗文杰', phone: '15612345033', room: '6栋2单元1301', signup_count: 2, signup_time: daysAgo(10, ' 09:55:00'), remark: '' },
 ]
 
 // ==================== 生活帮手（用户提交的生活帮助表单） ====================
@@ -336,7 +336,7 @@ export const helperList = [
         type: '家电维修',
         avatar: 'https://picsum.photos/seed/ghj-user-1/100/100',
         nickname: '张伟',
-        phone: '138****1001',
+        phone: '13812341001',
         building: '1栋1单元101',
         status: 0,
         handler: '',
@@ -350,7 +350,7 @@ export const helperList = [
         type: '管道疏通',
         avatar: 'https://picsum.photos/seed/ghj-user-2/100/100',
         nickname: '李娜',
-        phone: '138****1002',
+        phone: '13812341002',
         building: '1栋1单元102',
         status: 1,
         handler: '管理员·陈晓',
@@ -364,7 +364,7 @@ export const helperList = [
         type: '开锁换锁',
         avatar: 'https://picsum.photos/seed/ghj-user-3/100/100',
         nickname: '王强',
-        phone: '138****1003',
+        phone: '13812341003',
         building: '1栋1单元201',
         status: 1,
         handler: '楼管·刘敏',
@@ -378,7 +378,7 @@ export const helperList = [
         type: '保洁清洗',
         avatar: 'https://picsum.photos/seed/ghj-user-4/100/100',
         nickname: '赵敏',
-        phone: '138****1004',
+        phone: '13812341004',
         building: '2栋1单元301',
         status: 0,
         handler: '',
@@ -392,7 +392,7 @@ export const helperList = [
         type: '代买代办',
         avatar: 'https://picsum.photos/seed/ghj-user-5/100/100',
         nickname: '陈晨',
-        phone: '138****1005',
+        phone: '13812341005',
         building: '3栋2单元502',
         status: 1,
         handler: '管理员·陈晓',
@@ -406,7 +406,7 @@ export const helperList = [
         type: '家电维修',
         avatar: 'https://picsum.photos/seed/ghj-user-6/100/100',
         nickname: '刘洋',
-        phone: '138****1006',
+        phone: '13812341006',
         building: '5栋1单元1103',
         status: 0,
         handler: '',
@@ -420,7 +420,7 @@ export const helperList = [
         type: '其他',
         avatar: 'https://picsum.photos/seed/ghj-user-7/100/100',
         nickname: '孙悦',
-        phone: '138****1007',
+        phone: '13812341007',
         building: '2栋2单元801',
         status: 0,
         handler: '',
@@ -434,7 +434,7 @@ export const helperList = [
         type: '管道疏通',
         avatar: 'https://picsum.photos/seed/ghj-user-8/100/100',
         nickname: '周杰',
-        phone: '138****1008',
+        phone: '13812341008',
         building: '3栋1单元404',
         status: 1,
         handler: '楼管·刘敏',
@@ -505,9 +505,9 @@ export const roleList = [
 
 export const adminList = [
     { id: 1, username: 'admin', nickname: '物业管理员', role: '超级管理员', mobile: '13800138000', last_login: daysAgo(0, ' 08:30:00'), status: 1, create_time: daysAgo(300) },
-    { id: 2, username: 'jingli01', nickname: '王经理', role: '物业经理', mobile: '138****0002', last_login: daysAgo(1, ' 18:20:00'), status: 1, create_time: daysAgo(250) },
-    { id: 3, username: 'caiwu01', nickname: '钱会计', role: '财务专员', mobile: '138****0003', last_login: daysAgo(2, ' 09:00:00'), status: 1, create_time: daysAgo(180) },
-    { id: 4, username: 'loudong01', nickname: '孙丽华', role: '楼栋管理员', mobile: '138****0004', last_login: daysAgo(3, ' 14:45:00'), status: 0, create_time: daysAgo(90) },
+    { id: 2, username: 'jingli01', nickname: '王经理', role: '物业经理', mobile: '13812340002', last_login: daysAgo(1, ' 18:20:00'), status: 1, create_time: daysAgo(250) },
+    { id: 3, username: 'caiwu01', nickname: '钱会计', role: '财务专员', mobile: '13812340003', last_login: daysAgo(2, ' 09:00:00'), status: 1, create_time: daysAgo(180) },
+    { id: 4, username: 'loudong01', nickname: '孙丽华', role: '楼栋管理员', mobile: '13812340004', last_login: daysAgo(3, ' 14:45:00'), status: 0, create_time: daysAgo(90) },
 ]
 
 // ==================== 数据台 ====================
