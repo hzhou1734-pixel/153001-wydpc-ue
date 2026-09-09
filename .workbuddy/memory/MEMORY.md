@@ -25,5 +25,14 @@
 - 手机号一律完整显示，禁止 **** 脱敏（v1.0.23 起）
 - 页数/栋数等统计值一律由 mock 数据实时计算，不硬编码（v1.0.19 起）
 
+## 线上部署（EdgeOne）
+- 部署域名：https://1530-01-wyd.admin.ue.ehaiba.net （用户通过 EdgeOne 关联 GitHub 仓库自动构建）
+- EdgeOne 构建配置：安装 `npm install`、构建命令 `npm run build`、输出目录 `dist`、Node ≥ 18
+- **构建基路径（v1.0.29 起）**：`vite.config.ts` 中 `base: process.env.VITE_PUBLIC_PATH || '/'`，面向域名根部署
+  - 若需部署到子目录 `/admin/`：用 `npm run build:release`（= `vite build --base=/admin/ && node scripts/release.mjs`，产物复制到 ../server/public/admin）
+  - ⚠️ 历史坑：base 为 `/admin/` 而站点部署在根时，EdgeOne 会把 `/admin/assets/xx.js` 回退返回 index.html（text/html），module 脚本 MIME 不匹配 → 页面全白
+- 路由 `createWebHistory(import.meta.env.BASE_URL)`，需平台侧开启 SPA 回退（未匹配路径返回 index.html）
+- 接口基址 `.env.production` → `VITE_APP_BASE_URL=https://likeadmin.l.440.red:9443`（已验证连通）；登录走 src/mock/user.ts，业务页部分走 @/mock/api
+
 ## 工作方式
 - 用户通过问答方式提出功能修改需求，AI 执行修改后自动提交推送
