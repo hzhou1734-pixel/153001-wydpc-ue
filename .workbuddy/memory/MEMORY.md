@@ -50,3 +50,4 @@
 - 前端导出统一使用 src/utils/export.ts 的 exportCsv（CSV + BOM，兼容 Excel 中文）（v1.0.38）
 - 权限配置约定(v1.0.39)：权限目录集中在 src/mock/perms.ts 的 permModules，页面节点=查看权限(perms/lists)，操作权限=perms/<action>；新增功能页面时必须同步在 permModules 中登记其实际操作
 - 角色管理入口为 src/views/setting/role/index.vue（菜单 setting/role）；src/views/permission/* 为未接入菜单的旧代码，不可改动依赖
+- 列表交互约定(v1.0.41)：显示/隐藏一律用状态列 el-switch 开关切换，操作栏不放文字切换按钮；新增列表页须遵循
