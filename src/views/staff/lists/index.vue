@@ -222,17 +222,17 @@ function handleDelete(row: any) {
                         <span v-else>{{ row.buildings }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="orders" label="累计订单" width="110" align="center" />
+                <el-table-column prop="orders" label="累计订单" width="110" align="center" show-overflow-tooltip />
                 <el-table-column label="累计收益（元）" width="140" align="right">
                     <template #default="{ row }">¥{{ row.earnings }}</template>
                 </el-table-column>
-                <el-table-column label="状态" width="100" align="center">
+                <el-table-column label="状态" width="90" align="center">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status === 1" @change="toggleStatus(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="入职时间" width="150" />
-                <el-table-column label="操作" width="160" fixed="right">
+                <el-table-column prop="create_time" label="入职时间" width="150" show-overflow-tooltip />
+                <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
                         <el-button link type="danger" @click="handleDelete(row)">删除</el-button>

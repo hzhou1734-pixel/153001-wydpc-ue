@@ -16,3 +16,14 @@ body {
 #nprogress .bar {
     @apply bg-primary #{!important};
 }
+
+/* 列表表格：内容保持一行显示完整，过长自动省略并可悬浮查看 */
+.el-table {
+    .cell {
+        white-space: nowrap;
+        padding: 0 10px;
+    }
+    th.el-table__cell > .cell {
+        white-space: nowrap;
+    }
+}

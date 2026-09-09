@@ -23,7 +23,7 @@
                         <el-table-column prop="sort" label="排序" min-width="100" />
                         <el-table-column prop="num" label="管理员人数" min-width="100" />
                         <el-table-column prop="create_time" label="创建时间" min-width="180" />
-                        <el-table-column label="操作" width="200" fixed="right">
+                        <el-table-column label="操作" width="210" fixed="right">
                             <template #default="{ row }">
                                 <el-button
                                     link

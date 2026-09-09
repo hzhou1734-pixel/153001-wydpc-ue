@@ -23,14 +23,14 @@
                                 <span class="text-orange-500 font-bold">¥{{ row.price }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="sort" label="排序" width="80" />
+                        <el-table-column prop="sort" label="排序" width="80" show-overflow-tooltip />
                         <el-table-column label="状态" width="90">
                             <template #default="{ row }">
                                 <el-switch v-model="row.status" :active-value="1" :inactive-value="0"
                                     @change="toggleDishStatus(row)" />
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作" width="150" fixed="right">
+                        <el-table-column label="操作" width="130" fixed="right">
                             <template #default="{ row }">
                                 <el-button size="small" @click="openDishEdit(row)">编辑</el-button>
                                 <el-button size="small" type="danger" plain @click="handleDishDelete(row)">删除</el-button>
@@ -72,14 +72,14 @@
                                 <span class="text-orange-500 font-bold">¥{{ row.price }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="sort" label="排序" width="80" />
+                        <el-table-column prop="sort" label="排序" width="80" show-overflow-tooltip />
                         <el-table-column label="状态" width="90">
                             <template #default="{ row }">
                                 <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleCombo(row)" />
                             </template>
                         </el-table-column>
-                        <el-table-column prop="update_time" label="更新时间" width="170" />
-                        <el-table-column label="操作" width="150" fixed="right">
+                        <el-table-column prop="update_time" label="更新时间" width="160" show-overflow-tooltip />
+                        <el-table-column label="操作" width="130" fixed="right">
                             <template #default="{ row }">
                                 <el-button size="small" @click="openComboEdit(row)">编辑</el-button>
                                 <el-button size="small" type="danger" plain @click="handleComboDelete(row)">删除</el-button>

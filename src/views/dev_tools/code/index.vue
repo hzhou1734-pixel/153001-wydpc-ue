@@ -58,7 +58,7 @@
                     <el-table-column label="表描述" prop="table_comment" min-width="180" />
                     <el-table-column label="创建时间" prop="create_time" min-width="180" />
                     <el-table-column label="更新时间" prop="update_time" min-width="180" />
-                    <el-table-column label="操作" width="160" fixed="right">
+                    <el-table-column label="操作" width="130" fixed="right">
                         <template #default="{ row }">
                             <div class="flex items-center">
                                 <el-button

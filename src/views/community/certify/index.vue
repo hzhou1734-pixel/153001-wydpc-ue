@@ -62,9 +62,9 @@ onMounted(getLists)
             </div>
             <!-- 表格 -->
             <el-table :data="pager.lists" border>
-                <el-table-column prop="id" label="ID" width="60" />
+                <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip />
                 <el-table-column prop="nickname" label="申请人" min-width="90" />
-                <el-table-column prop="mobile" label="手机号" width="130" />
+                <el-table-column prop="mobile" label="手机号" width="120" show-overflow-tooltip />
                 <el-table-column prop="community" label="小区" min-width="130" />
                 <el-table-column label="房屋" min-width="140">
                     <template #default="{ row }">{{ row.building }}{{ row.unit }}{{ row.room }}</template>
@@ -76,8 +76,8 @@ onMounted(getLists)
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="申请时间" width="160" />
-                <el-table-column label="操作" width="200" fixed="right">
+                <el-table-column prop="create_time" label="申请时间" width="160" show-overflow-tooltip />
+                <el-table-column label="操作" width="190" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" size="small" @click="viewDetail(row)">详情</el-button>
                         <template v-if="row.status === 0">

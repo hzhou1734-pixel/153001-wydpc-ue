@@ -57,7 +57,7 @@
                     prop="update_time"
                     min-width="180"
                 ></el-table-column>
-                <el-table-column label="操作" width="160" fixed="right">
+                <el-table-column label="操作" width="190" fixed="right">
                     <template #default="{ row }">
                         <el-button
                             v-if="row.type !== MenuEnum.BUTTON"

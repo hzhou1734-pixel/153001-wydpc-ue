@@ -34,15 +34,15 @@
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
                 <el-table-column prop="title" label="通知标题" min-width="300" show-overflow-tooltip />
-                <el-table-column label="显示状态" width="100">
+                <el-table-column label="显示状态" width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="sort" label="排序" width="90" sortable />
-                <el-table-column prop="views" label="浏览量" width="100" sortable />
-                <el-table-column prop="create_time" label="添加时间" width="170" />
-                <el-table-column label="操作" width="170" fixed="right">
+                <el-table-column prop="sort" label="排序" width="80" sortable  show-overflow-tooltip />
+                <el-table-column prop="views" label="浏览量" width="100" sortable  show-overflow-tooltip />
+                <el-table-column prop="create_time" label="添加时间" width="160" show-overflow-tooltip />
+                <el-table-column label="操作" width="190" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>

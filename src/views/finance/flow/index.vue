@@ -82,7 +82,7 @@
                 </el-table-column>
                 <el-table-column prop="create_time" label="提交时间" min-width="170" />
                 <el-table-column prop="pay_time" label="支付时间" min-width="170" />
-                <el-table-column prop="pay_type" label="支付方式" width="110" />
+                <el-table-column prop="pay_type" label="支付方式" width="110" show-overflow-tooltip />
             </el-table>
             <div class="flex justify-end mt-4">
                 <el-pagination

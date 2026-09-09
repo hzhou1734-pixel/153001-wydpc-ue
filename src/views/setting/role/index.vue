@@ -16,14 +16,14 @@
                 </template>
             </el-table-column>
             <el-table-column prop="desc" label="角色描述" min-width="240" show-overflow-tooltip />
-            <el-table-column prop="members" label="成员数量" width="110" sortable />
+            <el-table-column prop="members" label="成员数量" width="110" sortable  show-overflow-tooltip />
             <el-table-column label="权限数量" width="110">
                 <template #default="{ row }">
                     <span>{{ permCountMap[row.id] ?? 0 }} 项</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="create_time" label="创建时间" width="170" />
-            <el-table-column label="操作" width="220" fixed="right">
+            <el-table-column prop="create_time" label="创建时间" width="160" show-overflow-tooltip />
+            <el-table-column label="操作" width="210" fixed="right">
                 <template #default="{ row }">
                     <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
                     <el-button link type="success" @click="openAuth(row)">分配权限</el-button>

@@ -53,7 +53,7 @@
                         @selection-change="handleSelectionChange"
                     >
                         <el-table-column type="selection" width="55" />
-                        <el-table-column label="ID" prop="id" />
+                        <el-table-column label="ID" prop="id" show-overflow-tooltip />
                         <el-table-column label="字典名称" prop="name" min-width="120" />
                         <el-table-column label="字典类型" prop="type" min-width="120" />
                         <el-table-column label="状态">
@@ -62,9 +62,9 @@
                                 <el-tag v-else type="danger">停用</el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column label="备注" prop="remark" show-tooltip-when-overflow />
+                        <el-table-column label="备注" prop="remark" show-tooltip-when-overflow  show-overflow-tooltip />
                         <el-table-column label="创建时间" prop="create_time" min-width="180" />
-                        <el-table-column label="操作" width="190" fixed="right">
+                        <el-table-column label="操作" width="180" fixed="right">
                             <template #default="{ row }">
                                 <el-button
                                     v-perms="['setting.dict.dict_type/edit']"

@@ -273,7 +273,7 @@ onMounted(getLists)
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="210" fixed="right" align="center">
+                <el-table-column label="操作" width="240" fixed="right" align="center">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="goDetail(row)">详情</el-button>
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>

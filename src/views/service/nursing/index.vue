@@ -50,8 +50,8 @@
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
                 <el-table-column label="托管服务标题" prop="name" min-width="180" show-overflow-tooltip />
-                <el-table-column label="开始时间" prop="start_time" width="120" />
-                <el-table-column label="结束时间" prop="end_time" width="120" />
+                <el-table-column label="开始时间" prop="start_time" width="120" show-overflow-tooltip />
+                <el-table-column label="结束时间" prop="end_time" width="120" show-overflow-tooltip />
                 <el-table-column label="托管类型" width="130">
                     <template #default="{ row }">
                         <el-tag :type="typeTag(row.type)" effect="light">{{ row.type }}</el-tag>
@@ -65,13 +65,13 @@
                 <el-table-column label="报名人数" width="100" align="center">
                     <template #default="{ row }">{{ row.signup_count ?? 0 }} 人</template>
                 </el-table-column>
-                <el-table-column label="托管状态" width="100">
+                <el-table-column label="托管状态" width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column label="添加时间" prop="create_time" width="170" />
-                <el-table-column label="操作" width="150" fixed="right">
+                <el-table-column label="添加时间" prop="create_time" width="160" show-overflow-tooltip />
+                <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button size="small" @click="openEdit(row)">编辑</el-button>
                         <el-button size="small" type="danger" plain @click="handleDelete(row)">删除</el-button>

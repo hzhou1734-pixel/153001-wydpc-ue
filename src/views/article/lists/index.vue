@@ -87,7 +87,7 @@
                 </el-table-column>
                 <el-table-column label="排序" prop="sort" min-width="100" />
                 <el-table-column label="发布时间" prop="create_time" min-width="120" />
-                <el-table-column label="操作" width="120" fixed="right">
+                <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button
                             v-perms="['article.article/edit', 'article.article/add:edit']"

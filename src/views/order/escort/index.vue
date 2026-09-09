@@ -45,7 +45,7 @@
                 </div>
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
-                <el-table-column prop="sn" label="订单编号" width="170" />
+                <el-table-column prop="sn" label="订单编号" width="170" show-overflow-tooltip />
                 <el-table-column label="下单人" min-width="150">
                     <template #default="{ row }">
                         <div class="flex items-center">
@@ -54,32 +54,32 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="130" />
+                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
                 <el-table-column label="金额" width="120" align="right">
                     <template #default="{ row }">
                         <span class="text-orange-500 font-bold">¥{{ row.amount }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="订单状态" width="100">
+                <el-table-column label="订单状态" width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="statusTag(row.status)">{{ statusMap[row.status] }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="支付状态" width="100">
+                <el-table-column label="支付状态" width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="row.pay_status === 1 ? 'success' : 'info'">
                             {{ row.pay_status === 1 ? '已支付' : '未支付' }}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="下单时间" width="170" />
-                <el-table-column label="支付时间" width="170">
+                <el-table-column prop="create_time" label="下单时间" width="160" show-overflow-tooltip />
+                <el-table-column label="支付时间" width="160">
                     <template #default="{ row }">{{ row.pay_time || '—' }}</template>
                 </el-table-column>
                 <el-table-column label="支付方式" width="110">
                     <template #default="{ row }">{{ row.pay_type || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="操作" width="150" fixed="right">
+                <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button size="small" type="primary" :disabled="row.status !== 1"
                             @click="openDispatch(row)">派单</el-button>

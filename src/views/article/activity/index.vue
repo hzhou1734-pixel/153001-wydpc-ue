@@ -44,7 +44,7 @@
                         <span>{{ row.title }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="活动状态" width="110">
+                <el-table-column label="活动状态" width="100">
                     <template #default="{ row }">
                         <el-tag size="small" :type="isEnded(row) ? 'info' : 'success'">{{ isEnded(row) ? '已结束' : '报名中' }}</el-tag>
                     </template>
@@ -56,14 +56,14 @@
                         <span class="text-tx-secondary"> / {{ row.limit }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="sort" label="排序" width="90" sortable />
-                <el-table-column prop="create_time" label="发布时间" width="170" />
-                <el-table-column label="显示状态" width="100">
+                <el-table-column prop="sort" label="排序" width="80" sortable  show-overflow-tooltip />
+                <el-table-column prop="create_time" label="发布时间" width="160" show-overflow-tooltip />
+                <el-table-column label="显示状态" width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="290" fixed="right">
+                <el-table-column label="操作" width="350" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" @click="openSignup(row)">报名列表</el-button>
@@ -165,9 +165,9 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="phone" label="手机号码" width="140" />
-                <el-table-column prop="signup_count" label="报名人数" width="100" align="center" />
-                <el-table-column prop="signup_time" label="报名时间" width="170" />
+                <el-table-column prop="phone" label="手机号码" width="120" show-overflow-tooltip />
+                <el-table-column prop="signup_count" label="报名人数" width="100" align="center" show-overflow-tooltip />
+                <el-table-column prop="signup_time" label="报名时间" width="160" show-overflow-tooltip />
                 <el-table-column prop="remark" label="备注" min-width="140" show-overflow-tooltip />
             </el-table>
             <template #footer>

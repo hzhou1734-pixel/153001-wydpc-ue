@@ -44,13 +44,13 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="desc" label="服务描述" min-width="180" show-overflow-tooltip />
-                <el-table-column prop="sort" label="排序" width="80" />
+                <el-table-column prop="sort" label="排序" width="80" show-overflow-tooltip />
                 <el-table-column label="状态" width="90">
                     <template #default="{ row }">
                         <el-switch v-model="row.status" :active-value="1" :inactive-value="0" @change="toggleStatus(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="150" fixed="right">
+                <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button size="small" @click="openEdit(row)">编辑</el-button>
                         <el-button size="small" type="danger" plain @click="handleDelete(row)">删除</el-button>

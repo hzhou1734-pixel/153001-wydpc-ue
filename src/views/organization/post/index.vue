@@ -54,7 +54,7 @@
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="120" fixed="right">
+                <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button
                             v-perms="['dept.jobs/edit']"

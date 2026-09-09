@@ -55,9 +55,9 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="phone" label="手机号码" width="130" />
+                <el-table-column prop="phone" label="手机号码" width="120" show-overflow-tooltip />
                 <el-table-column prop="building" label="楼栋" min-width="140" show-overflow-tooltip />
-                <el-table-column label="处理状态" width="100">
+                <el-table-column label="处理状态" width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="row.status === 1 ? 'success' : 'warning'">
                             {{ row.status === 1 ? '已处理' : '待处理' }}
@@ -70,14 +70,14 @@
                         <span v-else class="text-tx-secondary">—</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="提交时间" width="170" />
-                <el-table-column label="处理时间" width="170">
+                <el-table-column prop="create_time" label="提交时间" width="160" show-overflow-tooltip />
+                <el-table-column label="处理时间" width="160">
                     <template #default="{ row }">
                         <span v-if="row.handle_time">{{ row.handle_time }}</span>
                         <span v-else class="text-tx-secondary">—</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="180" fixed="right">
+                <el-table-column label="操作" width="170" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" :disabled="row.status === 1" @click="openHandle(row)">标记已处理</el-button>

@@ -33,7 +33,7 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column prop="id" label="帖子ID" width="90" />
+                <el-table-column prop="id" label="帖子ID" width="80" show-overflow-tooltip />
                 <el-table-column label="封面图" width="100">
                     <template #default="{ row }">
                         <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
@@ -53,8 +53,8 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="130" />
-                <el-table-column label="帖子状态" width="100">
+                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
+                <el-table-column label="帖子状态" width="90">
                     <template #default="{ row }">
                         <el-tooltip v-if="row.audit === 2" :content="row.audit_reason || '—'" placement="top">
                             <el-tag size="small" type="danger">已驳回</el-tag>
@@ -64,16 +64,16 @@
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="发布时间" width="170" />
-                <el-table-column label="审核时间" width="170">
+                <el-table-column prop="create_time" label="发布时间" width="160" show-overflow-tooltip />
+                <el-table-column label="审核时间" width="160">
                     <template #default="{ row }">{{ row.audit_time || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="显示状态" width="100">
+                <el-table-column label="显示状态" width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" :disabled="row.audit !== 1" @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="250" fixed="right">
+                <el-table-column label="操作" width="270" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" @click="openComment(row)">评论</el-button>
@@ -159,7 +159,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="content" label="评论内容" min-width="240" show-overflow-tooltip />
-                <el-table-column prop="create_time" label="评论时间" width="170" />
+                <el-table-column prop="create_time" label="评论时间" width="160" show-overflow-tooltip />
             </el-table>
             <template #footer>
                 <el-button @click="commentVisible = false">关闭</el-button>

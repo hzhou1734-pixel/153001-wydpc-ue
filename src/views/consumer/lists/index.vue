@@ -34,7 +34,7 @@
                         <el-avatar :src="row.avatar" :size="44" />
                     </template>
                 </el-table-column>
-                <el-table-column label="ID" prop="id" width="70" />
+                <el-table-column label="ID" prop="id" width="70" show-overflow-tooltip />
                 <el-table-column label="用户昵称" prop="nickname" min-width="110" />
                 <el-table-column label="手机号码" prop="mobile" min-width="130" />
                 <el-table-column label="所属小区" prop="community" min-width="150" />
@@ -63,7 +63,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="注册时间" prop="create_time" min-width="170" />
-                <el-table-column label="操作" width="100" fixed="right">
+                <el-table-column label="操作" width="120" fixed="right">
                     <template #default="{ row }">
                         <el-button type="primary" link>
                             <router-link

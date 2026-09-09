@@ -59,24 +59,24 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="手机号码" width="130">
+                <el-table-column label="手机号码" width="120">
                     <template #default="{ row }">{{ row.mobile || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="发布状态" width="100">
+                <el-table-column label="发布状态" width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="statusTag(row.status)">{{ statusText(row.status) }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="发布时间" width="170" />
-                <el-table-column label="审核时间" width="170">
+                <el-table-column prop="create_time" label="发布时间" width="160" show-overflow-tooltip />
+                <el-table-column label="审核时间" width="160">
                     <template #default="{ row }">{{ row.audit_time || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="显示状态" width="100">
+                <el-table-column label="显示状态" width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.is_show" :active-value="1" :inactive-value="0" :disabled="row.status !== 1" @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="210" fixed="right">
+                <el-table-column label="操作" width="270" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" :disabled="row.source !== 1" @click="openEdit(row)">编辑</el-button>

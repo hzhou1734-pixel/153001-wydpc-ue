@@ -33,11 +33,11 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="error" label="错误原因" min-width="120" />
-                <el-table-column prop="last_time" label="最后执行时间" width="180" />
+                <el-table-column prop="last_time" label="最后执行时间" width="160" show-overflow-tooltip />
                 <el-table-column prop="time" label="时长" min-width="100" />
                 <el-table-column prop="max_time" label="最大时长" min-width="100" />
 
-                <el-table-column label="操作" width="120" fixed="right">
+                <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <div class="flex">
                             <el-button type="primary" link>

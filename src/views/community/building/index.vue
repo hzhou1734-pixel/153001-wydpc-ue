@@ -311,8 +311,8 @@ onMounted(() => {
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="phone" label="联系电话" width="140" />
-                        <el-table-column label="操作" width="140" fixed="right">
+                        <el-table-column prop="phone" label="联系电话" width="120" show-overflow-tooltip />
+                        <el-table-column label="操作" width="130" fixed="right">
                             <template #default="{ row }">
                                 <el-button link type="primary" size="small" @click="openEdit(row)">编辑</el-button>
                                 <el-button link type="danger" size="small" @click="handleDelete(row)">删除</el-button>

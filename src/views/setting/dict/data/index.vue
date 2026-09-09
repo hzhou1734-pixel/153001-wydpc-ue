@@ -61,7 +61,7 @@
                         @selection-change="handleSelectionChange"
                     >
                         <el-table-column type="selection" width="55" />
-                        <el-table-column label="ID" prop="id" />
+                        <el-table-column label="ID" prop="id" show-overflow-tooltip />
                         <el-table-column label="数据名称" prop="name" min-width="120" />
                         <el-table-column label="数据值" prop="value" min-width="120" />
                         <el-table-column label="状态">
@@ -76,8 +76,8 @@
                             min-width="120"
                             show-tooltip-when-overflow
                         />
-                        <el-table-column label="排序" prop="sort" />
-                        <el-table-column label="操作" width="120" fixed="right">
+                        <el-table-column label="排序" prop="sort" show-overflow-tooltip />
+                        <el-table-column label="操作" width="130" fixed="right">
                             <template #default="{ row }">
                                 <el-button
                                     v-perms="['setting.dict.dict_data/edit']"

@@ -65,14 +65,14 @@
                 <el-table-column label="账单结算时间" min-width="170">
                     <template #default="{ row }">{{ row.settle_time || '-' }}</template>
                 </el-table-column>
-                <el-table-column label="账单状态" width="110">
+                <el-table-column label="账单状态" width="100">
                     <template #default="{ row }">
                         <el-tag size="small" :type="row.status === 1 ? 'success' : 'warning'">
                             {{ row.status === 1 ? '已结算' : '待结算' }}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="220" fixed="right">
+                <el-table-column label="操作" width="240" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">账单详情</el-button>
                         <el-button link type="success" @click="exportSingle(row)">导出明细</el-button>
@@ -132,7 +132,7 @@
                     <template #default="{ row }">¥{{ row.amount }}</template>
                 </el-table-column>
                 <el-table-column prop="pay_time" label="支付时间" min-width="170" />
-                <el-table-column prop="status_name" label="订单状态" width="100" />
+                <el-table-column prop="status_name" label="订单状态" width="90" show-overflow-tooltip />
             </el-table>
         </el-dialog>
     </div>
