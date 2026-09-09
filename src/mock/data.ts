@@ -190,9 +190,11 @@ export const hrList = [
 ]
 
 export const barList = [
-    { id: 1, title: '小区门口的路灯坏了三天了，谁来管管？', author: '张伟', community: '颐景园·江南里', views: 356, replies: 28, cover: 'https://picsum.photos/seed/ghj-bar-1/400/300', status: 1, create_time: daysAgo(1) },
-    { id: 2, title: '周末亲子活动照片分享，孩子们玩得很开心！', author: '李娜', community: '颐景园·江南里', views: 892, replies: 65, cover: 'https://picsum.photos/seed/ghj-bar-2/400/300', status: 1, create_time: daysAgo(3) },
-    { id: 3, title: '求推荐靠谱的家政保洁阿姨', author: '赵敏', community: '绿城·桂语江南', views: 234, replies: 41, cover: 'https://picsum.photos/seed/ghj-bar-3/400/300', status: 0, create_time: daysAgo(2) },
+    { id: 1, title: '小区门口的路灯坏了三天了，谁来管管？', author: '张伟', community: '颐景园·江南里', views: 356, replies: 28, cover: 'https://picsum.photos/seed/ghj-bar-1/400/300', status: 1, create_time: daysAgo(1), audit: 0, audit_reason: '', audit_time: '', content: '小区南门口的三盏路灯从上周五开始就不亮了，晚上回家那段路完全漆黑，已经有老人在台阶上差点摔倒。家里老人小孩每天出入都很不安全，希望物业尽快安排维修，也请大家留意出行安全。附上现场照片，位置就在南门岗亭到3号楼之间的路段。' },
+    { id: 2, title: '周末亲子活动照片分享，孩子们玩得很开心！', author: '李娜', community: '颐景园·江南里', views: 892, replies: 65, cover: 'https://picsum.photos/seed/ghj-bar-2/400/300', status: 1, create_time: daysAgo(3), audit: 1, audit_reason: '', audit_time: daysAgo(3), content: '上周六物业组织的亲子运动会太有意思了！拔河、两人三足、套圈圈，孩子们玩得不亦乐乎，我家娃回家路上一直念叨下次还要参加。感谢物业的精心组织，也谢谢各位志愿者业主的帮忙，照片分享给大家，欢迎下期多多报名~' },
+    { id: 3, title: '求推荐靠谱的家政保洁阿姨', author: '赵敏', community: '绿城·桂语江南', views: 234, replies: 41, cover: 'https://picsum.photos/seed/ghj-bar-3/400/300', status: 0, create_time: daysAgo(2), audit: 2, audit_reason: '内容涉及外部广告联系方式，不符合社区发帖规范', audit_time: daysAgo(2), content: '最近工作太忙，想找一位固定的家政保洁阿姨，每周来打扫两到三次，最好有经验、手脚麻利的。有推荐的朋友可以联系我，微信在此……' },
+    { id: 4, title: '5号楼电梯按钮面板脱落，已拍照报修', author: '王强', community: '颐景园·江南里', views: 128, replies: 12, cover: 'https://picsum.photos/seed/ghj-bar-4/400/300', status: 1, create_time: daysAgo(0), audit: 0, audit_reason: '', audit_time: '', content: '今天早上发现5号楼2单元的电梯按钮面板整个脱落挂在半空，小孩路过容易碰到，比较危险。已经拍照发到了物业���修群，请物业尽快派人来处理，也提醒邻居们乘坐电梯时注意安全。' },
+    { id: 5, title: '转让九成新婴儿床，同小区自提', author: '陈晓', community: '绿城·桂语江南', views: 86, replies: 9, cover: 'https://picsum.photos/seed/ghj-bar-5/400/300', status: 1, create_time: daysAgo(0), audit: 0, audit_reason: '', audit_time: '', content: '孩子长大了用不上，出一台九成新实木婴儿床，带床垫和蚊帐，原价1200元现400元转让，仅限同小区业主自提，可以先上门看货。有意向的邻居评论区留言或私信我。' },
 ]
 
 export const wonderfulList = [
