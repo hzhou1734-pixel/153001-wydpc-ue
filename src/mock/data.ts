@@ -198,9 +198,39 @@ export const barList = [
 ]
 
 export const wonderfulList = [
-    { id: 1, title: '社区重阳节敬老活动圆满举办', author: '物业宣传部', cover: 'https://picsum.photos/seed/ghj-wonderful-1/400/300', views: 1520, likes: 236, status: 1, create_time: daysAgo(5) },
-    { id: 2, title: '业主才艺大赛精彩回顾', author: '物业宣传部', cover: 'https://picsum.photos/seed/ghj-wonderful-2/400/300', views: 980, likes: 158, status: 1, create_time: daysAgo(10) },
-    { id: 3, title: '托管班孩子们的绘画作品展示', author: '周建国', cover: 'https://picsum.photos/seed/ghj-wonderful-3/400/300', views: 645, likes: 98, status: 0, create_time: daysAgo(15) },
+    {
+        id: 1,
+        title: '社区重阳节敬老活动圆满举办',
+        author: '物业宣传部',
+        cover: 'https://picsum.photos/seed/ghj-wonderful-1/400/300',
+        views: 1520,
+        likes: 236,
+        status: 1,
+        create_time: daysAgo(5),
+        content: `<h4>九九重阳，敬老情长</h4><p>10月11日上午，物业服务中心联合社区居委会在中心广场举办"重阳敬老·感恩相伴"主题活动，共有 120 余位老年业主参���。</p><p><img src="https://picsum.photos/seed/ghj-wonderful-1a/600/340" alt="重阳节敬老活动现场" style="max-width:100%;border-radius:8px;"/></p><h4>活动亮点回顾</h4><p>活动现场设置了免费健康义诊、理发服务、手工花艺三大体验区，社区文艺队为老人们带来了舞蹈《茉莉花》、戏曲联唱等精彩节目。</p><p>物业工作人员与志愿者一同为 30 位 80 岁以上老人送上重阳糕与鲜花，并入户走访慰问行动不便的高龄老人。</p><blockquote>尊老敬老是中华民族的传统美德，物业将把敬老活动做成常态，每月为老年业主提供一次便民服务日。</blockquote><p>感谢每一位参与活动的业主与志愿者，期待明年重阳再相聚！</p>`,
+    },
+    {
+        id: 2,
+        title: '业主才艺大赛精彩回顾',
+        author: '物业宣传部',
+        cover: 'https://picsum.photos/seed/ghj-wonderful-2/400/300',
+        views: 980,
+        likes: 158,
+        status: 1,
+        create_time: daysAgo(10),
+        content: `<h4>舞台属于每一位邻居</h4><p>上周六晚，"邻里之星"业主才艺大赛决赛在中心广场圆满落幕，16 组选手登台献艺，现场观众超过 400 人。</p><p><img src="https://picsum.photos/seed/ghj-wonderful-2a/600/340" alt="才艺大赛决赛现场" style="max-width:100%;border-radius:8px;"/></p><h4>获奖名单</h4><p>经过评委打分与业主现场投票，最终评出：</p><ul><li>一等奖：3 栋 李阿姨 —— 葫芦丝独奏《月光下的凤尾竹》</li><li>二等奖：7 栋 小宇家庭 —— 亲子合唱《听妈妈的话》</li><li>三等奖：12 栋 王先生 —— 魔术表演《奇幻瞬间》</li></ul><h4>温馨致谢</h4><p>感谢社区文艺志愿者团队全程协办，也感谢物业客服中心提供的音响舞台支持。下一届才艺大赛预计明年春季举行，欢迎更多邻居报名参与！</p>`,
+    },
+    {
+        id: 3,
+        title: '托管班孩子们的绘画作品展示',
+        author: '周建国',
+        cover: 'https://picsum.photos/seed/ghj-wonderful-3/400/300',
+        views: 645,
+        likes: 98,
+        status: 0,
+        create_time: daysAgo(15),
+        content: `<h4>童心绘世界</h4><p>本期社区四点半托管班以"我的小区我的家"为主题，组织孩子们开展绘画创作，共收到作品 28 幅。</p><p><img src="https://picsum.photos/seed/ghj-wonderful-3a/600/340" alt="托管班儿童绘画作品" style="max-width:100%;border-radius:8px;"/></p><p>孩子们用画笔描绘了小区的花园、滑梯和一起玩耍的小伙伴，稚嫩的笔触里满是对生活的观察与热爱。</p><p>作品已在社区活动中心一楼展出一周，欢迎各位家长带娃前往参观，为喜欢的小作者点赞投票。</p>`,
+    },
 ]
 
 export const noticeList = [
