@@ -173,6 +173,88 @@ const submitRoom = () => {
     showRoom.value = false
 }
 
+// 编辑房号（复用新增房号的级联选择器模式）
+const showEdit = ref(false)
+const editForm = reactive({ id: 0 as any, community_id: '' as any, building_id: '' as any, unit_id: '' as any, name: '', owner: '', phone: '' })
+
+// 楼栋下拉（随所选小区联动）
+const editBuildingOptions = computed(() => treeData.value.filter((item: any) => item.community_id === editForm.community_id))
+// 单元下拉（随所选楼栋联动）
+const editUnitOptions = computed(() => {
+    const building = treeData.value.find((item: any) => item.id === editForm.building_id)
+    return building?.children || []
+})
+
+const openEdit = (row: any) => {
+    editForm.id = row.id
+    editForm.name = row.name
+    editForm.owner = row.owner === '-' ? '' : row.owner
+    editForm.phone = row.phone === '-' ? '' : row.phone
+    editForm.building_id = row.building_id
+    editForm.unit_id = row.unit_id
+    // 从楼栋反查所属小区
+    const building = treeData.value.find((item: any) => item.id === row.building_id)
+    editForm.community_id = building?.community_id || ''
+    showEdit.value = true
+}
+
+// 小区变化时清空楼栋/单元
+const onEditCommunityChange = () => {
+    editForm.building_id = ''
+    editForm.unit_id = ''
+}
+
+// 楼栋变化时清空单元
+const onEditBuildingChange = () => {
+    editForm.unit_id = ''
+}
+
+const submitEdit = () => {
+    if (!editForm.community_id) {
+        ElMessage.warning('请选择所属小区')
+        return
+    }
+    if (!editForm.building_id) {
+        ElMessage.warning('请选择所属楼栋')
+        return
+    }
+    if (!editForm.unit_id) {
+        ElMessage.warning('请选择所属单元')
+        return
+    }
+    if (!editForm.name) {
+        ElMessage.warning('请输入房号')
+        return
+    }
+    const target = roomList.value.find((item: any) => item.id === editForm.id)
+    if (!target) {
+        ElMessage.error('房号不存在或已被删除')
+        return
+    }
+    target.name = editForm.name
+    target.unit_id = editForm.unit_id
+    target.building_id = editForm.building_id
+    target.owner = editForm.owner || '-'
+    target.phone = editForm.phone || '-'
+    ElMessage.success('修改成功')
+    showEdit.value = false
+}
+
+// 删除房号
+const handleDelete = (row: any) => {
+    ElMessageBox.confirm(`确定删除房号「${row.name}」吗？删除后不可恢复`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    })
+        .then(() => {
+            const index = roomList.value.findIndex((item: any) => item.id === row.id)
+            if (index > -1) roomList.value.splice(index, 1)
+            ElMessage.success('删除成功')
+        })
+        .catch(() => {})
+}
+
 onMounted(() => {
     getTree()
     getRooms()
@@ -232,8 +314,8 @@ onMounted(() => {
                         <el-table-column prop="phone" label="联系电话" width="140" />
                         <el-table-column label="操作" width="140" fixed="right">
                             <template #default="{ row }">
-                                <el-button link type="primary" size="small">编辑</el-button>
-                                <el-button link type="danger" size="small">删除</el-button>
+                                <el-button link type="primary" size="small" @click="openEdit(row)">编辑</el-button>
+                                <el-button link type="danger" size="small" @click="handleDelete(row)">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -302,6 +384,40 @@ onMounted(() => {
             <template #footer>
                 <el-button @click="showRoom = false">取消</el-button>
                 <el-button type="primary" @click="submitRoom">确定</el-button>
+            </template>
+        </el-dialog>
+
+        <!-- 编辑房号弹窗 -->
+        <el-dialog v-model="showEdit" title="编辑房号" width="460px">
+            <el-form label-width="80px">
+                <el-form-item label="所属小区" required>
+                    <el-select v-model="editForm.community_id" placeholder="请选择小区" class="!w-full" @change="onEditCommunityChange">
+                        <el-option v-for="item in communityOptions" :key="item.id" :label="item.name" :value="item.id" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="所属楼栋" required>
+                    <el-select v-model="editForm.building_id" placeholder="请选择楼栋" class="!w-full" @change="onEditBuildingChange">
+                        <el-option v-for="item in editBuildingOptions" :key="item.id" :label="item.name" :value="item.id" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="所属单元" required>
+                    <el-select v-model="editForm.unit_id" placeholder="请选择单元" class="!w-full">
+                        <el-option v-for="item in editUnitOptions" :key="item.id" :label="item.name" :value="item.id" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="房号" required>
+                    <el-input v-model="editForm.name" placeholder="如：101" />
+                </el-form-item>
+                <el-form-item label="业主">
+                    <el-input v-model="editForm.owner" placeholder="业主姓名（选填）" />
+                </el-form-item>
+                <el-form-item label="联系电话">
+                    <el-input v-model="editForm.phone" placeholder="业主联系电话（选填）" />
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="showEdit = false">取消</el-button>
+                <el-button type="primary" @click="submitEdit">确定</el-button>
             </template>
         </el-dialog>
     </div>

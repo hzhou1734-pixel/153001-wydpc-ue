@@ -18,5 +18,12 @@
 - scripts/release.mjs：build 后将 dist 复制到 ../server/public/admin
 - .gitignore 已排除 node_modules、dist、.env.* 等
 
+## Mock 数据一致性约定（扩充数据时必须遵守）
+- `roomList.certified === 1` ⟺ `certifyList.status === 1`（已通过）；`certified 0` ⟺ `status 0`（待审核）或无记录；`consumerList.certified` 需同步
+- 同一业主在 consumerList / roomList / certifyList 三张表中手机号必须完全一致
+- 楼栋 id 与单元 id 全局唯一：单元 id = 楼栋 id × 100 + 序号；颐景园 11栋/12栋因绿城已占用 id 11/12，改用 id 13/14
+- 手机号一律完整显示，禁止 **** 脱敏（v1.0.23 起）
+- 页数/栋数等统计值一律由 mock 数据实时计算，不硬编码（v1.0.19 起）
+
 ## 工作方式
 - 用户通过问答方式提出功能修改需求，AI 执行修改后自动提交推送
