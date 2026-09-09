@@ -95,9 +95,6 @@ export const permModules: PermModule[] = [
                 name: '陪诊服务',
                 perms: 'service.escort',
                 ops: [
-                    OP_ADD('新增服务'),
-                    OP_EDIT(),
-                    OP_DELETE(),
                     { key: 'setting', name: '单价设置' }
                 ]
             },
@@ -302,7 +299,6 @@ export const rolePerms: Record<number, string[]> = {
         'service.nursing/edit',
         'service.nursing/status',
         'service.escort/lists',
-        'service.escort/edit',
         'service.meal/lists',
         'service.meal/addDish',
         'service.meal/addCombo',
