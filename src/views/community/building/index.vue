@@ -40,9 +40,18 @@ const handleNodeClick = (data: any) => {
     currentUnit.value = data.type === 'unit' ? data : null
 }
 
+// 认证状态筛选：'' 全部 / '1' 已认证 / '0' 未认证
+const certFilter = ref('')
+
 const filteredRooms = computed(() => {
-    if (!currentUnit.value) return roomList.value
-    return roomList.value.filter((item: any) => item.unit_id === currentUnit.value.id)
+    let list = roomList.value
+    if (currentUnit.value) {
+        list = list.filter((item: any) => item.unit_id === currentUnit.value.id)
+    }
+    if (certFilter.value !== '') {
+        list = list.filter((item: any) => Number(item.certified) === Number(certFilter.value))
+    }
+    return list
 })
 
 // 楼栋下拉（供新增单元使用）
@@ -297,7 +306,14 @@ onMounted(() => {
                                 {{ currentUnit.name }}
                             </el-tag>
                         </span>
-                        <el-button size="small" type="primary" plain @click="openRoom">新增房号</el-button>
+                        <div class="flex items-center gap-2">
+                            <el-select v-model="certFilter" size="small" placeholder="认证状态" style="width: 120px">
+                                <el-option label="全部状态" value="" />
+                                <el-option label="已认证" value="1" />
+                                <el-option label="未认证" value="0" />
+                            </el-select>
+                            <el-button size="small" type="primary" plain @click="openRoom">新增房号</el-button>
+                        </div>
                     </div>
                     <el-table :data="filteredRooms" v-loading="roomLoading" border>
                         <el-table-column prop="name" label="房号" min-width="100" />
