@@ -143,13 +143,6 @@ onMounted(getInfo)
                         <el-table-column label="单元明细" min-width="160"><template #default="{ row }">{{ buildingUnitNames(row) }}</template></el-table-column>
                         <el-table-column label="登记房屋" min-width="100"><template #default="{ row }">{{ buildingRoomCount(row.id) }} 套</template></el-table-column>
                         <el-table-column label="已认证房屋" min-width="110"><template #default="{ row }">{{ buildingCertifiedCount(row.id) }} 套</template></el-table-column>
-                        <el-table-column label="维护状态" min-width="110">
-                            <template #default="{ row }">
-                                <el-tag :type="buildingRoomCount(row.id) ? 'success' : 'warning'">
-                                    {{ buildingRoomCount(row.id) ? '已维护' : '待完善' }}
-                                </el-tag>
-                            </template>
-                        </el-table-column>
                     </el-table>
                     <div class="text-tx-secondary text-xs mt-3">点击行首箭头可展开查看该楼栋各单元的房号、业主姓名与联系电话</div>
                 </el-tab-pane>
