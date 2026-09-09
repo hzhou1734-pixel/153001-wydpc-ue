@@ -36,6 +36,12 @@
                         </el-tag>
                     </template>
                 </el-table-column>
+                <el-table-column label="支付方式" width="100">
+                    <template #default="{ row }">
+                        <span>{{ row.pay_type || '—' }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="pay_time" label="支付时间" width="170" />
                 <el-table-column label="订单状态" width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="statusTag(row.status)">{{ statusText(row.status) }}</el-tag>
@@ -90,6 +96,8 @@
                 <el-descriptions-item label="陪诊员工">{{ detailRow.staff || '未派单' }}</el-descriptions-item>
                 <el-descriptions-item label="订单金额">¥{{ detailRow.amount }}</el-descriptions-item>
                 <el-descriptions-item label="支付状态">{{ detailRow.pay_status === 1 ? '已支付' : '未支付' }}</el-descriptions-item>
+                <el-descriptions-item label="支付方式">{{ detailRow.pay_type || '—' }}</el-descriptions-item>
+                <el-descriptions-item label="支付时间">{{ detailRow.pay_time || '—' }}</el-descriptions-item>
                 <el-descriptions-item label="订单状态">{{ statusText(detailRow.status) }}</el-descriptions-item>
                 <el-descriptions-item label="下单时间">{{ detailRow.create_time }}</el-descriptions-item>
             </el-descriptions>

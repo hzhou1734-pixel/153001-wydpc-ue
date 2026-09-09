@@ -20,6 +20,7 @@ import {
     wonderfulList,
     noticeList,
     activityList,
+    activitySignupList,
     helperList,
     bannerList,
     financeOverview,
@@ -121,6 +122,12 @@ export function getNoticeList(params?: Record<string, any>) {
 }
 export function getActivityList(params?: Record<string, any>) {
     return page(activityList, params)
+}
+export function getActivitySignupList(params?: Record<string, any>) {
+    let lists = activitySignupList
+    if (params?.activity_id) lists = lists.filter((item: any) => item.activity_id === Number(params.activity_id))
+    if (params?.keyword) lists = lists.filter((item: any) => item.nickname.includes(params.keyword) || item.room.includes(params.keyword))
+    return page(lists, params)
 }
 export function getHelperList(params?: Record<string, any>) {
     return page(helperList, params)

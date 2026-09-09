@@ -33,7 +33,7 @@ components.d.ts
 
 # .env
 .env.development
-.env.production
+# .env.production 已按需求纳入版本管理
 
 # 需求文档临时文件
 .tmp-req.txt

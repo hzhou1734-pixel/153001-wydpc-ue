@@ -35,16 +35,18 @@
         </template>
       </el-table-column>
       <el-table-column prop="create_time" label="创建时间" width="170" />
-      <el-table-column label="操作" width="170" fixed="right">
+      <el-table-column label="操作" width="260" fixed="right">
         <template #default="{ row }">
           <el-button link type="primary" @click="openDetail(row)">详情</el-button>
+          <el-button link type="primary" @click="openSignup(row)">报名</el-button>
+          <el-button v-if="row.signup_status === 1" link type="warning" @click="stopSignup(row)">停止报名</el-button>
           <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
           <el-button link type="danger" @click="removeRow(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="flex justify-end mt-4">
-      <el-pagination v-model:current-page="pager.page" v-model:page-size="pager.limit" :total="pager.total" layout="total, prev, pager, next" @current-change="getLists" />
+      <el-pagination v-model:current-page="pager.page" v-model:page-size="pager.size" :total="pager.count" layout="total, prev, pager, next" @current-change="getLists" />
     </div>
   </el-card>
 
@@ -55,6 +57,9 @@
       <el-descriptions-item label="开始时间">{{ current.start_time }}</el-descriptions-item>
       <el-descriptions-item label="状态">{{ current.status === 1 ? '进行中' : '已下架' }}</el-descriptions-item>
       <el-descriptions-item label="报名人数">{{ current.signup }}/{{ current.limit }} 人</el-descriptions-item>
+      <el-descriptions-item label="报名状态">
+        <el-tag :type="current.signup_status === 1 ? 'success' : 'info'" size="small">{{ current.signup_status === 1 ? '报名中' : '已停止报名' }}</el-tag>
+      </el-descriptions-item>
       <el-descriptions-item label="创建时间">{{ current.create_time }}</el-descriptions-item>
       <el-descriptions-item label="活动地点" :span="2">{{ current.address }}</el-descriptions-item>
       <el-descriptions-item label="封面" :span="2">
@@ -101,10 +106,40 @@
       <el-button type="primary" @click="saveEdit">确定</el-button>
     </template>
   </el-dialog>
+
+  <!-- 报名列表弹窗 -->
+  <el-dialog v-model="signupVisible" :title="`报名列表 - ${signupActivity.title || ''}`" width="820px" top="6vh">
+    <div class="flex items-center justify-between mb-3">
+      <el-input v-model="signupKeyword" placeholder="搜索昵称/房号" :prefix-icon="Search" clearable class="!w-60" @input="onSignupSearch" />
+      <el-tag :type="signupActivity.signup_status === 1 ? 'success' : 'info'" size="small">{{ signupActivity.signup_status === 1 ? '报名中' : '已停止报名' }}</el-tag>
+    </div>
+    <el-table :data="signupPager.lists" stripe max-height="440">
+      <el-table-column label="用户" min-width="150">
+        <template #default="{ row }">
+          <div class="flex items-center">
+            <el-avatar :size="28" :src="row.avatar" class="!mr-2" />
+            <span>{{ row.nickname }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="phone" label="联系电话" width="130" />
+      <el-table-column prop="room" label="房号" width="140" show-overflow-tooltip />
+      <el-table-column prop="signup_count" label="报名人数" width="90" align="center" />
+      <el-table-column prop="signup_time" label="报名时间" width="170" />
+      <el-table-column prop="remark" label="备注" min-width="120" show-overflow-tooltip />
+    </el-table>
+    <div class="flex justify-end mt-4">
+      <el-pagination v-model:current-page="signupPager.page" v-model:page-size="signupPager.size" :total="signupPager.count" layout="total, prev, pager, next" @current-change="getSignupLists" />
+    </div>
+    <template #footer>
+      <el-button v-if="signupActivity.signup_status === 1" type="warning" @click="stopSignup(signupActivity)">停止报名</el-button>
+      <el-button @click="signupVisible = false">关闭</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts" name="articleActivity">
-import { getActivityList } from '@/mock/api'
+import { getActivityList, getActivitySignupList } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 import { Search } from '@element-plus/icons-vue'
 import Editor from '@/components/editor/index.vue'
@@ -122,6 +157,37 @@ const filteredList = computed(() => {
 const percent = (row: any) => {
   if (!row.limit) return 0
   return Math.min(100, Math.round((row.signup / row.limit) * 100))
+}
+
+// 报名列表
+const signupVisible = ref(false)
+const signupActivity = ref<any>({})
+const signupKeyword = ref('')
+const signupPager = reactive({ page: 1, size: 10, count: 0, lists: [] as any[] })
+const getSignupLists = () => {
+  getActivitySignupList({ activity_id: signupActivity.value.id, keyword: signupKeyword.value.trim(), page_no: signupPager.page, page_size: signupPager.size }).then((res: any) => {
+    signupPager.lists = res.lists
+    signupPager.count = res.count
+  })
+}
+const onSignupSearch = () => {
+  signupPager.page = 1
+  getSignupLists()
+}
+const openSignup = (row: any) => {
+  signupActivity.value = row
+  signupKeyword.value = ''
+  signupPager.page = 1
+  signupVisible.value = true
+  getSignupLists()
+}
+const stopSignup = (row: any) => {
+  ElMessageBox.confirm(`确定停止「${row.title}」的报名吗？停止后用户将无法继续报名。`, '提示', { type: 'warning' })
+    .then(() => {
+      row.signup_status = 0
+      ElMessage.success('已停止报名')
+    })
+    .catch(() => {})
 }
 
 // 详情
@@ -195,6 +261,7 @@ const saveEdit = () => {
         id: Date.now(),
         views: 0,
         signup: 0,
+        signup_status: 1,
         limit: editForm.limit,
         title: editForm.title,
         address: editForm.address,
@@ -204,7 +271,7 @@ const saveEdit = () => {
         content: editForm.content,
         create_time: formatNow(),
       })
-      pager.total += 1
+      pager.count += 1
       ElMessage.success('添加成功')
     }
     editVisible.value = false

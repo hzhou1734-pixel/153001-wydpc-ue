@@ -159,27 +159,27 @@ export const mealServices = [
 
 // ==================== 订单 ====================
 export const nursingOrders = [
-    { id: 1001, sn: 'TG20260908001', user: '张伟', community: '颐景园·江南里', service: '全日托管', staff: '周建国', amount: '150.00', pay_status: 1, status: 2, create_time: daysAgo(0, ' 09:12:00') },
-    { id: 1002, sn: 'TG20260907002', user: '李娜', community: '颐景园·江南里', service: '半日托管（上午）', staff: '周建国', amount: '80.00', pay_status: 1, status: 3, create_time: daysAgo(1, ' 08:40:00') },
-    { id: 1003, sn: 'TG20260906003', user: '陈晨', community: '保利·天悦湾', service: '包月托管（工作日）', staff: '孙丽华', amount: '2600.00', pay_status: 1, status: 2, create_time: daysAgo(2, ' 16:05:00') },
-    { id: 1004, sn: 'TG20260905004', user: '刘洋', community: '万科·未来城三期', service: '全日托管', staff: '马长顺', amount: '150.00', pay_status: 0, status: 0, create_time: daysAgo(3, ' 11:30:00') },
-    { id: 1005, sn: 'TG20260904005', user: '王强', community: '颐景园·江南里', service: '半日托管（上午）', staff: '-', amount: '80.00', pay_status: 1, status: 1, create_time: daysAgo(4, ' 10:00:00') },
+    { id: 1001, sn: 'TG20260908001', user: '张伟', community: '颐景园·江南里', service: '全日托管', staff: '周建国', amount: '150.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 09:13:05'), status: 2, create_time: daysAgo(0, ' 09:12:00') },
+    { id: 1002, sn: 'TG20260907002', user: '李娜', community: '颐景园·江南里', service: '半日托管（上午）', staff: '周建国', amount: '80.00', pay_status: 1, pay_type: '余额支付', pay_time: daysAgo(1, ' 08:41:12'), status: 3, create_time: daysAgo(1, ' 08:40:00') },
+    { id: 1003, sn: 'TG20260906003', user: '陈晨', community: '保利·天悦湾', service: '包月托管（工作日）', staff: '孙丽华', amount: '2600.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(2, ' 16:06:30'), status: 2, create_time: daysAgo(2, ' 16:05:00') },
+    { id: 1004, sn: 'TG20260905004', user: '刘洋', community: '万科·未来城三期', service: '全日托管', staff: '马长顺', amount: '150.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(3, ' 11:30:00') },
+    { id: 1005, sn: 'TG20260904005', user: '王强', community: '颐景园·江南里', service: '半日托管（上午）', staff: '-', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(4, ' 10:01:20'), status: 1, create_time: daysAgo(4, ' 10:00:00') },
 ]
 
 export const mealOrders = [
-    { id: 2001, sn: 'SC20260908001', user: '张伟', community: '颐景园·江南里', service: '红烧狮子头套餐×2', staff: '吴秀兰', amount: '44.00', pay_status: 1, status: 2, create_time: daysAgo(0, ' 10:45:00') },
-    { id: 2002, sn: 'SC20260907002', user: '李娜', community: '颐景园·江南里', service: '清蒸鲈鱼套餐×1', staff: '吴秀兰', amount: '28.00', pay_status: 1, status: 3, create_time: daysAgo(1, ' 11:20:00') },
-    { id: 2003, sn: 'SC20260906003', user: '赵敏', community: '绿城·桂语江南', service: '香菇滑鸡粥×1', staff: '-', amount: '15.00', pay_status: 1, status: 1, create_time: daysAgo(2, ' 17:35:00') },
-    { id: 2004, sn: 'SC20260905004', user: '陈晨', community: '保利·天悦湾', service: '杂粮饭套餐×3', staff: '吴秀兰', amount: '54.00', pay_status: 1, status: 3, create_time: daysAgo(3, ' 12:00:00') },
-    { id: 2005, sn: 'SC20260904005', user: '刘洋', community: '万科·未来城三期', service: '低糖营养早餐×2', staff: '-', amount: '20.00', pay_status: 0, status: 0, create_time: daysAgo(4, ' 07:50:00') },
+    { id: 2001, sn: 'SC20260908001', user: '张伟', community: '颐景园·江南里', service: '红烧狮子头套餐×2', staff: '吴秀兰', amount: '44.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 10:46:08'), status: 2, create_time: daysAgo(0, ' 10:45:00') },
+    { id: 2002, sn: 'SC20260907002', user: '李娜', community: '颐景园·江南里', service: '清蒸鲈鱼套餐×1', staff: '吴秀兰', amount: '28.00', pay_status: 1, pay_type: '余额支付', pay_time: daysAgo(1, ' 11:21:33'), status: 3, create_time: daysAgo(1, ' 11:20:00') },
+    { id: 2003, sn: 'SC20260906003', user: '赵敏', community: '绿城·桂语江南', service: '香菇滑鸡粥×1', staff: '-', amount: '15.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 17:36:10'), status: 1, create_time: daysAgo(2, ' 17:35:00') },
+    { id: 2004, sn: 'SC20260905004', user: '陈晨', community: '保利·天悦湾', service: '杂粮饭套餐×3', staff: '吴秀兰', amount: '54.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(3, ' 12:01:45'), status: 3, create_time: daysAgo(3, ' 12:00:00') },
+    { id: 2005, sn: 'SC20260904005', user: '刘洋', community: '万科·未来城三期', service: '低糖营养早餐×2', staff: '-', amount: '20.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(4, ' 07:50:00') },
 ]
 
 export const escortOrders = [
-    { id: 3001, sn: 'PZ20260908001', user: '陈晨', community: '保利·天悦湾', service: '专家门诊陪诊（时价）', staff: '郑海涛', hours: 3, amount: '540.00', pay_status: 1, status: 2, create_time: daysAgo(0, ' 08:00:00') },
-    { id: 3002, sn: 'PZ20260907002', user: '张伟', community: '颐景园·江南里', service: '普通门诊陪诊（时价）', staff: '郑海涛', hours: 2, amount: '240.00', pay_status: 1, status: 3, create_time: daysAgo(1, ' 09:15:00') },
-    { id: 3003, sn: 'PZ20260906003', user: '李娜', community: '颐景园·江南里', service: '普通门诊陪诊（时价）', staff: '-', hours: 0, amount: '240.00', pay_status: 1, status: 1, create_time: daysAgo(2, ' 14:40:00') },
-    { id: 3004, sn: 'PZ20260905004', user: '王强', community: '颐景园·江南里', service: '住院陪护（时价）', staff: '郑海涛', hours: 8, amount: '1600.00', pay_status: 1, status: 3, create_time: daysAgo(5, ' 19:00:00') },
-    { id: 3005, sn: 'PZ20260904005', user: '赵敏', community: '绿城·桂语江南', service: '专家门诊陪诊（时价）', staff: '-', hours: 0, amount: '540.00', pay_status: 0, status: 0, create_time: daysAgo(6, ' 20:10:00') },
+    { id: 3001, sn: 'PZ20260908001', user: '陈晨', community: '保利·天悦湾', service: '专家门诊陪诊（时价）', staff: '郑海涛', hours: 3, amount: '540.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 08:01:25'), status: 2, create_time: daysAgo(0, ' 08:00:00') },
+    { id: 3002, sn: 'PZ20260907002', user: '张伟', community: '颐景园·江南里', service: '普通门诊陪诊（时价）', staff: '郑海涛', hours: 2, amount: '240.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(1, ' 09:16:40'), status: 3, create_time: daysAgo(1, ' 09:15:00') },
+    { id: 3003, sn: 'PZ20260906003', user: '李娜', community: '颐景园·江南里', service: '普通门诊陪诊（时价）', staff: '-', hours: 0, amount: '240.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 14:41:15'), status: 1, create_time: daysAgo(2, ' 14:40:00') },
+    { id: 3004, sn: 'PZ20260905004', user: '王强', community: '颐景园·江南里', service: '住院陪护（时价）', staff: '郑海涛', hours: 8, amount: '1600.00', pay_status: 1, pay_type: '余额支付', pay_time: daysAgo(5, ' 19:01:02'), status: 3, create_time: daysAgo(5, ' 19:00:00') },
+    { id: 3005, sn: 'PZ20260904005', user: '赵敏', community: '绿城·桂语江南', service: '专家门诊陪诊（时价）', staff: '-', hours: 0, amount: '540.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(6, ' 20:10:00') },
 ]
 
 // ==================== 内容管理 ====================
@@ -276,6 +276,7 @@ export const activityList = [
         start_time: daysAgo(-5),
         address: '小区中心广场',
         status: 1,
+        signup_status: 1,
         create_time: daysAgo(3),
         content: '<h4>活动介绍</h4><p>花好月圆人团圆！中秋佳节来临之际，物业服务中心特举办<strong>「中秋游园会」</strong>主题活动，诚邀全体业主携家人朋友共度佳节，猜灯谜、赢好礼、赏明月！</p><h4>活动安排</h4><ul><li><strong>活动时间：</strong>本周六 18:30 - 21:00</li><li><strong>活动地点：</strong>小区中心广场（雨天移至架空层）</li><li><strong>报名方式：</strong>APP 内本页直接报名，或至物业服务中心前台登记</li><li><strong>报名截止：</strong>活动开始前 2 小时</li></ul><h4>活动亮点</h4><ul><li><strong>猜灯谜赢好礼：</strong>现场 200 条灯谜，猜中即可兑换月饼、毛巾、洗衣液等精美礼品</li><li><strong>亲子灯笼 DIY：</strong>免费提供手工材料，和孩子一起制作专属花灯</li><li><strong>中秋茶话会：</strong>品月饼、饮清茶，邻里相聚话家常</li><li><strong>幸运大抽奖：</strong>报名业主均可参与抽奖，一等奖为智能电饭煲一台</li></ul><h4>温馨提示</h4><p>现场设有签到处，请报名成功的业主凭<strong>报名成功截图</strong>签到领取号码牌；请照看好随行儿童，不要在人群密集处追逐打闹。</p><p style="text-align:center;"><img src="https://picsum.photos/seed/ghj-activity-1a/600/340" alt="中秋游园会" style="max-width:100%;border-radius:8px;" /></p><blockquote>咨询热线：0731-8888 6666（物业服务中心）</blockquote>',
     },
@@ -288,6 +289,7 @@ export const activityList = [
         start_time: daysAgo(-10),
         address: '社区服务站',
         status: 1,
+        signup_status: 1,
         create_time: daysAgo(5),
         content: '<h4>活动背景</h4><p>为提升社区老年居民的健康意识，物业联合<strong>市第三人民医院</strong>开展「健康义诊进社区」公益活动，多名资深医师现场坐诊，为业主提供免费健康咨询服务。</p><h4>义诊项目</h4><ul><li><strong>基础体检：</strong>血压、血糖、心率测量，建立个人健康档案</li><li><strong>内科问诊：</strong>常见慢性病（高血压、糖尿病等）用药咨询与调理建议</li><li><strong>骨科咨询：</strong>颈肩腰腿痛、骨质疏松等老年常见骨病问诊</li><li><strong>中医理疗：</strong>穴位贴敷、艾灸体验，中医体质辨识</li></ul><h4>参与须知</h4><ul><li>活动时间：下周三上午 8:30 - 11:30</li><li>活动地点：社区服务站一楼大厅</li><li>请携带身份证或医保卡，便于建档</li><li>建议空腹前往，可免费测量空腹血糖</li><li>65 岁以上老人可优先就诊，行动不便者可联系物业安排志愿者陪同</li></ul><p>名额有限（150 人），报满即止，请尽快通过 APP 报名。</p><blockquote>咨询电话：0731-8888 6666 转 3（社区服务站）</blockquote>',
     },
@@ -300,9 +302,31 @@ export const activityList = [
         start_time: daysAgo(2),
         address: '托管活动室',
         status: 0,
+        signup_status: 1,
         create_time: daysAgo(20),
         content: '<h4>课程介绍</h4><p>「周末亲子手工课」是社区四点半课堂系列品牌活动，本期为<strong>第 12 期</strong>，主题为「非遗竹编小船」，由专业手工老师带领孩子们感受传统竹编技艺的魅力。</p><h4>课程安排</h4><ul><li><strong>上课时间：</strong>周六下午 14:30 - 16:00</li><li><strong>上课地点：</strong>托管活动室（3 栋架空层）</li><li><strong>适合年龄：</strong>4 - 10 岁儿童，须家长陪同</li><li><strong>材料费用：</strong>免费（由社区活动经费支持）</li></ul><h4>课堂流程</h4><ul><li>14:30 - 14:45 签到入场，领取材料包</li><li>14:45 - 15:30 老师示范竹编技法，亲子协作制作</li><li>15:30 - 15:50 作品展示与合影</li><li>15:50 - 16:00 整理收纳，颁发「小小手艺人」贴纸</li></ul><h4>温馨提示</h4><p>本期名额已报满，感谢大家的热情参与！后续将继续开设新一期课程，请关注 APP 首页活动预告。已报名家庭如无法到场，请提前在 APP 取消报名，将名额留给其他家庭。</p><p style="text-align:center;"><img src="https://picsum.photos/seed/ghj-activity-3a/600/340" alt="亲子手工课" style="max-width:100%;border-radius:8px;" /></p><blockquote>课程咨询：0731-8888 6666 转 5（四点半课堂）</blockquote>',
     },
+]
+
+// ==================== 社区活动报名列表（按活动分组的报名用户） ====================
+export const activitySignupList = [
+    // 活动 1：中秋游园会
+    { id: 101, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', phone: '138****1001', room: '1栋1单元101', signup_count: 3, signup_time: daysAgo(2, ' 09:12:00'), remark: '一家三口参加' },
+    { id: 102, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李慧', phone: '139****3284', room: '2栋2单元802', signup_count: 2, signup_time: daysAgo(2, ' 10:35:00'), remark: '' },
+    { id: 103, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王建国', phone: '137****7656', room: '3栋1单元501', signup_count: 4, signup_time: daysAgo(1, ' 14:20:00'), remark: '带父母一起参加' },
+    { id: 104, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '刘芳', phone: '136****5012', room: '1栋2单元1103', signup_count: 2, signup_time: daysAgo(1, ' 16:48:00'), remark: '' },
+    { id: 105, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈明辉', phone: '135****8890', room: '5栋1单元201', signup_count: 1, signup_time: daysAgo(0, ' 08:05:00'), remark: '' },
+    { id: 106, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '赵秀英', phone: '134****3327', room: '4栋2单元604', signup_count: 2, signup_time: daysAgo(0, ' 11:30:00'), remark: '希望安排靠前座位' },
+    // 活动 2：老年健康义诊
+    { id: 201, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', phone: '133****6612', room: '2栋1单元301', signup_count: 1, signup_time: daysAgo(4, ' 09:40:00'), remark: '68岁，需测血糖' },
+    { id: 202, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周桂兰', phone: '132****9045', room: '3栋2单元1502', signup_count: 2, signup_time: daysAgo(4, ' 10:15:00'), remark: '' },
+    { id: 203, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-9/100/100', nickname: '吴建军', phone: '131****4478', room: '6栋1单元101', signup_count: 1, signup_time: daysAgo(3, ' 15:22:00'), remark: '颈肩腰腿痛咨询' },
+    { id: 204, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '130****2265', room: '5栋2单元903', signup_count: 3, signup_time: daysAgo(3, ' 17:50:00'), remark: '替父母报名' },
+    // 活动 3：周末亲子手工课
+    { id: 301, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-11/100/100', nickname: '林晓梅', phone: '159****7412', room: '1栋1单元202', signup_count: 2, signup_time: daysAgo(15, ' 20:10:00'), remark: '孩子5岁' },
+    { id: 302, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-12/100/100', nickname: '郑凯', phone: '158****3856', room: '2栋2单元1104', signup_count: 2, signup_time: daysAgo(14, ' 12:45:00'), remark: '' },
+    { id: 303, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '157****6690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(12, ' 18:30:00'), remark: '希望多开自然主题' },
+    { id: 304, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-14/100/100', nickname: '罗文杰', phone: '156****5033', room: '6栋2单元1301', signup_count: 2, signup_time: daysAgo(10, ' 09:55:00'), remark: '' },
 ]
 
 // ==================== 生活帮手（用户提交的生活帮助表单） ====================
