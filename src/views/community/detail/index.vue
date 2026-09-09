@@ -35,9 +35,9 @@ const certifiedOwners = computed(() => certifyList.filter((item: any) => item.co
 const communityUsers = computed(() => consumerList.filter((item: any) => item.community === detail.value.name))
 const communityStaff = computed(() => staffList.filter((item: any) => item.community === detail.value.name))
 const communityOrders = computed(() => [
-    ...nursingOrders.map((item) => ({ ...item, type: '托管服务' })),
-    ...mealOrders.map((item) => ({ ...item, type: '膳食服务' })),
-    ...escortOrders.map((item) => ({ ...item, type: '陪诊服务' })),
+    ...nursingOrders.map((item: any) => ({ ...item, type: '托管服务', user: item.nickname })),
+    ...mealOrders.map((item: any) => ({ ...item, type: '膳食服务', user: item.nickname, service: `${item.combo} ×${item.quantity}` })),
+    ...escortOrders.map((item: any) => ({ ...item, type: '陪诊服务', user: item.nickname })),
 ].filter((item) => item.community === detail.value.name))
 const communityNotices = computed(() => noticeList.filter((item: any) => item.status === 1))
 

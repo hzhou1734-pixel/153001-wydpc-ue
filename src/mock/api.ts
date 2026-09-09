@@ -154,14 +154,75 @@ export function saveDailyMenu(params?: Record<string, any>) {
 }
 
 // ============ 订单管理 ============
+/** 订单通用筛选：关键字（订单号/服务名称/昵称/手机号）、状态、支付状态、支付方式、下单/支付时间区间 */
+function filterOrders(lists: any[], params: Record<string, any> = {}) {
+    let result = lists
+    if (params?.keyword) {
+        const kw = String(params.keyword)
+        result = result.filter((i: any) =>
+            String(i.sn).includes(kw) ||
+            String(i.service || '').includes(kw) ||
+            String(i.combo || '').includes(kw) ||
+            String(i.nickname || '').includes(kw) ||
+            String(i.mobile || '').includes(kw)
+        )
+    }
+    if (params?.status !== '' && params?.status !== undefined && params?.status !== null) {
+        result = result.filter((i: any) => i.status === Number(params.status))
+    }
+    if (params?.pay_status !== '' && params?.pay_status !== undefined && params?.pay_status !== null) {
+        result = result.filter((i: any) => i.pay_status === Number(params.pay_status))
+    }
+    if (params?.pay_type) result = result.filter((i: any) => i.pay_type === params.pay_type)
+    if (params?.start_time) {
+        result = result.filter((i: any) => String(i.create_time).slice(0, 10) >= params.start_time)
+    }
+    if (params?.end_time) {
+        result = result.filter((i: any) => String(i.create_time).slice(0, 10) <= params.end_time)
+    }
+    if (params?.pay_start) {
+        result = result.filter((i: any) => i.pay_time && String(i.pay_time).slice(0, 10) >= params.pay_start)
+    }
+    if (params?.pay_end) {
+        result = result.filter((i: any) => i.pay_time && String(i.pay_time).slice(0, 10) <= params.pay_end)
+    }
+    if (params?.need_delivery !== '' && params?.need_delivery !== undefined && params?.need_delivery !== null) {
+        result = result.filter((i: any) => i.need_delivery === Number(params.need_delivery))
+    }
+    if (params?.building) result = result.filter((i: any) => i.building === params.building)
+    return result
+}
 export function getNursingOrderList(params?: Record<string, any>) {
-    return page(nursingOrders, params)
+    return page(filterOrders(nursingOrders, params), params)
 }
 export function getMealOrderList(params?: Record<string, any>) {
-    return page(mealOrders, params)
+    return page(filterOrders(mealOrders, params), params)
 }
 export function getEscortOrderList(params?: Record<string, any>) {
-    return page(escortOrders, params)
+    return page(filterOrders(escortOrders, params), params)
+}
+/** 当前时间文本 */
+function nowText() {
+    const d = new Date()
+    const p = (v: number) => String(v).padStart(2, '0')
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`
+}
+
+/** 派单：指派员工并推进订单状态 */
+export function dispatchOrder(params?: Record<string, any>) {
+    const { type, id, staff_id } = params || {}
+    const target = type === 'nursing' ? nursingOrders : type === 'meal' ? mealOrders : escortOrders
+    const order: any = target.find((i: any) => i.id === Number(id))
+    const staff: any = staffList.find((s: any) => s.id === Number(staff_id))
+    if (!order || !staff) return Promise.reject(new Error('订单或员工不存在'))
+    order.staff = staff.name
+    order.staff_id = staff.id
+    order.status = 2
+    order.logs = [
+        ...(order.logs || []),
+        { time: nowText(), content: `已派单给${staff.role} ${staff.name}`, operator: '物业管理员' }
+    ]
+    return Promise.resolve({ ...order })
 }
 
 // ============ 内容管理 ============

@@ -243,9 +243,9 @@ const userName = computed(() => consumerList.find((item) => item.id === userId)?
 const userOrders = computed(() => {
     if (!userName.value) return []
     const all = [
-        ...nursingOrders.filter((item: any) => item.user === userName.value).map((item: any) => ({ ...item, type_name: '托管服务' })),
-        ...mealOrders.filter((item: any) => item.user === userName.value).map((item: any) => ({ ...item, type_name: '膳食服务' })),
-        ...escortOrders.filter((item: any) => item.user === userName.value).map((item: any) => ({ ...item, type_name: '陪诊服务' })),
+        ...nursingOrders.filter((item: any) => item.nickname === userName.value).map((item: any) => ({ ...item, type_name: '托管服务' })),
+        ...mealOrders.filter((item: any) => item.nickname === userName.value).map((item: any) => ({ ...item, type_name: '膳食服务', service: `${item.combo} ×${item.quantity}` })),
+        ...escortOrders.filter((item: any) => item.nickname === userName.value).map((item: any) => ({ ...item, type_name: '陪诊服务' })),
     ]
     return all.sort((a: any, b: any) => (a.create_time < b.create_time ? 1 : -1))
 })

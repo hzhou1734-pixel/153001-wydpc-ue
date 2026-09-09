@@ -112,9 +112,9 @@ const userFinanceFlows = computed(() =>
 )
 const userOrders = computed(() => [
     ...nursingOrders.map((item) => ({ ...item, orderType: '托管服务' })),
-    ...mealOrders.map((item) => ({ ...item, orderType: '膳食服务' })),
+    ...mealOrders.map((item) => ({ ...item, orderType: '膳食服务', service: `${item.combo} ×${item.quantity}` })),
     ...escortOrders.map((item) => ({ ...item, orderType: '陪诊服务' })),
-].filter((item) => item.user === formData.nickname))
+].filter((item) => item.nickname === formData.nickname))
 
 const getDetails = async () => {
     const data = await getConsumerDetail({ id: route.query.id })
