@@ -59,7 +59,10 @@ export function getDashboardTodo() {
 
 // ============ 小区管理 ============
 export function getCommunityList(params?: Record<string, any>) {
-    return page(communityList, params)
+    let lists = communityList
+    if (params?.keyword) lists = lists.filter((item: any) => item.name.includes(params.keyword))
+    if (params?.address) lists = lists.filter((item: any) => item.address.includes(params.address))
+    return page(lists, params)
 }
 export function getBuildingTree() {
     return Promise.resolve(buildingTree)

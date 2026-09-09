@@ -33,4 +33,7 @@ components.d.ts
 
 # .env
 .env.development
-.env.production.tmp-req.txt
+.env.production
+
+# 需求文档临时文件
+.tmp-req.txt
