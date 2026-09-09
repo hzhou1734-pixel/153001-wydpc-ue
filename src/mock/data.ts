@@ -12,6 +12,14 @@ function daysAgo(n: number, time = ' 10:30:00') {
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}${time}`
 }
 
+/** 日期辅助：基于当前时间偏移 n 天（正数为未来） */
+function dateOffset(n: number) {
+    const d = new Date()
+    d.setDate(d.getDate() + n)
+    const pad = (v: number) => String(v).padStart(2, '0')
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
 // ==================== 小区 ====================
 export const communityList = [
     { id: 1, name: '颐景园·江南里', address: '杭州市西湖区文一西路 128 号', cover: 'https://picsum.photos/seed/ghj-community-1/400/300', buildings: 12, houses: 1286, certified: 986, users: 1523, staff_count: 42, tuoguan_orders: 36, shanshi_orders: 58, peizhen_orders: 24, status: 1, create_time: daysAgo(320) },
@@ -318,6 +326,24 @@ export const mealServices = [
     { id: 5, name: '低糖营养早餐', category: '早餐', price: '10.00', spec: '豆浆 + 包子 + 鸡蛋', vendor: '社区食堂', cover: 'https://picsum.photos/seed/ghj-meal-5/400/300', status: 0, sort: 5 },
 ]
 
+/** 膳食套餐组合：按组合固定价售卖（如选 ABC 一个价、选 BCD 另一个价） */
+export const mealCombos = [
+    { id: 1, name: 'ABC 经典午餐组合', dish_ids: [1, 2, 3], price: '55.00', status: 1, sort: 1, update_time: daysAgo(0, ' 07:30:00') },
+    { id: 2, name: '双荤商务午餐组合', dish_ids: [1, 2], price: '45.00', status: 1, sort: 2, update_time: daysAgo(1, ' 07:10:00') },
+    { id: 3, name: '清淡养身晚餐组合', dish_ids: [3, 4], price: '28.00', status: 1, sort: 3, update_time: daysAgo(1, ' 16:40:00') },
+    { id: 4, name: '早餐 + 午餐全天组合', dish_ids: [5, 1], price: '29.00', status: 1, sort: 4, update_time: daysAgo(2, ' 06:50:00') },
+    { id: 5, name: '全日三餐组合', dish_ids: [5, 2, 4], price: '52.00', status: 0, sort: 5, update_time: daysAgo(3, ' 08:20:00') },
+    { id: 6, name: '低糖轻食组合', dish_ids: [4, 5], price: '24.00', status: 1, sort: 6, update_time: daysAgo(4, ' 09:05:00') },
+]
+
+/** 每日菜单：按日期配置当天供应的套餐组合 */
+export const dailyMenus = [
+    { date: dateOffset(0), combo_ids: [1, 2, 3] },
+    { date: dateOffset(1), combo_ids: [1, 3, 4, 6] },
+    { date: dateOffset(-1), combo_ids: [2, 3, 5] },
+    { date: dateOffset(-2), combo_ids: [1, 4] },
+]
+
 // ==================== 订单 ====================
 export const nursingOrders = [
     { id: 1001, sn: 'TG20260908001', user: '张伟', community: '颐景园·江南里', service: '日托·9月第一期', staff: '周建国', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 09:13:05'), status: 2, create_time: daysAgo(0, ' 09:12:00') },
@@ -328,11 +354,11 @@ export const nursingOrders = [
 ]
 
 export const mealOrders = [
-    { id: 2001, sn: 'SC20260908001', user: '张伟', community: '颐景园·江南里', service: '红烧狮子头套餐×2', staff: '吴秀兰', amount: '44.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 10:46:08'), status: 2, create_time: daysAgo(0, ' 10:45:00') },
-    { id: 2002, sn: 'SC20260907002', user: '李娜', community: '颐景园·江南里', service: '清蒸鲈鱼套餐×1', staff: '吴秀兰', amount: '28.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 11:21:33'), status: 3, create_time: daysAgo(1, ' 11:20:00') },
-    { id: 2003, sn: 'SC20260906003', user: '赵敏', community: '绿城·桂语江南', service: '香菇滑鸡粥×1', staff: '-', amount: '15.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 17:36:10'), status: 1, create_time: daysAgo(2, ' 17:35:00') },
-    { id: 2004, sn: 'SC20260905004', user: '陈晨', community: '保利·天悦湾', service: '杂粮饭套餐×3', staff: '吴秀兰', amount: '54.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(3, ' 12:01:45'), status: 3, create_time: daysAgo(3, ' 12:00:00') },
-    { id: 2005, sn: 'SC20260904005', user: '刘洋', community: '万科·未来城三期', service: '低糖营养早餐×2', staff: '-', amount: '20.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(4, ' 07:50:00') },
+    { id: 2001, sn: 'SC20260908001', user: '张伟', community: '颐景园·江南里', service: 'ABC 经典午餐组合×1', staff: '吴秀兰', amount: '55.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 10:46:08'), status: 2, create_time: daysAgo(0, ' 10:45:00') },
+    { id: 2002, sn: 'SC20260907002', user: '李娜', community: '颐景园·江南里', service: '双荤商务午餐组合×1', staff: '吴秀兰', amount: '45.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 11:21:33'), status: 3, create_time: daysAgo(1, ' 11:20:00') },
+    { id: 2003, sn: 'SC20260906003', user: '赵敏', community: '绿城·桂语江南', service: '清淡养身晚餐组合×1', staff: '-', amount: '28.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 17:36:10'), status: 1, create_time: daysAgo(2, ' 17:35:00') },
+    { id: 2004, sn: 'SC20260905004', user: '陈晨', community: '保利·天悦湾', service: '全日三餐组合×1', staff: '吴秀兰', amount: '52.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(3, ' 12:01:45'), status: 3, create_time: daysAgo(3, ' 12:00:00') },
+    { id: 2005, sn: 'SC20260904005', user: '刘洋', community: '万科·未来城三期', service: '低糖轻食组合×2', staff: '-', amount: '48.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(4, ' 07:50:00') },
 ]
 
 export const escortOrders = [

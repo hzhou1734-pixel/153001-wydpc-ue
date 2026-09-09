@@ -13,6 +13,8 @@ import {
     escortServices,
     escortPriceSetting,
     mealServices,
+    mealCombos,
+    dailyMenus,
     nursingOrders,
     mealOrders,
     escortOrders,
@@ -132,6 +134,23 @@ export function saveEscortPriceSetting(params?: Record<string, any>) {
 }
 export function getMealServiceList(params?: Record<string, any>) {
     return page(mealServices, params)
+}
+/** 膳食套餐组合（固定组合价） */
+export function getMealComboList(params?: Record<string, any>) {
+    return page(mealCombos, params)
+}
+/** 每日菜单：查询某日供应的套餐组合 */
+export function getDailyMenu(params?: Record<string, any>) {
+    const item = dailyMenus.find((row: any) => row.date === params?.date)
+    return Promise.resolve({ date: params?.date, combo_ids: item ? [...item.combo_ids] : [] })
+}
+/** 每日菜单：保存某日供应的套餐组合 */
+export function saveDailyMenu(params?: Record<string, any>) {
+    const idx = dailyMenus.findIndex((row: any) => row.date === params?.date)
+    const record = { date: params?.date, combo_ids: params?.combo_ids || [] }
+    if (idx > -1) dailyMenus[idx] = record
+    else dailyMenus.unshift(record)
+    return Promise.resolve({ ...record })
 }
 
 // ============ 订单管理 ============
