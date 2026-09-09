@@ -14,11 +14,11 @@ function daysAgo(n: number, time = ' 10:30:00') {
 
 // ==================== 小区 ====================
 export const communityList = [
-    { id: 1, name: '颐景园·江南里', address: '杭州市西湖区文一西路 128 号', cover: 'https://picsum.photos/seed/ghj-community-1/400/300', buildings: 12, houses: 1286, certified: 986, users: 1523, status: 1, create_time: daysAgo(320) },
-    { id: 2, name: '绿城·桂语江南', address: '杭州市滨江区江南大道 88 号', cover: 'https://picsum.photos/seed/ghj-community-2/400/300', buildings: 9, houses: 968, certified: 742, users: 1105, status: 1, create_time: daysAgo(280) },
-    { id: 3, name: '保利·天悦湾', address: '杭州市拱墅区祥园路 56 号', cover: 'https://picsum.photos/seed/ghj-community-3/400/300', buildings: 15, houses: 1740, certified: 1210, users: 1892, status: 1, create_time: daysAgo(240) },
-    { id: 4, name: '万科·未来城三期', address: '杭州市余杭区未来科技城海曙路 8 号', cover: 'https://picsum.photos/seed/ghj-community-4/400/300', buildings: 18, houses: 2106, certified: 1580, users: 2247, status: 1, create_time: daysAgo(200) },
-    { id: 5, name: '融创·金成府', address: '杭州市萧山区博学路 66 号', cover: 'https://picsum.photos/seed/ghj-community-5/400/300', buildings: 7, houses: 642, certified: 415, users: 688, status: 0, create_time: daysAgo(150) },
+    { id: 1, name: '颐景园·江南里', address: '杭州市西湖区文一西路 128 号', cover: 'https://picsum.photos/seed/ghj-community-1/400/300', buildings: 12, houses: 1286, certified: 986, users: 1523, staff_count: 42, tuoguan_orders: 36, shanshi_orders: 58, peizhen_orders: 24, status: 1, create_time: daysAgo(320) },
+    { id: 2, name: '绿城·桂语江南', address: '杭州市滨江区江南大道 88 号', cover: 'https://picsum.photos/seed/ghj-community-2/400/300', buildings: 9, houses: 968, certified: 742, users: 1105, staff_count: 28, tuoguan_orders: 22, shanshi_orders: 41, peizhen_orders: 15, status: 1, create_time: daysAgo(280) },
+    { id: 3, name: '保利·天悦湾', address: '杭州市拱墅区祥园路 56 号', cover: 'https://picsum.photos/seed/ghj-community-3/400/300', buildings: 15, houses: 1740, certified: 1210, users: 1892, staff_count: 55, tuoguan_orders: 48, shanshi_orders: 76, peizhen_orders: 33, status: 1, create_time: daysAgo(240) },
+    { id: 4, name: '万科·未来城三期', address: '杭州市余杭区未来科技城海曙路 8 号', cover: 'https://picsum.photos/seed/ghj-community-4/400/300', buildings: 18, houses: 2106, certified: 1580, users: 2247, staff_count: 68, tuoguan_orders: 65, shanshi_orders: 92, peizhen_orders: 47, status: 1, create_time: daysAgo(200) },
+    { id: 5, name: '融创·金成府', address: '杭州市萧山区博学路 66 号', cover: 'https://picsum.photos/seed/ghj-community-5/400/300', buildings: 7, houses: 642, certified: 415, users: 688, staff_count: 16, tuoguan_orders: 8, shanshi_orders: 12, peizhen_orders: 5, status: 0, create_time: daysAgo(150) },
 ]
 
 // ==================== 楼栋房号（二级树） ====================
