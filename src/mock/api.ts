@@ -25,6 +25,7 @@ import {
     activityList,
     activitySignupList,
     helperList,
+    barComments,
     bannerList,
     financeOverview,
     financeFlow,
@@ -226,20 +227,108 @@ export function dispatchOrder(params?: Record<string, any>) {
 }
 
 // ============ 内容管理 ============
+/** 取日期部分 YYYY-MM-DD，空值视为不参与区间筛选 */
+const dayOf = (v: any) => String(v || '').slice(0, 10)
+
+/** 通用关键字 + 状态 + 时间区间筛选 */
+function filterList<T>(lists: T[], params: Record<string, any> = {}, opts: {
+    keywordFields?: string[]
+    statusField?: string
+    timeField?: string
+    startTimeKey?: string
+    endTimeKey?: string
+    extra?: (item: any, params: Record<string, any>) => boolean
+} = {}) {
+    let result: any[] = lists as any[]
+    const kw = String(params.keyword || '').trim()
+    if (kw && opts.keywordFields?.length) {
+        result = result.filter((item: any) =>
+            opts.keywordFields!.some((f) => String(item[f] ?? '').includes(kw))
+        )
+    }
+    const statusField = opts.statusField || 'status'
+    if (params.status !== '' && params.status !== undefined && params.status !== null) {
+        result = result.filter((item: any) => Number(item[statusField]) === Number(params.status))
+    }
+    const timeField = opts.timeField || 'create_time'
+    if (params.start_time) {
+        result = result.filter((item: any) => {
+            const day = dayOf(item[timeField])
+            return day && day >= params.start_time
+        })
+    }
+    if (params.end_time) {
+        result = result.filter((item: any) => {
+            const day = dayOf(item[timeField])
+            return day && day <= params.end_time
+        })
+    }
+    if (opts.extra) result = result.filter((item: any) => opts.extra!(item, params))
+    return result as T[]
+}
+
+/** 人力资源：标题 / 昵称 / 手机号 搜索；发布状态、发布时间、审核时间筛选 */
 export function getHrList(params?: Record<string, any>) {
-    return page(hrList, params)
+    const lists = filterList(hrList, params, {
+        keywordFields: ['title', 'nickname', 'mobile', 'account'],
+        statusField: 'status',
+        timeField: 'create_time',
+        extra: (item, p) => {
+            if (p.audit_start && !(dayOf(item.audit_time) && dayOf(item.audit_time) >= p.audit_start)) return false
+            if (p.audit_end && !(dayOf(item.audit_time) && dayOf(item.audit_time) <= p.audit_end)) return false
+            return true
+        },
+    })
+    return page(lists, params)
 }
+/** 社区贴吧：帖子ID / 标题 / 昵称 / 手机号 搜索；帖子状态、发布时间、审核时间筛选 */
 export function getBarList(params?: Record<string, any>) {
-    return page(barList, params)
+    const lists = filterList(barList, params, {
+        keywordFields: ['id', 'title', 'author', 'mobile'],
+        statusField: 'audit',
+        timeField: 'create_time',
+        extra: (item, p) => {
+            if (p.audit_start && !(dayOf(item.audit_time) && dayOf(item.audit_time) >= p.audit_start)) return false
+            if (p.audit_end && !(dayOf(item.audit_time) && dayOf(item.audit_time) <= p.audit_end)) return false
+            return true
+        },
+    })
+    return page(lists, params)
 }
+/** 帖子评论列表 */
+export function getBarCommentList(params?: Record<string, any>) {
+    const lists = barComments.filter((item: any) => !params?.post_id || item.post_id === Number(params.post_id))
+    return page(lists, params)
+}
+/** 精彩内容：文章ID / 标题 搜索；显示状态、添加时间筛选 */
 export function getWonderfulList(params?: Record<string, any>) {
-    return page(wonderfulList, params)
+    const lists = filterList(wonderfulList, params, { keywordFields: ['id', 'title'], statusField: 'status' })
+    return page(lists, params)
 }
+/** 社区通知：标题搜索；显示状态、添加时间筛选 */
 export function getNoticeList(params?: Record<string, any>) {
-    return page(noticeList, params)
+    const lists = filterList(noticeList, params, { keywordFields: ['title'], statusField: 'status' })
+    return page(lists, params)
 }
+/** 社区活动：标题搜索；活动状态（1报名中 2已结束）、发布时间筛选 */
 export function getActivityList(params?: Record<string, any>) {
-    return page(activityList, params)
+    const lists = filterList(activityList, params, {
+        keywordFields: ['title'],
+        extra: (item, p) => {
+            if (!p.activity_status) return true
+            const ended = activityEnded(item)
+            return Number(p.activity_status) === 2 ? ended : !ended
+        },
+    })
+    return page(lists, params)
+}
+/** 是否已结束：超过报名结束时间或已手动停止报名 */
+export function activityEnded(item: any) {
+    const today = new Date()
+    const pad = (v: number) => String(v).padStart(2, '0')
+    const todayStr = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`
+    if (item.signup_status === 0) return true
+    return !!(item.signup_end && item.signup_end < todayStr)
 }
 export function getActivitySignupList(params?: Record<string, any>) {
     let lists = activitySignupList
@@ -247,11 +336,26 @@ export function getActivitySignupList(params?: Record<string, any>) {
     if (params?.keyword) lists = lists.filter((item: any) => item.nickname.includes(params.keyword) || item.room.includes(params.keyword))
     return page(lists, params)
 }
+/** 生活帮手：昵称 / 手机号 / 处理人 搜索；类型、楼栋、处理状态、提交时间、处理时间筛选 */
 export function getHelperList(params?: Record<string, any>) {
-    return page(helperList, params)
+    const lists = filterList(helperList, params, {
+        keywordFields: ['nickname', 'phone', 'handler'],
+        statusField: 'status',
+        timeField: 'create_time',
+        extra: (item, p) => {
+            if (p.type && item.type !== p.type) return false
+            if (p.building && !String(item.building || '').startsWith(p.building)) return false
+            if (p.handle_start && !(dayOf(item.handle_time) && dayOf(item.handle_time) >= p.handle_start)) return false
+            if (p.handle_end && !(dayOf(item.handle_time) && dayOf(item.handle_time) <= p.handle_end)) return false
+            return true
+        },
+    })
+    return page(lists, params)
 }
+/** Banner 图：标题搜索；状态、添加时间筛选 */
 export function getBannerList(params?: Record<string, any>) {
-    return page(bannerList, params)
+    const lists = filterList(bannerList, params, { keywordFields: ['name'], statusField: 'status' })
+    return page(lists, params)
 }
 
 // ============ 财务管理 ============

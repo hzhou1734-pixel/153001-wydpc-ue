@@ -385,18 +385,163 @@ export const escortOrders = [
 ]
 
 // ==================== 内容管理 ====================
+/**
+ * 人力资源
+ * source：1=物业后台发布（展示发布账号、免审核、发布时间=审核时间、默认置顶）；2=用户发布（需审核）
+ * status 发布状态：0=待审核 1=已通过 2=已驳回
+ * is_show：1=显示 0=隐藏
+ */
 export const hrList = [
-    { id: 1, title: '急聘社区托管员（颐景园）', type: '招聘', salary: '4500-6000元/月', company: '顾好家物业', contact: '周经理', status: 1, create_time: daysAgo(2) },
-    { id: 2, title: '求职：有经验的住家保姆', type: '求职', salary: '期望6000元/月', company: '个人-刘阿姨', contact: '刘阿姨', status: 1, create_time: daysAgo(4) },
-    { id: 3, title: '社区食堂招配菜员2名', type: '招聘', salary: '3800元/月', company: '社区食堂', contact: '孙店长', status: 0, create_time: daysAgo(6) },
+    {
+        id: 1, title: '急聘社区托管员（颐景园·江南里）', source: 1, account: 'admin', avatar: 'https://picsum.photos/seed/ghj-admin-logo/100/100',
+        nickname: '物业管理员', mobile: '13800138000', status: 1, audit_reason: '', is_top: 1, is_show: 1, sort: 1,
+        create_time: daysAgo(2, ' 09:10:00'), audit_time: daysAgo(2, ' 09:10:00'),
+        content: '<h4>岗位职责</h4><p>负责社区四点半课堂、日托班儿童的看护与作业辅导，配合开展手工、绘画等兴趣活动。</p><ul><li>年龄 25-50 周岁，身体健康，有爱心耐心</li><li>有幼教、保育、托管从业经验者优先</li><li>工作时间：周一至周五 15:30-19:30</li><li>薪资：4500-6000 元/月，缴纳五险一金</li></ul><h4>报名方式</h4><p>请携带身份证及相关资格证书至颐景园物业服务中心面试，或致电 0731-8888 6666 转 2。</p>'
+    },
+    {
+        id: 2, title: '社区食堂诚聘配菜员 2 名', source: 1, account: 'jingli01', avatar: 'https://picsum.photos/seed/ghj-admin-logo/100/100',
+        nickname: '王经理', mobile: '13812340002', status: 1, audit_reason: '', is_top: 1, is_show: 1, sort: 2,
+        create_time: daysAgo(6, ' 14:20:00'), audit_time: daysAgo(6, ' 14:20:00'),
+        content: '<h4>岗位要求</h4><p>负责社区食堂食材择洗、切配与初加工，协助厨师完成出餐。</p><ul><li>有食堂或餐饮后厨工作经验，持健康证上岗</li><li>能适应早班（5:30-13:30）</li><li>薪资：3800 元/月 + 全勤奖</li></ul><p>工作地点：颐景园社区食堂（3 栋架空层旁）。</p>'
+    },
+    {
+        id: 3, title: '招聘钟点保洁（可兼职）', source: 1, account: 'admin', avatar: 'https://picsum.photos/seed/ghj-admin-logo/100/100',
+        nickname: '物业管理员', mobile: '13800138000', status: 1, audit_reason: '', is_top: 1, is_show: 0, sort: 3,
+        create_time: daysAgo(12, ' 10:05:00'), audit_time: daysAgo(12, ' 10:05:00'),
+        content: '<h4>工作内容</h4><p>负责小区公共区域楼道、电梯厅日常保洁，可按需承揽业主入户保洁订单。</p><ul><li>计件结算，多劳多得，日结</li><li>需自备基础清洁工具</li></ul>'
+    },
+    {
+        id: 4, title: '求职：8 年经验住家保姆，可做家常菜', source: 2, account: '', avatar: 'https://picsum.photos/seed/ghj-user-11/100/100',
+        nickname: '刘阿姨', mobile: '13912342011', status: 0, audit_reason: '', is_top: 0, is_show: 0, sort: 0,
+        create_time: daysAgo(0, ' 09:35:00'), audit_time: '',
+        content: '<h4>个人简介</h4><p>本人 48 岁，从事住家保姆 8 年，擅长家常菜、老人小孩照料，性格温和，不挑活。</p><ul><li>期望薪资：6000 元/月，月休 4 天</li><li>服务区域：颐景园及周边小区</li></ul>'
+    },
+    {
+        id: 5, title: '求职：退休教师，可入户作业辅导', source: 2, account: '', avatar: 'https://picsum.photos/seed/ghj-user-12/100/100',
+        nickname: '郑凯', mobile: '15812343856', status: 1, audit_reason: '', is_top: 0, is_show: 1, sort: 0,
+        create_time: daysAgo(3, ' 16:40:00'), audit_time: daysAgo(3, ' 17:20:00'),
+        content: '<h4>个人简介</h4><p>退休小学语文教师，从教 32 年，可上门辅导小学 1-6 年级语文、作文，也可接送托管。</p><ul><li>辅导时间：周一至周五晚间、周末全天</li><li>收费：80 元/小时</li></ul>'
+    },
+    {
+        id: 6, title: '求职：水电维修师傅，可接小区零活', source: 2, account: '', avatar: 'https://picsum.photos/seed/ghj-user-13/100/100',
+        nickname: '何雪', mobile: '15712346690', status: 2, audit_reason: '内容含外部联系方式与广告信息，不符合社区发布规范', is_top: 0, is_show: 0, sort: 0,
+        create_time: daysAgo(2, ' 11:20:00'), audit_time: daysAgo(2, ' 15:05:00'),
+        content: '<h4>个人简介</h4><p>专业水电维修 15 年，承接家庭水电改造、灯具安装、龙头更换，联系电话 1xxxxxxxxxx，随叫随到。</p>'
+    },
+    {
+        id: 7, title: '求职：钟点工，可做饭保洁', source: 2, account: '', avatar: 'https://picsum.photos/seed/ghj-user-14/100/100',
+        nickname: '罗文杰', mobile: '15612345033', status: 1, audit_reason: '', is_top: 0, is_show: 1, sort: 0,
+        create_time: daysAgo(5, ' 08:50:00'), audit_time: daysAgo(5, ' 10:15:00'),
+        content: '<h4>服务内容</h4><p>提供钟点保洁、买菜做饭服务，按小时计费 45 元/小时，服务颐景园、保利天悦湾片区。</p>'
+    },
+    {
+        id: 8, title: '求职：可接送小孩上下学', source: 2, account: '', avatar: 'https://picsum.photos/seed/ghj-user-15/100/100',
+        nickname: '孙悦', mobile: '13812341007', status: 0, audit_reason: '', is_top: 0, is_show: 0, sort: 0,
+        create_time: daysAgo(1, ' 20:15:00'), audit_time: '',
+        content: '<h4>服务说明</h4><p>本人住 2 栋，孩子在同校就读，可顺路接送 1-3 年级学生上下学，电动车已配儿童座椅。</p>'
+    },
 ]
 
+/**
+ * 社区贴吧
+ * audit 帖子状态：0=待审核 1=已通过 2=已驳回
+ * status：1=显示 0=隐藏
+ */
 export const barList = [
-    { id: 1, title: '小区门口的路灯坏了三天了，谁来管管？', author: '张伟', community: '颐景园·江南里', views: 356, replies: 28, cover: 'https://picsum.photos/seed/ghj-bar-1/400/300', status: 1, create_time: daysAgo(1), audit: 0, audit_reason: '', audit_time: '', content: '小区南门口的三盏路灯从上周五开始就不亮了，晚上回家那段路完全漆黑，已经有老人在台阶上差点摔倒。家里老人小孩每天出入都很不安全，希望物业尽快安排维修，也请大家留意出行安全。附上现场照片，位置就在南门岗亭到3号楼之间的路段。' },
-    { id: 2, title: '周末亲子活动照片分享，孩子们玩得很开心！', author: '李娜', community: '颐景园·江南里', views: 892, replies: 65, cover: 'https://picsum.photos/seed/ghj-bar-2/400/300', status: 1, create_time: daysAgo(3), audit: 1, audit_reason: '', audit_time: daysAgo(3), content: '上周六物业组织的亲子运动会太有意思了！拔河、两人三足、套圈圈，孩子们玩得不亦乐乎，我家娃回家路上一直念叨下次还要参加。感谢物业的精心组织，也谢谢各位志愿者业主的帮忙，照片分享给大家，欢迎下期多多报名~' },
-    { id: 3, title: '求推荐靠谱的家政保洁阿姨', author: '赵敏', community: '绿城·桂语江南', views: 234, replies: 41, cover: 'https://picsum.photos/seed/ghj-bar-3/400/300', status: 0, create_time: daysAgo(2), audit: 2, audit_reason: '内容涉及外部广告联系方式，不符合社区发帖规范', audit_time: daysAgo(2), content: '最近工作太忙，想找一位固定的家政保洁阿姨，每周来打扫两到三次，最好有经验、手脚麻利的。有推荐的朋友可以联系我，微信在此……' },
-    { id: 4, title: '5号楼电梯按钮面板脱落，已拍照报修', author: '王强', community: '颐景园·江南里', views: 128, replies: 12, cover: 'https://picsum.photos/seed/ghj-bar-4/400/300', status: 1, create_time: daysAgo(0), audit: 0, audit_reason: '', audit_time: '', content: '今天早上发现5号楼2单元的电梯按钮面板整个脱落挂在半空，小孩路过容易碰到，比较危险。已经拍照发到了物业报修群，请物业尽快派人来处理，也提醒邻居们乘坐电梯时注意安全。' },
-    { id: 5, title: '转让九成新婴儿床，同小区自提', author: '陈晨', community: '保利·天悦湾', views: 86, replies: 9, cover: 'https://picsum.photos/seed/ghj-bar-5/400/300', status: 1, create_time: daysAgo(0), audit: 0, audit_reason: '', audit_time: '', content: '孩子长大了用不上，出一台九成新实木婴儿床，带床垫和蚊帐，原价1200元现400元转让，仅限同小区业主自提，可以先上门看货。有意向的邻居评论区留言或私信我。' },
+    {
+        id: 1001, title: '小区门口的路灯坏了三天了，谁来管管？', author: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001',
+        community: '颐景园·江南里', views: 356, replies: 28, collects: 45, cover: 'https://picsum.photos/seed/ghj-bar-1/400/300',
+        status: 1, create_time: daysAgo(1, ' 20:12:00'), audit: 0, audit_reason: '', audit_time: '',
+        content: '小区南门口的三盏路灯从上周五开始就不亮了，晚上回家那段路完全漆黑，已经有老人在台阶上差点摔倒。家里老人小孩每天出入都很不安全，希望物业尽快安排维修，也请大家留意出行安全。附上现场照片，位置就在南门岗亭到3号楼之间的路段。',
+        logs: [
+            { time: daysAgo(1, ' 20:12:00'), content: '用户「张伟」发布帖子', operator: '张伟' },
+            { time: daysAgo(1, ' 20:12:05'), content: '进入待审核队列，等待物业审核', operator: '系统' },
+        ],
+    },
+    {
+        id: 1002, title: '周末亲子活动照片分享，孩子们玩得很开心！', author: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002',
+        community: '颐景园·江南里', views: 892, replies: 65, collects: 132, cover: 'https://picsum.photos/seed/ghj-bar-2/400/300',
+        status: 1, create_time: daysAgo(3, ' 15:30:00'), audit: 1, audit_reason: '', audit_time: daysAgo(3, ' 16:05:00'),
+        content: '上周六物业组织的亲子运动会太有意思了！拔河、两人三足、套圈圈，孩子们玩得不亦乐乎，我家娃回家路上一直念叨下次还要参加。感谢物业的精心组织，也谢谢各位志愿者业主的帮忙，照片分享给大家，欢迎下期多多报名~',
+        logs: [
+            { time: daysAgo(3, ' 15:30:00'), content: '用户「李娜」发布帖子', operator: '李娜' },
+            { time: daysAgo(3, ' 16:05:00'), content: '物业审核通过，帖子对外展示', operator: 'admin' },
+            { time: daysAgo(2, ' 09:20:00'), content: '帖子被 132 位邻居收藏', operator: '系统' },
+        ],
+    },
+    {
+        id: 1003, title: '求推荐靠谱的家政保洁阿姨', author: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003',
+        community: '绿城·桂语江南', views: 234, replies: 41, collects: 18, cover: 'https://picsum.photos/seed/ghj-bar-3/400/300',
+        status: 0, create_time: daysAgo(2, ' 10:45:00'), audit: 2, audit_reason: '内容涉及外部广告联系方式，不符合社区发帖规范', audit_time: daysAgo(2, ' 14:20:00'),
+        content: '最近工作太忙，想找一位固定的家政保洁阿姨，每周来打扫两到三次，最好有经验、手脚麻利的。有推荐的朋友可以联系我，微信在此……',
+        logs: [
+            { time: daysAgo(2, ' 10:45:00'), content: '用户「赵敏」发布帖子', operator: '赵敏' },
+            { time: daysAgo(2, ' 14:20:00'), content: '物业审核驳回：内容涉及外部广告联系方式，不符合社区发帖规范', operator: 'admin' },
+        ],
+    },
+    {
+        id: 1004, title: '5号楼电梯按钮面板脱落，已拍照报修', author: '王强', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004',
+        community: '颐景园·江南里', views: 128, replies: 12, collects: 7, cover: 'https://picsum.photos/seed/ghj-bar-4/400/300',
+        status: 1, create_time: daysAgo(0, ' 08:20:00'), audit: 0, audit_reason: '', audit_time: '',
+        content: '今天早上发现5号楼2单元的电梯按钮面板整个脱落挂在半空，小孩路过容易碰到，比较危险。已经拍照发到了物业报修群，请物业尽快派人来处理，也提醒邻居们乘坐电梯时注意安全。',
+        logs: [
+            { time: daysAgo(0, ' 08:20:00'), content: '用户「王强」发布帖子', operator: '王强' },
+            { time: daysAgo(0, ' 08:20:03'), content: '进入待审核队列，等待物业审核', operator: '系统' },
+        ],
+    },
+    {
+        id: 1005, title: '转让九成新婴儿床，同小区自提', author: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005',
+        community: '保利·天悦湾', views: 86, replies: 9, collects: 5, cover: 'https://picsum.photos/seed/ghj-bar-5/400/300',
+        status: 1, create_time: daysAgo(0, ' 19:40:00'), audit: 0, audit_reason: '', audit_time: '',
+        content: '孩子长大了用不上，出一台九成新实木婴儿床，带床垫和蚊帐，原价1200元现400元转让，仅限同小区业主自提，可以先上门看货。有意向的邻居评论区留言或私信我。',
+        logs: [
+            { time: daysAgo(0, ' 19:40:00'), content: '用户「陈晨」发布帖子', operator: '陈晨' },
+        ],
+    },
+    {
+        id: 1006, title: '地下车库充电桩建议增加两个', author: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006',
+        community: '万科·未来城三期', views: 312, replies: 37, collects: 66, cover: 'https://picsum.photos/seed/ghj-bar-6/400/300',
+        status: 1, create_time: daysAgo(4, ' 12:10:00'), audit: 1, audit_reason: '', audit_time: daysAgo(4, ' 14:35:00'),
+        content: '小区新能源车越来越多，地下车库现有 4 个充电桩经常排不上队，建议物业在 B1 层再增设 2 个快充桩，能够扫码支付最好。',
+        logs: [
+            { time: daysAgo(4, ' 12:10:00'), content: '用户「刘洋」发布帖子', operator: '刘洋' },
+            { time: daysAgo(4, ' 14:35:00'), content: '物业审核通过，帖子对外展示', operator: 'jingli01' },
+        ],
+    },
+    {
+        id: 1007, title: '【拼团】阳澄湖大闸蟹团购，10 只 188 元', author: '周杰', avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', mobile: '13812341008',
+        community: '颐景园·江南里', views: 41, replies: 3, collects: 0, cover: 'https://picsum.photos/seed/ghj-bar-7/400/300',
+        status: 0, create_time: daysAgo(1, ' 13:05:00'), audit: 2, audit_reason: '未经物业备案的商业团购推广，予以驳回', audit_time: daysAgo(1, ' 15:30:00'),
+        content: '阳澄湖大闸蟹产地直发，4 对 8 只礼盒装只要 188 元，加微信 xxxx 下单，满 20 单发车。',
+        logs: [
+            { time: daysAgo(1, ' 13:05:00'), content: '用户「周杰」发布帖子', operator: '周杰' },
+            { time: daysAgo(1, ' 15:30:00'), content: '物业审核驳回：未经物业备案的商业团购推广', operator: 'admin' },
+        ],
+    },
+    {
+        id: 1008, title: '感谢保洁阿姨帮我把掉落阳台的被子捡回来', author: '孙德福', avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', mobile: '13312346612',
+        community: '颐景园·江南里', views: 520, replies: 58, collects: 89, cover: 'https://picsum.photos/seed/ghj-bar-8/400/300',
+        status: 1, create_time: daysAgo(6, ' 09:00:00'), audit: 1, audit_reason: '', audit_time: daysAgo(6, ' 10:20:00'),
+        content: '昨天风大，晒在阳台的被子被吹到了楼下绿化带，3 栋的保洁吴阿姨看到后主动帮忙捡回来还送到家门口，真的非常感谢，为物业的贴心服务点赞！',
+        logs: [
+            { time: daysAgo(6, ' 09:00:00'), content: '用户「孙德福」发布帖子', operator: '孙德福' },
+            { time: daysAgo(6, ' 10:20:00'), content: '物业审核通过，帖子对外展示', operator: 'admin' },
+        ],
+    },
+]
+
+/** 社区贴吧-帖子评论 */
+export const barComments = [
+    { id: 1, post_id: 1001, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', content: '确实，我昨晚带娃走那边差点摔跤，希望能尽快修好。', create_time: daysAgo(1, ' 20:35:00') },
+    { id: 2, post_id: 1001, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '王强', content: '已经报修了，物业说明天上午安排电工来换灯管。', create_time: daysAgo(1, ' 21:02:00') },
+    { id: 3, post_id: 1001, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', content: '南门那段路确实该加两盏灯了，建议一并反映。', create_time: daysAgo(0, ' 08:15:00') },
+    { id: 4, post_id: 1002, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', content: '照片拍得真好，我家娃也上镜啦！', create_time: daysAgo(3, ' 16:40:00') },
+    { id: 5, post_id: 1002, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', content: '下期什么时候报名？我们也想参加。', create_time: daysAgo(2, ' 10:05:00') },
+    { id: 6, post_id: 1002, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', content: '物业这次活动组织得很用心，点赞。', create_time: daysAgo(2, ' 11:30:00') },
+    { id: 7, post_id: 1004, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', content: '刚才经过看了一下，已经贴上警示胶带了。', create_time: daysAgo(0, ' 09:12:00') },
+    { id: 8, post_id: 1006, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '赵敏', content: '同意，B1 层空位还很多，装两个不难。', create_time: daysAgo(4, ' 13:20:00') },
+    { id: 9, post_id: 1006, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周杰', content: '希望支持扫码支付，现在那个 APP 太难用了。', create_time: daysAgo(3, ' 19:45:00') },
+    { id: 10, post_id: 1008, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', content: '吴阿姨确实是热心人，上次也帮我收过快递。', create_time: daysAgo(6, ' 10:50:00') },
 ]
 
 export const wonderfulList = [
@@ -407,6 +552,7 @@ export const wonderfulList = [
         cover: 'https://picsum.photos/seed/ghj-wonderful-1/400/300',
         views: 1520,
         likes: 236,
+        sort: 1,
         status: 1,
         create_time: daysAgo(5),
         content: `<h4>九九重阳，敬老情长</h4><p>10月11日上午，物业服务中心联合社区居委会在中心广场举办"重阳敬老·感恩相伴"主题活动，共有 120 余位老年业主参加。</p><p><img src="https://picsum.photos/seed/ghj-wonderful-1a/600/340" alt="重阳节敬老活动现场" style="max-width:100%;border-radius:8px;"/></p><h4>活动亮点回顾</h4><p>活动现场设置了免费健康义诊、理发服务、手工花艺三大体验区，社区文艺队为老人们带来了舞蹈《茉莉花》、戏曲联唱等精彩节目。</p><p>物业工作人员与志愿者一同为 30 位 80 岁以上老人送上重阳糕与鲜花，并入户走访慰问行动不便的高龄老人。</p><blockquote>尊老敬老是中华民族的传统美德，物业将把敬老活动做成常态，每月为老年业主提供一次便民服务日。</blockquote><p>感谢每一位参与活动的业主与志愿者，期待明年重阳再相聚！</p>`,
@@ -418,6 +564,7 @@ export const wonderfulList = [
         cover: 'https://picsum.photos/seed/ghj-wonderful-2/400/300',
         views: 980,
         likes: 158,
+        sort: 2,
         status: 1,
         create_time: daysAgo(10),
         content: `<h4>舞台属于每一位邻居</h4><p>上周六晚，"邻里之星"业主才艺大赛决赛在中心广场圆满落幕，16 组选手登台献艺，现场观众超过 400 人。</p><p><img src="https://picsum.photos/seed/ghj-wonderful-2a/600/340" alt="才艺大赛决赛现场" style="max-width:100%;border-radius:8px;"/></p><h4>获奖名单</h4><p>经过评委打分与业主现场投票，最终评出：</p><ul><li>一等奖：3 栋 李阿姨 —— 葫芦丝独奏《月光下的凤尾竹》</li><li>二等奖：7 栋 小宇家庭 —— 亲子合唱《听妈妈的话》</li><li>三等奖：12 栋 王先生 —— 魔术表演《奇幻瞬间》</li></ul><h4>温馨致谢</h4><p>感谢社区文艺志愿者团队全程协办，也感谢物业客服中心提供的音响舞台支持。下一届才艺大赛预计明年春季举行，欢迎更多邻居报名参与！</p>`,
@@ -429,6 +576,7 @@ export const wonderfulList = [
         cover: 'https://picsum.photos/seed/ghj-wonderful-3/400/300',
         views: 645,
         likes: 98,
+        sort: 3,
         status: 0,
         create_time: daysAgo(15),
         content: `<h4>童心绘世界</h4><p>本期社区四点半托管班以"我的小区我的家"为主题，组织孩子们开展绘画创作，共收到作品 28 幅。</p><p><img src="https://picsum.photos/seed/ghj-wonderful-3a/600/340" alt="托管班儿童绘画作品" style="max-width:100%;border-radius:8px;"/></p><p>孩子们用画笔描绘了小区的花园、滑梯和一起玩耍的小伙伴，稚嫩的笔触里满是对生活的观察与热爱。</p><p>作品已在社区活动中心一楼展出一周，欢迎各位家长带娃前往参观，为喜欢的小作者点赞投票。</p>`,
@@ -442,6 +590,7 @@ export const noticeList = [
         type: '物业通知',
         is_top: 1,
         views: 2103,
+        sort: 1,
         status: 1,
         create_time: daysAgo(1),
         content: '<h4>停水检修安排</h4><p>因市政供水管网升级改造，本小区将于 <strong>9月10日（周四）09:00—17:00</strong> 暂停供水，进行二次供水泵房检修及水箱清洗消毒作业。</p><ul><li><strong>停水范围：</strong>小区全部楼栋（含商铺）</li><li><strong>预计恢复：</strong>9月10日 17:00 前逐步恢复</li><li><strong>施工影响：</strong>恢复供水初期可能出现短时水浑现象，请先放水 1-2 分钟后再使用</li></ul><h4>温馨提示</h4><p>请各位业主提前储水，关闭家中用水设备，避免恢复供水时跑水。独居老人及行动不便的住户如有用水需求，可联系物业服务中心，我们将安排专人送水上门。</p><blockquote>物业服务热线：0731-8888 6666（24小时）</blockquote>',
@@ -452,6 +601,7 @@ export const noticeList = [
         type: '活动通知',
         is_top: 0,
         views: 876,
+        sort: 2,
         status: 1,
         create_time: daysAgo(2),
         content: '<h4>月满中秋 · 情聚顾好家</h4><p>一年一度的中秋游园会来啦！物业服务中心联合社区居委会，为业主们准备了一场热闹纷呈的中秋游园活动，诚邀全体业主携家人共同参与。</p><ul><li><strong>活动时间：</strong>9月15日（中秋节）18:30—21:00</li><li><strong>活动地点：</strong>小区中心广场</li><li><strong>报名方式：</strong>APP「活动中心」在线报名，或至物业前台登记</li><li><strong>报名截止：</strong>9月14日 18:00</li></ul><h4>活动亮点</h4><p>猜灯谜赢好礼、DIY 冰皮月饼、儿童手绘灯笼、露天电影《月光宝盒》，还有中秋茶话会与抽奖环节，惊喜大奖为全年物业费 8 折券。</p><p><img src="https://picsum.photos/seed/ghj-notice-2a/600/340" alt="中秋游园会" style="max-width:100%;border-radius:8px;" /></p>',
@@ -462,6 +612,7 @@ export const noticeList = [
         type: '安全提示',
         is_top: 1,
         views: 3421,
+        sort: 3,
         status: 1,
         create_time: daysAgo(3),
         content: '<h4>台风动态</h4><p>据气象部门预报，今年第 14 号台风将于 9月6日至7日 影响本市，届时将出现<strong>大到暴雨，阵风 8-10 级</strong>。请各位业主提前做好防风防雨准备。</p><h4>防范措施</h4><ul><li>检查并关好门窗，收回阳台悬挂物、花盆及杂物，防止高空坠物</li><li>减少不必要的外出，远离广告牌、临时搭建物及大树</li><li>车辆请勿停放在低洼路段及大树旁，避免水淹与砸损</li><li>备好手电筒、饮用水等应急物品，谨防停水停电</li></ul><h4>物业值守</h4><p>台风期间物业将安排 24 小时应急值守，工程班组全员待命，如遇紧急情况请第一时间联系物业服务中心。</p><blockquote>应急值班电话：0731-8888 6666 转 9</blockquote>',
@@ -475,10 +626,13 @@ export const activityList = [
         cover: 'https://picsum.photos/seed/ghj-activity-1/400/300',
         signup: 186,
         limit: 300,
-        start_time: daysAgo(-5),
+        activity_time: '9月15日（中秋节）18:30-21:00',
+        signup_start: dateOffset(-3),
+        signup_end: dateOffset(4),
         address: '小区中心广场',
         status: 1,
         signup_status: 1,
+        sort: 1,
         create_time: daysAgo(3),
         content: '<h4>活动介绍</h4><p>花好月圆人团圆！中秋佳节来临之际，物业服务中心特举办<strong>「中秋游园会」</strong>主题活动，诚邀全体业主携家人朋友共度佳节，猜灯谜、赢好礼、赏明月！</p><h4>活动安排</h4><ul><li><strong>活动时间：</strong>本周六 18:30 - 21:00</li><li><strong>活动地点：</strong>小区中心广场（雨天移至架空层）</li><li><strong>报名方式：</strong>APP 内本页直接报名，或至物业服务中心前台登记</li><li><strong>报名截止：</strong>活动开始前 2 小时</li></ul><h4>活动亮点</h4><ul><li><strong>猜灯谜赢好礼：</strong>现场 200 条灯谜，猜中即可兑换月饼、毛巾、洗衣液等精美礼品</li><li><strong>亲子灯笼 DIY：</strong>免费提供手工材料，和孩子一起制作专属花灯</li><li><strong>中秋茶话会：</strong>品月饼、饮清茶，邻里相聚话家常</li><li><strong>幸运大抽奖：</strong>报名业主均可参与抽奖，一等奖为智能电饭煲一台</li></ul><h4>温馨提示</h4><p>现场设有签到处，请报名成功的业主凭<strong>报名成功截图</strong>签到领取号码牌；请照看好随行儿童，不要在人群密集处追逐打闹。</p><p style="text-align:center;"><img src="https://picsum.photos/seed/ghj-activity-1a/600/340" alt="中秋游园会" style="max-width:100%;border-radius:8px;" /></p><blockquote>咨询热线：0731-8888 6666（物业服务中心）</blockquote>',
     },
@@ -488,10 +642,13 @@ export const activityList = [
         cover: 'https://picsum.photos/seed/ghj-activity-2/400/300',
         signup: 92,
         limit: 150,
-        start_time: daysAgo(-10),
+        activity_time: '9月20日（周三）08:30-11:30',
+        signup_start: dateOffset(-6),
+        signup_end: dateOffset(2),
         address: '社区服务站',
         status: 1,
         signup_status: 1,
+        sort: 2,
         create_time: daysAgo(5),
         content: '<h4>活动背景</h4><p>为提升社区老年居民的健康意识，物业联合<strong>市第三人民医院</strong>开展「健康义诊进社区」公益活动，多名资深医师现场坐诊，为业主提供免费健康咨询服务。</p><h4>义诊项目</h4><ul><li><strong>基础体检：</strong>血压、血糖、心率测量，建立个人健康档案</li><li><strong>内科问诊：</strong>常见慢性病（高血压、糖尿病等）用药咨询与调理建议</li><li><strong>骨科咨询：</strong>颈肩腰腿痛、骨质疏松等老年常见骨病问诊</li><li><strong>中医理疗：</strong>穴位贴敷、艾灸体验，中医体质辨识</li></ul><h4>参与须知</h4><ul><li>活动时间：下周三上午 8:30 - 11:30</li><li>活动地点：社区服务站一楼大厅</li><li>请携带身份证或医保卡，便于建档</li><li>建议空腹前往，可免费测量空腹血糖</li><li>65 岁以上老人可优先就诊，行动不便者可联系物业安排志愿者陪同</li></ul><p>名额有限（150 人），报满即止，请尽快通过 APP 报名。</p><blockquote>咨询电话：0731-8888 6666 转 3（社区服务站）</blockquote>',
     },
@@ -501,12 +658,47 @@ export const activityList = [
         cover: 'https://picsum.photos/seed/ghj-activity-3/400/300',
         signup: 40,
         limit: 40,
-        start_time: daysAgo(2),
+        activity_time: '9月6日（周六）14:30-16:00',
+        signup_start: dateOffset(-25),
+        signup_end: dateOffset(-8),
         address: '托管活动室',
-        status: 0,
+        status: 1,
         signup_status: 1,
+        sort: 3,
         create_time: daysAgo(20),
         content: '<h4>课程介绍</h4><p>「周末亲子手工课」是社区四点半课堂系列品牌活动，本期为<strong>第 12 期</strong>，主题为「非遗竹编小船」，由专业手工老师带领孩子们感受传统竹编技艺的魅力。</p><h4>课程安排</h4><ul><li><strong>上课时间：</strong>周六下午 14:30 - 16:00</li><li><strong>上课地点：</strong>托管活动室（3 栋架空层）</li><li><strong>适合年龄：</strong>4 - 10 岁儿童，须家长陪同</li><li><strong>材料费用：</strong>免费（由社区活动经费支持）</li></ul><h4>课堂流程</h4><ul><li>14:30 - 14:45 签到入场，领取材料包</li><li>14:45 - 15:30 老师示范竹编技法，亲子协作制作</li><li>15:30 - 15:50 作品展示与合影</li><li>15:50 - 16:00 整理收纳，颁发「小小手艺人」贴纸</li></ul><h4>温馨提示</h4><p>本期名额已报满，感谢大家的热情参与！后续将继续开设新一期课程，请关注 APP 首页活动预告。已报名家庭如无法到场，请提前在 APP 取消报名，将名额留给其他家庭。</p><p style="text-align:center;"><img src="https://picsum.photos/seed/ghj-activity-3a/600/340" alt="亲子手工课" style="max-width:100%;border-radius:8px;" /></p><blockquote>课程咨询：0731-8888 6666 转 5（四点半课堂）</blockquote>',
+    },
+    {
+        id: 4,
+        title: '邻里跳蚤市场·闲置好物置换',
+        cover: 'https://picsum.photos/seed/ghj-activity-4/400/300',
+        signup: 68,
+        limit: 80,
+        activity_time: '9月18日（周日）09:00-12:00',
+        signup_start: dateOffset(-5),
+        signup_end: dateOffset(6),
+        address: '中心广场东侧步道',
+        status: 1,
+        signup_status: 0,
+        sort: 4,
+        create_time: daysAgo(1),
+        content: '<h4>活动介绍</h4><p>家里堆着的闲置物品别浪费！邻里跳蚤市场为大家提供线下置换摊位，书籍、玩具、小家电、母婴用品都可以拿来交换或低价转让。</p><h4>活动安排</h4><ul><li><strong>活动时间：</strong>9月18日（周日）09:00 - 12:00</li><li><strong>活动地点：</strong>中心广场东侧步道</li><li><strong>摊位数量：</strong>40 个（每个摊位免费提供一桌两椅）</li><li><strong>报名截止：</strong>9月17日 18:00</li></ul><blockquote>温馨提示：禁止销售食品、药品及三无产品，请邻里之间友好议价。</blockquote>',
+    },
+    {
+        id: 5,
+        title: '秋季业主羽毛球友谊赛',
+        cover: 'https://picsum.photos/seed/ghj-activity-5/400/300',
+        signup: 32,
+        limit: 32,
+        activity_time: '8月30日（周六）19:00-21:00',
+        signup_start: dateOffset(-40),
+        signup_end: dateOffset(-12),
+        address: '小区羽毛球馆',
+        status: 0,
+        signup_status: 1,
+        sort: 5,
+        create_time: daysAgo(45),
+        content: '<h4>赛事回顾</h4><p>本届友谊赛共 16 组选手参赛，经过小组循环与淘汰赛，最终由 5 栋代表队夺得冠军。</p><ul><li>冠军：5 栋代表队（奖品：羽毛球拍一套）</li><li>亚军：2 栋代表队</li><li>季军：3 栋代表队</li></ul><p>感谢各位业主的热情参与与志愿裁判的辛勤付出，明年春季赛再见！</p>',
     },
 ]
 
@@ -529,6 +721,13 @@ export const activitySignupList = [
     { id: 302, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-12/100/100', nickname: '郑凯', phone: '15812343856', room: '2栋2单元1104', signup_count: 2, signup_time: daysAgo(14, ' 12:45:00'), remark: '' },
     { id: 303, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(12, ' 18:30:00'), remark: '希望多开自然主题' },
     { id: 304, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-14/100/100', nickname: '罗文杰', phone: '15612345033', room: '6栋2单元1301', signup_count: 2, signup_time: daysAgo(10, ' 09:55:00'), remark: '' },
+    // 活动 4：邻里跳蚤市场
+    { id: 401, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-9/100/100', nickname: '吴秀兰', phone: '13912342218', room: '1栋2单元601', signup_count: 1, signup_time: daysAgo(1, ' 10:20:00'), remark: '转让儿童绘本' },
+    { id: 402, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '13012342265', room: '5栋2单元903', signup_count: 2, signup_time: daysAgo(1, ' 15:40:00'), remark: '要一个靠边摊位' },
+    { id: 403, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-11/100/100', nickname: '刘阿姨', phone: '13912342011', room: '3栋1单元202', signup_count: 1, signup_time: daysAgo(0, ' 09:05:00'), remark: '' },
+    // 活动 5：羽毛球友谊赛
+    { id: 501, activity_id: 5, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(38, ' 19:20:00'), remark: '混双报名' },
+    { id: 502, activity_id: 5, avatar: 'https://picsum.photos/seed/ghj-user-15/100/100', nickname: '孙悦', phone: '13812341007', room: '2栋2单元801', signup_count: 2, signup_time: daysAgo(37, ' 20:05:00'), remark: '' },
 ]
 
 // ==================== 生活帮手（用户提交的生活帮助表单） ====================
@@ -555,7 +754,7 @@ export const helperList = [
         phone: '13812341002',
         building: '1栋1单元102',
         status: 1,
-        handler: '管理员·陈晓',
+        handler: 'admin（物业管理员）',
         create_time: daysAgo(3, ' 14:40:00'),
         handle_time: daysAgo(2, ' 16:20:00'),
         images: ['https://picsum.photos/seed/ghj-helper-2a/600/400'],
@@ -569,7 +768,7 @@ export const helperList = [
         phone: '13812341003',
         building: '1栋1单元201',
         status: 1,
-        handler: '楼管·刘敏',
+        handler: 'jingli01（王经理）',
         create_time: daysAgo(5, ' 20:05:00'),
         handle_time: daysAgo(5, ' 21:10:00'),
         images: [],
@@ -597,7 +796,7 @@ export const helperList = [
         phone: '13812341005',
         building: '3栋2单元502',
         status: 1,
-        handler: '管理员·陈晓',
+        handler: 'admin（物业管理员）',
         create_time: daysAgo(7, ' 08:50:00'),
         handle_time: daysAgo(7, ' 10:05:00'),
         images: ['https://picsum.photos/seed/ghj-helper-5a/600/400'],
@@ -639,7 +838,7 @@ export const helperList = [
         phone: '13812341008',
         building: '3栋1单元404',
         status: 1,
-        handler: '楼管·刘敏',
+        handler: 'jingli01（王经理）',
         create_time: daysAgo(10, ' 16:10:00'),
         handle_time: daysAgo(9, ' 11:30:00'),
         images: ['https://picsum.photos/seed/ghj-helper-8a/600/400'],
@@ -751,7 +950,7 @@ export const dashboardTodo = [
     { id: 4, name: '待派单陪诊订单', count: 2, path: '/order/escort', perms: 'order.escort/lists' },
     { id: 5, name: '待结算账单', count: 1, path: '/finance/bill', perms: 'finance.bill/lists' },
     { id: 6, name: '待处理退款申请', count: 1, path: '/finance/flow', perms: 'finance.flow/lists' },
-    { id: 7, name: '待审核帖子', count: 1, path: '/article/bar', perms: 'article.bar/lists' },
+    { id: 7, name: '待审核帖子', count: 3, path: '/article/bar', perms: 'article.bar/lists' },
     { id: 8, name: '待上线活动', count: 1, path: '/article/activity', perms: 'article.activity/lists' },
 ]
 
