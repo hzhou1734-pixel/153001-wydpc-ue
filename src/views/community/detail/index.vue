@@ -1,5 +1,16 @@
 <script setup lang="ts" name="communityDetail">
 import { getCommunityList } from '@/mock/api'
+import {
+    buildingTree,
+    certifyList,
+    consumerList,
+    escortOrders,
+    mealOrders,
+    noticeList,
+    nursingOrders,
+    roomList,
+    staffList,
+} from '@/mock/data'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -18,32 +29,39 @@ const getInfo = async () => {
     }
 }
 
+const buildings = computed(() => buildingTree.filter((item: any) => item.community_id === detail.value.id))
+const rooms = computed(() => roomList.filter((room: any) => buildings.value.some((building: any) => building.id === room.building_id)))
+const certifiedOwners = computed(() => certifyList.filter((item: any) => item.community === detail.value.name))
+const communityUsers = computed(() => consumerList.filter((item: any) => item.community === detail.value.name))
+const communityStaff = computed(() => staffList.filter((item: any) => item.community === detail.value.name))
+const communityOrders = computed(() => [
+    ...nursingOrders.map((item) => ({ ...item, type: '托管服务' })),
+    ...mealOrders.map((item) => ({ ...item, type: '膳食服务' })),
+    ...escortOrders.map((item) => ({ ...item, type: '陪诊服务' })),
+].filter((item) => item.community === detail.value.name))
+const communityNotices = computed(() => noticeList.filter((item: any) => item.status === 1))
+
 const infoItems = computed(() => [
-    { label: '小区名称', value: detail.value.name },
-    { label: '小区地址', value: detail.value.address },
-    { label: '楼栋数', value: `${detail.value.buildings ?? '-'} 栋` },
-    { label: '房屋数', value: `${detail.value.houses ?? '-'} 套` },
-    { label: '已认证住户', value: `${detail.value.certified ?? '-'} 人` },
-    { label: '注册用户', value: `${detail.value.users ?? '-'} 人` },
+    { label: '小区名称', value: detail.value.name || '-' },
+    { label: '小区地址', value: detail.value.address || '-' },
+    { label: '楼栋数', value: `${buildings.value.length} 栋` },
+    { label: '房屋数', value: `${rooms.value.length} 套` },
+    { label: '已认证住户', value: `${certifiedOwners.value.filter((item: any) => item.status === 1).length} 人` },
+    { label: '注册用户', value: `${communityUsers.value.length} 人` },
     { label: '状态', value: detail.value.status === 1 ? '营业中' : '已停用' },
-    { label: '创建时间', value: detail.value.create_time }
+    { label: '创建时间', value: detail.value.create_time || '-' },
 ])
 
-const tabStats = ref([
-    { label: '楼栋', value: 0, icon: 'el-icon-OfficeBuilding', color: '#409eff' },
-    { label: '房屋', value: 0, icon: 'el-icon-House', color: '#67c23a' },
-    { label: '认证住户', value: 0, icon: 'el-icon-Postcard', color: '#e6a23c' },
-    { label: '注册用户', value: 0, icon: 'el-icon-User', color: '#f56c6c' }
+const tabStats = computed(() => [
+    { label: '楼栋', value: buildings.value.length, icon: 'el-icon-OfficeBuilding', color: '#409eff' },
+    { label: '房屋', value: rooms.value.length, icon: 'el-icon-House', color: '#67c23a' },
+    { label: '认证住户', value: certifiedOwners.value.filter((item: any) => item.status === 1).length, icon: 'el-icon-Postcard', color: '#e6a23c' },
+    { label: '注册用户', value: communityUsers.value.length, icon: 'el-icon-User', color: '#f56c6c' },
 ])
-
-watch(detail, (val) => {
-    tabStats.value[0].value = val.buildings ?? 0
-    tabStats.value[1].value = val.houses ?? 0
-    tabStats.value[2].value = val.certified ?? 0
-    tabStats.value[3].value = val.users ?? 0
-})
 
 const back = () => router.back()
+const goBuildingManagement = () => router.push('/community/building')
+const goCertification = () => router.push('/community/certify')
 
 onMounted(getInfo)
 </script>
@@ -55,14 +73,12 @@ onMounted(getInfo)
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <el-button link @click="back">
-                            <icon name="el-icon-Back" :size="16" class="mr-1" />
-                            返回
+                            <icon name="el-icon-Back" :size="16" class="mr-1" />返回
                         </el-button>
                         <span class="card-title ml-3">小区详情</span>
                     </div>
                 </div>
             </template>
-            <!-- 顶部概览 -->
             <div class="flex gap-6 mb-6">
                 <el-image :src="detail.cover" fit="cover" class="w-64 h-36 rounded-lg shrink-0" />
                 <div class="flex-1">
@@ -73,43 +89,82 @@ onMounted(getInfo)
                         </el-tag>
                     </div>
                     <div class="text-tx-secondary text-sm mt-3 flex items-center">
-                        <icon name="el-icon-Location" :size="14" class="mr-1" />
-                        {{ detail.address }}
+                        <icon name="el-icon-Location" :size="14" class="mr-1" />{{ detail.address }}
                     </div>
                     <div class="flex mt-4 gap-8">
                         <div v-for="stat in tabStats" :key="stat.label" class="flex items-center gap-2">
                             <icon :name="stat.icon" :size="28" :color="stat.color" />
-                            <div>
-                                <div class="font-bold text-lg">{{ stat.value }}</div>
-                                <div class="text-tx-secondary text-xs">{{ stat.label }}</div>
-                            </div>
+                            <div><div class="font-bold text-lg">{{ stat.value }}</div><div class="text-tx-secondary text-xs">{{ stat.label }}</div></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Tab 详情 -->
+
             <el-tabs v-model="activeTab">
                 <el-tab-pane label="基本信息" name="info">
                     <el-descriptions :column="2" border>
-                        <el-descriptions-item v-for="item in infoItems" :key="item.label" :label="item.label">
-                            {{ item.value }}
-                        </el-descriptions-item>
+                        <el-descriptions-item v-for="item in infoItems" :key="item.label" :label="item.label">{{ item.value }}</el-descriptions-item>
                     </el-descriptions>
                 </el-tab-pane>
-                <el-tab-pane label="楼栋房屋" name="building">
-                    <el-table :data="[]" border empty-text="楼栋房屋数据请前往「楼栋房屋管理」页面维护">
-                        <el-table-column prop="name" label="楼栋" />
-                        <el-table-column prop="unit" label="单元" />
-                        <el-table-column prop="room" label="房号" />
-                        <el-table-column prop="owner" label="业主" />
+                <el-tab-pane :label="`楼栋管理（${buildings.length}）`" name="building">
+                    <div class="flex justify-end mb-4"><el-button type="primary" @click="goBuildingManagement">前往楼栋房屋管理</el-button></div>
+                    <el-table :data="buildings" border empty-text="暂无楼栋数据">
+                        <el-table-column label="楼栋名称" prop="name" min-width="160" />
+                        <el-table-column label="单元数量" min-width="120"><template #default="{ row }">{{ row.children?.length || 0 }} 个</template></el-table-column>
+                        <el-table-column label="已维护房屋" min-width="130"><template #default="{ row }">{{ rooms.filter((item) => item.building_id === row.id).length }} 套</template></el-table-column>
+                        <el-table-column label="维护状态" min-width="120"><template #default><el-tag type="success">已维护</el-tag></template></el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="认证住户" name="certify">
-                    <el-table :data="[]" border empty-text="认证住户数据请前往「住户认证」页面查看">
-                        <el-table-column prop="nickname" label="姓名" />
-                        <el-table-column prop="type" label="认证类型" />
-                        <el-table-column prop="room" label="房屋" />
-                        <el-table-column prop="status" label="状态" />
+                <el-tab-pane :label="`房屋信息（${rooms.length}）`" name="room">
+                    <el-table :data="rooms" border empty-text="暂无房屋数据">
+                        <el-table-column label="楼栋" min-width="110"><template #default="{ row }">{{ buildings.find((item) => item.id === row.building_id)?.name || '-' }}</template></el-table-column>
+                        <el-table-column label="单元" min-width="110"><template #default="{ row }">{{ buildings.find((item) => item.id === row.building_id)?.children?.find((unit) => unit.id === row.unit_id)?.name || '-' }}</template></el-table-column>
+                        <el-table-column label="房号" prop="name" min-width="100" />
+                        <el-table-column label="业主" prop="owner" min-width="110" />
+                        <el-table-column label="联系电话" prop="phone" min-width="130" />
+                        <el-table-column label="认证状态" min-width="110"><template #default="{ row }"><el-tag :type="row.certified ? 'success' : 'info'">{{ row.certified ? '已认证' : '未认证' }}</el-tag></template></el-table-column>
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane :label="`认证住户（${certifiedOwners.length}）`" name="certify">
+                    <div class="flex justify-end mb-4"><el-button type="primary" @click="goCertification">前往住户认证管理</el-button></div>
+                    <el-table :data="certifiedOwners" border empty-text="暂无认证住户">
+                        <el-table-column label="住户姓名" prop="nickname" min-width="110" />
+                        <el-table-column label="手机号码" prop="mobile" min-width="130" />
+                        <el-table-column label="楼栋" prop="building" min-width="100" />
+                        <el-table-column label="单元/房号" min-width="140"><template #default="{ row }">{{ row.unit }}{{ row.room }}</template></el-table-column>
+                        <el-table-column label="认证状态" min-width="110"><template #default="{ row }"><el-tag :type="row.status ? 'success' : 'warning'">{{ row.status ? '已通过' : '待审核' }}</el-tag></template></el-table-column>
+                        <el-table-column label="提交时间" prop="create_time" min-width="180" />
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane :label="`绑定员工（${communityStaff.length}）`" name="staff">
+                    <el-table :data="communityStaff" border empty-text="暂无绑定员工">
+                        <el-table-column label="员工" min-width="150"><template #default="{ row }"><el-avatar :src="row.avatar" :size="32" class="mr-2" />{{ row.name }}</template></el-table-column>
+                        <el-table-column label="岗位" prop="role" min-width="120" />
+                        <el-table-column label="手机号码" prop="mobile" min-width="130" />
+                        <el-table-column label="负责楼栋" prop="buildings" min-width="160" />
+                        <el-table-column label="服务订单" min-width="110"><template #default="{ row }">{{ row.orders }} 单</template></el-table-column>
+                        <el-table-column label="状态" min-width="100"><template #default="{ row }"><el-tag :type="row.status ? 'success' : 'info'">{{ row.status ? '在职' : '已停用' }}</el-tag></template></el-table-column>
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane :label="`服务订单（${communityOrders.length}）`" name="order">
+                    <el-table :data="communityOrders" border empty-text="暂无服务订单">
+                        <el-table-column label="订单编号" prop="sn" min-width="170" />
+                        <el-table-column label="服务类型" prop="type" min-width="110" />
+                        <el-table-column label="用户" prop="user" min-width="100" />
+                        <el-table-column label="服务项目" prop="service" min-width="180" />
+                        <el-table-column label="服务人员" prop="staff" min-width="110" />
+                        <el-table-column label="订单金额" min-width="110" align="right"><template #default="{ row }">¥{{ row.amount }}</template></el-table-column>
+                        <el-table-column label="支付状态" min-width="100"><template #default="{ row }"><el-tag :type="row.pay_status ? 'success' : 'warning'">{{ row.pay_status ? '已支付' : '待支付' }}</el-tag></template></el-table-column>
+                        <el-table-column label="下单时间" prop="create_time" min-width="180" />
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane :label="`通知公告（${communityNotices.length}）`" name="notice">
+                    <el-table :data="communityNotices" border empty-text="暂无已发布通知">
+                        <el-table-column label="公告标题" prop="title" min-width="260" />
+                        <el-table-column label="公告类型" prop="type" min-width="120" />
+                        <el-table-column label="浏览量" prop="views" min-width="100" />
+                        <el-table-column label="发布时间" prop="create_time" min-width="180" />
+                        <el-table-column label="发布状态" min-width="110"><template #default><el-tag type="success">已发布</el-tag></template></el-table-column>
                     </el-table>
                 </el-tab-pane>
             </el-tabs>
