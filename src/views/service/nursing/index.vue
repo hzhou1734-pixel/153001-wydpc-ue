@@ -16,11 +16,6 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="name" label="服务名称" min-width="140" show-overflow-tooltip />
-                <el-table-column label="服务类型" width="110">
-                    <template #default="{ row }">
-                        <el-tag size="small" :type="typeTag(row.type)">{{ row.type }}</el-tag>
-                    </template>
-                </el-table-column>
                 <el-table-column label="价格" width="120">
                     <template #default="{ row }">
                         <span class="text-orange-500 font-bold">¥{{ row.price }}</span><span class="text-xs text-gray-400">/{{ row.unit }}</span>
@@ -51,13 +46,6 @@
             <el-form :model="editForm" label-width="90px">
                 <el-form-item label="服务名称" required>
                     <el-input v-model="editForm.name" placeholder="请输入服务名称" />
-                </el-form-item>
-                <el-form-item label="服务类型" required>
-                    <el-select v-model="editForm.type" placeholder="请选择服务类型" class="!w-full">
-                        <el-option label="日常照料" value="日常照料" />
-                        <el-option label="健康监测" value="健康监测" />
-                        <el-option label="紧急呼叫" value="紧急呼叫" />
-                    </el-select>
                 </el-form-item>
                 <el-form-item label="价格（元）" required>
                     <el-input-number v-model="editForm.price" :min="0" :precision="2" class="!w-full" />
@@ -102,17 +90,12 @@ const { pager, getLists } = usePaging({ fetchFun: getNursingServiceList, firstLo
 const showEdit = ref(false)
 const editTitle = ref('')
 const editForm = reactive({
-    id: 0, name: '', type: '日常照料', price: 0, unit: '次', duration: '', desc: '', sort: 0, status: 1
+    id: 0, name: '', price: 0, unit: '次', duration: '', desc: '', sort: 0, status: 1
 })
-
-const typeTag = (type: string) => {
-    const map: Record<string, string> = { '日常照料': 'success', '健康监测': 'warning', '紧急呼叫': 'danger' }
-    return map[type] || 'info'
-}
 
 const openAdd = () => {
     editTitle.value = '新增养老服务'
-    Object.assign(editForm, { id: 0, name: '', type: '日常照料', price: 0, unit: '次', duration: '', desc: '', sort: 0, status: 1 })
+    Object.assign(editForm, { id: 0, name: '', price: 0, unit: '次', duration: '', desc: '', sort: 0, status: 1 })
     showEdit.value = true
 }
 
