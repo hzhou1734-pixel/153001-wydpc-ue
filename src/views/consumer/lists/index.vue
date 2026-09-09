@@ -46,9 +46,6 @@
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="账户余额" min-width="120" align="right">
-                    <template #default="{ row }">¥{{ row.balance }}</template>
-                </el-table-column>
                 <el-table-column label="未结算金额" min-width="120" align="right">
                     <template #default="{ row }">¥{{ row.unsettled_amount || '0.00' }}</template>
                 </el-table-column>

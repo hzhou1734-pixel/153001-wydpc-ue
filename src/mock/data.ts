@@ -268,12 +268,12 @@ export const certifyList = [
 
 // ==================== 用户 ====================
 export const consumerList = [
-    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 0, balance: '1286.00', orders: 23, unsettled_amount: '316.00', settled_amount: '18650.00', status: 1, create_time: daysAgo(180) },
-    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, balance: '356.50', orders: 15, unsettled_amount: '28.00', settled_amount: '9420.00', status: 1, create_time: daysAgo(165) },
-    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 0, balance: '0.00', orders: 8, unsettled_amount: '0.00', settled_amount: '3280.00', status: 1, create_time: daysAgo(120) },
-    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, balance: '58.00', orders: 3, unsettled_amount: '0.00', settled_amount: '1180.00', status: 1, create_time: daysAgo(90) },
-    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, balance: '2680.00', orders: 46, unsettled_amount: '540.00', settled_amount: '32140.00', status: 0, create_time: daysAgo(60) },
-    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, balance: '92.30', orders: 12, unsettled_amount: '150.00', settled_amount: '6890.00', status: 1, create_time: daysAgo(30) },
+    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 0, orders: 23, unsettled_amount: '316.00', settled_amount: '18650.00', status: 1, create_time: daysAgo(180) },
+    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, orders: 15, unsettled_amount: '28.00', settled_amount: '9420.00', status: 1, create_time: daysAgo(165) },
+    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 0, orders: 8, unsettled_amount: '0.00', settled_amount: '3280.00', status: 1, create_time: daysAgo(120) },
+    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, orders: 3, unsettled_amount: '0.00', settled_amount: '1180.00', status: 1, create_time: daysAgo(90) },
+    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, orders: 46, unsettled_amount: '540.00', settled_amount: '32140.00', status: 0, create_time: daysAgo(60) },
+    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, orders: 12, unsettled_amount: '150.00', settled_amount: '6890.00', status: 1, create_time: daysAgo(30) },
 ]
 
 // ==================== 员工 ====================
@@ -309,7 +309,7 @@ export const mealServices = [
 // ==================== 订单 ====================
 export const nursingOrders = [
     { id: 1001, sn: 'TG20260908001', user: '张伟', community: '颐景园·江南里', service: '全日托管', staff: '周建国', amount: '150.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 09:13:05'), status: 2, create_time: daysAgo(0, ' 09:12:00') },
-    { id: 1002, sn: 'TG20260907002', user: '李娜', community: '颐景园·江南里', service: '半日托管（上午）', staff: '周建国', amount: '80.00', pay_status: 1, pay_type: '余额支付', pay_time: daysAgo(1, ' 08:41:12'), status: 3, create_time: daysAgo(1, ' 08:40:00') },
+    { id: 1002, sn: 'TG20260907002', user: '李娜', community: '颐景园·江南里', service: '半日托管（上午）', staff: '周建国', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 08:41:12'), status: 3, create_time: daysAgo(1, ' 08:40:00') },
     { id: 1003, sn: 'TG20260906003', user: '陈晨', community: '保利·天悦湾', service: '包月托管（工作日）', staff: '孙丽华', amount: '2600.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(2, ' 16:06:30'), status: 2, create_time: daysAgo(2, ' 16:05:00') },
     { id: 1004, sn: 'TG20260905004', user: '刘洋', community: '万科·未来城三期', service: '全日托管', staff: '马长顺', amount: '150.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(3, ' 11:30:00') },
     { id: 1005, sn: 'TG20260904005', user: '王强', community: '颐景园·江南里', service: '半日托管（上午）', staff: '-', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(4, ' 10:01:20'), status: 1, create_time: daysAgo(4, ' 10:00:00') },
@@ -317,7 +317,7 @@ export const nursingOrders = [
 
 export const mealOrders = [
     { id: 2001, sn: 'SC20260908001', user: '张伟', community: '颐景园·江南里', service: '红烧狮子头套餐×2', staff: '吴秀兰', amount: '44.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 10:46:08'), status: 2, create_time: daysAgo(0, ' 10:45:00') },
-    { id: 2002, sn: 'SC20260907002', user: '李娜', community: '颐景园·江南里', service: '清蒸鲈鱼套餐×1', staff: '吴秀兰', amount: '28.00', pay_status: 1, pay_type: '余额支付', pay_time: daysAgo(1, ' 11:21:33'), status: 3, create_time: daysAgo(1, ' 11:20:00') },
+    { id: 2002, sn: 'SC20260907002', user: '李娜', community: '颐景园·江南里', service: '清蒸鲈鱼套餐×1', staff: '吴秀兰', amount: '28.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 11:21:33'), status: 3, create_time: daysAgo(1, ' 11:20:00') },
     { id: 2003, sn: 'SC20260906003', user: '赵敏', community: '绿城·桂语江南', service: '香菇滑鸡粥×1', staff: '-', amount: '15.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 17:36:10'), status: 1, create_time: daysAgo(2, ' 17:35:00') },
     { id: 2004, sn: 'SC20260905004', user: '陈晨', community: '保利·天悦湾', service: '杂粮饭套餐×3', staff: '吴秀兰', amount: '54.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(3, ' 12:01:45'), status: 3, create_time: daysAgo(3, ' 12:00:00') },
     { id: 2005, sn: 'SC20260904005', user: '刘洋', community: '万科·未来城三期', service: '低糖营养早餐×2', staff: '-', amount: '20.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(4, ' 07:50:00') },
@@ -327,7 +327,7 @@ export const escortOrders = [
     { id: 3001, sn: 'PZ20260908001', user: '陈晨', community: '保利·天悦湾', service: '专家门诊陪诊（时价）', staff: '郑海涛', hours: 3, amount: '540.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 08:01:25'), status: 2, create_time: daysAgo(0, ' 08:00:00') },
     { id: 3002, sn: 'PZ20260907002', user: '张伟', community: '颐景园·江南里', service: '普通门诊陪诊（时价）', staff: '郑海涛', hours: 2, amount: '240.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(1, ' 09:16:40'), status: 3, create_time: daysAgo(1, ' 09:15:00') },
     { id: 3003, sn: 'PZ20260906003', user: '李娜', community: '颐景园·江南里', service: '普通门诊陪诊（时价）', staff: '-', hours: 0, amount: '240.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 14:41:15'), status: 1, create_time: daysAgo(2, ' 14:40:00') },
-    { id: 3004, sn: 'PZ20260905004', user: '王强', community: '颐景园·江南里', service: '住院陪护（时价）', staff: '郑海涛', hours: 8, amount: '1600.00', pay_status: 1, pay_type: '余额支付', pay_time: daysAgo(5, ' 19:01:02'), status: 3, create_time: daysAgo(5, ' 19:00:00') },
+    { id: 3004, sn: 'PZ20260905004', user: '王强', community: '颐景园·江南里', service: '住院陪护（时价）', staff: '郑海涛', hours: 8, amount: '1600.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(5, ' 19:01:02'), status: 3, create_time: daysAgo(5, ' 19:00:00') },
     { id: 3005, sn: 'PZ20260904005', user: '赵敏', community: '绿城·桂语江南', service: '专家门诊陪诊（时价）', staff: '-', hours: 0, amount: '540.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(6, ' 20:10:00') },
 ]
 
@@ -610,14 +610,13 @@ export const financeOverview = {
     total_refund: '32680.00',
     month_settle: '152300.00',
     total_settle: '986500.00',
-    balance: '844110.00',
 }
 
 export const financeFlow = [
     { id: 1, sn: 'FL20260908001', type: '服务收入', from: '张伟-全日托管', amount: '+150.00', pay_type: '微信支付', create_time: daysAgo(0, ' 09:15:00') },
     { id: 2, sn: 'FL20260908002', type: '服务收入', from: '陈晨-专家门诊陪诊', amount: '+540.00', pay_type: '微信支付', create_time: daysAgo(0, ' 08:10:00') },
     { id: 3, sn: 'FL20260907003', type: '退款支出', from: '刘洋-全日托管', amount: '-150.00', pay_type: '原路退回', create_time: daysAgo(1, ' 15:30:00') },
-    { id: 4, sn: 'FL20260907004', type: '服务收入', from: '李娜-清蒸鲈鱼套餐', amount: '+28.00', pay_type: '余额支付', create_time: daysAgo(1, ' 11:25:00') },
+    { id: 4, sn: 'FL20260907004', type: '服务收入', from: '李娜-清蒸鲈鱼套餐', amount: '+28.00', pay_type: '微信支付', create_time: daysAgo(1, ' 11:25:00') },
     { id: 5, sn: 'FL20260906005', type: '员工结算', from: '周建国-8月收益', amount: '-8632.00', pay_type: '银行转账', create_time: daysAgo(2, ' 10:00:00') },
 ]
 

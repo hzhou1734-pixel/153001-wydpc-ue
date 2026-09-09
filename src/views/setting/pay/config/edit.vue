@@ -220,7 +220,6 @@ interface FormData {
 }
 
 enum PayWayEnum {
-    BALANCE = 1,
     WECHAT = 2,
     ALIPAY = 3
 }
@@ -234,8 +233,6 @@ const loading = ref<boolean>(true)
 
 const popupTitle = computed(() => {
     switch (formData.value.pay_way) {
-        case PayWayEnum.BALANCE:
-            return '余额支付'
         case PayWayEnum.WECHAT:
             return '微信支付'
         case PayWayEnum.ALIPAY:

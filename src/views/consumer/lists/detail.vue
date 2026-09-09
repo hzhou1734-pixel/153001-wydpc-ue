@@ -13,15 +13,6 @@
                             <el-avatar :src="formData.avatar" :size="58" />
                         </div>
                         <div class="basis-40 flex flex-col justify-center items-center">
-                            <div class="text-tx-regular">账户余额</div>
-                            <div class="mt-2 flex items-center text-lg font-medium">
-                                ¥{{ formData.balance }}
-                                <el-button type="primary" link class="ml-2" @click="handleAdjust(formData.balance)">
-                                    调整余额
-                                </el-button>
-                            </div>
-                        </div>
-                        <div class="basis-40 flex flex-col justify-center items-center">
                             <div class="text-tx-regular">服务订单</div>
                             <div class="mt-2 text-lg font-medium">{{ formData.orders }} 单</div>
                         </div>
@@ -89,16 +80,10 @@
             </el-tabs>
         </el-card>
 
-        <account-adjust
-            v-model:show="adjustState.show"
-            :value="adjustState.value"
-            @confirm="handleConfirmAdjust"
-        />
     </div>
 </template>
 
 <script lang="ts" setup name="consumerDetail">
-import AccountAdjust from '../components/account-adjust.vue'
 import { getConsumerDetail } from '@/mock/api'
 import { escortOrders, financeFlow, mealOrders, nursingOrders } from '@/mock/data'
 
@@ -111,13 +96,10 @@ const formData = reactive({
     community: '',
     room: '',
     certified: 0,
-    balance: '0.00',
     orders: 0,
     status: 1,
     create_time: '',
 })
-const adjustState = reactive({ show: false, value: '' })
-
 const orderStatusMap: Record<number, { label: string; type: string }> = {
     0: { label: '待接单', type: 'warning' },
     1: { label: '服务中', type: 'primary' },
@@ -137,18 +119,6 @@ const userOrders = computed(() => [
 const getDetails = async () => {
     const data = await getConsumerDetail({ id: route.query.id })
     Object.assign(formData, data)
-}
-
-const handleAdjust = (value: string) => {
-    adjustState.show = true
-    adjustState.value = value
-}
-const handleConfirmAdjust = (value: { action: number; num: number }) => {
-    const amount = Number(value.num) || 0
-    const nextBalance = Number(formData.balance) + (value.action === 1 ? amount : -amount)
-    formData.balance = Math.max(0, nextBalance).toFixed(2)
-    adjustState.show = false
-    ElMessage.success('余额调整成功')
 }
 
 getDetails()

@@ -35,7 +35,6 @@
                         <el-descriptions-item label="性别">{{ detail.gender || '未设置' }}</el-descriptions-item>
                         <el-descriptions-item label="所属小区">{{ detail.community }}</el-descriptions-item>
                         <el-descriptions-item label="房屋信息">{{ detail.room || '—' }}</el-descriptions-item>
-                        <el-descriptions-item label="账户余额">¥{{ detail.balance }}</el-descriptions-item>
                         <el-descriptions-item label="服务订单">{{ detail.orders }} 单</el-descriptions-item>
                         <el-descriptions-item label="未结算金额">¥{{ detail.unsettled_amount || '0.00' }}</el-descriptions-item>
                         <el-descriptions-item label="已结算金额">¥{{ detail.settled_amount || '0.00' }}</el-descriptions-item>
