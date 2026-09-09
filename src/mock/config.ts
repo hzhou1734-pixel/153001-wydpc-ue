@@ -8,6 +8,7 @@ export function mockConfig() {
         web_favicon: 'https://picsum.photos/seed/ghj-favicon/64/64',
         web_logo: 'https://picsum.photos/seed/ghj-logo/200/60',
         login_logo: 'https://picsum.photos/seed/ghj-login/200/60',
+        login_image: 'https://picsum.photos/seed/ghj-login-banner/800/800',
         copyright: '顾好家物业服务集团有限公司',
     })
 }
