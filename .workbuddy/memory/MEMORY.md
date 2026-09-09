@@ -52,3 +52,4 @@
 - 角色管理入口为 src/views/setting/role/index.vue（菜单 setting/role）；src/views/permission/* 为未接入菜单的旧代码，不可改动依赖
 - 列表交互约定(v1.0.41)：显示/隐藏一律用状态列 el-switch 开关切换，操作栏不放文字切换按钮；新增列表页须遵循
 - 列表样式约定(v1.0.42)：全局 .el-table .cell 强制 nowrap（EP 默认换行）；列宽口径：时间列 160、手机号 120、排序/ID 80、状态 90~100、操作列按按钮文本实算；长文本列须加 show-overflow-tooltip
+- 图片上传约定(v1.0.43)：所有图片表单项一律使用 @/components/image-upload（本地 FileReader + base64，不依赖后端接口），禁止 el-input 输入图片链接；必填图片须在提交时校验「请上传XX图」，不得用 picsum 随机图兜底
