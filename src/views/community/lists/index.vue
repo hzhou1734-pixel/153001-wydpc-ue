@@ -146,12 +146,11 @@ const submitEdit = () => {
     }
     const row = pager.lists.find((item: any) => item.id === editForm.id)
     if (row) {
+        // 楼栋数/房屋数由系统数据自动生成，编辑时不覆盖
         Object.assign(row, {
             name: editForm.name,
             cover: editForm.cover,
             address: editForm.address,
-            buildings: editForm.buildings,
-            houses: editForm.houses,
             status: editForm.status
         })
     } else {
@@ -330,10 +329,16 @@ onMounted(getLists)
                     <el-input v-model="editForm.address" placeholder="请输入小区详细位置" />
                 </el-form-item>
                 <el-form-item label="楼栋数">
-                    <el-input-number v-model="editForm.buildings" :min="0" />
+                    <div class="flex items-center">
+                        <span class="font-bold">{{ editForm.buildings }} 栋</span>
+                        <span class="ml-2 text-xs text-tx-secondary">由「楼栋房屋管理」数据自动统计，不可编辑</span>
+                    </div>
                 </el-form-item>
                 <el-form-item label="房屋数">
-                    <el-input-number v-model="editForm.houses" :min="0" />
+                    <div class="flex items-center">
+                        <span class="font-bold">{{ editForm.houses }} 套</span>
+                        <span class="ml-2 text-xs text-tx-secondary">由「楼栋房屋管理」数据自动统计，不可编辑</span>
+                    </div>
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-switch v-model="editForm.status" :active-value="1" :inactive-value="0" active-text="营业中" inactive-text="停用" />
