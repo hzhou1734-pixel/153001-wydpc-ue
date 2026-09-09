@@ -234,9 +234,36 @@ export const wonderfulList = [
 ]
 
 export const noticeList = [
-    { id: 1, title: '关于9月10日小区停水检修的通知', type: '物业通知', is_top: 1, views: 2103, status: 1, create_time: daysAgo(1) },
-    { id: 2, title: '中秋节社区游园活动报名开始', type: '活动通知', is_top: 0, views: 876, status: 1, create_time: daysAgo(2) },
-    { id: 3, title: '台风预警温馨提示', type: '安全提示', is_top: 1, views: 3421, status: 1, create_time: daysAgo(3) },
+    {
+        id: 1,
+        title: '关于9月10日小区停水检修的通知',
+        type: '物业通知',
+        is_top: 1,
+        views: 2103,
+        status: 1,
+        create_time: daysAgo(1),
+        content: '<h4>停水检修安排</h4><p>因市政供水管网升级改造，本小区将于 <strong>9月10日（周四）09:00—17:00</strong> 暂停供水，进行二次供水泵房检修及水箱清洗消毒作业。</p><ul><li><strong>停水范围：</strong>小区全部楼栋（含商铺）</li><li><strong>预计恢复：</strong>9月10日 17:00 前逐步恢复</li><li><strong>施工影响：</strong>恢复供水初期可能出现短时水浑现象，请先放水 1-2 分钟后再使用</li></ul><h4>温馨提示</h4><p>请各位业主提前储水，关闭家中用水设备，避免恢复供水时跑水。独居老人及行动不便的住户如有用水需求，可联系物业服务中心，我们将安排专人送水上门。</p><blockquote>物业服务热线：0731-8888 6666（24小时）</blockquote>',
+    },
+    {
+        id: 2,
+        title: '中秋节社区游园活动报名开始',
+        type: '活动通知',
+        is_top: 0,
+        views: 876,
+        status: 1,
+        create_time: daysAgo(2),
+        content: '<h4>月满中秋 · 情聚顾好家</h4><p>一年一度的中秋游园会来啦！物业服务中心联合社区居委会，为业主们准备了一场热闹纷呈的中秋游园活动，诚邀全体业主携家人共同参与。</p><ul><li><strong>活动时间：</strong>9月15日（中秋节）18:30—21:00</li><li><strong>活动地点：</strong>小区中心广场</li><li><strong>报名方式：</strong>APP「活动中心」在线报名，或至物业前台登记</li><li><strong>报名截止：</strong>9月14日 18:00</li></ul><h4>活动亮点</h4><p>猜灯谜赢好礼、DIY 冰皮月饼、儿童手绘灯笼、露天电影《月光宝盒》，还有中秋茶话会与抽奖环节，惊喜大奖为全年物业费 8 折券。</p><p><img src="https://picsum.photos/seed/ghj-notice-2a/600/340" alt="中秋游园会" style="max-width:100%;border-radius:8px;" /></p>',
+    },
+    {
+        id: 3,
+        title: '台风预警温馨提示',
+        type: '安全提示',
+        is_top: 1,
+        views: 3421,
+        status: 1,
+        create_time: daysAgo(3),
+        content: '<h4>台风动态</h4><p>据气象部门预报，今年第 14 号台风将于 9月6日至7日 影响本市，届时将出现<strong>大到暴雨，阵风 8-10 级</strong>。请各位业主提前做好防风防雨准备。</p><h4>防范措施</h4><ul><li>检查并关好门窗，收回阳台悬挂物、花盆及杂物，防止高空坠物</li><li>减少不必要的外出，远离广告牌、临时搭建物及大树</li><li>车辆请勿停放在低洼路段及大树旁，避免水淹与砸损</li><li>备好手电筒、饮用水等应急物品，谨防停水停电</li></ul><h4>物业值守</h4><p>台风期间物业将安排 24 小时应急值守，工程班组全员待命，如遇紧急情况请第一时间联系物业服务中心。</p><blockquote>应急值班电话：0731-8888 6666 转 9</blockquote>',
+    },
 ]
 
 export const activityList = [
