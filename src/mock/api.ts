@@ -77,7 +77,22 @@ export function getCertifyList(params?: Record<string, any>) {
 
 // ============ 用户管理 ============
 export function getConsumerList(params?: Record<string, any>) {
-    return page(consumerList, params)
+    let lists = consumerList
+    if (params?.keyword) {
+        const keyword = String(params.keyword)
+        lists = lists.filter((item: any) =>
+            item.nickname.includes(keyword) || item.mobile.includes(keyword) || item.community.includes(keyword)
+        )
+    }
+    if (params?.community) lists = lists.filter((item: any) => item.community === params.community)
+    if (params?.status !== '' && params?.status !== undefined) {
+        lists = lists.filter((item: any) => item.status === Number(params.status))
+    }
+    return page(lists, params)
+}
+export function getConsumerDetail(params?: Record<string, any>) {
+    const item = consumerList.find((row: any) => row.id === Number(params?.id))
+    return Promise.resolve(item || consumerList[0])
 }
 
 // ============ 员工管理 ============

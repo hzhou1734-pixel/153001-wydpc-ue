@@ -3,101 +3,90 @@
         <el-card class="!border-none" shadow="never">
             <el-page-header content="用户详情" @back="$router.back()" />
         </el-card>
-        <el-card class="mt-4 !border-none" header="基本资料" shadow="never">
-            <el-form ref="formRef" class="ls-form" :model="formData" label-width="120px">
-                <div class="bg-page flex py-5 mb-10 items-center">
-                    <div class="basis-40 flex flex-col justify-center items-center">
-                        <div class="mb-2 text-tx-regular">用户头像</div>
-                        <el-avatar :src="formData.avatar" :size="58" />
-                    </div>
-                    <div class="basis-40 flex flex-col justify-center items-center">
-                        <div class="text-tx-regular">账户余额</div>
-                        <div class="mt-2 flex items-center">
-                            ¥{{ formData.user_money }}
-                            <el-button
-                                v-perms="['user.user/adjustMoney']"
-                                type="primary"
-                                link
-                                @click="handleAdjust(formData.user_money)"
-                            >
-                                调整
-                            </el-button>
+
+        <el-card class="mt-4 !border-none" shadow="never">
+            <el-tabs v-model="activeTab">
+                <el-tab-pane label="基本信息" name="profile">
+                    <div class="bg-page flex py-5 mb-8 items-center">
+                        <div class="basis-40 flex flex-col justify-center items-center">
+                            <div class="mb-2 text-tx-regular">用户头像</div>
+                            <el-avatar :src="formData.avatar" :size="58" />
+                        </div>
+                        <div class="basis-40 flex flex-col justify-center items-center">
+                            <div class="text-tx-regular">账户余额</div>
+                            <div class="mt-2 flex items-center text-lg font-medium">
+                                ¥{{ formData.balance }}
+                                <el-button type="primary" link class="ml-2" @click="handleAdjust(formData.balance)">
+                                    调整余额
+                                </el-button>
+                            </div>
+                        </div>
+                        <div class="basis-40 flex flex-col justify-center items-center">
+                            <div class="text-tx-regular">服务订单</div>
+                            <div class="mt-2 text-lg font-medium">{{ formData.orders }} 单</div>
                         </div>
                     </div>
-                </div>
-                <el-form-item label="用户昵称：">
-                    {{ formData.nickname }}
-                </el-form-item>
-                <el-form-item label="账号：">
-                    {{ formData.account }}
-                    <popover-input
-                        class="ml-[10px]"
-                        @confirm="handleEdit($event, 'account')"
-                        :limit="32"
-                        v-perms="['user.user/edit']"
-                    >
-                        <el-button type="primary" link>
-                            <icon name="el-icon-EditPen" />
-                        </el-button>
-                    </popover-input>
-                </el-form-item>
-                <el-form-item label="真实姓名：">
-                    {{ formData.real_name || '-' }}
-                    <popover-input
-                        class="ml-[10px]"
-                        @confirm="handleEdit($event, 'real_name')"
-                        :limit="32"
-                        v-perms="['user.user/edit']"
-                    >
-                        <el-button type="primary" link>
-                            <icon name="el-icon-EditPen" />
-                        </el-button>
-                    </popover-input>
-                </el-form-item>
-                <el-form-item label="性别：">
-                    {{ formData.sex }}
-                    <popover-input
-                        class="ml-[10px]"
-                        type="select"
-                        :options="[
-                            {
-                                label: '未知',
-                                value: 0
-                            },
-                            {
-                                label: '男',
-                                value: 1
-                            },
-                            {
-                                label: '女',
-                                value: 2
-                            }
-                        ]"
-                        @confirm="handleEdit($event, 'sex')"
-                        v-perms="['user.user/edit']"
-                    >
-                        <el-button type="primary" link>
-                            <icon name="el-icon-EditPen" />
-                        </el-button>
-                    </popover-input>
-                </el-form-item>
-                <el-form-item label="联系电话：">
-                    {{ formData.mobile || '-' }}
-                    <popover-input
-                        class="ml-[10px]"
-                        type="number"
-                        @confirm="handleEdit($event, 'mobile')"
-                        v-perms="['user.user/edit']"
-                    >
-                        <el-button type="primary" link>
-                            <icon name="el-icon-EditPen" />
-                        </el-button>
-                    </popover-input>
-                </el-form-item>
-                <el-form-item label="注册来源："> {{ formData.channel }} </el-form-item>
-                <el-form-item label="注册时间："> {{ formData.create_time }} </el-form-item>
-                <el-form-item label="最近登录时间："> {{ formData.login_time }} </el-form-item>
-            </el-form>
+                    <el-descriptions :column="2" border>
+                        <el-descriptions-item label="用户昵称">{{ formData.nickname || '-' }}</el-descriptions-item>
+                        <el-descriptions-item label="手机号码">{{ formData.mobile || '-' }}</el-descriptions-item>
+                        <el-descriptions-item label="所属小区">{{ formData.community || '-' }}</el-descriptions-item>
+                        <el-descriptions-item label="房屋信息">{{ formData.room || '-' }}</el-descriptions-item>
+                        <el-descriptions-item label="业主认证">
+                            <el-tag :type="formData.certified ? 'success' : 'info'" effect="light">
+                                {{ formData.certified ? '已认证' : '未认证' }}
+                            </el-tag>
+                        </el-descriptions-item>
+                        <el-descriptions-item label="账户状态">
+                            <el-tag :type="formData.status ? 'success' : 'danger'" effect="light">
+                                {{ formData.status ? '正常' : '已禁用' }}
+                            </el-tag>
+                        </el-descriptions-item>
+                        <el-descriptions-item label="注册时间" :span="2">{{ formData.create_time || '-' }}</el-descriptions-item>
+                    </el-descriptions>
+                </el-tab-pane>
+
+                <el-tab-pane label="资金流水" name="finance">
+                    <el-table :data="userFinanceFlows" size="large" empty-text="暂无资金流水">
+                        <el-table-column label="流水单号" prop="sn" min-width="180" />
+                        <el-table-column label="业务类型" prop="type" min-width="120" />
+                        <el-table-column label="关联业务" prop="from" min-width="200" />
+                        <el-table-column label="金额" min-width="120" align="right">
+                            <template #default="{ row }">
+                                <span :class="row.amount.startsWith('+') ? 'text-success' : 'text-error'">¥{{ row.amount }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="支付方式" prop="pay_type" min-width="120" />
+                        <el-table-column label="发生时间" prop="create_time" min-width="180" />
+                    </el-table>
+                </el-tab-pane>
+
+                <el-tab-pane label="服务订单" name="orders">
+                    <el-table :data="userOrders" size="large" empty-text="暂无服务订单">
+                        <el-table-column label="订单编号" prop="sn" min-width="180" />
+                        <el-table-column label="服务类型" prop="orderType" min-width="110" />
+                        <el-table-column label="服务项目" prop="service" min-width="180" />
+                        <el-table-column label="服务人员" prop="staff" min-width="110" />
+                        <el-table-column label="订单金额" min-width="110" align="right">
+                            <template #default="{ row }">¥{{ row.amount }}</template>
+                        </el-table-column>
+                        <el-table-column label="支付状态" min-width="100">
+                            <template #default="{ row }">
+                                <el-tag :type="row.pay_status ? 'success' : 'warning'" effect="light">
+                                    {{ row.pay_status ? '已支付' : '待支付' }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="订单状态" min-width="100">
+                            <template #default="{ row }">
+                                <el-tag :type="orderStatusMap[row.status]?.type || 'info'" effect="light">
+                                    {{ orderStatusMap[row.status]?.label || '未知' }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="下单时间" prop="create_time" min-width="180" />
+                    </el-table>
+                </el-tab-pane>
+            </el-tabs>
         </el-card>
 
         <account-adjust
@@ -109,62 +98,58 @@
 </template>
 
 <script lang="ts" setup name="consumerDetail">
-import type { FormInstance } from 'element-plus'
-
-import { adjustMoney, getUserDetail, userEdit } from '@/api/consumer'
-import { isEmpty } from '@/utils/util'
-
 import AccountAdjust from '../components/account-adjust.vue'
+import { getConsumerDetail } from '@/mock/api'
+import { escortOrders, financeFlow, mealOrders, nursingOrders } from '@/mock/data'
 
 const route = useRoute()
+const activeTab = ref('profile')
 const formData = reactive({
     avatar: '',
-    channel: '',
-    create_time: '',
-    login_time: '',
-    mobile: '',
     nickname: '',
-    real_name: 0,
-    sex: 0,
-    sn: '',
-    account: '',
-    user_money: ''
+    mobile: '',
+    community: '',
+    room: '',
+    certified: 0,
+    balance: '0.00',
+    orders: 0,
+    status: 1,
+    create_time: '',
 })
+const adjustState = reactive({ show: false, value: '' })
 
-const adjustState = reactive({
-    show: false,
-    value: ''
-})
-const formRef = shallowRef<FormInstance>()
-
-const getDetails = async () => {
-    const data = await getUserDetail({
-        id: route.query.id
-    })
-    Object.keys(formData).forEach((key) => {
-        //@ts-ignore
-        formData[key] = data[key]
-    })
+const orderStatusMap: Record<number, { label: string; type: string }> = {
+    0: { label: '待接单', type: 'warning' },
+    1: { label: '服务中', type: 'primary' },
+    2: { label: '已完成', type: 'success' },
+    3: { label: '已取消', type: 'info' },
 }
 
-const handleEdit = async (value: string, field: string) => {
-    if (isEmpty(value)) return
-    await userEdit({
-        id: route.query.id,
-        field,
-        value
-    })
-    getDetails()
+const userFinanceFlows = computed(() =>
+    financeFlow.filter((item) => item.from.startsWith(`${formData.nickname}-`))
+)
+const userOrders = computed(() => [
+    ...nursingOrders.map((item) => ({ ...item, orderType: '托管服务' })),
+    ...mealOrders.map((item) => ({ ...item, orderType: '膳食服务' })),
+    ...escortOrders.map((item) => ({ ...item, orderType: '陪诊服务' })),
+].filter((item) => item.user === formData.nickname))
+
+const getDetails = async () => {
+    const data = await getConsumerDetail({ id: route.query.id })
+    Object.assign(formData, data)
 }
 
 const handleAdjust = (value: string) => {
     adjustState.show = true
     adjustState.value = value
 }
-const handleConfirmAdjust = async (value: any) => {
-    await adjustMoney({ user_id: route.query.id, ...value })
+const handleConfirmAdjust = (value: { action: number; num: number }) => {
+    const amount = Number(value.num) || 0
+    const nextBalance = Number(formData.balance) + (value.action === 1 ? amount : -amount)
+    formData.balance = Math.max(0, nextBalance).toFixed(2)
     adjustState.show = false
-    getDetails()
+    ElMessage.success('余额调整成功')
 }
+
 getDetails()
 </script>
