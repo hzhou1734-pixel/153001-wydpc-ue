@@ -287,10 +287,22 @@ export const staffList = [
 
 // ==================== 服务 ====================
 export const nursingServices = [
-    { id: 1, type: '半日托管', name: '半日托管（上午）', price: '80.00', unit: '次', duration: '4小时', desc: '上午 8:00-12:00，含午餐配送', cover: 'https://picsum.photos/seed/ghj-nursing-1/400/300', status: 1, sort: 1 },
-    { id: 2, type: '全日托管', name: '全日托管', price: '150.00', unit: '次', duration: '8小时', desc: '8:00-18:00，含午餐、午休看护', cover: 'https://picsum.photos/seed/ghj-nursing-2/400/300', status: 1, sort: 2 },
-    { id: 3, type: '包月托管', name: '包月托管（工作日）', price: '2600.00', unit: '月', duration: '22天', desc: '工作日全日托管，含每日午餐', cover: 'https://picsum.photos/seed/ghj-nursing-3/400/300', status: 1, sort: 3 },
+    { id: 1, name: '日托·9月第一期', type: '日托', price: '80.00', start_time: '2026-09-01', end_time: '2026-09-30', signup_count: 26, status: 1, sort: 1, create_time: daysAgo(28, ' 09:20:00') },
+    { id: 2, name: '日托·10月第二期', type: '日托', price: '80.00', start_time: '2026-10-01', end_time: '2026-10-31', signup_count: 12, status: 1, sort: 2, create_time: daysAgo(20, ' 14:05:00') },
+    { id: 3, name: '日托·暑期托管班', type: '日托', price: '90.00', start_time: '2026-07-01', end_time: '2026-08-31', signup_count: 64, status: 1, sort: 3, create_time: daysAgo(70, ' 10:12:00') },
+    { id: 4, name: '学期每日托·2026秋季', type: '学期每日托', price: '2600.00', start_time: '2026-09-01', end_time: '2027-01-20', signup_count: 38, status: 1, sort: 4, create_time: daysAgo(35, ' 08:40:00') },
+    { id: 5, name: '学期每日托·江南里专属班', type: '学期每日托', price: '2400.00', start_time: '2026-09-05', end_time: '2027-01-15', signup_count: 15, status: 1, sort: 5, create_time: daysAgo(30, ' 16:22:00') },
+    { id: 6, name: '学期每日托·2026春季', type: '学期每日托', price: '2600.00', start_time: '2026-02-20', end_time: '2026-07-05', signup_count: 52, status: 0, sort: 6, create_time: daysAgo(190, ' 09:00:00') },
+    { id: 7, name: '学期周末托·周六班', type: '学期周末托', price: '1200.00', start_time: '2026-09-12', end_time: '2027-01-16', signup_count: 20, status: 1, sort: 7, create_time: daysAgo(24, ' 11:35:00') },
+    { id: 8, name: '学期周末托·周日班', type: '学期周末托', price: '1200.00', start_time: '2026-09-13', end_time: '2027-01-17', signup_count: 9, status: 0, sort: 8, create_time: daysAgo(18, ' 15:48:00') },
 ]
+
+/** 陪诊服务单价设置（按小时计费） */
+export const escortPriceSetting = {
+    hour_price: '120.00',
+    min_hours: 2,
+    remark: '不足 1 小时按 1 小时计费，超出部分按实际时长折算',
+}
 
 export const escortServices = [
     { id: 1, name: '普通门诊陪诊（时价）', price: '120.00', unit: '小时', desc: '陪同挂号、候诊、取药、记录医嘱', cover: 'https://picsum.photos/seed/ghj-escort-1/400/300', status: 1, sort: 1 },
@@ -308,11 +320,11 @@ export const mealServices = [
 
 // ==================== 订单 ====================
 export const nursingOrders = [
-    { id: 1001, sn: 'TG20260908001', user: '张伟', community: '颐景园·江南里', service: '全日托管', staff: '周建国', amount: '150.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 09:13:05'), status: 2, create_time: daysAgo(0, ' 09:12:00') },
-    { id: 1002, sn: 'TG20260907002', user: '李娜', community: '颐景园·江南里', service: '半日托管（上午）', staff: '周建国', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 08:41:12'), status: 3, create_time: daysAgo(1, ' 08:40:00') },
-    { id: 1003, sn: 'TG20260906003', user: '陈晨', community: '保利·天悦湾', service: '包月托管（工作日）', staff: '孙丽华', amount: '2600.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(2, ' 16:06:30'), status: 2, create_time: daysAgo(2, ' 16:05:00') },
-    { id: 1004, sn: 'TG20260905004', user: '刘洋', community: '万科·未来城三期', service: '全日托管', staff: '马长顺', amount: '150.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(3, ' 11:30:00') },
-    { id: 1005, sn: 'TG20260904005', user: '王强', community: '颐景园·江南里', service: '半日托管（上午）', staff: '-', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(4, ' 10:01:20'), status: 1, create_time: daysAgo(4, ' 10:00:00') },
+    { id: 1001, sn: 'TG20260908001', user: '张伟', community: '颐景园·江南里', service: '日托·9月第一期', staff: '周建国', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 09:13:05'), status: 2, create_time: daysAgo(0, ' 09:12:00') },
+    { id: 1002, sn: 'TG20260907002', user: '李娜', community: '颐景园·江南里', service: '日托·9月第一期', staff: '周建国', amount: '80.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 08:41:12'), status: 3, create_time: daysAgo(1, ' 08:40:00') },
+    { id: 1003, sn: 'TG20260906003', user: '陈晨', community: '保利·天悦湾', service: '学期每日托·2026秋季', staff: '孙丽华', amount: '2600.00', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(2, ' 16:06:30'), status: 2, create_time: daysAgo(2, ' 16:05:00') },
+    { id: 1004, sn: 'TG20260905004', user: '刘洋', community: '万科·未来城三期', service: '日托·9月第一期', staff: '马长顺', amount: '80.00', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(3, ' 11:30:00') },
+    { id: 1005, sn: 'TG20260904005', user: '王强', community: '颐景园·江南里', service: '学期周末托·周六班', staff: '-', amount: '1200.00', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(4, ' 10:01:20'), status: 1, create_time: daysAgo(4, ' 10:00:00') },
 ]
 
 export const mealOrders = [

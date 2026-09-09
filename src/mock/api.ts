@@ -11,6 +11,7 @@ import {
     staffList,
     nursingServices,
     escortServices,
+    escortPriceSetting,
     mealServices,
     nursingOrders,
     mealOrders,
@@ -102,10 +103,32 @@ export function getStaffList(params?: Record<string, any>) {
 
 // ============ 服务管理 ============
 export function getNursingServiceList(params?: Record<string, any>) {
-    return page(nursingServices, params)
+    let lists = nursingServices
+    if (params?.keyword) {
+        lists = lists.filter((item: any) => item.name.includes(String(params.keyword)))
+    }
+    if (params?.type) lists = lists.filter((item: any) => item.type === params.type)
+    if (params?.status !== '' && params?.status !== undefined && params?.status !== null) {
+        lists = lists.filter((item: any) => item.status === Number(params.status))
+    }
+    if (params?.start_time) {
+        lists = lists.filter((item: any) => String(item.create_time).slice(0, 10) >= params.start_time)
+    }
+    if (params?.end_time) {
+        lists = lists.filter((item: any) => String(item.create_time).slice(0, 10) <= params.end_time)
+    }
+    return page(lists, params)
 }
 export function getEscortServiceList(params?: Record<string, any>) {
     return page(escortServices, params)
+}
+/** 陪诊服务单价设置（元/小时） */
+export function getEscortPriceSetting() {
+    return Promise.resolve({ ...escortPriceSetting })
+}
+export function saveEscortPriceSetting(params?: Record<string, any>) {
+    Object.assign(escortPriceSetting, params || {})
+    return Promise.resolve({ ...escortPriceSetting })
 }
 export function getMealServiceList(params?: Record<string, any>) {
     return page(mealServices, params)
