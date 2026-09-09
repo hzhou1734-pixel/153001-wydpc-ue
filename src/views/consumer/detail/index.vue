@@ -45,12 +45,6 @@
                         </el-descriptions-item>
                         <el-descriptions-item label="注册时间">{{ detail.create_time }}</el-descriptions-item>
                     </el-descriptions>
-                    <el-alert
-                        class="mt-4"
-                        type="info"
-                        :closable="false"
-                        title="物业后台仅可查看用户账号状态，如需启用/禁用操作，请联系平台管理员处理。"
-                    />
                 </el-tab-pane>
 
                 <!-- 板块二：订单信息 -->
