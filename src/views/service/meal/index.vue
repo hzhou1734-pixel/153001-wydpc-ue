@@ -21,8 +21,6 @@
                         <span class="text-orange-500 font-bold">¥{{ row.price }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="spec" label="规格" min-width="120" show-overflow-tooltip />
-                <el-table-column prop="vendor" label="供应商" min-width="130" show-overflow-tooltip />
                 <el-table-column prop="sort" label="排序" width="80" />
                 <el-table-column label="状态" width="90">
                     <template #default="{ row }">
@@ -42,7 +40,7 @@
             </div>
         </el-card>
 
-        <el-dialog v-model="showEdit" :title="editTitle" width="520px">
+        <el-dialog v-model="showEdit" :title="editTitle" width="760px" top="5vh">
             <el-form :model="editForm" label-width="90px">
                 <el-form-item label="餐品名称" required>
                     <el-input v-model="editForm.name" placeholder="请输入餐品名称" />
@@ -50,11 +48,8 @@
                 <el-form-item label="价格（元）" required>
                     <el-input-number v-model="editForm.price" :min="0" :precision="2" class="!w-full" />
                 </el-form-item>
-                <el-form-item label="规格">
-                    <el-input v-model="editForm.spec" placeholder="如：一份/500g" />
-                </el-form-item>
-                <el-form-item label="供应商">
-                    <el-input v-model="editForm.vendor" placeholder="请输入供应商名称" />
+                <el-form-item label="菜品信息">
+                    <Editor v-model="editForm.detail" mode="simple" height="260px" class="!w-full" />
                 </el-form-item>
                 <el-form-item label="封面图">
                     <el-input v-model="editForm.cover" placeholder="请输入封面图地址" />
@@ -81,24 +76,25 @@
 import { getMealServiceList } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 import { Plus } from '@element-plus/icons-vue'
+import Editor from '@/components/editor/index.vue'
 
 const { pager, getLists } = usePaging({ fetchFun: getMealServiceList, firstLoading: true })
 
 const showEdit = ref(false)
 const editTitle = ref('')
 const editForm = reactive({
-    id: 0, name: '', price: 0, spec: '', vendor: '', cover: '', sort: 0, status: 1
+    id: 0, name: '', price: 0, detail: '', cover: '', sort: 0, status: 1
 })
 
 const openAdd = () => {
     editTitle.value = '新增餐品'
-    Object.assign(editForm, { id: 0, name: '', price: 0, spec: '', vendor: '', cover: '', sort: 0, status: 1 })
+    Object.assign(editForm, { id: 0, name: '', price: 0, detail: '', cover: '', sort: 0, status: 1 })
     showEdit.value = true
 }
 
 const openEdit = (row: any) => {
     editTitle.value = '编辑餐品'
-    Object.assign(editForm, row)
+    Object.assign(editForm, row, { detail: row.detail || '' })
     showEdit.value = true
 }
 
