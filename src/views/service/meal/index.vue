@@ -75,18 +75,13 @@
                         <el-table-column prop="sort" label="排序" width="80" />
                         <el-table-column label="状态" width="90">
                             <template #default="{ row }">
-                                <el-tag :type="row.status ? 'success' : 'info'" effect="light">
-                                    {{ row.status ? '显示' : '隐藏' }}
-                                </el-tag>
+                                <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleCombo(row)" />
                             </template>
                         </el-table-column>
                         <el-table-column prop="update_time" label="更新时间" width="170" />
-                        <el-table-column label="操作" width="200" fixed="right">
+                        <el-table-column label="操作" width="150" fixed="right">
                             <template #default="{ row }">
                                 <el-button size="small" @click="openComboEdit(row)">编辑</el-button>
-                                <el-button size="small" type="primary" plain @click="toggleCombo(row)">
-                                    {{ row.status ? '隐藏' : '显示' }}
-                                </el-button>
                                 <el-button size="small" type="danger" plain @click="handleComboDelete(row)">删除</el-button>
                             </template>
                         </el-table-column>

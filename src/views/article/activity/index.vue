@@ -42,7 +42,6 @@
                 <el-table-column label="标题" min-width="200" show-overflow-tooltip>
                     <template #default="{ row }">
                         <span>{{ row.title }}</span>
-                        <el-tag v-if="row.status === 0" size="small" type="info" class="!ml-1">已隐藏</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="活动状态" width="110">
@@ -59,15 +58,17 @@
                 </el-table-column>
                 <el-table-column prop="sort" label="排序" width="90" sortable />
                 <el-table-column prop="create_time" label="发布时间" width="170" />
-                <el-table-column label="操作" width="330" fixed="right">
+                <el-table-column label="显示状态" width="100">
+                    <template #default="{ row }">
+                        <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleShow(row)" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="290" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" @click="openSignup(row)">报名列表</el-button>
                         <el-button link type="warning" :disabled="isEnded(row)" @click="stopSignup(row)">停止报名</el-button>
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
-                        <el-button link type="info" @click="toggleShow(row)">
-                            {{ row.status === 1 ? '隐藏' : '显示' }}
-                        </el-button>
                         <el-button link type="danger" @click="delRow(row)">删除</el-button>
                     </template>
                 </el-table-column>

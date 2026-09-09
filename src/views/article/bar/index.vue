@@ -43,7 +43,6 @@
                 <el-table-column label="标题" min-width="220" show-overflow-tooltip>
                     <template #default="{ row }">
                         <span>{{ row.title }}</span>
-                        <el-tag v-if="row.status === 0" size="small" type="info" class="!ml-1">已隐藏</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="发布人" min-width="150">
@@ -69,15 +68,17 @@
                 <el-table-column label="审核时间" width="170">
                     <template #default="{ row }">{{ row.audit_time || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="操作" width="290" fixed="right">
+                <el-table-column label="显示状态" width="100">
+                    <template #default="{ row }">
+                        <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" :disabled="row.audit !== 1" @change="toggleShow(row)" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="250" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" @click="openComment(row)">评论</el-button>
                         <el-button v-if="row.audit === 0" link type="warning" @click="openAudit(row, 1)">审核</el-button>
                         <el-button v-else link type="danger" @click="openAudit(row, 2)">违规重审</el-button>
-                        <el-button link type="info" :disabled="row.audit !== 1" @click="toggleShow(row)">
-                            {{ row.status === 1 ? '隐藏' : '显示' }}
-                        </el-button>
                         <el-button link type="danger" @click="delRow(row)">删除</el-button>
                     </template>
                 </el-table-column>

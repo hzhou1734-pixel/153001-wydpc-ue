@@ -42,7 +42,6 @@
                     <template #default="{ row }">
                         <span>{{ row.title }}</span>
                         <el-tag v-if="row.is_top === 1" size="small" type="danger" class="!ml-1">置顶</el-tag>
-                        <el-tag v-if="row.is_show === 0" size="small" type="info" class="!ml-1">已隐藏</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="发布人" min-width="170">
@@ -72,16 +71,18 @@
                 <el-table-column label="审核时间" width="170">
                     <template #default="{ row }">{{ row.audit_time || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="操作" width="250" fixed="right">
+                <el-table-column label="显示状态" width="100">
+                    <template #default="{ row }">
+                        <el-switch :model-value="row.is_show" :active-value="1" :inactive-value="0" :disabled="row.status !== 1" @change="toggleShow(row)" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="210" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>
                         <el-button link type="primary" :disabled="row.source !== 1" @click="openEdit(row)">编辑</el-button>
                         <el-button v-if="row.status === 0" link type="warning" @click="openAudit(row, 1)">审核</el-button>
                         <el-button v-else-if="row.status === 1" link type="danger" @click="openAudit(row, 2)">违规驳回</el-button>
                         <el-button v-else link type="warning" @click="reAudit(row)">重新审核</el-button>
-                        <el-button link type="info" :disabled="row.status !== 1" @click="toggleShow(row)">
-                            {{ row.is_show === 1 ? '隐藏' : '显示' }}
-                        </el-button>
                         <el-button link type="danger" @click="delRow(row)">删除</el-button>
                     </template>
                 </el-table-column>

@@ -67,18 +67,13 @@
                 </el-table-column>
                 <el-table-column label="托管状态" width="100">
                     <template #default="{ row }">
-                        <el-tag :type="row.status ? 'success' : 'info'" effect="light">
-                            {{ row.status ? '显示' : '隐藏' }}
-                        </el-tag>
+                        <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
                 <el-table-column label="添加时间" prop="create_time" width="170" />
-                <el-table-column label="操作" width="200" fixed="right">
+                <el-table-column label="操作" width="150" fixed="right">
                     <template #default="{ row }">
                         <el-button size="small" @click="openEdit(row)">编辑</el-button>
-                        <el-button size="small" type="primary" plain @click="toggleShow(row)">
-                            {{ row.status ? '隐藏' : '显示' }}
-                        </el-button>
                         <el-button size="small" type="danger" plain @click="handleDelete(row)">删除</el-button>
                     </template>
                 </el-table-column>
