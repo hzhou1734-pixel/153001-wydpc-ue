@@ -267,9 +267,42 @@ export const noticeList = [
 ]
 
 export const activityList = [
-    { id: 1, title: '中秋游园会·猜灯谜赢好礼', cover: 'https://picsum.photos/seed/ghj-activity-1/400/300', signup: 186, limit: 300, start_time: daysAgo(-5), address: '小区中心广场', status: 1, create_time: daysAgo(3) },
-    { id: 2, title: '老年健康义诊进社区', cover: 'https://picsum.photos/seed/ghj-activity-2/400/300', signup: 92, limit: 150, start_time: daysAgo(-10), address: '社区服务站', status: 1, create_time: daysAgo(5) },
-    { id: 3, title: '周末亲子手工课（第12期）', cover: 'https://picsum.photos/seed/ghj-activity-3/400/300', signup: 40, limit: 40, start_time: daysAgo(2), address: '托管活动室', status: 0, create_time: daysAgo(20) },
+    {
+        id: 1,
+        title: '中秋游园会·猜灯谜赢好礼',
+        cover: 'https://picsum.photos/seed/ghj-activity-1/400/300',
+        signup: 186,
+        limit: 300,
+        start_time: daysAgo(-5),
+        address: '小区中心广场',
+        status: 1,
+        create_time: daysAgo(3),
+        content: '<h4>活动介绍</h4><p>花好月圆人团圆！中秋佳节来临之际，物业服务中心特举办<strong>「中秋游园会��</strong>主题活动，诚邀全体业主携家人朋友共度佳节，猜灯谜、赢好礼、赏明月！</p><h4>活动安排</h4><ul><li><strong>活动时间：</strong>本周六 18:30 - 21:00</li><li><strong>活动地点：</strong>小区中心广场（雨天移至架空层）</li><li><strong>报名方式：</strong>APP 内本页直接报名，或至物业服务中心前台登记</li><li><strong>报名截止：</strong>活动开始前 2 小时</li></ul><h4>活动亮点</h4><ul><li><strong>猜灯谜赢好礼：</strong>现场 200 条灯谜，猜中即可兑换月饼、毛巾、洗衣液等精美礼品</li><li><strong>亲子灯笼 DIY：</strong>免费提供手工材料，和孩子一起制作专属花灯</li><li><strong>中秋茶话会：</strong>品月饼、饮清茶，邻里相聚话家常</li><li><strong>幸运大抽奖：</strong>报名业主均可参与抽奖，一等奖为智能电饭煲一台</li></ul><h4>温馨提示</h4><p>现场设有签到处，请报名成功的业主凭<strong>报名成功截图</strong>签到领取号码牌；请照看好随行儿童，不要在人群密集处追逐打闹。</p><p style="text-align:center;"><img src="https://picsum.photos/seed/ghj-activity-1a/600/340" alt="中秋游园会" style="max-width:100%;border-radius:8px;" /></p><blockquote>咨询热线：0731-8888 6666（物业服务中心）</blockquote>',
+    },
+    {
+        id: 2,
+        title: '老年健康义诊进社区',
+        cover: 'https://picsum.photos/seed/ghj-activity-2/400/300',
+        signup: 92,
+        limit: 150,
+        start_time: daysAgo(-10),
+        address: '社区服务站',
+        status: 1,
+        create_time: daysAgo(5),
+        content: '<h4>活动背景</h4><p>为提升社区老年居民的健康意识，物业联合<strong>市第三人民医院</strong>开展「健康义诊进社区」公益活动，多名资深医师现场坐诊，为业主提供免费健康咨询服务。</p><h4>义诊项目</h4><ul><li><strong>基础体检：</strong>血压、血糖、心率测量，建立个人健康档案</li><li><strong>内科问诊：</strong>常见慢性病（高血压、糖尿病等）用药咨询与调理建议</li><li><strong>骨科咨询：</strong>颈肩腰腿痛、骨质疏松等老年常见骨病问诊</li><li><strong>中医理疗：</strong>穴位贴敷、艾灸体验，中医体质辨识</li></ul><h4>参与须知</h4><ul><li>活动时间：下周三上午 8:30 - 11:30</li><li>活动地点：社区服务站一楼大厅</li><li>请携带身份证或医保卡，便于建档</li><li>建议空腹前往，可免费测量空腹血糖</li><li>65 岁以上老人可优先就诊，行动不便者可联系物业安排志愿者陪同</li></ul><p>名额有限（150 人），报满即止，请尽快通过 APP 报名。</p><blockquote>咨询电话：0731-8888 6666 转 3（社区服务站）</blockquote>',
+    },
+    {
+        id: 3,
+        title: '周末亲子手工课（第12期）',
+        cover: 'https://picsum.photos/seed/ghj-activity-3/400/300',
+        signup: 40,
+        limit: 40,
+        start_time: daysAgo(2),
+        address: '托管活动室',
+        status: 0,
+        create_time: daysAgo(20),
+        content: '<h4>课程介绍</h4><p>「周末亲子手工课」是社区四点半课堂系列品牌活动，本期为<strong>第 12 期</strong>，主题为「非遗竹编小船」，由专业手工老师带领孩子们感受传统竹编技艺的魅力。</p><h4>课程安排</h4><ul><li><strong>上课时间：</strong>周六下午 14:30 - 16:00</li><li><strong>上课地点：</strong>托管活动室（3 栋架空层）</li><li><strong>适合年龄：</strong>4 - 10 岁儿童，须家长陪同</li><li><strong>材料费用：</strong>免费（由社区活动经费支持）</li></ul><h4>课堂流程</h4><ul><li>14:30 - 14:45 签到入场，领取材料包</li><li>14:45 - 15:30 老师示范竹编技法，亲子协作制作</li><li>15:30 - 15:50 作品展示与合影</li><li>15:50 - 16:00 整理收纳，颁发「小小手艺人」贴纸</li></ul><h4>温馨提示</h4><p>本期名额已报满，感谢大家的热情参与！后续将继续开设新一期课程，请关注 APP 首页活动预告。已报名家庭如无法到场，请提前在 APP 取消报名，将名额留给其他家庭。</p><p style="text-align:center;"><img src="https://picsum.photos/seed/ghj-activity-3a/600/340" alt="亲子手工课" style="max-width:100%;border-radius:8px;" /></p><blockquote>课程咨询：0731-8888 6666 转 5（四点半课堂）</blockquote>',
+    },
 ]
 
 export const helperList = [
