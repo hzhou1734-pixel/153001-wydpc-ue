@@ -126,7 +126,7 @@
                     <Editor v-model="dishForm.detail" mode="simple" height="260px" class="!w-full" />
                 </el-form-item>
                 <el-form-item label="封面图">
-                    <el-input v-model="dishForm.cover" placeholder="请输入封面图地址" />
+                    <ImageUpload v-model="dishForm.cover" :width="160" :height="100" tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
                 <el-form-item label="排序">
                     <el-input-number v-model="dishForm.sort" :min="0" />
@@ -183,6 +183,7 @@ import { getDailyMenu, getMealComboList, getMealServiceList, saveDailyMenu } fro
 import { usePaging } from '@/hooks/usePaging'
 import { Plus } from '@element-plus/icons-vue'
 import Editor from '@/components/editor/index.vue'
+import ImageUpload from '@/components/image-upload/index.vue'
 
 const activeTab = ref('dishes')
 

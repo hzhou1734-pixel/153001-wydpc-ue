@@ -75,7 +75,7 @@
                     <el-input v-model="editForm.desc" type="textarea" :rows="3" placeholder="请输入服务描述" />
                 </el-form-item>
                 <el-form-item label="封面图">
-                    <el-input v-model="editForm.cover" placeholder="请输入封面图地址" />
+                    <ImageUpload v-model="editForm.cover" :width="160" :height="100" tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
                 <el-form-item label="排序">
                     <el-input-number v-model="editForm.sort" :min="0" />
@@ -99,6 +99,7 @@
 import { getEscortPriceSetting, getEscortServiceList, saveEscortPriceSetting } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 import { Plus } from '@element-plus/icons-vue'
+import ImageUpload from '@/components/image-upload/index.vue'
 
 const { pager, getLists } = usePaging({ fetchFun: getEscortServiceList, firstLoading: true })
 

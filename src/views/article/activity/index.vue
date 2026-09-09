@@ -114,10 +114,7 @@
                     <el-input v-model="editForm.title" placeholder="请输入活动标题" maxlength="60" show-word-limit />
                 </el-form-item>
                 <el-form-item label="活动封面图" required>
-                    <div class="w-full">
-                        <el-input v-model="editForm.cover" placeholder="请输入封面图地址（留空自动生成）" clearable />
-                        <el-image v-if="editForm.cover" :src="editForm.cover" fit="cover" class="w-40 h-24 rounded mt-2" />
-                    </div>
+                    <ImageUpload v-model="editForm.cover" :width="200" :height="125" tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
                 <el-form-item label="活动时间" required>
                     <el-input v-model="editForm.activity_time" placeholder="如：9月15日（中秋节）18:30-21:00" />
@@ -182,6 +179,7 @@ import { getActivityList, getActivitySignupList, activityEnded } from '@/mock/ap
 import { usePaging } from '@/hooks/usePaging'
 import { Search, Plus } from '@element-plus/icons-vue'
 import Editor from '@/components/editor/index.vue'
+import ImageUpload from '@/components/image-upload/index.vue'
 
 const queryParams = reactive({ keyword: '', activity_status: '', start_time: '', end_time: '' })
 const { pager, getLists } = usePaging({ fetchFun: getActivityList, params: queryParams, firstLoading: true })
@@ -246,6 +244,7 @@ const submitEdit = () => {
     if (!signupRange.value?.length) return ElMessage.warning('请选择报名时间范围')
     if (!editForm.limit) return ElMessage.warning('请设置报名总人数')
     if (!editForm.content.trim()) return ElMessage.warning('请输入详情介绍')
+    if (!editForm.cover) return ElMessage.warning('请上传活动封面图')
     const cover = editForm.cover.trim() || `https://picsum.photos/seed/ghj-activity-${Date.now() % 1000}/400/300`
     const payload = {
         ...editForm,

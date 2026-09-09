@@ -67,10 +67,7 @@
                     <el-input v-model="editForm.name" placeholder="如：首页-中秋活动推广" maxlength="40" show-word-limit />
                 </el-form-item>
                 <el-form-item label="Banner图" required>
-                    <div class="w-full">
-                        <el-input v-model="editForm.image" placeholder="请输入Banner图地址（留空自动生成）" clearable />
-                        <el-image v-if="editForm.image" :src="editForm.image" fit="cover" class="w-full h-28 rounded mt-2" />
-                    </div>
+                    <ImageUpload v-model="editForm.image" width="100%" :height="112" tip="建议尺寸 750×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
                 <el-form-item label="排序">
                     <el-input-number v-model="editForm.sort" :min="0" :max="999" />
@@ -114,6 +111,7 @@
 import { getBannerList, getActivityList } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 import { Search, Plus } from '@element-plus/icons-vue'
+import ImageUpload from '@/components/image-upload/index.vue'
 
 const queryParams = reactive({ keyword: '', status: '', start_time: '', end_time: '' })
 const { pager, getLists } = usePaging({ fetchFun: getBannerList, params: queryParams, firstLoading: true })
@@ -194,7 +192,8 @@ const openEdit = (row: any) => {
 }
 const submitEdit = () => {
     if (!editForm.name.trim()) return ElMessage.warning('请输入Banner图标题')
-    const image = editForm.image.trim() || `https://picsum.photos/seed/ghj-banner-${Date.now() % 1000}/750/300`
+    if (!editForm.image) return ElMessage.warning('请上传Banner图')
+    const image = editForm.image
     const link = buildLink()
     if (editForm.id) {
         const row = pager.lists.find((i: any) => i.id === editForm.id)
