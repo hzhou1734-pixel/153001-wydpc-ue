@@ -2,6 +2,7 @@
 import { getCommunityList } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 import { useRouter } from 'vue-router'
+import ImageUpload from '@/components/image-upload/index.vue'
 
 const router = useRouter()
 
@@ -25,11 +26,6 @@ const handleReset = () => {
     searchParams.keyword = ''
     searchParams.address = ''
     resetPage()
-}
-
-// 随机生成门头图（模拟上传）
-const randomCover = () => {
-    return `https://picsum.photos/seed/ghj-${Math.random().toString(36).slice(2, 8)}/400/300`
 }
 
 // 新增/编辑弹窗
@@ -102,7 +98,7 @@ const openAdd = () => {
     Object.assign(editForm, {
         id: 0,
         name: '',
-        cover: randomCover(),
+        cover: '',
         region: [],
         address: '',
         buildings: 0,
@@ -125,10 +121,6 @@ const openEdit = (row: any) => {
         status: row.status
     })
     showEdit.value = true
-}
-
-const changeCover = () => {
-    editForm.cover = randomCover()
 }
 
 const submitEdit = () => {
@@ -245,12 +237,19 @@ onMounted(getLists)
                 <el-table-column label="小区门头" width="100">
                     <template #default="{ row }">
                         <el-image
+                            v-if="row.cover"
                             :src="row.cover"
                             :preview-src-list="[row.cover]"
                             preview-teleported
                             fit="cover"
                             class="w-16 h-11 rounded"
                         />
+                        <div
+                            v-else
+                            class="w-16 h-11 rounded flex items-center justify-center text-xs text-tx-secondary bg-fill-light"
+                        >
+                            暂无门头照
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column label="小区名称" prop="name" min-width="150" show-overflow-tooltip>
@@ -269,7 +268,7 @@ onMounted(getLists)
                 <el-table-column label="状态" width="80" align="center">
                     <template #default="{ row }">
                         <el-tag :type="row.status === 1 ? 'success' : 'info'" size="small">
-                            {{ row.status === 1 ? '营业中' : '已停用' }}
+                            {{ row.status === 1 ? '启用' : '已停用' }}
                         </el-tag>
                     </template>
                 </el-table-column>
@@ -300,18 +299,8 @@ onMounted(getLists)
 
         <el-dialog v-model="showEdit" :title="editTitle" width="560px">
             <el-form label-width="90px">
-                <el-form-item label="小区门头" required>
-                    <div class="flex items-center gap-3">
-                        <el-image
-                            v-if="editForm.cover"
-                            :src="editForm.cover"
-                            :preview-src-list="[editForm.cover]"
-                            preview-teleported
-                            fit="cover"
-                            class="w-24 h-16 rounded border border-br"
-                        />
-                        <el-button size="small" @click="changeCover">更换门头图</el-button>
-                    </div>
+                <el-form-item label="小区门头照">
+                    <ImageUpload v-model="editForm.cover" :width="160" :height="100" text="上传门头照" tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
                 <el-form-item label="小区名称" required>
                     <el-input v-model="editForm.name" placeholder="请输入小区名称" />
@@ -341,7 +330,7 @@ onMounted(getLists)
                     </div>
                 </el-form-item>
                 <el-form-item label="状态">
-                    <el-switch v-model="editForm.status" :active-value="1" :inactive-value="0" active-text="营业中" inactive-text="停用" />
+                    <el-switch v-model="editForm.status" :active-value="1" :inactive-value="0" active-text="启用" inactive-text="停用" />
                 </el-form-item>
             </el-form>
             <template #footer>

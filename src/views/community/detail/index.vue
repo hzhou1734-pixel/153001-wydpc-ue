@@ -48,7 +48,7 @@ const infoItems = computed(() => [
     { label: '房屋数', value: `${rooms.value.length} 套` },
     { label: '已认证住户', value: `${certifiedOwners.value.filter((item: any) => item.status === 1).length} 人` },
     { label: '注册用户', value: `${communityUsers.value.length} 人` },
-    { label: '状态', value: detail.value.status === 1 ? '营业中' : '已停用' },
+    { label: '状态', value: detail.value.status === 1 ? '启用' : '已停用' },
     { label: '创建时间', value: detail.value.create_time || '-' },
 ])
 
@@ -92,7 +92,7 @@ onMounted(getInfo)
                     <div class="flex items-center gap-3">
                         <span class="text-xl font-bold">{{ detail.name }}</span>
                         <el-tag :type="detail.status === 1 ? 'success' : 'info'" size="small">
-                            {{ detail.status === 1 ? '营业中' : '已停用' }}
+                            {{ detail.status === 1 ? '启用' : '已停用' }}
                         </el-tag>
                     </div>
                     <div class="text-tx-secondary text-sm mt-3 flex items-center">
