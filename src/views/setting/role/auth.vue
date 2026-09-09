@@ -7,13 +7,6 @@
         :close-on-click-modal="false"
     >
         <div v-loading="loading">
-            <el-alert
-                type="info"
-                :closable="false"
-                show-icon
-                class="!mb-3"
-                title="勾选页面节点即授予「查看」权限；其下子节点为该页面实际存在的操作权限（新增、编辑、删除、审核、导出、派单等）"
-            />
             <div class="flex items-center gap-4 mb-2">
                 <el-checkbox v-model="checkStrictly" label="父子联动" />
                 <el-button link type="primary" @click="toggleExpand">展开/折叠</el-button>
@@ -31,13 +24,7 @@
                     show-checkbox
                 >
                     <template #default="{ data }">
-                        <span class="flex items-center">
-                            <span>{{ data.name }}</span>
-                            <el-tag v-if="data.type === 'op'" size="small" type="info" class="!ml-2">
-                                操作
-                            </el-tag>
-                            <el-tag v-else-if="data.type === 'page'" size="small" class="!ml-2">页面</el-tag>
-                        </span>
+                        <span>{{ data.name }}</span>
                     </template>
                 </el-tree>
             </el-scrollbar>
