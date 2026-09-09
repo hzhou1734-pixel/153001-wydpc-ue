@@ -37,6 +37,7 @@ import {
     dashboardBusiness,
     dashboardTodo,
 } from './data'
+import { permTree, rolePerms } from './perms'
 
 /** 通用分页包装 */
 function page<T>(lists: T[], params: Record<string, any> = {}) {
@@ -355,6 +356,22 @@ export function getHelperList(params?: Record<string, any>) {
 export function getBannerList(params?: Record<string, any>) {
     const lists = filterList(bannerList, params, { keywordFields: ['name'], statusField: 'status' })
     return page(lists, params)
+}
+
+// ============ 角色权限 ============
+/** 权限树（按现有功能页面生成，仅包含各页面实际存在的操作） */
+export function getPermTree() {
+    return Promise.resolve(permTree)
+}
+/** 角色已分配的权限标识 */
+export function getRolePerms(params?: Record<string, any>) {
+    return Promise.resolve({ id: Number(params?.id), perms: rolePerms[Number(params?.id)] || [] })
+}
+/** 保存角色权限 */
+export function saveRolePerms(params?: Record<string, any>) {
+    const id = Number(params?.id)
+    rolePerms[id] = [...(params?.perms || [])]
+    return Promise.resolve({ id, perms: rolePerms[id] })
 }
 
 // ============ 财务管理 ============
