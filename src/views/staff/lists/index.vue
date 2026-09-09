@@ -40,7 +40,8 @@ const editForm = reactive({
     mobile: '',
     role_id: 1,
     community: '',
-    buildings: [] as string[]
+    buildings: [] as string[],
+    status: 1
 })
 
 // 负责楼栋选项：仅取楼栋层级（不含单元），并按所属社区联动过滤
@@ -99,17 +100,11 @@ function onAvatarFileChange(e: Event) {
     reader.readAsDataURL(file)
     input.value = ''
 }
-function onAvatarRandom() {
-    editForm.avatar = `https://picsum.photos/seed/ghj-staff-${Math.floor(Math.random() * 999)}/200/200`
-}
-function onAvatarClear() {
-    editForm.avatar = ''
-}
 
 function openAdd() {
     editTitle.value = '新增员工'
     editingId.value = null
-    Object.assign(editForm, { name: '', avatar: '', mobile: '', role_id: 1, community: '', buildings: [] })
+    Object.assign(editForm, { name: '', avatar: '', mobile: '', role_id: 1, community: '', buildings: [], status: 1 })
     showEdit.value = true
 }
 
@@ -122,7 +117,8 @@ function openEdit(row: any) {
         mobile: row.mobile,
         role_id: row.role_id,
         community: row.community,
-        buildings: row.buildings && row.buildings !== '-' ? row.buildings.split('、') : []
+        buildings: row.buildings && row.buildings !== '-' ? row.buildings.split('、') : [],
+        status: row.status
     })
     showEdit.value = true
 }
@@ -147,7 +143,7 @@ function submitEdit() {
             buildings: buildingStr,
             orders: 0,
             earnings: '0.00',
-            status: 1,
+            status: editForm.status,
             create_time: new Date().toLocaleDateString('zh-CN')
         })
         ElMessage.success('新增成功')
@@ -161,6 +157,7 @@ function submitEdit() {
             row.role_id = editForm.role_id
             row.community = editForm.community
             row.buildings = buildingStr
+            row.status = editForm.status
         }
         ElMessage.success('保存成功')
     }
@@ -263,8 +260,6 @@ function handleDelete(row: any) {
                         <div class="ml-4">
                             <div class="flex flex-wrap gap-2">
                                 <el-button @click="triggerAvatarUpload">上传头像</el-button>
-                                <el-button @click="onAvatarRandom">随机生成</el-button>
-                                <el-button v-if="editForm.avatar" @click="onAvatarClear">清除</el-button>
                             </div>
                             <div class="mt-2 text-xs text-tx-secondary leading-relaxed">
                                 支持 jpg/png 格式，5MB 以内<br />上传后自动居中裁剪为正方形
@@ -294,6 +289,12 @@ function handleDelete(row: any) {
                     <el-select v-model="editForm.community" placeholder="请选择所属社区" class="w-full" @change="onCommunityChange">
                         <el-option v-for="item in communityOptions" :key="item" :label="item" :value="item" />
                     </el-select>
+                </el-form-item>
+                <el-form-item label="账号状态">
+                    <el-radio-group v-model="editForm.status">
+                        <el-radio :value="1">启用</el-radio>
+                        <el-radio :value="0">停用</el-radio>
+                    </el-radio-group>
                 </el-form-item>
                 <el-form-item v-if="editForm.role_id === 4" label="负责楼栋" required>
                     <el-select v-model="editForm.buildings" multiple placeholder="请选择负责楼栋（必选）" class="w-full">
