@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "vite",
         "preview": "vite preview --port 4173",
-        "build": "vite build && node scripts/release.mjs",
+        "build": "vite build",
+        "build:release": "vite build --base=/admin/ && node scripts/release.mjs",
         "type-check": "vue-tsc --noEmit",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
     },

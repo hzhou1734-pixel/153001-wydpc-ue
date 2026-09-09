@@ -37,7 +37,9 @@ function getElementPlusStylePaths() {
 }
 
 export default defineConfig({
-    base: '/admin/',
+    // 部署基路径：默认根路径 '/'，适配 EdgeOne/静态托管直接部署到域名根目录。
+    // 若需部署到子目录（如 /admin/），构建时传参覆盖：vite build --base=/admin/
+    base: process.env.VITE_PUBLIC_PATH || '/',
     server: {
         host: '0.0.0.0',
         hmr: true,
