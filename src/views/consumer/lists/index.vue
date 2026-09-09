@@ -34,6 +34,7 @@
                         <el-avatar :src="row.avatar" :size="44" />
                     </template>
                 </el-table-column>
+                <el-table-column label="ID" prop="id" width="70" />
                 <el-table-column label="用户昵称" prop="nickname" min-width="110" />
                 <el-table-column label="手机号码" prop="mobile" min-width="130" />
                 <el-table-column label="所属小区" prop="community" min-width="150" />
@@ -47,6 +48,12 @@
                 </el-table-column>
                 <el-table-column label="账户余额" min-width="120" align="right">
                     <template #default="{ row }">¥{{ row.balance }}</template>
+                </el-table-column>
+                <el-table-column label="未结算金额" min-width="120" align="right">
+                    <template #default="{ row }">¥{{ row.unsettled_amount || '0.00' }}</template>
+                </el-table-column>
+                <el-table-column label="已结算金额" min-width="120" align="right">
+                    <template #default="{ row }">¥{{ row.settled_amount || '0.00' }}</template>
                 </el-table-column>
                 <el-table-column label="服务订单" min-width="100" align="center">
                     <template #default="{ row }">{{ row.orders }} 单</template>
@@ -64,7 +71,7 @@
                         <el-button type="primary" link>
                             <router-link
                                 :to="{
-                                    path: getRoutePath('user.user/detail'),
+                                    path: getRoutePath('consumer.lists/detail'),
                                     query: { id: row.id }
                                 }"
                             >

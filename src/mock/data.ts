@@ -268,12 +268,12 @@ export const certifyList = [
 
 // ==================== 用户 ====================
 export const consumerList = [
-    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 0, balance: '1286.00', orders: 23, status: 1, create_time: daysAgo(180) },
-    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, balance: '356.50', orders: 15, status: 1, create_time: daysAgo(165) },
-    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 0, balance: '0.00', orders: 8, status: 1, create_time: daysAgo(120) },
-    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, balance: '58.00', orders: 3, status: 1, create_time: daysAgo(90) },
-    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, balance: '2680.00', orders: 46, status: 0, create_time: daysAgo(60) },
-    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, balance: '92.30', orders: 12, status: 1, create_time: daysAgo(30) },
+    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 0, balance: '1286.00', orders: 23, unsettled_amount: '316.00', settled_amount: '18650.00', status: 1, create_time: daysAgo(180) },
+    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, balance: '356.50', orders: 15, unsettled_amount: '28.00', settled_amount: '9420.00', status: 1, create_time: daysAgo(165) },
+    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 0, balance: '0.00', orders: 8, unsettled_amount: '0.00', settled_amount: '3280.00', status: 1, create_time: daysAgo(120) },
+    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, balance: '58.00', orders: 3, unsettled_amount: '0.00', settled_amount: '1180.00', status: 1, create_time: daysAgo(90) },
+    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, balance: '2680.00', orders: 46, unsettled_amount: '540.00', settled_amount: '32140.00', status: 0, create_time: daysAgo(60) },
+    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, balance: '92.30', orders: 12, unsettled_amount: '150.00', settled_amount: '6890.00', status: 1, create_time: daysAgo(30) },
 ]
 
 // ==================== 员工 ====================
@@ -343,7 +343,7 @@ export const barList = [
     { id: 2, title: '周末亲子活动照片分享，孩子们玩得很开心！', author: '李娜', community: '颐景园·江南里', views: 892, replies: 65, cover: 'https://picsum.photos/seed/ghj-bar-2/400/300', status: 1, create_time: daysAgo(3), audit: 1, audit_reason: '', audit_time: daysAgo(3), content: '上周六物业组织的亲子运动会太有意思了！拔河、两人三足、套圈圈，孩子们玩得不亦乐乎，我家娃回家路上一直念叨下次还要参加。感谢物业的精心组织，也谢谢各位志愿者业主的帮忙，照片分享给大家，欢迎下期多多报名~' },
     { id: 3, title: '求推荐靠谱的家政保洁阿姨', author: '赵敏', community: '绿城·桂语江南', views: 234, replies: 41, cover: 'https://picsum.photos/seed/ghj-bar-3/400/300', status: 0, create_time: daysAgo(2), audit: 2, audit_reason: '内容涉及外部广告联系方式，不符合社区发帖规范', audit_time: daysAgo(2), content: '最近工作太忙，想找一位固定的家政保洁阿姨，每周来打扫两到三次，最好有经验、手脚麻利的。有推荐的朋友可以联系我，微信在此……' },
     { id: 4, title: '5号楼电梯按钮面板脱落，已拍照报修', author: '王强', community: '颐景园·江南里', views: 128, replies: 12, cover: 'https://picsum.photos/seed/ghj-bar-4/400/300', status: 1, create_time: daysAgo(0), audit: 0, audit_reason: '', audit_time: '', content: '今天早上发现5号楼2单元的电梯按钮面板整个脱落挂在半空，小孩路过容易碰到，比较危险。已经拍照发到了物业报修群，请物业尽快派人来处理，也提醒邻居们乘坐电梯时注意安全。' },
-    { id: 5, title: '转让九成新婴儿床，同小区自提', author: '陈晓', community: '绿城·桂语江南', views: 86, replies: 9, cover: 'https://picsum.photos/seed/ghj-bar-5/400/300', status: 1, create_time: daysAgo(0), audit: 0, audit_reason: '', audit_time: '', content: '孩子长大了用不上，出一台九成新实木婴儿床，带床垫和蚊帐，原价1200元现400元转让，仅限同小区业主自提，可以先上门看货。有意向的邻居评论区留言或私信我。' },
+    { id: 5, title: '转让九成新婴儿床，同小区自提', author: '陈晨', community: '保利·天悦湾', views: 86, replies: 9, cover: 'https://picsum.photos/seed/ghj-bar-5/400/300', status: 1, create_time: daysAgo(0), audit: 0, audit_reason: '', audit_time: '', content: '孩子长大了用不上，出一台九成新实木婴儿床，带床垫和蚊帐，原价1200元现400元转让，仅限同小区业主自提，可以先上门看货。有意向的邻居评论区留言或私信我。' },
 ]
 
 export const wonderfulList = [
@@ -461,18 +461,18 @@ export const activityList = [
 export const activitySignupList = [
     // 活动 1：中秋游园会
     { id: 101, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', phone: '13812341001', room: '1栋1单元101', signup_count: 3, signup_time: daysAgo(2, ' 09:12:00'), remark: '一家三口参加' },
-    { id: 102, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李慧', phone: '13912343284', room: '2栋2单元802', signup_count: 2, signup_time: daysAgo(2, ' 10:35:00'), remark: '' },
-    { id: 103, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王建国', phone: '13712347656', room: '3栋1单元501', signup_count: 4, signup_time: daysAgo(1, ' 14:20:00'), remark: '带父母一起参加' },
-    { id: 104, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '刘芳', phone: '13612345012', room: '1栋2单元1103', signup_count: 2, signup_time: daysAgo(1, ' 16:48:00'), remark: '' },
+    { id: 102, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', phone: '13812341002', room: '2栋1单元802', signup_count: 2, signup_time: daysAgo(2, ' 10:35:00'), remark: '' },
+    { id: 103, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王强', phone: '13812341003', room: '1栋1单元201', signup_count: 4, signup_time: daysAgo(1, ' 14:20:00'), remark: '带父母一起参加' },
+    { id: 104, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', phone: '13812341004', room: '2栋2单元1103', signup_count: 2, signup_time: daysAgo(1, ' 16:48:00'), remark: '' },
     { id: 105, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈明辉', phone: '13512348890', room: '5栋1单元201', signup_count: 1, signup_time: daysAgo(0, ' 08:05:00'), remark: '' },
     { id: 106, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '赵秀英', phone: '13412343327', room: '4栋2单元604', signup_count: 2, signup_time: daysAgo(0, ' 11:30:00'), remark: '希望安排靠前座位' },
     // 活动 2：老年健康义诊
     { id: 201, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', phone: '13312346612', room: '2栋1单元301', signup_count: 1, signup_time: daysAgo(4, ' 09:40:00'), remark: '68岁，需测血糖' },
     { id: 202, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周桂兰', phone: '13212349045', room: '3栋2单元1502', signup_count: 2, signup_time: daysAgo(4, ' 10:15:00'), remark: '' },
-    { id: 203, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-9/100/100', nickname: '吴建军', phone: '13112344478', room: '6栋1单元101', signup_count: 1, signup_time: daysAgo(3, ' 15:22:00'), remark: '颈肩腰腿痛咨询' },
+    { id: 203, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', phone: '13812341005', room: '3栋2单元502', signup_count: 1, signup_time: daysAgo(3, ' 15:22:00'), remark: '颈肩腰腿痛咨询' },
     { id: 204, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '13012342265', room: '5栋2单元903', signup_count: 3, signup_time: daysAgo(3, ' 17:50:00'), remark: '替父母报名' },
     // 活动 3：周末亲子手工课
-    { id: 301, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-11/100/100', nickname: '林晓梅', phone: '15912347412', room: '1栋1单元202', signup_count: 2, signup_time: daysAgo(15, ' 20:10:00'), remark: '孩子5岁' },
+    { id: 301, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', phone: '13812341006', room: '5栋1单元1103', signup_count: 2, signup_time: daysAgo(15, ' 20:10:00'), remark: '孩子5岁' },
     { id: 302, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-12/100/100', nickname: '郑凯', phone: '15812343856', room: '2栋2单元1104', signup_count: 2, signup_time: daysAgo(14, ' 12:45:00'), remark: '' },
     { id: 303, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(12, ' 18:30:00'), remark: '希望多开自然主题' },
     { id: 304, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-14/100/100', nickname: '罗文杰', phone: '15612345033', room: '6栋2单元1301', signup_count: 2, signup_time: daysAgo(10, ' 09:55:00'), remark: '' },
@@ -701,6 +701,38 @@ export const dashboardTodo = [
     { id: 6, name: '待处理退款申请', count: 1, path: '/finance/flow', perms: 'finance.flow/lists' },
     { id: 7, name: '待审核帖子', count: 1, path: '/article/bar', perms: 'article.bar/lists' },
     { id: 8, name: '待上线活动', count: 1, path: '/article/activity', perms: 'article.activity/lists' },
+]
+
+// ==================== 用户月度结算明细（用户详情-结算信息板块） ====================
+export const userSettleList = [
+    { id: 1, user_id: 1, settle_sn: 'JS20260901001', order_type: '托管服务', amount: '1280.00', status: 2, settle_time: daysAgo(8, ' 10:30:00'), create_time: daysAgo(9, ' 18:20:00'), remark: '8月托管服务费结算' },
+    { id: 2, user_id: 1, settle_sn: 'JS20260901002', order_type: '膳食服务', amount: '465.00', status: 2, settle_time: daysAgo(8, ' 10:35:00'), create_time: daysAgo(9, ' 18:25:00'), remark: '' },
+    { id: 3, user_id: 1, settle_sn: 'JS20260902001', order_type: '陪诊服务', amount: '368.00', status: 1, settle_time: '', create_time: daysAgo(7, ' 14:10:00'), remark: '服务确认后 T+7 结算' },
+    { id: 4, user_id: 2, settle_sn: 'JS20260901003', order_type: '托管服务', amount: '960.00', status: 2, settle_time: daysAgo(8, ' 11:00:00'), create_time: daysAgo(9, ' 19:05:00'), remark: '' },
+    { id: 5, user_id: 2, settle_sn: 'JS20260903001', order_type: '家政保洁', amount: '180.00', status: 1, settle_time: '', create_time: daysAgo(6, ' 09:40:00'), remark: '' },
+    { id: 6, user_id: 3, settle_sn: 'JS20260801001', order_type: '膳食服务', amount: '328.00', status: 2, settle_time: daysAgo(38, ' 15:20:00'), create_time: daysAgo(39, ' 17:30:00'), remark: '7月膳食服务费结算' },
+    { id: 7, user_id: 5, settle_sn: 'JS20260901004', order_type: '托管服务', amount: '2160.00', status: 2, settle_time: daysAgo(8, ' 11:30:00'), create_time: daysAgo(9, ' 20:15:00'), remark: '' },
+    { id: 8, user_id: 5, settle_sn: 'JS20260904001', order_type: '陪诊服务', amount: '540.00', status: 0, settle_time: '', create_time: daysAgo(4, ' 13:25:00'), remark: '待服务完成确认' } as any,
+    { id: 9, user_id: 6, settle_sn: 'JS20260902002', order_type: '家政保洁', amount: '150.00', status: 1, settle_time: '', create_time: daysAgo(7, ' 10:50:00'), remark: '' },
+]
+
+// ==================== 用户健康手环（用户详情-健康手环板块） ====================
+export const healthBandList = [
+    { id: 1, user_id: 1, nickname: '张伟', band_sn: 'BAND2026A08801', bind_time: daysAgo(90, ' 09:20:00'), status: 1, battery: 78, heart_rate: 76, steps: 8236, sleep: '7小时20分', last_sync: daysAgo(0, ' 07:45:00') },
+    { id: 2, user_id: 1, nickname: '张伟', band_sn: 'BAND2026A08802', bind_time: daysAgo(30, ' 14:10:00'), status: 1, battery: 92, heart_rate: 72, steps: 6412, sleep: '6小时55分', last_sync: daysAgo(0, ' 08:02:00'), note: '为家中老人代绑' } as any,
+    { id: 3, user_id: 2, nickname: '李娜', band_sn: 'BAND2026B11205', bind_time: daysAgo(60, ' 10:30:00'), status: 1, battery: 45, heart_rate: 81, steps: 10245, sleep: '7小时05分', last_sync: daysAgo(0, ' 07:30:00') },
+    { id: 4, user_id: 3, nickname: '王强', band_sn: 'BAND2026C33018', bind_time: daysAgo(15, ' 16:45:00'), status: 1, battery: 88, heart_rate: 68, steps: 4530, sleep: '8小时10分', last_sync: daysAgo(0, ' 06:58:00') },
+    { id: 5, user_id: 5, nickname: '陈晨', band_sn: 'BAND2026D55602', bind_time: daysAgo(45, ' 11:20:00'), status: 0, battery: 12, heart_rate: 0, steps: 0, sleep: '—', last_sync: daysAgo(5, ' 22:10:00'), note: '电量耗尽离线，已短信提醒' } as any,
+    { id: 6, user_id: 6, nickname: '刘洋', band_sn: 'BAND2026E77811', bind_time: daysAgo(20, ' 09:05:00'), status: 1, battery: 66, heart_rate: 74, steps: 7310, sleep: '7小时40分', last_sync: daysAgo(0, ' 07:12:00') },
+]
+
+// ==================== 用户资源大厅发布记录（用户详情-资源大厅板块） ====================
+export const resourceList = [
+    { id: 1, user_id: 1, title: '转让九成新婴儿床，同小区自提', category: '闲置转让', price: '260.00', status: 1, views: 186, create_time: daysAgo(6, ' 20:15:00'), cover: 'https://picsum.photos/seed/ghj-resource-1a/300/200' },
+    { id: 2, user_id: 2, title: '专业钢琴一对一陪练，可上门', category: '家政服务', price: '150.00', status: 1, views: 94, create_time: daysAgo(12, ' 14:30:00'), cover: 'https://picsum.photos/seed/ghj-resource-2a/300/200' },
+    { id: 3, user_id: 3, title: '求购二手婴儿推车，九成新以上', category: '闲置求购', price: '面议', status: 1, views: 57, create_time: daysAgo(3, ' 09:20:00'), cover: 'https://picsum.photos/seed/ghj-resource-3a/300/200' },
+    { id: 4, user_id: 4, title: '周末拼车往返机场，找同小区邻居', category: '拼车出行', price: '40.00', status: 0, views: 132, create_time: daysAgo(20, ' 18:40:00'), cover: 'https://picsum.photos/seed/ghj-resource-4a/300/200' },
+    { id: 5, user_id: 5, title: '儿童绘本低价转，经典书单一次打包', category: '闲置转让', price: '80.00', status: 1, views: 45, create_time: daysAgo(9, ' 11:05:00'), cover: 'https://picsum.photos/seed/ghj-resource-5a/300/200' },
 ]
 
 /** 分页辅助：模拟 usePaging 需要的 { count, lists } 返回 */
