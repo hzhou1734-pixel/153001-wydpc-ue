@@ -57,6 +57,55 @@ function onCommunityChange() {
     editForm.buildings = []
 }
 
+// 头像编辑：本地选择图片 → 居中裁剪为正方形 → 压缩为 200x200 base64（纯前端，mock 项目无上传接口）
+const avatarInputRef = ref<HTMLInputElement>()
+function triggerAvatarUpload() {
+    avatarInputRef.value?.click()
+}
+function onAvatarFileChange(e: Event) {
+    const input = e.target as HTMLInputElement
+    const file = input.files?.[0]
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+        ElMessage.warning('请选择图片文件')
+        input.value = ''
+        return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        ElMessage.warning('图片大小不能超过 5MB')
+        input.value = ''
+        return
+    }
+    const reader = new FileReader()
+    reader.onload = () => {
+        const img = new Image()
+        img.onload = () => {
+            const size = 200
+            const canvas = document.createElement('canvas')
+            canvas.width = size
+            canvas.height = size
+            const ctx = canvas.getContext('2d')
+            if (!ctx) return
+            // 居中裁剪为正方形
+            const side = Math.min(img.width, img.height)
+            const sx = (img.width - side) / 2
+            const sy = (img.height - side) / 2
+            ctx.drawImage(img, sx, sy, side, side, 0, 0, size, size)
+            editForm.avatar = canvas.toDataURL('image/jpeg', 0.85)
+            ElMessage.success('头像已更新')
+        }
+        img.src = reader.result as string
+    }
+    reader.readAsDataURL(file)
+    input.value = ''
+}
+function onAvatarRandom() {
+    editForm.avatar = `https://picsum.photos/seed/ghj-staff-${Math.floor(Math.random() * 999)}/200/200`
+}
+function onAvatarClear() {
+    editForm.avatar = ''
+}
+
 function openAdd() {
     editTitle.value = '新增员工'
     editingId.value = null
@@ -90,7 +139,7 @@ function submitEdit() {
         list.unshift({
             id: Date.now(),
             name: editForm.name,
-            avatar: `https://picsum.photos/seed/ghj-staff-${Date.now() % 100}/100/100`,
+            avatar: editForm.avatar || `https://picsum.photos/seed/ghj-staff-${Date.now() % 100}/100/100`,
             mobile: editForm.mobile,
             role: roleName,
             role_id: editForm.role_id,
@@ -106,6 +155,7 @@ function submitEdit() {
         const row = list.find((i) => i.id === editingId.value)
         if (row) {
             row.name = editForm.name
+            row.avatar = editForm.avatar || `https://picsum.photos/seed/ghj-staff-${Date.now() % 100}/100/100`
             row.mobile = editForm.mobile
             row.role = roleName
             row.role_id = editForm.role_id
@@ -207,6 +257,28 @@ function handleDelete(row: any) {
 
         <el-dialog v-model="showEdit" :title="editTitle" width="560px">
             <el-form label-width="90px">
+                <el-form-item label="员工头像">
+                    <div class="flex items-center">
+                        <el-avatar :size="80" :src="editForm.avatar || undefined" />
+                        <div class="ml-4">
+                            <div class="flex flex-wrap gap-2">
+                                <el-button @click="triggerAvatarUpload">上传头像</el-button>
+                                <el-button @click="onAvatarRandom">随机生成</el-button>
+                                <el-button v-if="editForm.avatar" @click="onAvatarClear">清除</el-button>
+                            </div>
+                            <div class="mt-2 text-xs text-tx-secondary leading-relaxed">
+                                支持 jpg/png 格式，5MB 以内<br />上传后自动居中裁剪为正方形
+                            </div>
+                        </div>
+                    </div>
+                    <input
+                        ref="avatarInputRef"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        style="display: none"
+                        @change="onAvatarFileChange"
+                    />
+                </el-form-item>
                 <el-form-item label="员工姓名" required>
                     <el-input v-model="editForm.name" placeholder="请输入员工姓名" maxlength="20" />
                 </el-form-item>
