@@ -51,13 +51,11 @@ export const roomList = [
     { id: 5, name: '201', unit_id: 201, building_id: 2, owner: '陈晨', phone: '138****1005', certified: 1 },
 ]
 
-// ==================== 认证列表 ====================
+// ==================== 认证列表（仅业主认证，家属/租户不做认证） ====================
 export const certifyList = [
     { id: 1, user_id: 1, nickname: '张伟', mobile: '138****1001', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 0, create_time: daysAgo(1) },
     { id: 2, user_id: 2, nickname: '李娜', mobile: '138****1002', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '102', type: '业主', status: 1, create_time: daysAgo(3) },
-    { id: 3, user_id: 3, nickname: '王强', mobile: '138****1003', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '201', type: '家属', status: 0, create_time: daysAgo(0, ' 14:20:00') },
-    { id: 4, user_id: 4, nickname: '赵敏', mobile: '138****1004', community: '绿城·桂语江南', building: '2栋', unit: '1单元', room: '301', type: '租户', status: 2, create_time: daysAgo(5) },
-    { id: 5, user_id: 5, nickname: '陈晨', mobile: '138****1005', community: '保利·天悦湾', building: '3栋', unit: '2单元', room: '502', type: '业主', status: 1, create_time: daysAgo(7) },
+    { id: 3, user_id: 5, nickname: '陈晨', mobile: '138****1005', community: '保利·天悦湾', building: '3栋', unit: '2单元', room: '502', type: '业主', status: 1, create_time: daysAgo(7) },
 ]
 
 // ==================== 用户 ====================
@@ -261,7 +259,7 @@ export const dashboardBusiness = {
 }
 
 export const dashboardTodo = [
-    { id: 1, name: '待审核认证申请', count: 2, path: '/community/certify', perms: 'community.certify/lists' },
+    { id: 1, name: '待审核认证申请', count: 1, path: '/community/certify', perms: 'community.certify/lists' },
     { id: 2, name: '待派单托管订单', count: 1, path: '/order/nursing', perms: 'order.nursing/lists' },
     { id: 3, name: '待派单膳食订单', count: 2, path: '/order/meal', perms: 'order.meal/lists' },
     { id: 4, name: '待派单陪诊订单', count: 2, path: '/order/escort', perms: 'order.escort/lists' },

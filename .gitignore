@@ -33,4 +33,4 @@ components.d.ts
 
 # .env
 .env.development
-.env.production
+.env.production.tmp-req.txt

@@ -4,7 +4,6 @@ import { usePaging } from '@/hooks/usePaging'
 
 const searchParams = reactive({
     keyword: '',
-    type: '',
     status: ''
 })
 
@@ -17,17 +16,14 @@ const { pager, getLists, resetPage } = usePaging({
 const handleSearch = () => resetPage()
 const handleReset = () => {
     searchParams.keyword = ''
-    searchParams.type = ''
     searchParams.status = ''
     resetPage()
 }
 
-const typeTag = (type: string) => (type === '业主' ? 'success' : type === '家属' ? 'primary' : 'warning')
-
 // 审核操作
 const handleAudit = (row: any, pass: boolean) => {
     ElMessageBox.confirm(
-        `确认${pass ? '通过' : '拒绝'}用户「${row.nickname}」（${row.community} ${row.building}${row.unit}${row.room}）的${row.type}认证申请吗？`,
+        `确认${pass ? '通过' : '拒绝'}用户「${row.nickname}」（${row.community} ${row.building}${row.unit}${row.room}）的业主认证申请吗？`,
         '审核确认',
         { type: 'warning' }
     )
@@ -40,7 +36,7 @@ const handleAudit = (row: any, pass: boolean) => {
 
 const viewDetail = (row: any) => {
     ElMessageBox.alert(
-        `申请人：${row.nickname}（${row.mobile}）<br/>认证类型：${row.type}<br/>小区：${row.community}<br/>房屋：${row.building}${row.unit}${row.room}<br/>申请时间：${row.create_time}`,
+        `申请人：${row.nickname}（${row.mobile}）<br/>小区：${row.community}<br/>房屋：${row.building}${row.unit}${row.room}<br/>申请时间：${row.create_time}`,
         '认证详情',
         { dangerouslyUseHTMLString: true }
     )
@@ -56,11 +52,6 @@ onMounted(getLists)
             <!-- 搜索栏 -->
             <div class="flex flex-wrap items-center gap-3 mb-4">
                 <el-input v-model="searchParams.keyword" placeholder="姓名/手机号" clearable class="!w-48" @keyup.enter="handleSearch" />
-                <el-select v-model="searchParams.type" placeholder="认证类型" clearable class="!w-32">
-                    <el-option label="业主" value="业主" />
-                    <el-option label="家属" value="家属" />
-                    <el-option label="租户" value="租户" />
-                </el-select>
                 <el-select v-model="searchParams.status" placeholder="审核状态" clearable class="!w-32">
                     <el-option label="待审核" :value="0" />
                     <el-option label="已通过" :value="1" />
@@ -77,11 +68,6 @@ onMounted(getLists)
                 <el-table-column prop="community" label="小区" min-width="130" />
                 <el-table-column label="房屋" min-width="140">
                     <template #default="{ row }">{{ row.building }}{{ row.unit }}{{ row.room }}</template>
-                </el-table-column>
-                <el-table-column label="认证类型" width="90">
-                    <template #default="{ row }">
-                        <el-tag :type="typeTag(row.type)" size="small">{{ row.type }}</el-tag>
-                    </template>
                 </el-table-column>
                 <el-table-column label="状态" width="90">
                     <template #default="{ row }">
