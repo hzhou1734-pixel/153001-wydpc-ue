@@ -96,7 +96,6 @@
                 <el-tab-pane :label="`帖子发布（${userPosts.length}）`" name="posts">
                     <el-table :data="userPosts" size="large">
                         <el-table-column label="帖子标题" prop="title" min-width="220" show-overflow-tooltip />
-                        <el-table-column label="所属板块" prop="board" min-width="110" />
                         <el-table-column label="浏览量" prop="views" min-width="90" align="center" />
                         <el-table-column label="回复数" prop="replies" min-width="90" align="center" />
                         <el-table-column label="状态" min-width="100">
