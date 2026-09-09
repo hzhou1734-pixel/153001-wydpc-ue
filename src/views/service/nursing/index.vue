@@ -9,36 +9,38 @@
                     </el-button>
                 </div>
             </template>
-            <el-row :gutter="16">
-                <el-col v-for="item in pager.lists" :key="item.id" :span="8" class="mb-4">
-                    <el-card shadow="hover" class="service-card">
-                        <div class="flex gap-3">
-                            <el-image :src="item.cover" fit="cover" class="w-24 h-24 rounded-lg shrink-0" />
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="font-bold text-base truncate">{{ item.name }}</span>
-                                    <el-tag size="small" :type="typeTag(item.type)">{{ item.type }}</el-tag>
-                                </div>
-                                <div class="text-orange-500 font-bold mb-1">
-                                    ¥{{ item.price }}<span class="text-xs text-gray-400 font-normal">/{{ item.unit }}</span>
-                                </div>
-                                <div class="text-xs text-gray-500 mb-1">时长：{{ item.duration }}</div>
-                                <div class="text-xs text-gray-400 line-clamp-2">{{ item.desc }}</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                            <div class="flex items-center gap-2 text-xs text-gray-500">
-                                <span>排序：{{ item.sort }}</span>
-                                <el-switch v-model="item.status" :active-value="1" :inactive-value="0" size="small" @change="toggleStatus(item)" />
-                            </div>
-                            <div>
-                                <el-button size="small" @click="openEdit(item)">编辑</el-button>
-                                <el-button size="small" type="danger" plain @click="handleDelete(item)">删除</el-button>
-                            </div>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
+            <el-table :data="pager.lists">
+                <el-table-column label="封面" width="90">
+                    <template #default="{ row }">
+                        <el-image :src="row.cover" fit="cover" class="w-14 h-14 rounded-md" :preview-src-list="[row.cover]" preview-teleported />
+                    </template>
+                </el-table-column>
+                <el-table-column prop="name" label="服务名称" min-width="140" show-overflow-tooltip />
+                <el-table-column label="服务类型" width="110">
+                    <template #default="{ row }">
+                        <el-tag size="small" :type="typeTag(row.type)">{{ row.type }}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="价格" width="120">
+                    <template #default="{ row }">
+                        <span class="text-orange-500 font-bold">¥{{ row.price }}</span><span class="text-xs text-gray-400">/{{ row.unit }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="duration" label="服务时长" width="100" />
+                <el-table-column prop="desc" label="服务描述" min-width="160" show-overflow-tooltip />
+                <el-table-column prop="sort" label="排序" width="80" />
+                <el-table-column label="状态" width="90">
+                    <template #default="{ row }">
+                        <el-switch v-model="row.status" :active-value="1" :inactive-value="0" @change="toggleStatus(row)" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="150" fixed="right">
+                    <template #default="{ row }">
+                        <el-button size="small" @click="openEdit(row)">编辑</el-button>
+                        <el-button size="small" type="danger" plain @click="handleDelete(row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
             <div class="flex justify-end mt-2">
                 <el-pagination v-model:current-page="pager.page" v-model:page-size="pager.size" :total="pager.count"
                     layout="total, prev, pager, next" @current-change="getLists" />
