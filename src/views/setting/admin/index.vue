@@ -3,7 +3,10 @@
     <template #header>
       <div class="flex items-center justify-between">
         <span class="card-title">管理员账号</span>
-        <el-input v-model="keyword" placeholder="搜索账号/姓名/角色" :prefix-icon="Search" clearable class="!w-60" @input="getLists" />
+        <div class="flex gap-3">
+          <el-input v-model="keyword" placeholder="搜索账号/姓名/角色" :prefix-icon="Search" clearable class="!w-60" />
+          <el-button type="primary" @click="openAdd">新增管理员</el-button>
+        </div>
       </div>
     </template>
     <el-table :data="filteredList" stripe>
@@ -22,9 +25,10 @@
         </template>
       </el-table-column>
       <el-table-column prop="create_time" label="创建时间" width="170" />
-      <el-table-column label="操作" width="90" fixed="right">
+      <el-table-column label="操作" width="140" fixed="right">
         <template #default="{ row }">
           <el-button link type="primary" size="small" @click="openEdit(row)">编辑</el-button>
+          <el-button link type="danger" size="small" :disabled="row.username === 'admin'" @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,16 +92,43 @@ const onStatusChange = (row: any) => {
   ElMessage.success(row.status === 1 ? `已启用账号「${row.username}」` : `已禁用账号「${row.username}」`)
 }
 
+const openAdd = () => {
+  Object.assign(editForm, { id: 0, username: '', nickname: '', role: '物业经理', mobile: '' })
+  editVisible.value = true
+}
+
 const openEdit = (row: any) => {
   Object.assign(editForm, { id: row.id, username: row.username, nickname: row.nickname, role: row.role, mobile: row.mobile })
   editVisible.value = true
 }
 
 const saveEdit = () => {
+  if (!editForm.username.trim() || !editForm.nickname.trim() || !editForm.mobile.trim()) {
+    ElMessage.warning('请填写登录账号、姓名和手机号')
+    return
+  }
   const target = pager.lists.find((item: any) => item.id === editForm.id)
   if (target) Object.assign(target, editForm)
+  else {
+    pager.lists.unshift({
+      ...editForm,
+      id: Date.now(),
+      status: 1,
+      last_login: '未登录',
+      create_time: new Date().toLocaleString('zh-CN', { hour12: false }).replaceAll('/', '-')
+    })
+    pager.count++
+  }
   editVisible.value = false
   ElMessage.success('保存成功')
+}
+
+const handleDelete = (row: any) => {
+  ElMessageBox.confirm(`确认删除管理员「${row.username}」吗？`, '提示', { type: 'warning' }).then(() => {
+    const index = pager.lists.findIndex((item: any) => item.id === row.id)
+    if (index > -1) { pager.lists.splice(index, 1); pager.count-- }
+    ElMessage.success('删除成功')
+  }).catch(() => {})
 }
 
 onMounted(getLists)
