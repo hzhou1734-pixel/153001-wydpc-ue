@@ -4,8 +4,11 @@
             <template #header>
                 <div class="flex items-center justify-between">
                     <span class="card-title">招聘求职</span>
-                    <el-input v-model="queryKw" placeholder="搜索标题 / 公司 / 联系人" clearable style="width: 240px"
-                        :prefix-icon="Search" @input="getLists" />
+                    <div class="flex items-center">
+                        <el-input v-model="queryKw" placeholder="搜索标题 / 公司 / 联系人" clearable style="width: 240px"
+                            :prefix-icon="Search" @input="getLists" />
+                        <el-button type="primary" class="!ml-3" @click="openAdd">新增</el-button>
+                    </div>
                 </div>
             </template>
             <el-table :data="filteredList" stripe>
@@ -38,8 +41,8 @@
             </div>
         </el-card>
 
-        <!-- 编辑弹窗 -->
-        <el-dialog v-model="showEdit" title="编辑招聘求职信息" width="520px">
+        <!-- 新增/编辑弹窗 -->
+        <el-dialog v-model="showEdit" :title="editForm.id ? '编辑招聘求职信息' : '新增招聘求职信息'" width="520px">
             <el-form :model="editForm" label-width="90px">
                 <el-form-item label="标题" required>
                     <el-input v-model="editForm.title" placeholder="请输入标题" />
@@ -86,18 +89,30 @@ const toggleStatus = (row: any) => {
     ElMessage.success(`已${row.status === 1 ? '上架' : '下架'}：${row.title}`)
 }
 
-// ---- 编辑 ----
+// ---- 新增/编辑 ----
 const showEdit = ref(false)
 const editForm = reactive({ id: 0, title: '', type: '招聘', salary: '', company: '', contact: '' })
+const openAdd = () => {
+    Object.assign(editForm, { id: 0, title: '', type: '招聘', salary: '', company: '', contact: '' })
+    showEdit.value = true
+}
 const openEdit = (row: any) => {
     Object.assign(editForm, row)
     showEdit.value = true
 }
 const submitEdit = () => {
     if (!editForm.title.trim()) return ElMessage.warning('请输入标题')
-    const target = pager.lists.find((i: any) => i.id === editForm.id)
-    if (target) Object.assign(target, editForm)
-    ElMessage.success('保存成功')
+    const now = new Date()
+    const pad = (v: number) => String(v).padStart(2, '0')
+    const timeStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
+    if (editForm.id) {
+        const target = pager.lists.find((i: any) => i.id === editForm.id)
+        if (target) Object.assign(target, editForm)
+        ElMessage.success('保存成功')
+    } else {
+        pager.lists.unshift({ ...editForm, id: Date.now(), status: 1, create_time: timeStr })
+        ElMessage.success('新增成功')
+    }
     showEdit.value = false
 }
 
