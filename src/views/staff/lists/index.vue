@@ -200,7 +200,7 @@ function handleDelete(row: any) {
                 </div>
             </template>
             <el-table :data="pager.lists" stripe>
-                <el-table-column label="员工" min-width="180">
+                <el-table-column label="员工" min-width="160">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-avatar :size="36" :src="row.avatar" />
@@ -211,31 +211,31 @@ function handleDelete(row: any) {
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="角色" width="110">
+                <el-table-column label="角色" width="120">
                     <template #default="{ row }">
                         <el-tag :type="[1, 2, 3, 4].includes(row.role_id) ? ['primary', 'success', 'warning', 'danger'][row.role_id - 1] : 'info'" effect="light">
                             {{ row.role }}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="community" label="所属社区" min-width="140" show-overflow-tooltip />
-                <el-table-column label="负责楼栋" min-width="120">
+                <el-table-column prop="community" label="所属社区" min-width="130" show-overflow-tooltip />
+                <el-table-column label="负责楼栋" min-width="150" show-overflow-tooltip>
                     <template #default="{ row }">
                         <span v-if="row.buildings === '-'" class="text-tx-secondary">--</span>
                         <span v-else>{{ row.buildings }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="orders" label="累计订单" width="90" align="center" />
-                <el-table-column label="累计收益（元）" width="120" align="right">
+                <el-table-column prop="orders" label="累计订单" width="110" align="center" />
+                <el-table-column label="累计收益（元）" width="140" align="right">
                     <template #default="{ row }">¥{{ row.earnings }}</template>
                 </el-table-column>
-                <el-table-column label="状态" width="90" align="center">
+                <el-table-column label="状态" width="100" align="center">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status === 1" @change="toggleStatus(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="入职时间" width="120" />
-                <el-table-column label="操作" width="140" fixed="right">
+                <el-table-column prop="create_time" label="入职时间" width="150" />
+                <el-table-column label="操作" width="160" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
                         <el-button link type="danger" @click="handleDelete(row)">删除</el-button>
@@ -309,4 +309,10 @@ function handleDelete(row: any) {
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+/* 加大单元格内边距，避免内容贴边显得拥挤 */
+:deep(.el-table th.el-table__cell),
+:deep(.el-table td.el-table__cell) {
+    padding: 14px 0;
+}
+</style>
