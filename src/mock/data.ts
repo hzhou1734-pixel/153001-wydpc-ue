@@ -42,6 +42,69 @@ export const buildingTree = [
         id: 3, name: '3栋', community_id: 1, community_name: '颐景园·江南里',
         children: [{ id: 301, name: '1单元', parent_id: 3, type: 'unit' }],
     },
+    {
+        id: 4, name: '4栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 401, name: '1单元', parent_id: 4, type: 'unit' },
+            { id: 402, name: '2单元', parent_id: 4, type: 'unit' },
+        ],
+    },
+    {
+        id: 5, name: '5栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 501, name: '1单元', parent_id: 5, type: 'unit' },
+            { id: 502, name: '2单元', parent_id: 5, type: 'unit' },
+        ],
+    },
+    {
+        id: 6, name: '6栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 601, name: '1单元', parent_id: 6, type: 'unit' },
+            { id: 602, name: '2单元', parent_id: 6, type: 'unit' },
+        ],
+    },
+    {
+        id: 7, name: '7栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 701, name: '1单元', parent_id: 7, type: 'unit' },
+            { id: 702, name: '2单元', parent_id: 7, type: 'unit' },
+        ],
+    },
+    {
+        id: 8, name: '8栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 801, name: '1单元', parent_id: 8, type: 'unit' },
+            { id: 802, name: '2单元', parent_id: 8, type: 'unit' },
+        ],
+    },
+    {
+        id: 9, name: '9栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 901, name: '1单元', parent_id: 9, type: 'unit' },
+            { id: 902, name: '2单元', parent_id: 9, type: 'unit' },
+        ],
+    },
+    {
+        id: 10, name: '10栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 1001, name: '1单元', parent_id: 10, type: 'unit' },
+            { id: 1002, name: '2单元', parent_id: 10, type: 'unit' },
+        ],
+    },
+    {
+        id: 13, name: '11栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 1301, name: '1单元', parent_id: 13, type: 'unit' },
+            { id: 1302, name: '2单元', parent_id: 13, type: 'unit' },
+        ],
+    },
+    {
+        id: 14, name: '12栋', community_id: 1, community_name: '颐景园·江南里',
+        children: [
+            { id: 1401, name: '1单元', parent_id: 14, type: 'unit' },
+            { id: 1402, name: '2单元', parent_id: 14, type: 'unit' },
+        ],
+    },
     // 绿城·桂语江南
     {
         id: 11, name: '1栋', community_id: 2, community_name: '绿城·桂语江南',
@@ -102,12 +165,89 @@ export const buildingTree = [
     },
 ]
 
+// 房号数据：覆盖 5 个小区，certified 与 certifyList 的认证审核状态保持一致
 export const roomList = [
+    // 颐景园·江南里 1栋（1单元 101 / 2单元 102）
     { id: 1, name: '101', unit_id: 101, building_id: 1, owner: '张伟', phone: '13812341001', certified: 0 },
     { id: 2, name: '102', unit_id: 101, building_id: 1, owner: '李娜', phone: '13812341002', certified: 1 },
     { id: 3, name: '201', unit_id: 101, building_id: 1, owner: '王强', phone: '13812341003', certified: 0 },
+    { id: 6, name: '202', unit_id: 101, building_id: 1, owner: '周明华', phone: '13812341011', certified: 1 },
+    { id: 7, name: '301', unit_id: 101, building_id: 1, owner: '吴桂英', phone: '13812341012', certified: 1 },
+    { id: 8, name: '302', unit_id: 101, building_id: 1, owner: '郑国强', phone: '13812341013', certified: 0 },
     { id: 4, name: '101', unit_id: 102, building_id: 1, owner: '赵敏', phone: '13812341004', certified: 0 },
+    { id: 9, name: '102', unit_id: 102, building_id: 1, owner: '冯淑华', phone: '13812341014', certified: 1 },
+    { id: 10, name: '201', unit_id: 102, building_id: 1, owner: '蒋文斌', phone: '13812341015', certified: 1 },
+    { id: 11, name: '301', unit_id: 102, building_id: 1, owner: '韩雪梅', phone: '13812341016', certified: 0 },
+    // 颐景园·江南里 2栋（1单元 201 / 2单元 202）
     { id: 5, name: '201', unit_id: 201, building_id: 2, owner: '陈晨', phone: '13812341005', certified: 1 },
+    { id: 12, name: '202', unit_id: 201, building_id: 2, owner: '沈国庆', phone: '13812341017', certified: 1 },
+    { id: 13, name: '301', unit_id: 201, building_id: 2, owner: '曹丽萍', phone: '13812341018', certified: 0 },
+    { id: 14, name: '101', unit_id: 202, building_id: 2, owner: '谢天华', phone: '13812341019', certified: 1 },
+    { id: 15, name: '102', unit_id: 202, building_id: 2, owner: '罗建平', phone: '13812341020', certified: 1 },
+    // 颐景园·江南里 3栋（1单元 301）
+    { id: 16, name: '101', unit_id: 301, building_id: 3, owner: '高志远', phone: '13812341021', certified: 1 },
+    { id: 17, name: '102', unit_id: 301, building_id: 3, owner: '林秀珍', phone: '13812341022', certified: 1 },
+    { id: 18, name: '201', unit_id: 301, building_id: 3, owner: '何俊杰', phone: '13812341023', certified: 0 },
+    // 颐景园·江南里 4栋（1单元 401 / 2单元 402）
+    { id: 19, name: '101', unit_id: 401, building_id: 4, owner: '梁国庆', phone: '13812341024', certified: 1 },
+    { id: 20, name: '102', unit_id: 401, building_id: 4, owner: '宋雅琴', phone: '13812341025', certified: 1 },
+    { id: 21, name: '201', unit_id: 401, building_id: 4, owner: '唐建军', phone: '13812341026', certified: 0 },
+    { id: 22, name: '101', unit_id: 402, building_id: 4, owner: '许桂兰', phone: '13812341027', certified: 1 },
+    // 颐景园·江南里 5栋（1单元 501 / 2单元 502）
+    { id: 23, name: '101', unit_id: 501, building_id: 5, owner: '邓世昌', phone: '13812341028', certified: 1 },
+    { id: 24, name: '102', unit_id: 501, building_id: 5, owner: '萧慧敏', phone: '13812341029', certified: 0 },
+    { id: 25, name: '201', unit_id: 501, building_id: 5, owner: '程志刚', phone: '13812341030', certified: 1 },
+    { id: 26, name: '101', unit_id: 502, building_id: 5, owner: '侯丽娟', phone: '13812341031', certified: 1 },
+    // 颐景园·江南里 6栋（1单元 601 / 2单元 602）
+    { id: 27, name: '101', unit_id: 601, building_id: 6, owner: '白云飞', phone: '13812341032', certified: 1 },
+    { id: 28, name: '102', unit_id: 601, building_id: 6, owner: '石秀英', phone: '13812341033', certified: 1 },
+    { id: 29, name: '201', unit_id: 602, building_id: 6, owner: '姚建国', phone: '13812341034', certified: 0 },
+    // 颐景园·江南里 7栋（1单元 701 / 2单元 702）
+    { id: 30, name: '101', unit_id: 701, building_id: 7, owner: '贺永康', phone: '13812341035', certified: 1 },
+    { id: 31, name: '102', unit_id: 701, building_id: 7, owner: '卢春花', phone: '13812341036', certified: 1 },
+    { id: 32, name: '201', unit_id: 702, building_id: 7, owner: '钱进', phone: '13812341037', certified: 1 },
+    // 颐景园·江南里 8栋（1单元 801 / 2单元 802）
+    { id: 33, name: '101', unit_id: 801, building_id: 8, owner: '汪海洋', phone: '13812341038', certified: 1 },
+    { id: 34, name: '102', unit_id: 801, building_id: 8, owner: '傅明霞', phone: '13812341039', certified: 0 },
+    { id: 35, name: '101', unit_id: 802, building_id: 8, owner: '尹德海', phone: '13812341040', certified: 1 },
+    // 颐景园·江南里 9栋（1单元 901 / 2单元 902）
+    { id: 36, name: '101', unit_id: 901, building_id: 9, owner: '董国梁', phone: '13812341041', certified: 1 },
+    { id: 37, name: '102', unit_id: 901, building_id: 9, owner: '潘丽华', phone: '13812341042', certified: 1 },
+    { id: 38, name: '201', unit_id: 902, building_id: 9, owner: '万启明', phone: '13812341043', certified: 0 },
+    // 颐景园·江南里 10栋（1单元 1001 / 2单元 1002）
+    { id: 39, name: '101', unit_id: 1001, building_id: 10, owner: '杜文昌', phone: '13812341044', certified: 1 },
+    { id: 40, name: '102', unit_id: 1001, building_id: 10, owner: '苏美玲', phone: '13812341045', certified: 1 },
+    { id: 41, name: '101', unit_id: 1002, building_id: 10, owner: '丁秀兰', phone: '13812341046', certified: 1 },
+    // 颐景园·江南里 11栋（1单元 1301 / 2单元 1302）
+    { id: 42, name: '101', unit_id: 1301, building_id: 13, owner: '范长青', phone: '13812341047', certified: 1 },
+    { id: 43, name: '102', unit_id: 1301, building_id: 13, owner: '曾丽珍', phone: '13812341048', certified: 1 },
+    { id: 44, name: '101', unit_id: 1302, building_id: 13, owner: '彭思远', phone: '13812341049', certified: 0 },
+    // 颐景园·江南里 12栋（1单元 1401 / 2单元 1402）
+    { id: 45, name: '101', unit_id: 1401, building_id: 14, owner: '董雅静', phone: '13812341050', certified: 1 },
+    { id: 46, name: '102', unit_id: 1401, building_id: 14, owner: '袁浩然', phone: '13812341051', certified: 1 },
+    { id: 47, name: '101', unit_id: 1402, building_id: 14, owner: '蔡文静', phone: '13812341052', certified: 1 },
+    // 绿城·桂语江南（1栋 1101/1102 单元，2栋 1201/1202 单元）
+    { id: 48, name: '301', unit_id: 1201, building_id: 12, owner: '赵敏', phone: '13812341004', certified: 0 },
+    { id: 49, name: '101', unit_id: 1101, building_id: 11, owner: '孙晓峰', phone: '13812341053', certified: 1 },
+    { id: 50, name: '201', unit_id: 1101, building_id: 11, owner: '马春丽', phone: '13812341054', certified: 1 },
+    { id: 51, name: '102', unit_id: 1102, building_id: 11, owner: '朱海涛', phone: '13812341055', certified: 1 },
+    { id: 52, name: '201', unit_id: 1202, building_id: 12, owner: '胡佳琪', phone: '13812341056', certified: 0 },
+    // 保利·天悦湾（1栋 2101、2栋 2201/2202、3栋 2301/2302 单元）
+    { id: 53, name: '502', unit_id: 2302, building_id: 23, owner: '陈晨', phone: '13812341005', certified: 1 },
+    { id: 54, name: '101', unit_id: 2101, building_id: 21, owner: '郭子豪', phone: '13812341057', certified: 1 },
+    { id: 55, name: '102', unit_id: 2101, building_id: 21, owner: '邱美凤', phone: '13812341058', certified: 1 },
+    { id: 56, name: '101', unit_id: 2201, building_id: 22, owner: '华志明', phone: '13812341059', certified: 0 },
+    { id: 57, name: '201', unit_id: 2202, building_id: 22, owner: '金雅婷', phone: '13812341060', certified: 1 },
+    { id: 58, name: '101', unit_id: 2301, building_id: 23, owner: '洪天佑', phone: '13812341061', certified: 1 },
+    // 万科·未来城三期（5栋 3501/3502、6栋 3601 单元）
+    { id: 59, name: '1103', unit_id: 3501, building_id: 35, owner: '刘洋', phone: '13812341006', certified: 1 },
+    { id: 60, name: '101', unit_id: 3501, building_id: 35, owner: '秦晓东', phone: '13812341062', certified: 1 },
+    { id: 61, name: '102', unit_id: 3502, building_id: 35, owner: '顾月华', phone: '13812341063', certified: 1 },
+    { id: 62, name: '101', unit_id: 3601, building_id: 36, owner: '蓝天翔', phone: '13812341064', certified: 0 },
+    // 融创·金成府（1栋 4101/4102、2栋 4201 单元）
+    { id: 63, name: '101', unit_id: 4101, building_id: 41, owner: '葛志成', phone: '13812341065', certified: 1 },
+    { id: 64, name: '102', unit_id: 4102, building_id: 41, owner: '章慧珍', phone: '13812341066', certified: 1 },
+    { id: 65, name: '201', unit_id: 4201, building_id: 42, owner: '温子墨', phone: '13812341067', certified: 1 },
 ]
 
 // ==================== 认证列表（仅业主认证，家属/租户不做认证） ====================
@@ -115,13 +255,22 @@ export const certifyList = [
     { id: 1, user_id: 1, nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 0, create_time: daysAgo(1) },
     { id: 2, user_id: 2, nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '102', type: '业主', status: 1, create_time: daysAgo(3) },
     { id: 3, user_id: 5, nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋', unit: '2单元', room: '502', type: '业主', status: 1, create_time: daysAgo(7) },
+    { id: 4, user_id: 3, nickname: '王强', mobile: '13812341003', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '201', type: '业主', status: 0, create_time: daysAgo(2) },
+    { id: 5, user_id: 11, nickname: '周明华', mobile: '13812341011', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '202', type: '业主', status: 1, create_time: daysAgo(20) },
+    { id: 6, user_id: 12, nickname: '沈国庆', mobile: '13812341017', community: '颐景园·江南里', building: '2栋', unit: '1单元', room: '202', type: '业主', status: 1, create_time: daysAgo(25) },
+    { id: 7, user_id: 13, nickname: '孙晓峰', mobile: '13812341053', community: '绿城·桂语江南', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(30) },
+    { id: 8, user_id: 4, nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋', unit: '1单元', room: '301', type: '业主', status: 0, create_time: daysAgo(4) },
+    { id: 9, user_id: 14, nickname: '郭子豪', mobile: '13812341057', community: '保利·天悦湾', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(30) },
+    { id: 10, user_id: 6, nickname: '刘洋', mobile: '13812341006', community: '万科·未来城三期', building: '5栋', unit: '1单元', room: '1103', type: '业主', status: 1, create_time: daysAgo(12) },
+    { id: 11, user_id: 15, nickname: '秦晓东', mobile: '13812341062', community: '万科·未来城三期', building: '5栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(45) },
+    { id: 12, user_id: 16, nickname: '葛志成', mobile: '13812341065', community: '融创·金成府', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(50) },
 ]
 
 // ==================== 用户 ====================
 export const consumerList = [
-    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 1, balance: '1286.00', orders: 23, status: 1, create_time: daysAgo(180) },
+    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 0, balance: '1286.00', orders: 23, status: 1, create_time: daysAgo(180) },
     { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, balance: '356.50', orders: 15, status: 1, create_time: daysAgo(165) },
-    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 1, balance: '0.00', orders: 8, status: 1, create_time: daysAgo(120) },
+    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 0, balance: '0.00', orders: 8, status: 1, create_time: daysAgo(120) },
     { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, balance: '58.00', orders: 3, status: 1, create_time: daysAgo(90) },
     { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, balance: '2680.00', orders: 46, status: 0, create_time: daysAgo(60) },
     { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, balance: '92.30', orders: 12, status: 1, create_time: daysAgo(30) },
@@ -544,7 +693,7 @@ export const dashboardBusiness = {
 }
 
 export const dashboardTodo = [
-    { id: 1, name: '待审核认证申请', count: 1, path: '/community/certify', perms: 'community.certify/lists' },
+    { id: 1, name: '待审核认证申请', count: 3, path: '/community/certify', perms: 'community.certify/lists' },
     { id: 2, name: '待派单托管订单', count: 1, path: '/order/nursing', perms: 'order.nursing/lists' },
     { id: 3, name: '待派单膳食订单', count: 2, path: '/order/meal', perms: 'order.meal/lists' },
     { id: 4, name: '待派单陪诊订单', count: 2, path: '/order/escort', perms: 'order.escort/lists' },

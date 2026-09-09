@@ -60,8 +60,15 @@ const tabStats = computed(() => [
 ])
 
 const back = () => router.back()
-const goBuildingManagement = () => router.push('/community/building')
-const goCertification = () => router.push('/community/certify')
+
+// 楼栋 / 单元维度的房号明细，用于楼栋管理页签直接展示具体数据
+const unitRooms = (buildingId: number, unitId: number) =>
+    rooms.value.filter((room: any) => room.building_id === buildingId && room.unit_id === unitId)
+const buildingRoomCount = (buildingId: number) =>
+    rooms.value.filter((room: any) => room.building_id === buildingId).length
+const buildingCertifiedCount = (buildingId: number) =>
+    rooms.value.filter((room: any) => room.building_id === buildingId && room.certified === 1).length
+const buildingUnitNames = (row: any) => (row.children || []).map((unit: any) => unit.name).join('、') || '-'
 
 onMounted(getInfo)
 </script>
@@ -107,13 +114,44 @@ onMounted(getInfo)
                     </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane :label="`楼栋管理（${buildings.length}）`" name="building">
-                    <div class="flex justify-end mb-4"><el-button type="primary" @click="goBuildingManagement">前往楼栋房屋管理</el-button></div>
-                    <el-table :data="buildings" border empty-text="暂无楼栋数据">
-                        <el-table-column label="楼栋名称" prop="name" min-width="160" />
-                        <el-table-column label="单元数量" min-width="120"><template #default="{ row }">{{ row.children?.length || 0 }} 个</template></el-table-column>
-                        <el-table-column label="已维护房屋" min-width="130"><template #default="{ row }">{{ rooms.filter((item) => item.building_id === row.id).length }} 套</template></el-table-column>
-                        <el-table-column label="维护状态" min-width="120"><template #default><el-tag type="success">已维护</el-tag></template></el-table-column>
+                    <el-table :data="buildings" border row-key="id" empty-text="暂无楼栋数据">
+                        <el-table-column type="expand">
+                            <template #default="{ row }">
+                                <div class="px-4 py-2">
+                                    <div v-for="unit in row.children || []" :key="unit.id" class="mb-3">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="font-bold text-sm">{{ unit.name }}</span>
+                                            <span class="text-tx-secondary text-xs">已登记 {{ unitRooms(row.id, unit.id).length }} 套</span>
+                                        </div>
+                                        <div v-if="unitRooms(row.id, unit.id).length" class="flex flex-wrap gap-2">
+                                            <el-tag
+                                                v-for="room in unitRooms(row.id, unit.id)"
+                                                :key="room.id"
+                                                :type="room.certified ? 'success' : 'info'"
+                                                effect="plain"
+                                            >
+                                                {{ room.name }} · {{ room.owner }} · {{ room.phone }}
+                                            </el-tag>
+                                        </div>
+                                        <span v-else class="text-tx-secondary text-xs">该单元暂无登记房屋</span>
+                                    </div>
+                                </div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="楼栋名称" prop="name" min-width="120" />
+                        <el-table-column label="单元数量" min-width="100"><template #default="{ row }">{{ row.children?.length || 0 }} 个</template></el-table-column>
+                        <el-table-column label="单元明细" min-width="160"><template #default="{ row }">{{ buildingUnitNames(row) }}</template></el-table-column>
+                        <el-table-column label="登记房屋" min-width="100"><template #default="{ row }">{{ buildingRoomCount(row.id) }} 套</template></el-table-column>
+                        <el-table-column label="已认证房屋" min-width="110"><template #default="{ row }">{{ buildingCertifiedCount(row.id) }} 套</template></el-table-column>
+                        <el-table-column label="维护状态" min-width="110">
+                            <template #default="{ row }">
+                                <el-tag :type="buildingRoomCount(row.id) ? 'success' : 'warning'">
+                                    {{ buildingRoomCount(row.id) ? '已维护' : '待完善' }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
                     </el-table>
+                    <div class="text-tx-secondary text-xs mt-3">点击行首箭头可展开查看该楼栋各单元的房号、业主姓名与联系电话</div>
                 </el-tab-pane>
                 <el-tab-pane :label="`房屋信息（${rooms.length}）`" name="room">
                     <el-table :data="rooms" border empty-text="暂无房屋数据">
@@ -126,12 +164,12 @@ onMounted(getInfo)
                     </el-table>
                 </el-tab-pane>
                 <el-tab-pane :label="`认证住户（${certifiedOwners.length}）`" name="certify">
-                    <div class="flex justify-end mb-4"><el-button type="primary" @click="goCertification">前往住户认证管理</el-button></div>
                     <el-table :data="certifiedOwners" border empty-text="暂无认证住户">
                         <el-table-column label="住户姓名" prop="nickname" min-width="110" />
                         <el-table-column label="手机号码" prop="mobile" min-width="130" />
+                        <el-table-column label="身份类型" prop="type" min-width="100" />
                         <el-table-column label="楼栋" prop="building" min-width="100" />
-                        <el-table-column label="单元/房号" min-width="140"><template #default="{ row }">{{ row.unit }}{{ row.room }}</template></el-table-column>
+                        <el-table-column label="单元/房号" min-width="140"><template #default="{ row }">{{ row.unit }}/{{ row.room }}</template></el-table-column>
                         <el-table-column label="认证状态" min-width="110"><template #default="{ row }"><el-tag :type="row.status ? 'success' : 'warning'">{{ row.status ? '已通过' : '待审核' }}</el-tag></template></el-table-column>
                         <el-table-column label="提交时间" prop="create_time" min-width="180" />
                     </el-table>
