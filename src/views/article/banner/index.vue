@@ -108,26 +108,58 @@
 </template>
 
 <script setup lang="ts" name="articleBanner">
-import { getBannerList, getActivityList } from '@/mock/api'
+import { contentBannerList, contentActivityList } from '@/mock/data_content'
 import { usePaging } from '@/hooks/usePaging'
 import { Search, Plus } from '@element-plus/icons-vue'
 import ImageUpload from '@/components/image-upload/index.vue'
 
 const queryParams = reactive({ keyword: '', status: '', start_time: '', end_time: '' })
-const { pager, getLists } = usePaging({ fetchFun: getBannerList, params: queryParams, firstLoading: true })
-
 const createRange = ref<string[]>([])
+
+// 本地筛选：列表分页与数据源保持一致
+const doFilter = (data: any[], params: Record<string, any> = {}) => {
+    let result = data
+    if (params.keyword) {
+        const kw = String(params.keyword)
+        result = result.filter((i: any) => String(i.name || '').includes(kw))
+    }
+    if (params.status !== '' && params.status !== undefined && params.status !== null) {
+        result = result.filter((i: any) => i.status === Number(params.status))
+    }
+    if (params.start_time) {
+        result = result.filter((i: any) => String(i.create_time).slice(0, 10) >= params.start_time)
+    }
+    if (params.end_time) {
+        result = result.filter((i: any) => String(i.create_time).slice(0, 10) <= params.end_time)
+    }
+    return result
+}
+
+const getBannerList = (params: Record<string, any>) => {
+    const { page_no = 1, page_size = 15, ...rest } = params
+    const lists = doFilter(contentBannerList, rest)
+    return Promise.resolve({
+        count: lists.length,
+        lists: lists.slice((page_no - 1) * page_size, page_no * page_size)
+    })
+}
+
+const { pager, getLists, resetPage, resetParams } = usePaging({
+    fetchFun: getBannerList,
+    params: queryParams,
+    firstLoading: true
+})
+
 const onSearch = () => {
     queryParams.start_time = createRange.value?.[0] || ''
     queryParams.end_time = createRange.value?.[1] || ''
-    pager.page = 1
-    getLists()
+    resetPage()
 }
 const resetQuery = () => {
-    queryParams.keyword = ''
-    queryParams.status = ''
     createRange.value = []
-    onSearch()
+    queryParams.start_time = ''
+    queryParams.end_time = ''
+    resetParams()
 }
 
 const nowTimeStr = () => {
@@ -146,14 +178,12 @@ const linkTypes = [
 const builtinPages = [
     { value: '/pages/meal/index', label: '膳食服务' },
     { value: '/pages/escort/index', label: '陪诊服务' },
+    { value: '/pages/nursing/index', label: '托管服务' },
     { value: '/pages/housekeeping/index', label: '家政服务' },
     { value: '/pages/helper/index', label: '生活帮手' },
     { value: '/pages/article/list', label: '精彩内容列表' },
 ]
-const activityOptions = ref<any[]>([])
-getActivityList({ page_size: 100 }).then((res: any) => {
-    activityOptions.value = res?.lists || []
-})
+const activityOptions = contentActivityList
 
 const onTypeChange = () => {
     editForm.link = ''

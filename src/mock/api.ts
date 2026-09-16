@@ -19,13 +19,10 @@ import {
     mealOrders,
     escortOrders,
     hrList,
-    barList,
     wonderfulList,
     noticeList,
     activityList,
     activitySignupList,
-    helperList,
-    barComments,
     bannerList,
     financeFlow,
     financeBill,
@@ -101,7 +98,27 @@ export function getConsumerDetail(params?: Record<string, any>) {
 
 // ============ 员工管理 ============
 export function getStaffList(params?: Record<string, any>) {
-    return page(staffList, params)
+    let lists: any[] = staffList
+    if (params?.keyword) {
+        const kw = String(params.keyword)
+        lists = lists.filter(
+            (item: any) => String(item.id).includes(kw) || item.name.includes(kw) || item.mobile.includes(kw)
+        )
+    }
+    if (params?.role_id !== '' && params?.role_id !== undefined && params?.role_id !== null) {
+        lists = lists.filter((item: any) => item.role_id === Number(params.role_id))
+    }
+    if (params?.status !== '' && params?.status !== undefined && params?.status !== null) {
+        lists = lists.filter((item: any) => item.status === Number(params.status))
+    }
+    if (params?.create_time?.length === 2) {
+        lists = lists.filter(
+            (item: any) =>
+                String(item.create_time).slice(0, 10) >= params.create_time[0] &&
+                String(item.create_time).slice(0, 10) <= params.create_time[1]
+        )
+    }
+    return page(lists, params)
 }
 
 // ============ 服务管理 ============
@@ -281,25 +298,6 @@ export function getHrList(params?: Record<string, any>) {
     })
     return page(lists, params)
 }
-/** 社区贴吧：帖子ID / 标题 / 昵称 / 手机号 搜索；帖子状态、发布时间、审核时间筛选 */
-export function getBarList(params?: Record<string, any>) {
-    const lists = filterList(barList, params, {
-        keywordFields: ['id', 'title', 'author', 'mobile'],
-        statusField: 'audit',
-        timeField: 'create_time',
-        extra: (item, p) => {
-            if (p.audit_start && !(dayOf(item.audit_time) && dayOf(item.audit_time) >= p.audit_start)) return false
-            if (p.audit_end && !(dayOf(item.audit_time) && dayOf(item.audit_time) <= p.audit_end)) return false
-            return true
-        },
-    })
-    return page(lists, params)
-}
-/** 帖子评论列表 */
-export function getBarCommentList(params?: Record<string, any>) {
-    const lists = barComments.filter((item: any) => !params?.post_id || item.post_id === Number(params.post_id))
-    return page(lists, params)
-}
 /** 精彩内容：文章ID / 标题 搜索；显示状态、添加时间筛选 */
 export function getWonderfulList(params?: Record<string, any>) {
     const lists = filterList(wonderfulList, params, { keywordFields: ['id', 'title'], statusField: 'status' })
@@ -334,22 +332,6 @@ export function getActivitySignupList(params?: Record<string, any>) {
     let lists = activitySignupList
     if (params?.activity_id) lists = lists.filter((item: any) => item.activity_id === Number(params.activity_id))
     if (params?.keyword) lists = lists.filter((item: any) => item.nickname.includes(params.keyword) || item.room.includes(params.keyword))
-    return page(lists, params)
-}
-/** 生活帮手：昵称 / 手机号 / 处理人 搜索；类型、楼栋、处理状态、提交时间、处理时间筛选 */
-export function getHelperList(params?: Record<string, any>) {
-    const lists = filterList(helperList, params, {
-        keywordFields: ['nickname', 'phone', 'handler'],
-        statusField: 'status',
-        timeField: 'create_time',
-        extra: (item, p) => {
-            if (p.type && item.type !== p.type) return false
-            if (p.building && !String(item.building || '').startsWith(p.building)) return false
-            if (p.handle_start && !(dayOf(item.handle_time) && dayOf(item.handle_time) >= p.handle_start)) return false
-            if (p.handle_end && !(dayOf(item.handle_time) && dayOf(item.handle_time) <= p.handle_end)) return false
-            return true
-        },
-    })
     return page(lists, params)
 }
 /** Banner 图：标题搜索；状态、添加时间筛选 */

@@ -1,0 +1,218 @@
+/**
+ * 订单管理模块新增 Mock 数据
+ * 生活帮手订单 / 订单评价 / 人才库 / 陪诊附加费用
+ * 图片统一使用 picsum 按业务场景 seed 生成虚拟图片
+ */
+
+/** 日期辅助：基于当前时间往前推 n 天 */
+function daysAgo(n: number, time = ' 10:30:00') {
+    const d = new Date()
+    d.setDate(d.getDate() - n)
+    const pad = (v: number) => String(v).padStart(2, '0')
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}${time}`
+}
+
+const userImg = (n: number) => `https://picsum.photos/seed/ghj-user-${n}/100/100`
+const helperImg = (n: number) => `https://picsum.photos/seed/ghj-helper-${n}/400/300`
+const talentImg = (n: number) => `https://picsum.photos/seed/ghj-talent-${n}/100/100`
+
+/** 订单状态枚举（全局统一）：0 待支付 1 待派单 2 服务中 3 已完成 4 已取消 */
+
+// ==================== 生活帮手订单 ====================
+export const helperOrders = [
+    {
+        id: 4001, sn: 'BZ20260908001', service_id: 4001,
+        cover: helperImg(1), title: '家电维修', spec: '空调维修',
+        avatar: userImg(1), nickname: '张伟', mobile: '13812341001',
+        community: '颐景园·江南里', building: '1栋1单元101',
+        staff: '钱志明', staff_id: 1, staff_mobile: '13912343001',
+        amount: '120.00', status: 2, address: '颐景园·江南里 1栋1单元101',
+        remark: '客厅空调制冷效果差，需上门检修加氟',
+        create_time: daysAgo(0, ' 09:40:00'), finish_time: '',
+        logs: [
+            { time: daysAgo(0, ' 09:40:00'), content: '用户提交生活帮手订单', operator: '张伟' },
+            { time: daysAgo(0, ' 09:52:00'), content: '订单已关联到人才库用户 钱志明，由其线下对接完成', operator: '物业管理员' }
+        ]
+    },
+    {
+        id: 4002, sn: 'BZ20260907002', service_id: 4002,
+        cover: helperImg(2), title: '管道疏通', spec: '马桶疏通',
+        avatar: userImg(2), nickname: '李娜', mobile: '13812341002',
+        community: '颐景园·江南里', building: '1栋1单元102',
+        staff: '赵有发', staff_id: 3, staff_mobile: '13912343003',
+        amount: '80.00', status: 3, address: '颐景园·江南里 1栋1单元102',
+        remark: '主卫马桶堵塞，已准备好工具后联系我',
+        create_time: daysAgo(1, ' 08:20:00'), finish_time: daysAgo(1, ' 14:35:00'),
+        logs: [
+            { time: daysAgo(1, ' 08:20:00'), content: '用户提交生活帮手订单', operator: '李娜' },
+            { time: daysAgo(1, ' 08:35:00'), content: '订单已关联到人才库用户 赵有发，由其线下对接完成', operator: '物业管理员' },
+            { time: daysAgo(1, ' 14:35:00'), content: '赵有发 完成服务，订单已完成', operator: '赵有发' }
+        ]
+    },
+    {
+        id: 4003, sn: 'BZ20260907003', service_id: 4004,
+        cover: helperImg(4), title: '保洁清洗', spec: '两室一厅日常保洁',
+        avatar: userImg(4), nickname: '赵敏', mobile: '13812341004',
+        community: '绿城·桂语江南', building: '2栋1单元301',
+        staff: '', staff_id: 0, staff_mobile: '',
+        amount: '160.00', status: 1, address: '绿城·桂语江南 2栋1单元301',
+        remark: '周末家中有人，需要擦玻璃和厨房油污清洁',
+        create_time: daysAgo(1, ' 16:10:00'), finish_time: '',
+        logs: [
+            { time: daysAgo(1, ' 16:10:00'), content: '用户提交生活帮手订单，等待关联接单人', operator: '赵敏' }
+        ]
+    },
+    {
+        id: 4004, sn: 'BZ20260906004', service_id: 4003,
+        cover: helperImg(3), title: '开锁换锁', spec: '更换锁芯',
+        avatar: userImg(5), nickname: '陈晨', mobile: '13812341005',
+        community: '保利·天悦湾', building: '3栋2单元502',
+        staff: '蒋伟', staff_id: 4, staff_mobile: '13912343004',
+        amount: '160.00', status: 3, address: '保利·天悦湾 3栋2单元502',
+        remark: '钥匙断在锁孔里，需要上门开锁并更换锁芯',
+        create_time: daysAgo(2, ' 19:05:00'), finish_time: daysAgo(2, ' 20:40:00'),
+        logs: [
+            { time: daysAgo(2, ' 19:05:00'), content: '用户提交生活帮手订单', operator: '陈晨' },
+            { time: daysAgo(2, ' 19:20:00'), content: '订单已关联到人才库用户 蒋伟，由其线下对接完成', operator: '物业管理员' },
+            { time: daysAgo(2, ' 20:40:00'), content: '蒋伟 完成服务，订单已完成', operator: '蒋伟' }
+        ]
+    },
+    {
+        id: 4005, sn: 'BZ20260905005', service_id: 4006,
+        cover: helperImg(6), title: '居家照护', spec: '半天陪护照料',
+        avatar: userImg(6), nickname: '刘洋', mobile: '13812341006',
+        community: '万科·未来城三期', building: '5栋1单元1103',
+        staff: '何秀娟', staff_id: 5, staff_mobile: '13912343005',
+        amount: '260.00', status: 2, address: '万科·未来城三期 5栋1单元1103',
+        remark: '家中老人术后需要协助起居，上午半天即可',
+        create_time: daysAgo(3, ' 10:15:00'), finish_time: '',
+        logs: [
+            { time: daysAgo(3, ' 10:15:00'), content: '用户提交生活帮手订单', operator: '刘洋' },
+            { time: daysAgo(3, ' 10:30:00'), content: '订单已关联到人才库用户 何秀娟，由其线下对接完成', operator: '物业管理员' }
+        ]
+    },
+    {
+        id: 4006, sn: 'BZ20260904006', service_id: 4005,
+        cover: helperImg(5), title: '代买代办', spec: '超市代买配送到家',
+        avatar: userImg(3), nickname: '王强', mobile: '13812341003',
+        community: '颐景园·江南里', building: '1栋1单元201',
+        staff: '', staff_id: 0, staff_mobile: '',
+        amount: '30.00', status: 1, address: '颐景园·江南里 1栋1单元201',
+        remark: '代买米面粮油，票据拍照即可，现金已提前支付',
+        create_time: daysAgo(4, ' 15:20:00'), finish_time: '',
+        logs: [
+            { time: daysAgo(4, ' 15:20:00'), content: '用户提交生活帮手订单，等待关联接单人', operator: '王强' }
+        ]
+    },
+    {
+        id: 4007, sn: 'BZ20260903007', service_id: 4007,
+        cover: helperImg(7), title: '衣物洗护', spec: '羽绒服上门取送洗护',
+        avatar: userImg(2), nickname: '李娜', mobile: '13812341002',
+        community: '颐景园·江南里', building: '1栋1单元102',
+        staff: '', staff_id: 0, staff_mobile: '',
+        amount: '68.00', status: 0, address: '颐景园·江南里 1栋1单元102',
+        remark: '两件长款羽绒服，需要干洗并上门取送',
+        create_time: daysAgo(5, ' 11:05:00'), finish_time: '',
+        logs: [
+            { time: daysAgo(5, ' 11:05:00'), content: '用户提交生活帮手订单，等待支付', operator: '李娜' }
+        ]
+    },
+    {
+        id: 4008, sn: 'BZ20260902008', service_id: 4008,
+        cover: helperImg(8), title: '搬家搬运', spec: '两室一厅同城搬家',
+        avatar: userImg(5), nickname: '陈晨', mobile: '13812341005',
+        community: '保利·天悦湾', building: '3栋2单元502',
+        staff: '罗小川', staff_id: 6, staff_mobile: '13912343006',
+        amount: '480.00', status: 3, address: '保利·天悦湾 3栋2单元502 → 万科·未来城三期 5栋',
+        remark: '有钢琴和大件家具，需提前评估搬运方案',
+        create_time: daysAgo(6, ' 09:00:00'), finish_time: daysAgo(6, ' 17:30:00'),
+        logs: [
+            { time: daysAgo(6, ' 09:00:00'), content: '用户提交生活帮手订单', operator: '陈晨' },
+            { time: daysAgo(6, ' 09:25:00'), content: '订单已关联到人才库用户 罗小川，由其线下对接完成', operator: '物业管理员' },
+            { time: daysAgo(6, ' 17:30:00'), content: '罗小川 完成服务，订单已完成', operator: '罗小川' }
+        ]
+    },
+    {
+        id: 4009, sn: 'BZ20260901009', service_id: 4004,
+        cover: helperImg(4), title: '保洁清洗', spec: '抽油烟机深度拆洗',
+        avatar: userImg(1), nickname: '张伟', mobile: '13812341001',
+        community: '颐景园·江南里', building: '1栋1单元101',
+        staff: '王晓梅', staff_id: 2, staff_mobile: '13912343002',
+        amount: '150.00', status: 4, address: '颐景园·江南里 1栋1单元101',
+        remark: '抽油烟机油污很重，需要深度拆洗，可开发票',
+        create_time: daysAgo(7, ' 14:30:00'), finish_time: '',
+        logs: [
+            { time: daysAgo(7, ' 14:30:00'), content: '用户提交生活帮手订单', operator: '张伟' },
+            { time: daysAgo(7, ' 14:45:00'), content: '订单已关联到人才库用户 王晓梅，由其线下对接完成', operator: '物业管理员' },
+            { time: daysAgo(6, ' 09:10:00'), content: '用户临时有事，订单已取消', operator: '物业管理员' }
+        ]
+    },
+    {
+        id: 4010, sn: 'BZ20260831010', service_id: 4001,
+        cover: helperImg(1), title: '家电维修', spec: '洗衣机维修',
+        avatar: userImg(6), nickname: '刘洋', mobile: '13812341006',
+        community: '万科·未来城三期', building: '5栋1单元1103',
+        staff: '', staff_id: 0, staff_mobile: '',
+        amount: '100.00', status: 1, address: '万科·未来城三期 5栋1单元1103',
+        remark: '洗衣机脱水时异响严重，方便的话下午上门',
+        create_time: daysAgo(8, ' 08:50:00'), finish_time: '',
+        logs: [
+            { time: daysAgo(8, ' 08:50:00'), content: '用户提交生活帮手订单，等待关联接单人', operator: '刘洋' }
+        ]
+    }
+]
+
+// ==================== 订单评价 ====================
+export const orderEvaluations = [
+    { id: 5001, sn: 'TG20260908001', title: '日托·9月第一期', avatar: userImg(1), nickname: '张伟', mobile: '13812341001', stars: 5, content: '托管员每天早上准时上门接孩子，晚上还贴心反馈饮食和作息情况，非常省心，强烈推荐！', create_time: daysAgo(0, ' 19:20:00') },
+    { id: 5002, sn: 'SC20260907002', title: '双荤商务午餐组合', avatar: userImg(2), nickname: '李娜', mobile: '13812341002', stars: 5, content: '配送很快，保温盒包装很严实，打开还是热乎的，分量也足。', create_time: daysAgo(1, ' 12:35:00') },
+    { id: 5003, sn: 'PZ20260907002', title: '普通门诊陪诊（时价）', avatar: userImg(1), nickname: '张伟', mobile: '13812341001', stars: 4, content: '陪诊员全程帮忙排队挂号取药，服务态度很好，就是医院车位太紧张耽误了点时间。', create_time: daysAgo(1, ' 15:48:00') },
+    { id: 5004, sn: 'BZ20260907002', title: '管道疏通', avatar: userImg(2), nickname: '李娜', mobile: '13812341002', stars: 5, content: '师傅上门很快，十几分钟就疏通好了，还顺手清理了现场，价格也公道。', create_time: daysAgo(1, ' 15:20:00') },
+    { id: 5005, sn: 'SC20260906003', title: '清淡养身晚餐组合', avatar: userImg(4), nickname: '赵敏', mobile: '13812341004', stars: 3, content: '粥和小菜都挺好，就是配送比约定时间晚了近二十分钟，希望能改进。', create_time: daysAgo(2, ' 19:05:00') },
+    { id: 5006, sn: 'TG20260906003', title: '学期每日托·2026秋季', avatar: userImg(5), nickname: '陈晨', mobile: '13812341005', stars: 5, content: '一整个学期的托管都交给社区了，老师很负责，孩子作业在学校就写完了。', create_time: daysAgo(2, ' 20:30:00') },
+    { id: 5007, sn: 'BZ20260906004', title: '开锁换锁', avatar: userImg(5), nickname: '陈晨', mobile: '13812341005', stars: 5, content: '晚上十点多求助，师傅四十分钟就到了，收费透明没有额外加价，太感谢了。', create_time: daysAgo(2, ' 21:40:00') },
+    { id: 5008, sn: 'PZ20260905004', title: '住院陪护（时价）', avatar: userImg(3), nickname: '王强', mobile: '13812341003', stars: 4, content: '陪护护士照顾得细致，夜间也会定时查看，唯一遗憾是不能连续同一位陪诊员。', create_time: daysAgo(3, ' 11:15:00') },
+    { id: 5009, sn: 'BZ20260905005', title: '居家照护', avatar: userImg(6), nickname: '刘洋', mobile: '13812341006', stars: 5, content: '老人术后行动不便，照护人员很有耐心，还会帮忙做康复按摩，家人放心不少。', create_time: daysAgo(3, ' 18:25:00') },
+    { id: 5010, sn: 'SC20260904005', title: '低糖轻食组合', avatar: userImg(6), nickname: '刘洋', mobile: '13812341006', stars: 2, content: '到食堂自取时只剩一份，套餐内容和APP上介绍的不太一致，希望库存能准一点。', create_time: daysAgo(4, ' 12:10:00') },
+    { id: 5011, sn: 'BZ20260902008', title: '搬家搬运', avatar: userImg(5), nickname: '陈晨', mobile: '13812341005', stars: 5, content: '钢琴包装得很专业，全程没有磕碰，师傅们搬完还帮着把垃圾清理了，好评。', create_time: daysAgo(6, ' 19:50:00') },
+    { id: 5012, sn: 'TG20260901008', title: '学期周末托·周日班', avatar: userImg(2), nickname: '李娜', mobile: '13812341002', stars: 1, content: '临时有事申请退款，客服处理了很久才开始退，希望以后能更顺畅一些。', create_time: daysAgo(7, ' 10:05:00') }
+]
+
+// ==================== 人才库 ====================
+/** 供生活帮手订单「订单关联」选择，关联后由该用户线下对接完成 */
+export const talentList = [
+    { id: 1, avatar: talentImg(1), nickname: '钱志明', mobile: '13912343001', community: '颐景园·江南里', skills: ['家电维修', '水电维修'], years: 12, orders: 128, stars: '4.9', status: 1, create_time: daysAgo(210) },
+    { id: 2, avatar: talentImg(2), nickname: '王晓梅', mobile: '13912343002', community: '颐景园·江南里', skills: ['保洁清洗', '衣物洗护'], years: 6, orders: 203, stars: '4.8', status: 1, create_time: daysAgo(196) },
+    { id: 3, avatar: talentImg(3), nickname: '赵有发', mobile: '13912343003', community: '绿城·桂语江南', skills: ['管道疏通', '防水补漏'], years: 9, orders: 176, stars: '4.7', status: 1, create_time: daysAgo(188) },
+    { id: 4, avatar: talentImg(4), nickname: '蒋伟', mobile: '13912343004', community: '保利·天悦湾', skills: ['开锁换锁', '更换锁芯'], years: 15, orders: 96, stars: '5.0', status: 1, create_time: daysAgo(175) },
+    { id: 5, avatar: talentImg(5), nickname: '何秀娟', mobile: '13912343005', community: '万科·未来城三期', skills: ['居家照护', '陪诊陪护'], years: 8, orders: 142, stars: '4.9', status: 1, create_time: daysAgo(160) },
+    { id: 6, avatar: talentImg(6), nickname: '罗小川', mobile: '13912343006', community: '保利·天悦湾', skills: ['代买代办', '搬家搬运'], years: 4, orders: 87, stars: '4.6', status: 1, create_time: daysAgo(145) },
+    { id: 7, avatar: talentImg(7), nickname: '孙丽', mobile: '13912343007', community: '绿城·桂语江南', skills: ['家电清洗', '空调维修'], years: 7, orders: 65, stars: '4.8', status: 1, create_time: daysAgo(120) },
+    { id: 8, avatar: talentImg(8), nickname: '邓国平', mobile: '13912343008', community: '颐景园·江南里', skills: ['家具安装', '墙面修补'], years: 5, orders: 38, stars: '4.5', status: 0, create_time: daysAgo(90) }
+]
+
+// ==================== 陪诊订单附加费用 ====================
+/** 按陪诊订单 id 归档：extra_fee 金额 + extra_remark 说明，无记录则显示「无附加费用」 */
+export const escortExtraFees: Record<number, { name: string; extra_fee: string; extra_remark: string }[]> = {
+    3001: [
+        { name: '停车费', extra_fee: '20.00', extra_remark: '医院地下车库 4 小时' },
+        { name: '挂号费', extra_fee: '50.00', extra_remark: '专家门诊挂号费，凭票实报实销' }
+    ],
+    3002: [
+        { name: '挂号费', extra_fee: '15.00', extra_remark: '普通门诊挂号费，陪诊员代缴' }
+    ],
+    3003: [
+        { name: '停车费', extra_fee: '12.00', extra_remark: '省人民医院路面临时停车' }
+    ],
+    3004: [
+        { name: '餐费', extra_fee: '90.00', extra_remark: '住院期间陪护人员三餐，按 30 元/餐计' },
+        { name: '停车费', extra_fee: '48.00', extra_remark: '住院部停车场包日计费，共 3 天' }
+    ],
+    3006: [
+        { name: '挂号费', extra_fee: '15.00', extra_remark: '社区医院普通号，陪诊员代缴' }
+    ],
+    3008: [
+        { name: '停车费', extra_fee: '18.00', extra_remark: '就诊过程中临时停车 2 小时' },
+        { name: '餐费', extra_fee: '25.00', extra_remark: '陪诊员午餐，医院食堂就餐' }
+    ]
+}

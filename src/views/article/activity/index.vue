@@ -163,9 +163,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="phone" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column prop="signup_count" label="报名人数" width="100" align="center" show-overflow-tooltip />
                 <el-table-column prop="signup_time" label="报名时间" width="160" show-overflow-tooltip />
-                <el-table-column prop="remark" label="备注" min-width="140" show-overflow-tooltip />
             </el-table>
             <template #footer>
                 <el-button @click="signupVisible = false">关闭</el-button>
@@ -175,30 +173,70 @@
 </template>
 
 <script setup lang="ts" name="articleActivity">
-import { getActivityList, getActivitySignupList, activityEnded } from '@/mock/api'
+import { contentActivityList, contentActivitySignupList } from '@/mock/data_content'
 import { usePaging } from '@/hooks/usePaging'
 import { Search, Plus } from '@element-plus/icons-vue'
 import Editor from '@/components/editor/index.vue'
 import ImageUpload from '@/components/image-upload/index.vue'
 
 const queryParams = reactive({ keyword: '', activity_status: '', start_time: '', end_time: '' })
-const { pager, getLists } = usePaging({ fetchFun: getActivityList, params: queryParams, firstLoading: true })
-
 const createRange = ref<string[]>([])
+
+/** 是否已结束：手动停止报名或已超过报名结束时间 */
+const isEnded = (row: any) => {
+    if (!row) return false
+    if (row.signup_status === 0) return true
+    const today = new Date()
+    const p = (v: number) => String(v).padStart(2, '0')
+    const todayStr = `${today.getFullYear()}-${p(today.getMonth() + 1)}-${p(today.getDate())}`
+    return !!(row.signup_end && row.signup_end < todayStr)
+}
+
+// 本地筛选：列表分页与数据源保持一致
+const doFilter = (data: any[], params: Record<string, any> = {}) => {
+    let result = data
+    if (params.keyword) {
+        const kw = String(params.keyword)
+        result = result.filter((i: any) => String(i.title || '').includes(kw))
+    }
+    if (params.activity_status) {
+        result = result.filter((i: any) => (Number(params.activity_status) === 2 ? isEnded(i) : !isEnded(i)))
+    }
+    if (params.start_time) {
+        result = result.filter((i: any) => String(i.create_time).slice(0, 10) >= params.start_time)
+    }
+    if (params.end_time) {
+        result = result.filter((i: any) => String(i.create_time).slice(0, 10) <= params.end_time)
+    }
+    return result
+}
+
+const getActivityList = (params: Record<string, any>) => {
+    const { page_no = 1, page_size = 15, ...rest } = params
+    const lists = doFilter(contentActivityList, rest)
+    return Promise.resolve({
+        count: lists.length,
+        lists: lists.slice((page_no - 1) * page_size, page_no * page_size)
+    })
+}
+
+const { pager, getLists, resetPage, resetParams } = usePaging({
+    fetchFun: getActivityList,
+    params: queryParams,
+    firstLoading: true
+})
+
 const onSearch = () => {
     queryParams.start_time = createRange.value?.[0] || ''
     queryParams.end_time = createRange.value?.[1] || ''
-    pager.page = 1
-    getLists()
+    resetPage()
 }
 const resetQuery = () => {
-    queryParams.keyword = ''
-    queryParams.activity_status = ''
     createRange.value = []
-    onSearch()
+    queryParams.start_time = ''
+    queryParams.end_time = ''
+    resetParams()
 }
-
-const isEnded = (row: any) => activityEnded(row)
 
 const nowTimeStr = () => {
     const d = new Date()
@@ -303,13 +341,12 @@ const signupVisible = ref(false)
 const signupLoading = ref(false)
 const signupActivity = ref<any>({})
 const signupLists = ref<any[]>([])
-const openSignup = async (row: any) => {
+const openSignup = (row: any) => {
     signupActivity.value = row
     signupVisible.value = true
     signupLoading.value = true
     try {
-        const res: any = await getActivitySignupList({ activity_id: row.id, page_size: 100 })
-        signupLists.value = res?.lists || []
+        signupLists.value = contentActivitySignupList.filter((i: any) => i.activity_id === row.id)
     } finally {
         signupLoading.value = false
     }

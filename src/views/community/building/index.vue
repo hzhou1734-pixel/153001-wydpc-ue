@@ -1,400 +1,128 @@
-<script setup lang="ts" name="communityBuilding">
-import { getBuildingTree, getRoomList, getCommunityList } from '@/mock/api'
-
-const loading = ref(false)
-const treeData = ref<any[]>([])
-const treeRef = ref()
-const roomLoading = ref(false)
-const roomList = ref<any[]>([])
-const currentUnit = ref<any>(null)
-const communityOptions = ref<any[]>([])
-
-// 加载楼栋树
-const getTree = async () => {
-    loading.value = true
-    try {
-        treeData.value = await getBuildingTree()
-    } finally {
-        loading.value = false
-    }
-}
-
-// 加载房号列表
-const getRooms = async () => {
-    roomLoading.value = true
-    try {
-        roomList.value = await getRoomList()
-    } finally {
-        roomLoading.value = false
-    }
-}
-
-// 加载小区下拉数据
-const getCommunityOptions = async () => {
-    const res = await getCommunityList({ page_size: 100 })
-    communityOptions.value = res.lists || []
-}
-
-// 选中单元节点
-const handleNodeClick = (data: any) => {
-    currentUnit.value = data.type === 'unit' ? data : null
-}
-
-// 认证状态筛选：'' 全部 / '1' 已认证 / '0' 未认证
-const certFilter = ref('')
-
-const filteredRooms = computed(() => {
-    let list = roomList.value
-    if (currentUnit.value) {
-        list = list.filter((item: any) => item.unit_id === currentUnit.value.id)
-    }
-    if (certFilter.value !== '') {
-        list = list.filter((item: any) => Number(item.certified) === Number(certFilter.value))
-    }
-    return list
-})
-
-// 楼栋下拉（供新增单元使用）
-const buildingOptions = computed(() => treeData.value.map((item: any) => ({ id: item.id, name: item.name })))
-
-// 新增楼栋/单元（模拟）
-const showAdd = ref(false)
-const addForm = reactive({ type: 'building', name: '', community_id: '' as any, building_id: '' as any })
-const openAdd = (type: string) => {
-    addForm.type = type
-    addForm.name = ''
-    addForm.community_id = ''
-    addForm.building_id = ''
-    // 新增单元时，若左侧已选中某楼栋则默认预填
-    if (type === 'unit') {
-        const node = treeRef.value?.getCurrentNode()
-        if (node && node.type !== 'unit') addForm.building_id = node.id
-    }
-    showAdd.value = true
-}
-const submitAdd = () => {
-    if (!addForm.name) {
-        ElMessage.warning('请输入名称')
-        return
-    }
-    if (addForm.type === 'building') {
-        if (!addForm.community_id) {
-            ElMessage.warning('请选择所属小区')
-            return
-        }
-        treeData.value.push({
-            id: Date.now(),
-            name: addForm.name,
-            community_id: addForm.community_id,
-            children: []
-        })
-    } else {
-        if (!addForm.building_id) {
-            ElMessage.warning('请选择所属楼栋')
-            return
-        }
-        const building = treeData.value.find((item: any) => item.id === addForm.building_id)
-        if (!building) {
-            ElMessage.warning('所属楼栋不存在')
-            return
-        }
-        building.children = building.children || []
-        building.children.push({
-            id: Date.now(),
-            name: addForm.name,
-            parent_id: building.id,
-            type: 'unit'
-        })
-    }
-    ElMessage.success('添加成功')
-    showAdd.value = false
-}
-
-// 新增房号（小区-楼栋-单元级联，默认选中当前所在小区-楼栋-单元）
-const showRoom = ref(false)
-const roomForm = reactive({ community_id: '' as any, building_id: '' as any, unit_id: '' as any, name: '', owner: '', phone: '' })
-
-// 楼栋下拉（随所选小区联动）
-const roomBuildingOptions = computed(() => treeData.value.filter((item: any) => item.community_id === roomForm.community_id))
-// 单元下拉（随所选楼栋联动）
-const roomUnitOptions = computed(() => {
-    const building = treeData.value.find((item: any) => item.id === roomForm.building_id)
-    return building?.children || []
-})
-
-const openRoom = () => {
-    roomForm.community_id = ''
-    roomForm.building_id = ''
-    roomForm.unit_id = ''
-    roomForm.name = ''
-    roomForm.owner = ''
-    roomForm.phone = ''
-    // 默认选中当前所在小区-楼栋-单元
-    if (currentUnit.value) {
-        const building = treeData.value.find((item: any) => item.children?.some((u: any) => u.id === currentUnit.value.id))
-        if (building) {
-            roomForm.building_id = building.id
-            roomForm.community_id = building.community_id
-            roomForm.unit_id = currentUnit.value.id
-        }
-    }
-    showRoom.value = true
-}
-
-// 小区变化时清空楼栋/单元
-const onRoomCommunityChange = () => {
-    roomForm.building_id = ''
-    roomForm.unit_id = ''
-}
-
-// 楼栋变化时清空单元
-const onRoomBuildingChange = () => {
-    roomForm.unit_id = ''
-}
-
-const submitRoom = () => {
-    if (!roomForm.community_id) {
-        ElMessage.warning('请选择所属小区')
-        return
-    }
-    if (!roomForm.building_id) {
-        ElMessage.warning('请选择所属楼栋')
-        return
-    }
-    if (!roomForm.unit_id) {
-        ElMessage.warning('请选择所属单元')
-        return
-    }
-    if (!roomForm.name) {
-        ElMessage.warning('请输入房号')
-        return
-    }
-    roomList.value.push({
-        id: Date.now(),
-        name: roomForm.name,
-        unit_id: roomForm.unit_id,
-        building_id: roomForm.building_id,
-        owner: roomForm.owner || '-',
-        phone: roomForm.phone || '-',
-        certified: 0
-    })
-    ElMessage.success('添加成功')
-    showRoom.value = false
-}
-
-// 编辑房号（复用新增房号的级联选择器模式）
-const showEdit = ref(false)
-const editForm = reactive({ id: 0 as any, community_id: '' as any, building_id: '' as any, unit_id: '' as any, name: '', owner: '', phone: '' })
-
-// 楼栋下拉（随所选小区联动）
-const editBuildingOptions = computed(() => treeData.value.filter((item: any) => item.community_id === editForm.community_id))
-// 单元下拉（随所选楼栋联动）
-const editUnitOptions = computed(() => {
-    const building = treeData.value.find((item: any) => item.id === editForm.building_id)
-    return building?.children || []
-})
-
-const openEdit = (row: any) => {
-    editForm.id = row.id
-    editForm.name = row.name
-    editForm.owner = row.owner === '-' ? '' : row.owner
-    editForm.phone = row.phone === '-' ? '' : row.phone
-    editForm.building_id = row.building_id
-    editForm.unit_id = row.unit_id
-    // 从楼栋反查所属小区
-    const building = treeData.value.find((item: any) => item.id === row.building_id)
-    editForm.community_id = building?.community_id || ''
-    showEdit.value = true
-}
-
-// 小区变化时清空楼栋/单元
-const onEditCommunityChange = () => {
-    editForm.building_id = ''
-    editForm.unit_id = ''
-}
-
-// 楼栋变化时清空单元
-const onEditBuildingChange = () => {
-    editForm.unit_id = ''
-}
-
-const submitEdit = () => {
-    if (!editForm.community_id) {
-        ElMessage.warning('请选择所属小区')
-        return
-    }
-    if (!editForm.building_id) {
-        ElMessage.warning('请选择所属楼栋')
-        return
-    }
-    if (!editForm.unit_id) {
-        ElMessage.warning('请选择所属单元')
-        return
-    }
-    if (!editForm.name) {
-        ElMessage.warning('请输入房号')
-        return
-    }
-    const target = roomList.value.find((item: any) => item.id === editForm.id)
-    if (!target) {
-        ElMessage.error('房号不存在或已被删除')
-        return
-    }
-    target.name = editForm.name
-    target.unit_id = editForm.unit_id
-    target.building_id = editForm.building_id
-    target.owner = editForm.owner || '-'
-    target.phone = editForm.phone || '-'
-    ElMessage.success('修改成功')
-    showEdit.value = false
-}
-
-// 删除房号
-const handleDelete = (row: any) => {
-    ElMessageBox.confirm(`确定删除房号「${row.name}」吗？删除后不可恢复`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-    })
-        .then(() => {
-            const index = roomList.value.findIndex((item: any) => item.id === row.id)
-            if (index > -1) roomList.value.splice(index, 1)
-            ElMessage.success('删除成功')
-        })
-        .catch(() => {})
-}
-
-onMounted(() => {
-    getTree()
-    getRooms()
-    getCommunityOptions()
-})
-</script>
-
 <template>
-    <div class="community-building" v-loading="loading">
+    <div class="community-building">
         <el-card class="!border-none" shadow="never">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <span class="card-title">楼栋房屋管理</span>
+                    <span class="card-title">楼栋房号</span>
                     <div>
-                        <el-button type="primary" plain size="small" @click="openAdd('building')">新增楼栋</el-button>
-                        <el-button type="primary" size="small" @click="openAdd('unit')">新增单元</el-button>
+                        <el-button type="primary" plain @click="openAddBuilding">添加楼栋</el-button>
+                        <el-button type="primary" @click="openAddRoom">添加房号</el-button>
                     </div>
                 </div>
             </template>
-            <div class="flex gap-4">
-                <!-- 左侧楼栋树 -->
-                <div class="w-64 shrink-0 border border-br rounded-lg p-3">
-                    <div class="text-tx-secondary text-sm mb-2">楼栋结构（点击单元筛选房号）</div>
-                    <el-tree
-                        ref="treeRef"
-                        :data="treeData"
-                        node-key="id"
-                        default-expand-all
-                        highlight-current
-                        :props="{ label: 'name', children: 'children' }"
-                        @node-click="handleNodeClick"
-                    />
-                </div>
-                <!-- 右侧房号表格 -->
-                <div class="flex-1">
-                    <div class="mb-3 flex items-center justify-between">
-                        <span class="font-bold">
-                            房号列表
-                            <el-tag v-if="currentUnit" size="small" class="ml-2" closable @close="currentUnit = null">
-                                {{ currentUnit.name }}
-                            </el-tag>
-                        </span>
-                        <div class="flex items-center gap-2">
-                            <el-select v-model="certFilter" size="small" placeholder="认证状态" style="width: 120px">
-                                <el-option label="全部状态" value="" />
-                                <el-option label="已认证" value="1" />
-                                <el-option label="未认证" value="0" />
-                            </el-select>
-                            <el-button size="small" type="primary" plain @click="openRoom">新增房号</el-button>
-                        </div>
-                    </div>
-                    <el-table :data="filteredRooms" v-loading="roomLoading" border>
-                        <el-table-column prop="name" label="房号" min-width="100" />
-                        <el-table-column label="业主" min-width="160">
-                            <template #default="{ row }">
-                                <div class="flex items-center justify-between gap-2">
-                                    <span>{{ row.owner }}</span>
-                                    <el-tag :type="row.certified ? 'success' : 'info'" size="small">
-                                        {{ row.certified ? '已认证' : '未认证' }}
-                                    </el-tag>
-                                </div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="phone" label="联系电话" width="120" show-overflow-tooltip />
-                        <el-table-column label="操作" width="130" fixed="right">
-                            <template #default="{ row }">
-                                <el-button link type="primary" size="small" @click="openEdit(row)">编辑</el-button>
-                                <el-button link type="danger" size="small" @click="handleDelete(row)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </div>
-            </div>
-        </el-card>
 
-        <!-- 新增楼栋/单元弹窗 -->
-        <el-dialog v-model="showAdd" :title="addForm.type === 'building' ? '新增楼栋' : '新增单元'" width="420px">
-            <el-form label-width="80px">
-                <template v-if="addForm.type === 'building'">
-                    <el-form-item label="所属小区" required>
-                        <el-select v-model="addForm.community_id" placeholder="请选择所属小区" class="!w-full">
-                            <el-option v-for="item in communityOptions" :key="item.id" :label="item.name" :value="item.id" />
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="楼栋名称" required>
-                        <el-input v-model="addForm.name" placeholder="如：6栋" />
-                    </el-form-item>
-                </template>
-                <template v-else>
-                    <el-form-item label="所属楼栋" required>
-                        <el-select v-model="addForm.building_id" placeholder="请选择所属楼栋" class="!w-full">
-                            <el-option v-for="item in buildingOptions" :key="item.id" :label="item.name" :value="item.id" />
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="单元名称" required>
-                        <el-input v-model="addForm.name" placeholder="如：1单元" />
-                    </el-form-item>
-                </template>
-            </el-form>
-            <template #footer>
-                <el-button @click="showAdd = false">取消</el-button>
-                <el-button type="primary" @click="submitAdd">确定</el-button>
-            </template>
-        </el-dialog>
-
-        <!-- 新增房号弹窗 -->
-        <el-dialog v-model="showRoom" title="新增房号" width="460px">
-            <el-form label-width="80px">
-                <el-form-item label="所属小区" required>
-                    <el-select v-model="roomForm.community_id" placeholder="请选择小区" class="!w-full" @change="onRoomCommunityChange">
+            <el-form :model="queryParams" inline class="mb-2">
+                <el-form-item label="所属小区">
+                    <el-select v-model="queryParams.community_id" placeholder="全部小区" clearable class="!w-[180px]">
                         <el-option v-for="item in communityOptions" :key="item.id" :label="item.name" :value="item.id" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="所属楼栋" required>
-                    <el-select v-model="roomForm.building_id" placeholder="请选择楼栋" class="!w-full" @change="onRoomBuildingChange">
-                        <el-option v-for="item in roomBuildingOptions" :key="item.id" :label="item.name" :value="item.id" />
+                <el-form-item label="楼栋/房号">
+                    <el-input v-model="queryParams.keyword" placeholder="楼栋名称 / 房号" clearable class="!w-[180px]" @keyup.enter="getTreeList" />
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="getTreeList">查询</el-button>
+                    <el-button @click="resetQuery">重置</el-button>
+                </el-form-item>
+            </el-form>
+
+            <el-table :data="treeList" v-loading="loading" row-key="id" default-expand-all border :tree-props="{ children: 'children' }">
+                <el-table-column label="楼栋 / 房号" min-width="180">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'building'" class="font-bold">{{ row.name }}</span>
+                        <span v-else>房号 {{ row.name }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="小区名称" min-width="160">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'building'">{{ row.community_name }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="楼栋管家" min-width="110">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'building'">{{ row.keeper_name || '未设置' }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="管家电话" width="120">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'building'">{{ row.keeper_mobile || '-' }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="房数" width="80" align="center">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'building'">{{ (row.children || []).length }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="认证业主" min-width="220">
+                    <template #default="{ row }">
+                        <template v-if="row.type === 'room'">
+                            <div v-if="row.certified" class="flex items-center">
+                                <el-image :src="row.avatar" class="w-7 h-7 rounded-full mr-2 shrink-0" />
+                                <span>{{ row.owner }}</span>
+                                <span class="text-tx-secondary text-xs ml-2">{{ row.phone }}</span>
+                            </div>
+                            <el-tag v-else type="info" size="small">未认证</el-tag>
+                        </template>
+                    </template>
+                </el-table-column>
+                <el-table-column label="家庭成员数" width="110" align="center">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'room'">{{ row.certified ? `${row.family_count} 人` : '-' }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="认证时间" width="160">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'room'">{{ row.certified ? row.cert_time || '-' : '-' }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="排序" width="80" align="center">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'building'">{{ row.sort }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="130" fixed="right">
+                    <template #default="{ row }">
+                        <el-button link type="primary" @click="row.type === 'building' ? openEditBuilding(row) : openEditRoom(row)">编辑</el-button>
+                        <el-button link type="danger" @click="row.type === 'building' ? handleDeleteBuilding(row) : handleDeleteRoom(row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-card>
+
+        <!-- 添加 / 编辑楼栋 -->
+        <el-dialog v-model="showBuilding" :title="buildingForm.id ? '编辑楼栋' : '添加楼栋'" width="440px">
+            <el-form :model="buildingForm" label-width="90px">
+                <el-form-item label="所属小区" required>
+                    <el-select v-model="buildingForm.community_id" placeholder="请选择小区" class="!w-full">
+                        <el-option v-for="item in communityOptions" :key="item.id" :label="item.name" :value="item.id" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="所属单元" required>
-                    <el-select v-model="roomForm.unit_id" placeholder="请选择单元" class="!w-full">
-                        <el-option v-for="item in roomUnitOptions" :key="item.id" :label="item.name" :value="item.id" />
+                <el-form-item label="楼栋名称" required>
+                    <el-input v-model="buildingForm.name" placeholder="如：6栋" />
+                </el-form-item>
+                <el-form-item label="排序">
+                    <el-input-number v-model="buildingForm.sort" :min="0" />
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="showBuilding = false">取消</el-button>
+                <el-button type="primary" @click="submitBuilding">确定</el-button>
+            </template>
+        </el-dialog>
+
+        <!-- 添加 / 编辑房号 -->
+        <el-dialog v-model="showRoom" :title="roomForm.id ? '编辑房号' : '添加房号'" width="440px">
+            <el-form :model="roomForm" label-width="90px">
+                <el-form-item label="所属楼栋" required>
+                    <el-select v-model="roomForm.building_id" placeholder="请选择楼栋" class="!w-full" filterable>
+                        <el-option v-for="item in buildingOptions" :key="item.id" :label="`${item.community_name} ${item.name}`" :value="item.id" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="房号" required>
                     <el-input v-model="roomForm.name" placeholder="如：101" />
                 </el-form-item>
-                <el-form-item label="业主">
-                    <el-input v-model="roomForm.owner" placeholder="业主姓名（选填）" />
-                </el-form-item>
-                <el-form-item label="联系电话">
-                    <el-input v-model="roomForm.phone" placeholder="业主联系电话（选填）" />
+                <el-form-item label="排序">
+                    <el-input-number v-model="roomForm.sort" :min="0" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -402,39 +130,183 @@ onMounted(() => {
                 <el-button type="primary" @click="submitRoom">确定</el-button>
             </template>
         </el-dialog>
-
-        <!-- 编辑房号弹窗 -->
-        <el-dialog v-model="showEdit" title="编辑房号" width="460px">
-            <el-form label-width="80px">
-                <el-form-item label="所属小区" required>
-                    <el-select v-model="editForm.community_id" placeholder="请选择小区" class="!w-full" @change="onEditCommunityChange">
-                        <el-option v-for="item in communityOptions" :key="item.id" :label="item.name" :value="item.id" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="所属楼栋" required>
-                    <el-select v-model="editForm.building_id" placeholder="请选择楼栋" class="!w-full" @change="onEditBuildingChange">
-                        <el-option v-for="item in editBuildingOptions" :key="item.id" :label="item.name" :value="item.id" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="所属单元" required>
-                    <el-select v-model="editForm.unit_id" placeholder="请选择单元" class="!w-full">
-                        <el-option v-for="item in editUnitOptions" :key="item.id" :label="item.name" :value="item.id" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="房号" required>
-                    <el-input v-model="editForm.name" placeholder="如：101" />
-                </el-form-item>
-                <el-form-item label="业主">
-                    <el-input v-model="editForm.owner" placeholder="业主姓名（选填）" />
-                </el-form-item>
-                <el-form-item label="联系电话">
-                    <el-input v-model="editForm.phone" placeholder="业主联系电话（选填）" />
-                </el-form-item>
-            </el-form>
-            <template #footer>
-                <el-button @click="showEdit = false">取消</el-button>
-                <el-button type="primary" @click="submitEdit">确定</el-button>
-            </template>
-        </el-dialog>
     </div>
 </template>
+
+<script setup lang="ts" name="communityBuilding">
+import { buildingTree, certifyList, communityList, roomList, staffList } from '@/mock/data'
+
+const loading = ref(false)
+const communityOptions = communityList
+const queryParams = reactive({ community_id: '' as any, keyword: '' })
+
+/** 楼栋-房号二级树（文档要求：不需要单元，直接楼栋-房号） */
+const treeList = computed(() => {
+    const kw = String(queryParams.keyword || '').trim()
+    let buildings = buildingTree as any[]
+    if (queryParams.community_id !== '' && queryParams.community_id !== undefined) {
+        buildings = buildings.filter((item: any) => item.community_id === queryParams.community_id)
+    }
+    const result = buildings.map((item: any, index: number) => {
+        // 楼栋管家：楼栋管理员角色且负责楼栋包含该楼栋
+        const keeper = staffList.find((s: any) => s.role_id === 4 && String(s.buildings || '').includes(item.name))
+        let rooms = roomList.filter((r: any) => r.building_id === item.id)
+        if (kw && !item.name.includes(kw)) {
+            rooms = rooms.filter((r: any) => String(r.name).includes(kw) || String(r.owner).includes(kw))
+        }
+        return {
+            id: `b-${item.id}`,
+            type: 'building',
+            raw_id: item.id,
+            name: item.name,
+            community_id: item.community_id,
+            community_name: item.community_name,
+            keeper_name: keeper?.name || '',
+            keeper_mobile: keeper?.mobile || '',
+            sort: index + 1,
+            children: rooms.map((r: any, i: number) => {
+                const cert: any = certifyList.find((c: any) => c.mobile === r.phone) || {}
+                return {
+                    id: `r-${r.id}`,
+                    type: 'room',
+                    raw_id: r.id,
+                    building_id: r.building_id,
+                    name: r.name,
+                    owner: r.owner,
+                    phone: r.phone,
+                    certified: r.certified,
+                    avatar: `https://picsum.photos/seed/ghj-room-${r.id}/100/100`,
+                    family_count: r.certified ? cert.family_count || 3 : 0,
+                    cert_time: r.certified ? cert.audit_time || cert.create_time || '-' : '',
+                    sort: i + 1
+                }
+            })
+        }
+    })
+    return kw ? result.filter((b: any) => (b.children || []).length > 0 || b.name.includes(kw)) : result
+})
+
+const buildingOptions = computed(() =>
+    (buildingTree as any[]).map((item: any) => ({ id: item.id, name: item.name, community_name: item.community_name }))
+)
+
+const getTreeList = () => {
+    loading.value = true
+    setTimeout(() => (loading.value = false), 120)
+}
+const resetQuery = () => {
+    queryParams.community_id = ''
+    queryParams.keyword = ''
+    getTreeList()
+}
+
+// ============ 楼栋 ============
+const showBuilding = ref(false)
+const buildingForm = reactive({ id: 0 as any, community_id: '' as any, name: '', sort: 0 })
+
+const openAddBuilding = () => {
+    buildingForm.id = 0
+    buildingForm.community_id = queryParams.community_id || ''
+    buildingForm.name = ''
+    buildingForm.sort = (buildingTree as any[]).length + 1
+    showBuilding.value = true
+}
+const openEditBuilding = (row: any) => {
+    buildingForm.id = row.raw_id
+    buildingForm.community_id = row.community_id
+    buildingForm.name = row.name
+    buildingForm.sort = row.sort
+    showBuilding.value = true
+}
+const submitBuilding = () => {
+    if (!buildingForm.community_id) return ElMessage.warning('请选择所属小区')
+    if (!buildingForm.name) return ElMessage.warning('请输入楼栋名称')
+    if (buildingForm.id) {
+        const target = (buildingTree as any[]).find((item: any) => item.id === buildingForm.id)
+        if (target) {
+            target.name = buildingForm.name
+            target.community_id = buildingForm.community_id
+        }
+    } else {
+        const community = communityList.find((item: any) => item.id === buildingForm.community_id)
+        ;(buildingTree as any[]).push({
+            id: Date.now(),
+            name: buildingForm.name,
+            community_id: buildingForm.community_id,
+            community_name: community?.name || ''
+        })
+    }
+    ElMessage.success(buildingForm.id ? '修改成功' : '添加成功')
+    showBuilding.value = false
+}
+const handleDeleteBuilding = (row: any) => {
+    const rooms = roomList.filter((r: any) => r.building_id === row.raw_id)
+    ElMessageBox.confirm(
+        rooms.length ? `该楼栋下还有 ${rooms.length} 套房号，删除后房号将一并移除，确定删除吗？` : `确定删除楼栋「${row.name}」吗？`,
+        '提示',
+        { type: 'warning' }
+    )
+        .then(() => {
+            const idx = (buildingTree as any[]).findIndex((item: any) => item.id === row.raw_id)
+            if (idx > -1) (buildingTree as any[]).splice(idx, 1)
+            rooms.forEach((r: any) => {
+                const i = roomList.findIndex((item: any) => item.id === r.id)
+                if (i > -1) roomList.splice(i, 1)
+            })
+            ElMessage.success('删除成功')
+        })
+        .catch(() => {})
+}
+
+// ============ 房号 ============
+const showRoom = ref(false)
+const roomForm = reactive({ id: 0 as any, building_id: '' as any, name: '', sort: 0 })
+
+const openAddRoom = () => {
+    roomForm.id = 0
+    roomForm.building_id = ''
+    roomForm.name = ''
+    roomForm.sort = 0
+    showRoom.value = true
+}
+const openEditRoom = (row: any) => {
+    roomForm.id = row.raw_id
+    roomForm.building_id = row.building_id
+    roomForm.name = row.name
+    roomForm.sort = row.sort
+    showRoom.value = true
+}
+const submitRoom = () => {
+    if (!roomForm.building_id) return ElMessage.warning('请选择所属楼栋')
+    if (!roomForm.name) return ElMessage.warning('请输入房号')
+    if (roomForm.id) {
+        const target = roomList.find((item: any) => item.id === roomForm.id)
+        if (target) {
+            target.name = roomForm.name
+            target.building_id = roomForm.building_id
+        }
+    } else {
+        roomList.push({
+            id: Date.now(),
+            name: roomForm.name,
+            building_id: roomForm.building_id,
+            owner: '-',
+            phone: '-',
+            certified: 0
+        } as any)
+    }
+    ElMessage.success(roomForm.id ? '修改成功' : '添加成功')
+    showRoom.value = false
+}
+const handleDeleteRoom = (row: any) => {
+    ElMessageBox.confirm(`确定删除房号「${row.name}」吗？`, '提示', { type: 'warning' })
+        .then(() => {
+            const idx = roomList.findIndex((item: any) => item.id === row.raw_id)
+            if (idx > -1) roomList.splice(idx, 1)
+            ElMessage.success('删除成功')
+        })
+        .catch(() => {})
+}
+
+onMounted(getTreeList)
+</script>

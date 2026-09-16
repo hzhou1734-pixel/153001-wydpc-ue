@@ -56,7 +56,7 @@ export const permModules: PermModule[] = [
             {
                 name: '楼栋房号',
                 perms: 'community.building',
-                ops: [OP_ADD('新增楼栋/单元/房号'), OP_EDIT(), OP_DELETE()]
+                ops: [OP_ADD('添加楼栋/房号'), OP_EDIT(), OP_DELETE()]
             },
             {
                 name: '认证列表',
@@ -79,7 +79,7 @@ export const permModules: PermModule[] = [
             {
                 name: '员工列表',
                 perms: 'staff.lists',
-                ops: [OP_ADD('新增员工'), OP_EDIT(), OP_DELETE()]
+                ops: [OP_ADD('添加员工'), OP_EDIT(), { key: 'role', name: '修改角色' }, { key: 'status', name: '启用禁用' }]
             }
         ]
     },
@@ -94,21 +94,21 @@ export const permModules: PermModule[] = [
             {
                 name: '陪诊服务',
                 perms: 'service.escort',
-                ops: [
-                    { key: 'setting', name: '单价设置' }
-                ]
+                ops: [OP_ADD('添加陪诊'), OP_EDIT('编辑陪诊'), OP_DELETE('删除服务'), OP_STATUS()]
             },
             {
                 name: '膳食服务',
                 perms: 'service.meal',
                 ops: [
-                    { key: 'addDish', name: '新增菜品' },
-                    { key: 'addCombo', name: '新增组合' },
-                    OP_EDIT(),
-                    OP_DELETE(),
-                    { key: 'menu', name: '保存当日菜单' },
-                    OP_STATUS()
+                    { key: 'add', name: '添加菜单内容' },
+                    OP_EDIT('修改菜单'),
+                    OP_DELETE('删除菜单内容')
                 ]
+            },
+            {
+                name: '生活帮手',
+                perms: 'service.helper',
+                ops: [OP_ADD('添加生活帮手'), OP_EDIT(), OP_DELETE(), OP_STATUS()]
             }
         ]
     },
@@ -129,6 +129,16 @@ export const permModules: PermModule[] = [
                 name: '陪诊订单',
                 perms: 'order.escort',
                 ops: [OP_DETAIL('订单详情'), { key: 'dispatch', name: '陪诊派单' }]
+            },
+            {
+                name: '生活帮手订单',
+                perms: 'order.helper',
+                ops: [OP_DETAIL('订单详情'), { key: 'relate', name: '订单关联' }, { key: 'cancel', name: '取消订单' }]
+            },
+            {
+                name: '订单评价',
+                perms: 'order.evaluate',
+                ops: [OP_DETAIL('评价详情')]
             }
         ]
     },
@@ -138,25 +148,7 @@ export const permModules: PermModule[] = [
             {
                 name: '人力资源',
                 perms: 'article.hr',
-                ops: [
-                    OP_DETAIL(),
-                    OP_ADD('添加资源'),
-                    OP_EDIT(),
-                    OP_AUDIT('发布审核'),
-                    OP_DELETE(),
-                    OP_STATUS()
-                ]
-            },
-            {
-                name: '贴吧管理',
-                perms: 'article.bar',
-                ops: [
-                    OP_DETAIL('帖子详情'),
-                    OP_AUDIT('帖子审核'),
-                    { key: 'comment', name: '帖子评论' },
-                    OP_DELETE('删除帖子'),
-                    OP_STATUS()
-                ]
+                ops: [OP_DETAIL('认证详情'), OP_AUDIT('认证审核')]
             },
             {
                 name: '精彩内容',
@@ -182,9 +174,14 @@ export const permModules: PermModule[] = [
                 ]
             },
             {
-                name: '生活帮手',
-                perms: 'article.helper',
-                ops: [OP_DETAIL(), { key: 'handle', name: '标记已处理' }]
+                name: '人才库',
+                perms: 'article.talent',
+                ops: [
+                    OP_DETAIL('人才详情'),
+                    { key: 'relate', name: '关联服务' },
+                    { key: 'dispatch', name: '订单派单' },
+                    { key: 'status', name: '启用禁用' }
+                ]
             },
             {
                 name: 'Banner管理',
@@ -197,20 +194,26 @@ export const permModules: PermModule[] = [
         name: '财务管理',
         pages: [
             { name: '财务概况', perms: 'finance.overview', ops: VIEW_ONLY },
-            { name: '财务流水', perms: 'finance.flow', ops: [OP_EXPORT('流水导出')] },
+            { name: '订单流水', perms: 'finance.flow', ops: [OP_EXPORT('流水导出')] },
             {
                 name: '账单结算',
                 perms: 'finance.bill',
-                ops: [
-                    OP_DETAIL('账单详情'),
-                    OP_EXPORT('账单导出'),
-                    { key: 'settle', name: '账单结算' }
-                ]
+                ops: [OP_DETAIL('账单详情')]
             },
             {
                 name: '员工收益',
                 perms: 'finance.earnings',
-                ops: [OP_ADD('添加收益'), OP_EXPORT('收益导出')]
+                ops: [OP_EXPORT('收益导出')]
+            },
+            {
+                name: '小区钱袋子',
+                perms: 'finance.wallet',
+                ops: [OP_ADD('添加数据')]
+            },
+            {
+                name: '收益配置',
+                perms: 'finance.profit',
+                ops: [{ key: 'setting', name: '保存配置' }]
             }
         ]
     },
@@ -300,10 +303,12 @@ export const rolePerms: Record<number, string[]> = {
         'service.nursing/status',
         'service.escort/lists',
         'service.meal/lists',
-        'service.meal/addDish',
-        'service.meal/addCombo',
+        'service.meal/add',
         'service.meal/edit',
-        'service.meal/menu',
+        'service.meal/delete',
+        'service.helper/lists',
+        'service.helper/add',
+        'service.helper/edit',
         'order.nursing/lists',
         'order.nursing/detail',
         'order.nursing/dispatch',
@@ -313,15 +318,20 @@ export const rolePerms: Record<number, string[]> = {
         'order.escort/lists',
         'order.escort/detail',
         'order.escort/dispatch',
+        'order.helper/lists',
+        'order.helper/detail',
+        'order.helper/relate',
+        'order.helper/cancel',
+        'order.evaluate/lists',
+        'order.evaluate/detail',
         'article.hr/lists',
         'article.hr/detail',
         'article.hr/audit',
-        'article.hr/status',
-        'article.bar/lists',
-        'article.bar/detail',
-        'article.bar/audit',
-        'article.bar/comment',
-        'article.bar/status',
+        'article.talent/lists',
+        'article.talent/detail',
+        'article.talent/relate',
+        'article.talent/dispatch',
+        'article.talent/status',
         'article.wonderful/lists',
         'article.wonderful/add',
         'article.wonderful/edit',
@@ -336,9 +346,6 @@ export const rolePerms: Record<number, string[]> = {
         'article.activity/stop',
         'article.activity/signup',
         'article.activity/status',
-        'article.helper/lists',
-        'article.helper/detail',
-        'article.helper/handle',
         'article.banner/lists',
         'article.banner/add',
         'article.banner/edit',
@@ -358,8 +365,11 @@ export const rolePerms: Record<number, string[]> = {
         'finance.bill/export',
         'finance.bill/settle',
         'finance.earnings/lists',
-        'finance.earnings/add',
         'finance.earnings/export',
+        'finance.wallet/lists',
+        'finance.wallet/add',
+        'finance.profit/lists',
+        'finance.profit/setting',
         'order.nursing/lists',
         'order.nursing/detail',
         'order.meal/lists',
@@ -381,8 +391,5 @@ export const rolePerms: Record<number, string[]> = {
         'order.meal/lists',
         'order.meal/detail',
         'order.meal/dispatch',
-        'article.helper/lists',
-        'article.helper/detail',
-        'article.helper/handle'
     ]
 }

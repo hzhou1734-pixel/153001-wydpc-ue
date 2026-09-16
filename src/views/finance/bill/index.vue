@@ -1,89 +1,73 @@
 <template>
     <div class="finance-bill">
         <el-card class="!border-none" shadow="never">
+            <el-alert
+                class="mb-4"
+                type="info"
+                :closable="false"
+                show-icon
+                title="账单规则"
+                description="每个用户如果在上月有过托管单、膳食单，则自动生成一条账单；账单预付金额、退还金额为其下所有托管单、膳食单的合计。"
+            />
             <el-form :model="queryParams" inline class="mb--4">
-                <el-form-item label="账单状态">
-                    <el-select v-model="queryParams.status" placeholder="全部" clearable class="!w-[130px]">
-                        <el-option label="待结算" :value="0" />
-                        <el-option label="已结算" :value="1" />
-                    </el-select>
+                <el-form-item label="结算时间">
+                    <el-date-picker
+                        v-model="settleRange"
+                        type="daterange"
+                        value-format="YYYY-MM-DD"
+                        range-separator="~"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        class="!w-[240px]"
+                    />
                 </el-form-item>
                 <el-form-item>
                     <el-input
                         v-model="queryParams.keyword"
-                        placeholder="账单号/用户昵称/手机号"
+                        placeholder="用户昵称/手机号码"
                         clearable
-                        class="!w-[260px]"
+                        class="!w-[240px]"
                         @keyup.enter="resetPage"
                     />
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="resetPage">查询</el-button>
                     <el-button @click="resetParamsHandler">重置</el-button>
-                    <el-button type="success" :disabled="!multipleSelection.length" @click="exportBills">
-                        账单导出
-                    </el-button>
                 </el-form-item>
             </el-form>
         </el-card>
 
         <el-card class="!border-none mt-4" shadow="never" v-loading="pager.loading">
             <template #header>
-                <div class="flex items-center justify-between">
-                    <span class="card-title">账单结算</span>
-                    <span class="text-xs text-tx-secondary">勾选账单后可批量导出；单条账单可导出其订单明细</span>
-                </div>
+                <span class="card-title">账单结算</span>
             </template>
-            <el-table
-                :data="pager.lists"
-                stripe
-                row-key="id"
-                @selection-change="(val: any[]) => (multipleSelection = val)"
-            >
-                <el-table-column type="selection" width="50" />
-                <el-table-column prop="sn" label="账单号" min-width="170" show-overflow-tooltip />
-                <el-table-column label="账单金额" min-width="130" align="right">
-                    <template #default="{ row }">
-                        <span class="text-green-600 font-medium">¥{{ row.amount }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="所属用户" min-width="170">
+            <el-table :data="pager.lists" stripe>
+                <el-table-column prop="title" label="账单标题" min-width="200" show-overflow-tooltip />
+                <el-table-column label="所属用户" min-width="180">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-avatar :size="32" :src="row.avatar" />
-                            <div class="ml-2">
-                                <div>{{ row.nickname }}</div>
-                                <div class="text-xs text-tx-secondary">{{ row.mobile }}</div>
-                            </div>
+                            <span class="ml-2">{{ row.nickname }}</span>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="订单数" width="90" align="center">
-                    <template #default="{ row }">{{ row.order_count }} 单</template>
-                </el-table-column>
-                <el-table-column prop="update_time" label="账单更新时间" min-width="170" />
-                <el-table-column label="账单结算时间" min-width="170">
-                    <template #default="{ row }">{{ row.settle_time || '-' }}</template>
-                </el-table-column>
-                <el-table-column label="账单状态" width="100">
+                <el-table-column prop="mobile" label="手机号码" width="120" />
+                <el-table-column label="预付金额" min-width="120" align="right">
                     <template #default="{ row }">
-                        <el-tag size="small" :type="row.status === 1 ? 'success' : 'warning'">
-                            {{ row.status === 1 ? '已结算' : '待结算' }}
-                        </el-tag>
+                        <span class="font-medium">¥{{ row.prepay_amount }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="240" fixed="right">
+                <el-table-column label="退还金额" min-width="120" align="right">
+                    <template #default="{ row }">
+                        <span class="text-red-500 font-medium">¥{{ row.refund_amount }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="settle_time" label="结算时间" width="160">
+                    <template #default="{ row }">{{ row.settle_time || '-' }}</template>
+                </el-table-column>
+                <el-table-column label="操作" width="90" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">账单详情</el-button>
-                        <el-button link type="success" @click="exportSingle(row)">导出明细</el-button>
-                        <el-button
-                            v-if="row.status === 0"
-                            link
-                            type="warning"
-                            @click="handleSettle(row)"
-                        >
-                            结算
-                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -91,122 +75,104 @@
                 <el-pagination
                     v-model:current-page="pager.page"
                     v-model:page-size="pager.size"
-                    :page-sizes="[10, 15, 20, 50]"
                     :total="pager.count"
-                    layout="total, sizes, prev, pager, next, jumper"
+                    layout="total, prev, pager, next"
                     @current-change="getLists"
-                    @size-change="resetPage"
                 />
             </div>
         </el-card>
 
         <!-- 账单详情 -->
-        <el-dialog v-model="detailState.show" title="账单详情" width="860px" top="5vh">
+        <el-dialog v-model="detailState.show" title="账单详情" width="900px" top="5vh">
             <el-descriptions :column="2" border class="mb-4">
-                <el-descriptions-item label="账单号">{{ detailState.row.sn }}</el-descriptions-item>
-                <el-descriptions-item label="账单金额">
-                    <span class="text-green-600 font-medium">¥{{ detailState.row.amount }}</span>
-                </el-descriptions-item>
+                <el-descriptions-item label="账单标题">{{ detailState.row.title }}</el-descriptions-item>
+                <el-descriptions-item label="结算时间">{{ detailState.row.settle_time || '-' }}</el-descriptions-item>
                 <el-descriptions-item label="所属用户">
                     {{ detailState.row.nickname }}（{{ detailState.row.mobile }}）
                 </el-descriptions-item>
-                <el-descriptions-item label="账单状态">
-                    <el-tag size="small" :type="detailState.row.status === 1 ? 'success' : 'warning'">
-                        {{ detailState.row.status === 1 ? '已结算' : '待结算' }}
-                    </el-tag>
+                <el-descriptions-item label="账单明细数">
+                    {{ detailState.row.items?.length || 0 }} 条
                 </el-descriptions-item>
-                <el-descriptions-item label="账单更新时间">{{ detailState.row.update_time }}</el-descriptions-item>
-                <el-descriptions-item label="账单结算时间">{{ detailState.row.settle_time || '-' }}</el-descriptions-item>
+                <el-descriptions-item label="账单预付金额">
+                    <span class="font-medium">¥{{ detailState.row.prepay_amount }}</span>
+                </el-descriptions-item>
+                <el-descriptions-item label="账单退还金额">
+                    <span class="text-red-500 font-medium">¥{{ detailState.row.refund_amount }}</span>
+                </el-descriptions-item>
             </el-descriptions>
 
-            <div class="section-title">订单明细</div>
-            <el-table :data="detailState.row.orders || []" border stripe size="small">
-                <el-table-column prop="order_sn" label="订单编号" min-width="170" show-overflow-tooltip />
-                <el-table-column label="订单类型" width="110">
+            <div class="section-title">账单明细</div>
+            <el-table :data="detailState.row.items || []" border stripe size="small">
+                <el-table-column label="订单类型" width="100">
                     <template #default="{ row }">
-                        <el-tag size="small">{{ row.order_type_name }}</el-tag>
+                        <el-tag size="small" :type="row.type === '托管' ? 'success' : 'warning'">
+                            {{ row.type }}
+                        </el-tag>
                     </template>
                 </el-table-column>
+                <el-table-column prop="sn" label="订单编号" min-width="160" show-overflow-tooltip />
                 <el-table-column prop="service" label="服务名称" min-width="200" show-overflow-tooltip />
-                <el-table-column label="订单金额" width="120" align="right">
-                    <template #default="{ row }">¥{{ row.amount }}</template>
+                <el-table-column label="预付金额" width="120" align="right">
+                    <template #default="{ row }">¥{{ row.prepay_amount }}</template>
                 </el-table-column>
-                <el-table-column prop="pay_time" label="支付时间" min-width="170" />
-                <el-table-column prop="status_name" label="订单状态" width="90" show-overflow-tooltip />
+                <el-table-column label="退还金额" width="120" align="right">
+                    <template #default="{ row }">¥{{ row.refund_amount }}</template>
+                </el-table-column>
+                <el-table-column prop="create_time" label="下单时间" width="160" />
             </el-table>
         </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts" name="financeBill">
-import { getFinanceBill } from '@/mock/api'
+import { billList } from '@/mock/data_finance'
 import { usePaging } from '@/hooks/usePaging'
-import { exportCsv } from '@/utils/export'
 
-const queryParams = reactive({ keyword: '', status: '' })
+const queryParams = reactive({ keyword: '', start_time: '', end_time: '' })
+const settleRange = ref<any[]>([])
+
+/** 账单列表：用户昵称 / 手机号搜索，结算时间筛选 */
+const getBillLists = (params: Record<string, any>) => {
+    const { page_no, page_size, keyword, start_time, end_time } = params
+    let lists: any[] = billList as any[]
+    if (keyword) {
+        const kw = String(keyword).trim().toLowerCase()
+        lists = lists.filter(
+            (item: any) =>
+                String(item.nickname).toLowerCase().includes(kw) || String(item.mobile).includes(kw)
+        )
+    }
+    if (start_time) lists = lists.filter((item: any) => String(item.settle_time).slice(0, 10) >= start_time)
+    if (end_time) lists = lists.filter((item: any) => String(item.settle_time).slice(0, 10) <= end_time)
+    return Promise.resolve({
+        count: lists.length,
+        lists: lists.slice((page_no - 1) * page_size, page_no * page_size)
+    })
+}
 
 const { pager, getLists, resetPage } = usePaging({
-    fetchFun: getFinanceBill,
+    fetchFun: getBillLists,
     params: queryParams,
     firstLoading: true
 })
 
-const multipleSelection = ref<any[]>([])
-const detailState = reactive({ show: false, row: {} as any })
-
-watch(() => queryParams.status, () => resetPage())
+watch(settleRange, () => {
+    queryParams.start_time = settleRange.value?.[0] || ''
+    queryParams.end_time = settleRange.value?.[1] || ''
+    resetPage()
+})
 
 const resetParamsHandler = () => {
-    Object.assign(queryParams, { keyword: '', status: '' })
+    Object.assign(queryParams, { keyword: '', start_time: '', end_time: '' })
+    settleRange.value = []
     resetPage()
 }
 
-/** 账单详情 */
+/** 账单详情：账单预付金额、退还金额及其下每一条托管单、膳食单明细 */
+const detailState = reactive({ show: false, row: {} as any })
 const openDetail = (row: any) => {
     detailState.row = row
     detailState.show = true
-}
-
-/** 单条账单 → 导出其订单明细表 */
-const exportSingle = (row: any) => {
-    exportCsv(`账单明细_${row.sn}`, [
-        { label: '账单号', formatter: () => row.sn },
-        { label: '所属用户', formatter: () => row.nickname },
-        { label: '手机号码', formatter: () => row.mobile },
-        { label: '订单编号', prop: 'order_sn' },
-        { label: '订单类型', prop: 'order_type_name' },
-        { label: '服务名称', prop: 'service' },
-        { label: '订单金额', prop: 'amount' },
-        { label: '支付时间', prop: 'pay_time' },
-        { label: '订单状态', prop: 'status_name' }
-    ], row.orders || [])
-}
-
-/** 多条账单 → 导出账单记录表 */
-const exportBills = () => {
-    exportCsv(`账单记录_${new Date().toLocaleDateString('zh-CN')}`, [
-        { label: '账单号', prop: 'sn' },
-        { label: '账单金额', prop: 'amount' },
-        { label: '所属用户昵称', prop: 'nickname' },
-        { label: '手机号码', prop: 'mobile' },
-        { label: '订单数', prop: 'order_count' },
-        { label: '账单更新时间', prop: 'update_time' },
-        { label: '账单结算时间', formatter: (row: any) => row.settle_time || '-' },
-        { label: '账单状态', formatter: (row: any) => (row.status === 1 ? '已结算' : '待结算') }
-    ], multipleSelection.value)
-}
-
-/** 结算 */
-const handleSettle = (row: any) => {
-    ElMessageBox.confirm(`确定将账单「${row.sn}」标记为已结算吗？账单金额 ¥${row.amount}。`, '结算确认', {
-        type: 'warning'
-    })
-        .then(() => {
-            row.status = 1
-            row.settle_time = new Date().toLocaleString('zh-CN', { hour12: false }).replace(/\//g, '-')
-            ElMessage.success('结算成功')
-        })
-        .catch(() => {})
 }
 
 onMounted(getLists)

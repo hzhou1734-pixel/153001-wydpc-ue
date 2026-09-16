@@ -5,19 +5,27 @@
                 <span class="card-title">角色管理</span>
                 <div class="flex gap-3">
                     <el-input v-model="keyword" placeholder="搜索角色名称" :prefix-icon="Search" clearable class="!w-60" />
-                    <el-button type="primary" @click="openAdd">新增角色</el-button>
+                    <el-date-picker
+                        v-model="createTime"
+                        type="daterange"
+                        value-format="YYYY-MM-DD"
+                        start-placeholder="添加开始"
+                        end-placeholder="添加结束"
+                        class="!w-[240px]"
+                    />
+                    <el-button type="primary" @click="openAdd">添加角色</el-button>
                 </div>
             </div>
         </template>
-        <el-table :data="filteredList" stripe>
+        <el-table :data="filteredList">
+            <el-table-column prop="id" label="角色ID" width="80" />
             <el-table-column prop="name" label="角色名称" min-width="140">
                 <template #default="{ row }">
                     <el-tag size="small" type="primary">{{ row.name }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column prop="desc" label="角色描述" min-width="240" show-overflow-tooltip />
-            <el-table-column prop="members" label="成员数量" width="110" sortable  show-overflow-tooltip />
-            <el-table-column label="权限数量" width="110">
+            <el-table-column prop="desc" label="角色说明" min-width="300" show-overflow-tooltip />
+            <el-table-column label="权限数量" width="100">
                 <template #default="{ row }">
                     <span>{{ permCountMap[row.id] ?? 0 }} 项</span>
                 </template>
@@ -81,9 +89,19 @@ const form = reactive({ id: 0, name: '', desc: '' })
 const authRef = shallowRef<InstanceType<typeof AuthPopup>>()
 const permCountMap = ref<Record<number, number>>({})
 
+const createTime = ref<any>([])
 const filteredList = computed(() => {
     const kw = keyword.value.trim()
-    return kw ? pager.lists.filter((item: any) => item.name?.includes(kw)) : pager.lists
+    let list: any[] = pager.lists
+    if (kw) list = list.filter((item: any) => item.name?.includes(kw))
+    if (createTime.value?.length === 2) {
+        list = list.filter(
+            (item: any) =>
+                String(item.create_time).slice(0, 10) >= createTime.value[0] &&
+                String(item.create_time).slice(0, 10) <= createTime.value[1]
+        )
+    }
+    return list
 })
 
 /** 统计各角色已分配的权限数量 */
@@ -140,6 +158,7 @@ const save = () => {
     loadPermCount()
 }
 const handleDelete = (row: any) => {
+    if (row.members > 0) return ElMessage.warning(`该角色下已有关联的管理员账号（${row.members} 个），无法删除`)
     ElMessageBox.confirm(`确认删除角色「${row.name}」吗？`, '提示', { type: 'warning' })
         .then(() => {
             const index = pager.lists.findIndex((item: any) => item.id === row.id)

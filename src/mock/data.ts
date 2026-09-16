@@ -33,255 +33,183 @@ export const communityList = [
 export const buildingTree = [
     // 颐景园·江南里
     {
-        id: 1, name: '1栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 101, name: '1单元', parent_id: 1, type: 'unit' },
-            { id: 102, name: '2单元', parent_id: 1, type: 'unit' },
-        ],
+        id: 1, name: '1栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 2, name: '2栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 201, name: '1单元', parent_id: 2, type: 'unit' },
-            { id: 202, name: '2单元', parent_id: 2, type: 'unit' },
-        ],
+        id: 2, name: '2栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 3, name: '3栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [{ id: 301, name: '1单元', parent_id: 3, type: 'unit' }],
+        id: 3, name: '3栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 4, name: '4栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 401, name: '1单元', parent_id: 4, type: 'unit' },
-            { id: 402, name: '2单元', parent_id: 4, type: 'unit' },
-        ],
+        id: 4, name: '4栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 5, name: '5栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 501, name: '1单元', parent_id: 5, type: 'unit' },
-            { id: 502, name: '2单元', parent_id: 5, type: 'unit' },
-        ],
+        id: 5, name: '5栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 6, name: '6栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 601, name: '1单元', parent_id: 6, type: 'unit' },
-            { id: 602, name: '2单元', parent_id: 6, type: 'unit' },
-        ],
+        id: 6, name: '6栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 7, name: '7栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 701, name: '1单元', parent_id: 7, type: 'unit' },
-            { id: 702, name: '2单元', parent_id: 7, type: 'unit' },
-        ],
+        id: 7, name: '7栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 8, name: '8栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 801, name: '1单元', parent_id: 8, type: 'unit' },
-            { id: 802, name: '2单元', parent_id: 8, type: 'unit' },
-        ],
+        id: 8, name: '8栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 9, name: '9栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 901, name: '1单元', parent_id: 9, type: 'unit' },
-            { id: 902, name: '2单元', parent_id: 9, type: 'unit' },
-        ],
+        id: 9, name: '9栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 10, name: '10栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 1001, name: '1单元', parent_id: 10, type: 'unit' },
-            { id: 1002, name: '2单元', parent_id: 10, type: 'unit' },
-        ],
+        id: 10, name: '10栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 13, name: '11栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 1301, name: '1单元', parent_id: 13, type: 'unit' },
-            { id: 1302, name: '2单元', parent_id: 13, type: 'unit' },
-        ],
+        id: 13, name: '11栋', community_id: 1, community_name: '颐景园·江南里'
     },
     {
-        id: 14, name: '12栋', community_id: 1, community_name: '颐景园·江南里',
-        children: [
-            { id: 1401, name: '1单元', parent_id: 14, type: 'unit' },
-            { id: 1402, name: '2单元', parent_id: 14, type: 'unit' },
-        ],
+        id: 14, name: '12栋', community_id: 1, community_name: '颐景园·江南里'
     },
     // 绿城·桂语江南
     {
-        id: 11, name: '1栋', community_id: 2, community_name: '绿城·桂语江南',
-        children: [
-            { id: 1101, name: '1单元', parent_id: 11, type: 'unit' },
-            { id: 1102, name: '2单元', parent_id: 11, type: 'unit' },
-        ],
+        id: 11, name: '1栋', community_id: 2, community_name: '绿城·桂语江南'
     },
     {
-        id: 12, name: '2栋', community_id: 2, community_name: '绿城·桂语江南',
-        children: [
-            { id: 1201, name: '1单元', parent_id: 12, type: 'unit' },
-            { id: 1202, name: '2单元', parent_id: 12, type: 'unit' },
-        ],
+        id: 12, name: '2栋', community_id: 2, community_name: '绿城·桂语江南'
     },
     // 保利·天悦湾
     {
-        id: 21, name: '1栋', community_id: 3, community_name: '保利·天悦湾',
-        children: [{ id: 2101, name: '1单元', parent_id: 21, type: 'unit' }],
+        id: 21, name: '1栋', community_id: 3, community_name: '保利·天悦湾'
     },
     {
-        id: 22, name: '2栋', community_id: 3, community_name: '保利·天悦湾',
-        children: [
-            { id: 2201, name: '1单元', parent_id: 22, type: 'unit' },
-            { id: 2202, name: '2单元', parent_id: 22, type: 'unit' },
-        ],
+        id: 22, name: '2栋', community_id: 3, community_name: '保利·天悦湾'
     },
     {
-        id: 23, name: '3栋', community_id: 3, community_name: '保利·天悦湾',
-        children: [
-            { id: 2301, name: '1单元', parent_id: 23, type: 'unit' },
-            { id: 2302, name: '2单元', parent_id: 23, type: 'unit' },
-        ],
+        id: 23, name: '3栋', community_id: 3, community_name: '保利·天悦湾'
     },
     // 万科·未来城三期
     {
-        id: 35, name: '5栋', community_id: 4, community_name: '万科·未来城三期',
-        children: [
-            { id: 3501, name: '1单元', parent_id: 35, type: 'unit' },
-            { id: 3502, name: '2单元', parent_id: 35, type: 'unit' },
-        ],
+        id: 35, name: '5栋', community_id: 4, community_name: '万科·未来城三期'
     },
     {
-        id: 36, name: '6栋', community_id: 4, community_name: '万科·未来城三期',
-        children: [{ id: 3601, name: '1单元', parent_id: 36, type: 'unit' }],
+        id: 36, name: '6栋', community_id: 4, community_name: '万科·未来城三期'
     },
     // 融创·金成府
     {
-        id: 41, name: '1栋', community_id: 5, community_name: '融创·金成府',
-        children: [
-            { id: 4101, name: '1单元', parent_id: 41, type: 'unit' },
-            { id: 4102, name: '2单元', parent_id: 41, type: 'unit' },
-        ],
+        id: 41, name: '1栋', community_id: 5, community_name: '融创·金成府'
     },
     {
-        id: 42, name: '2栋', community_id: 5, community_name: '融创·金成府',
-        children: [{ id: 4201, name: '1单元', parent_id: 42, type: 'unit' }],
+        id: 42, name: '2栋', community_id: 5, community_name: '融创·金成府'
     },
 ]
 
 // 房号数据：覆盖 5 个小区，certified 与 certifyList 的认证审核状态保持一致
 export const roomList = [
-    // 颐景园·江南里 1栋（1单元 101 / 2单元 102）
-    { id: 1, name: '101', unit_id: 101, building_id: 1, owner: '张伟', phone: '13812341001', certified: 0 },
-    { id: 2, name: '102', unit_id: 101, building_id: 1, owner: '李娜', phone: '13812341002', certified: 1 },
-    { id: 3, name: '201', unit_id: 101, building_id: 1, owner: '王强', phone: '13812341003', certified: 0 },
-    { id: 6, name: '202', unit_id: 101, building_id: 1, owner: '周明华', phone: '13812341011', certified: 1 },
-    { id: 7, name: '301', unit_id: 101, building_id: 1, owner: '吴桂英', phone: '13812341012', certified: 1 },
-    { id: 8, name: '302', unit_id: 101, building_id: 1, owner: '郑国强', phone: '13812341013', certified: 0 },
-    { id: 4, name: '101', unit_id: 102, building_id: 1, owner: '赵敏', phone: '13812341004', certified: 0 },
-    { id: 9, name: '102', unit_id: 102, building_id: 1, owner: '冯淑华', phone: '13812341014', certified: 1 },
-    { id: 10, name: '201', unit_id: 102, building_id: 1, owner: '蒋文斌', phone: '13812341015', certified: 1 },
-    { id: 11, name: '301', unit_id: 102, building_id: 1, owner: '韩雪梅', phone: '13812341016', certified: 0 },
-    // 颐景园·江南里 2栋（1单元 201 / 2单元 202）
-    { id: 5, name: '201', unit_id: 201, building_id: 2, owner: '陈晨', phone: '13812341005', certified: 1 },
-    { id: 12, name: '202', unit_id: 201, building_id: 2, owner: '沈国庆', phone: '13812341017', certified: 1 },
-    { id: 13, name: '301', unit_id: 201, building_id: 2, owner: '曹丽萍', phone: '13812341018', certified: 0 },
-    { id: 14, name: '101', unit_id: 202, building_id: 2, owner: '谢天华', phone: '13812341019', certified: 1 },
-    { id: 15, name: '102', unit_id: 202, building_id: 2, owner: '罗建平', phone: '13812341020', certified: 1 },
-    // 颐景园·江南里 3栋（1单元 301）
-    { id: 16, name: '101', unit_id: 301, building_id: 3, owner: '高志远', phone: '13812341021', certified: 1 },
-    { id: 17, name: '102', unit_id: 301, building_id: 3, owner: '林秀珍', phone: '13812341022', certified: 1 },
-    { id: 18, name: '201', unit_id: 301, building_id: 3, owner: '何俊杰', phone: '13812341023', certified: 0 },
-    // 颐景园·江南里 4栋（1单元 401 / 2单元 402）
-    { id: 19, name: '101', unit_id: 401, building_id: 4, owner: '梁国庆', phone: '13812341024', certified: 1 },
-    { id: 20, name: '102', unit_id: 401, building_id: 4, owner: '宋雅琴', phone: '13812341025', certified: 1 },
-    { id: 21, name: '201', unit_id: 401, building_id: 4, owner: '唐建军', phone: '13812341026', certified: 0 },
-    { id: 22, name: '101', unit_id: 402, building_id: 4, owner: '许桂兰', phone: '13812341027', certified: 1 },
-    // 颐景园·江南里 5栋（1单元 501 / 2单元 502）
-    { id: 23, name: '101', unit_id: 501, building_id: 5, owner: '邓世昌', phone: '13812341028', certified: 1 },
-    { id: 24, name: '102', unit_id: 501, building_id: 5, owner: '萧慧敏', phone: '13812341029', certified: 0 },
-    { id: 25, name: '201', unit_id: 501, building_id: 5, owner: '程志刚', phone: '13812341030', certified: 1 },
-    { id: 26, name: '101', unit_id: 502, building_id: 5, owner: '侯丽娟', phone: '13812341031', certified: 1 },
-    // 颐景园·江南里 6栋（1单元 601 / 2单元 602）
-    { id: 27, name: '101', unit_id: 601, building_id: 6, owner: '白云飞', phone: '13812341032', certified: 1 },
-    { id: 28, name: '102', unit_id: 601, building_id: 6, owner: '石秀英', phone: '13812341033', certified: 1 },
-    { id: 29, name: '201', unit_id: 602, building_id: 6, owner: '姚建国', phone: '13812341034', certified: 0 },
-    // 颐景园·江南里 7栋（1单元 701 / 2单元 702）
-    { id: 30, name: '101', unit_id: 701, building_id: 7, owner: '贺永康', phone: '13812341035', certified: 1 },
-    { id: 31, name: '102', unit_id: 701, building_id: 7, owner: '卢春花', phone: '13812341036', certified: 1 },
-    { id: 32, name: '201', unit_id: 702, building_id: 7, owner: '钱进', phone: '13812341037', certified: 1 },
-    // 颐景园·江南里 8栋（1单元 801 / 2单元 802）
-    { id: 33, name: '101', unit_id: 801, building_id: 8, owner: '汪海洋', phone: '13812341038', certified: 1 },
-    { id: 34, name: '102', unit_id: 801, building_id: 8, owner: '傅明霞', phone: '13812341039', certified: 0 },
-    { id: 35, name: '101', unit_id: 802, building_id: 8, owner: '尹德海', phone: '13812341040', certified: 1 },
-    // 颐景园·江南里 9栋（1单元 901 / 2单元 902）
-    { id: 36, name: '101', unit_id: 901, building_id: 9, owner: '董国梁', phone: '13812341041', certified: 1 },
-    { id: 37, name: '102', unit_id: 901, building_id: 9, owner: '潘丽华', phone: '13812341042', certified: 1 },
-    { id: 38, name: '201', unit_id: 902, building_id: 9, owner: '万启明', phone: '13812341043', certified: 0 },
-    // 颐景园·江南里 10栋（1单元 1001 / 2单元 1002）
-    { id: 39, name: '101', unit_id: 1001, building_id: 10, owner: '杜文昌', phone: '13812341044', certified: 1 },
-    { id: 40, name: '102', unit_id: 1001, building_id: 10, owner: '苏美玲', phone: '13812341045', certified: 1 },
-    { id: 41, name: '101', unit_id: 1002, building_id: 10, owner: '丁秀兰', phone: '13812341046', certified: 1 },
-    // 颐景园·江南里 11栋（1单元 1301 / 2单元 1302）
-    { id: 42, name: '101', unit_id: 1301, building_id: 13, owner: '范长青', phone: '13812341047', certified: 1 },
-    { id: 43, name: '102', unit_id: 1301, building_id: 13, owner: '曾丽珍', phone: '13812341048', certified: 1 },
-    { id: 44, name: '101', unit_id: 1302, building_id: 13, owner: '彭思远', phone: '13812341049', certified: 0 },
-    // 颐景园·江南里 12栋（1单元 1401 / 2单元 1402）
-    { id: 45, name: '101', unit_id: 1401, building_id: 14, owner: '董雅静', phone: '13812341050', certified: 1 },
-    { id: 46, name: '102', unit_id: 1401, building_id: 14, owner: '袁浩然', phone: '13812341051', certified: 1 },
-    { id: 47, name: '101', unit_id: 1402, building_id: 14, owner: '蔡文静', phone: '13812341052', certified: 1 },
-    // 绿城·桂语江南（1栋 1101/1102 单元，2栋 1201/1202 单元）
-    { id: 48, name: '301', unit_id: 1201, building_id: 12, owner: '赵敏', phone: '13812341004', certified: 0 },
-    { id: 49, name: '101', unit_id: 1101, building_id: 11, owner: '孙晓峰', phone: '13812341053', certified: 1 },
-    { id: 50, name: '201', unit_id: 1101, building_id: 11, owner: '马春丽', phone: '13812341054', certified: 1 },
-    { id: 51, name: '102', unit_id: 1102, building_id: 11, owner: '朱海涛', phone: '13812341055', certified: 1 },
-    { id: 52, name: '201', unit_id: 1202, building_id: 12, owner: '胡佳琪', phone: '13812341056', certified: 0 },
-    // 保利·天悦湾（1栋 2101、2栋 2201/2202、3栋 2301/2302 单元）
-    { id: 53, name: '502', unit_id: 2302, building_id: 23, owner: '陈晨', phone: '13812341005', certified: 1 },
-    { id: 54, name: '101', unit_id: 2101, building_id: 21, owner: '郭子豪', phone: '13812341057', certified: 1 },
-    { id: 55, name: '102', unit_id: 2101, building_id: 21, owner: '邱美凤', phone: '13812341058', certified: 1 },
-    { id: 56, name: '101', unit_id: 2201, building_id: 22, owner: '华志明', phone: '13812341059', certified: 0 },
-    { id: 57, name: '201', unit_id: 2202, building_id: 22, owner: '金雅婷', phone: '13812341060', certified: 1 },
-    { id: 58, name: '101', unit_id: 2301, building_id: 23, owner: '洪天佑', phone: '13812341061', certified: 1 },
-    // 万科·未来城三期（5栋 3501/3502、6栋 3601 单元）
-    { id: 59, name: '1103', unit_id: 3501, building_id: 35, owner: '刘洋', phone: '13812341006', certified: 1 },
-    { id: 60, name: '101', unit_id: 3501, building_id: 35, owner: '秦晓东', phone: '13812341062', certified: 1 },
-    { id: 61, name: '102', unit_id: 3502, building_id: 35, owner: '顾月华', phone: '13812341063', certified: 1 },
-    { id: 62, name: '101', unit_id: 3601, building_id: 36, owner: '蓝天翔', phone: '13812341064', certified: 0 },
-    // 融创·金成府（1栋 4101/4102、2栋 4201 单元）
-    { id: 63, name: '101', unit_id: 4101, building_id: 41, owner: '葛志成', phone: '13812341065', certified: 1 },
-    { id: 64, name: '102', unit_id: 4102, building_id: 41, owner: '章慧珍', phone: '13812341066', certified: 1 },
-    { id: 65, name: '201', unit_id: 4201, building_id: 42, owner: '温子墨', phone: '13812341067', certified: 1 },
+    // 颐景园·江南里 1栋
+    { id: 1, name: '101', building_id: 1, owner: '张伟', phone: '13812341001', certified: 0 },
+    { id: 2, name: '102', building_id: 1, owner: '李娜', phone: '13812341002', certified: 1 },
+    { id: 3, name: '103', building_id: 1, owner: '王强', phone: '13812341003', certified: 0 },
+    { id: 6, name: '104', building_id: 1, owner: '周明华', phone: '13812341011', certified: 1 },
+    { id: 7, name: '201', building_id: 1, owner: '吴桂英', phone: '13812341012', certified: 1 },
+    { id: 8, name: '202', building_id: 1, owner: '郑国强', phone: '13812341013', certified: 0 },
+    { id: 4, name: '203', building_id: 1, owner: '赵敏', phone: '13812341004', certified: 0 },
+    { id: 9, name: '204', building_id: 1, owner: '冯淑华', phone: '13812341014', certified: 1 },
+    { id: 10, name: '301', building_id: 1, owner: '蒋文斌', phone: '13812341015', certified: 1 },
+    { id: 11, name: '302', building_id: 1, owner: '韩雪梅', phone: '13812341016', certified: 0 },
+    // 颐景园·江南里 2栋
+    { id: 5, name: '101', building_id: 2, owner: '陈晨', phone: '13812341005', certified: 1 },
+    { id: 12, name: '102', building_id: 2, owner: '沈国庆', phone: '13812341017', certified: 1 },
+    { id: 13, name: '103', building_id: 2, owner: '曹丽萍', phone: '13812341018', certified: 0 },
+    { id: 14, name: '104', building_id: 2, owner: '谢天华', phone: '13812341019', certified: 1 },
+    { id: 15, name: '201', building_id: 2, owner: '罗建平', phone: '13812341020', certified: 1 },
+    // 颐景园·江南里 3栋
+    { id: 16, name: '101', building_id: 3, owner: '高志远', phone: '13812341021', certified: 1 },
+    { id: 17, name: '102', building_id: 3, owner: '林秀珍', phone: '13812341022', certified: 1 },
+    { id: 18, name: '103', building_id: 3, owner: '何俊杰', phone: '13812341023', certified: 0 },
+    // 颐景园·江南里 4栋
+    { id: 19, name: '101', building_id: 4, owner: '梁国庆', phone: '13812341024', certified: 1 },
+    { id: 20, name: '102', building_id: 4, owner: '宋雅琴', phone: '13812341025', certified: 1 },
+    { id: 21, name: '103', building_id: 4, owner: '唐建军', phone: '13812341026', certified: 0 },
+    { id: 22, name: '104', building_id: 4, owner: '许桂兰', phone: '13812341027', certified: 1 },
+    // 颐景园·江南里 5栋
+    { id: 23, name: '101', building_id: 5, owner: '邓世昌', phone: '13812341028', certified: 1 },
+    { id: 24, name: '102', building_id: 5, owner: '萧慧敏', phone: '13812341029', certified: 0 },
+    { id: 25, name: '103', building_id: 5, owner: '程志刚', phone: '13812341030', certified: 1 },
+    { id: 26, name: '104', building_id: 5, owner: '侯丽娟', phone: '13812341031', certified: 1 },
+    // 颐景园·江南里 6栋
+    { id: 27, name: '101', building_id: 6, owner: '白云飞', phone: '13812341032', certified: 1 },
+    { id: 28, name: '102', building_id: 6, owner: '石秀英', phone: '13812341033', certified: 1 },
+    { id: 29, name: '103', building_id: 6, owner: '姚建国', phone: '13812341034', certified: 0 },
+    // 颐景园·江南里 7栋
+    { id: 30, name: '101', building_id: 7, owner: '贺永康', phone: '13812341035', certified: 1 },
+    { id: 31, name: '102', building_id: 7, owner: '卢春花', phone: '13812341036', certified: 1 },
+    { id: 32, name: '103', building_id: 7, owner: '钱进', phone: '13812341037', certified: 1 },
+    // 颐景园·江南里 8栋
+    { id: 33, name: '101', building_id: 8, owner: '汪海洋', phone: '13812341038', certified: 1 },
+    { id: 34, name: '102', building_id: 8, owner: '傅明霞', phone: '13812341039', certified: 0 },
+    { id: 35, name: '103', building_id: 8, owner: '尹德海', phone: '13812341040', certified: 1 },
+    // 颐景园·江南里 9栋
+    { id: 36, name: '101', building_id: 9, owner: '董国梁', phone: '13812341041', certified: 1 },
+    { id: 37, name: '102', building_id: 9, owner: '潘丽华', phone: '13812341042', certified: 1 },
+    { id: 38, name: '103', building_id: 9, owner: '万启明', phone: '13812341043', certified: 0 },
+    // 颐景园·江南里 10栋
+    { id: 39, name: '101', building_id: 10, owner: '杜文昌', phone: '13812341044', certified: 1 },
+    { id: 40, name: '102', building_id: 10, owner: '苏美玲', phone: '13812341045', certified: 1 },
+    { id: 41, name: '103', building_id: 10, owner: '丁秀兰', phone: '13812341046', certified: 1 },
+    // 颐景园·江南里 11栋
+    { id: 42, name: '101', building_id: 13, owner: '范长青', phone: '13812341047', certified: 1 },
+    { id: 43, name: '102', building_id: 13, owner: '曾丽珍', phone: '13812341048', certified: 1 },
+    { id: 44, name: '103', building_id: 13, owner: '彭思远', phone: '13812341049', certified: 0 },
+    // 颐景园·江南里 12栋
+    { id: 45, name: '101', building_id: 14, owner: '董雅静', phone: '13812341050', certified: 1 },
+    { id: 46, name: '102', building_id: 14, owner: '袁浩然', phone: '13812341051', certified: 1 },
+    { id: 47, name: '103', building_id: 14, owner: '蔡文静', phone: '13812341052', certified: 1 },
+    // 绿城·桂语江南（1栋、2栋）
+    { id: 48, name: '101', building_id: 12, owner: '赵敏', phone: '13812341004', certified: 0 },
+    { id: 49, name: '101', building_id: 11, owner: '孙晓峰', phone: '13812341053', certified: 1 },
+    { id: 50, name: '102', building_id: 11, owner: '马春丽', phone: '13812341054', certified: 1 },
+    { id: 51, name: '103', building_id: 11, owner: '朱海涛', phone: '13812341055', certified: 1 },
+    { id: 52, name: '102', building_id: 12, owner: '胡佳琪', phone: '13812341056', certified: 0 },
+    // 保利·天悦湾（1栋、2栋、3栋）
+    { id: 53, name: '101', building_id: 23, owner: '陈晨', phone: '13812341005', certified: 1 },
+    { id: 54, name: '101', building_id: 21, owner: '郭子豪', phone: '13812341057', certified: 1 },
+    { id: 55, name: '102', building_id: 21, owner: '邱美凤', phone: '13812341058', certified: 1 },
+    { id: 56, name: '101', building_id: 22, owner: '华志明', phone: '13812341059', certified: 0 },
+    { id: 57, name: '102', building_id: 22, owner: '金雅婷', phone: '13812341060', certified: 1 },
+    { id: 58, name: '102', building_id: 23, owner: '洪天佑', phone: '13812341061', certified: 1 },
+    // 万科·未来城三期（5栋、6栋）
+    { id: 59, name: '101', building_id: 35, owner: '刘洋', phone: '13812341006', certified: 1 },
+    { id: 60, name: '102', building_id: 35, owner: '秦晓东', phone: '13812341062', certified: 1 },
+    { id: 61, name: '103', building_id: 35, owner: '顾月华', phone: '13812341063', certified: 1 },
+    { id: 62, name: '101', building_id: 36, owner: '蓝天翔', phone: '13812341064', certified: 0 },
+    // 融创·金成府（1栋、2栋）
+    { id: 63, name: '101', building_id: 41, owner: '葛志成', phone: '13812341065', certified: 1 },
+    { id: 64, name: '102', building_id: 41, owner: '章慧珍', phone: '13812341066', certified: 1 },
+    { id: 65, name: '101', building_id: 42, owner: '温子墨', phone: '13812341067', certified: 1 },
 ]
 
 // ==================== 认证列表（仅业主认证，家属/租户不做认证） ====================
 export const certifyList = [
-    { id: 1, user_id: 1, nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 0, create_time: daysAgo(1) },
-    { id: 2, user_id: 2, nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '102', type: '业主', status: 1, create_time: daysAgo(3) },
-    { id: 3, user_id: 5, nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋', unit: '2单元', room: '502', type: '业主', status: 1, create_time: daysAgo(7) },
-    { id: 4, user_id: 3, nickname: '王强', mobile: '13812341003', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '201', type: '业主', status: 0, create_time: daysAgo(2) },
-    { id: 5, user_id: 11, nickname: '周明华', mobile: '13812341011', community: '颐景园·江南里', building: '1栋', unit: '1单元', room: '202', type: '业主', status: 1, create_time: daysAgo(20) },
-    { id: 6, user_id: 12, nickname: '沈国庆', mobile: '13812341017', community: '颐景园·江南里', building: '2栋', unit: '1单元', room: '202', type: '业主', status: 1, create_time: daysAgo(25) },
-    { id: 7, user_id: 13, nickname: '孙晓峰', mobile: '13812341053', community: '绿城·桂语江南', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(30) },
-    { id: 8, user_id: 4, nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋', unit: '1单元', room: '301', type: '业主', status: 0, create_time: daysAgo(4) },
-    { id: 9, user_id: 14, nickname: '郭子豪', mobile: '13812341057', community: '保利·天悦湾', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(30) },
-    { id: 10, user_id: 6, nickname: '刘洋', mobile: '13812341006', community: '万科·未来城三期', building: '5栋', unit: '1单元', room: '1103', type: '业主', status: 1, create_time: daysAgo(12) },
-    { id: 11, user_id: 15, nickname: '秦晓东', mobile: '13812341062', community: '万科·未来城三期', building: '5栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(45) },
-    { id: 12, user_id: 16, nickname: '葛志成', mobile: '13812341065', community: '融创·金成府', building: '1栋', unit: '1单元', room: '101', type: '业主', status: 1, create_time: daysAgo(50) },
+    { id: 1, user_id: 1, nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋', room: '101', type: '业主', job: '企业职员', family_count: 3, hobby: '烘焙、园艺', status: 0, create_time: daysAgo(1), audit_time: '' },
+    { id: 2, user_id: 2, nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋', room: '102', type: '业主', job: '自由职业', family_count: 4, hobby: '羽毛球、钓鱼', status: 1, create_time: daysAgo(3), audit_time: '2026-09-15 10:30:00' },
+    { id: 3, user_id: 3, nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋', room: '101', type: '业主', job: '教师', family_count: 5, hobby: '摄影、旅行', status: 1, create_time: daysAgo(7), audit_time: '2026-09-14 10:30:00' },
+    { id: 4, user_id: 4, nickname: '王强', mobile: '13812341003', community: '颐景园·江南里', building: '1栋', room: '103', type: '业主', job: '个体经营', family_count: 2, hobby: '围棋、养花', status: 0, create_time: daysAgo(2), audit_time: '' },
+    { id: 5, user_id: 5, nickname: '周明华', mobile: '13812341011', community: '颐景园·江南里', building: '1栋', room: '104', type: '业主', job: '医护', family_count: 3, hobby: '广场舞、手工', status: 1, create_time: daysAgo(20), audit_time: '2026-09-12 10:30:00' },
+    { id: 6, user_id: 6, nickname: '沈国庆', mobile: '13812341017', community: '颐景园·江南里', building: '2栋', room: '102', type: '业主', job: '工程师', family_count: 4, hobby: '阅读、跑步', status: 1, create_time: daysAgo(25), audit_time: '2026-09-11 10:30:00' },
+    { id: 7, user_id: 7, nickname: '孙晓峰', mobile: '13812341053', community: '绿城·桂语江南', building: '1栋', room: '101', type: '业主', job: '公务员', family_count: 5, hobby: '厨艺、宠物', status: 1, create_time: daysAgo(30), audit_time: '2026-09-10 10:30:00' },
+    { id: 8, user_id: 8, nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋', room: '101', type: '业主', job: '退休职工', family_count: 2, hobby: '书法、太极', status: 0, create_time: daysAgo(4), audit_time: '' },
+    { id: 9, user_id: 9, nickname: '郭子豪', mobile: '13812341057', community: '保利·天悦湾', building: '1栋', room: '101', type: '业主', job: '企业职员', family_count: 3, hobby: '烘焙、园艺', status: 1, create_time: daysAgo(30), audit_time: '2026-09-08 10:30:00' },
+    { id: 10, user_id: 10, nickname: '刘洋', mobile: '13812341006', community: '万科·未来城三期', building: '5栋', room: '101', type: '业主', job: '自由职业', family_count: 4, hobby: '羽毛球、钓鱼', status: 1, create_time: daysAgo(12), audit_time: '2026-09-07 10:30:00' },
+    { id: 11, user_id: 11, nickname: '秦晓东', mobile: '13812341062', community: '万科·未来城三期', building: '5栋', room: '102', type: '业主', job: '教师', family_count: 5, hobby: '摄影、旅行', status: 1, create_time: daysAgo(45), audit_time: '2026-09-06 10:30:00' },
+    { id: 12, user_id: 12, nickname: '葛志成', mobile: '13812341065', community: '融创·金成府', building: '1栋', room: '101', type: '业主', job: '个体经营', family_count: 2, hobby: '围棋、养花', status: 1, create_time: daysAgo(50), audit_time: '2026-09-05 10:30:00' },
 ]
 
 // ==================== 用户 ====================
 export const consumerList = [
-    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋1单元101', certified: 0, orders: 23, unsettled_amount: '316.00', settled_amount: '18650.00', status: 1, create_time: daysAgo(180) },
-    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋1单元102', certified: 1, orders: 15, unsettled_amount: '28.00', settled_amount: '9420.00', status: 1, create_time: daysAgo(165) },
-    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋1单元201', certified: 0, orders: 8, unsettled_amount: '0.00', settled_amount: '3280.00', status: 1, create_time: daysAgo(120) },
-    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋1单元301', certified: 0, orders: 3, unsettled_amount: '0.00', settled_amount: '1180.00', status: 1, create_time: daysAgo(90) },
-    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋2单元502', certified: 1, orders: 46, unsettled_amount: '540.00', settled_amount: '32140.00', status: 0, create_time: daysAgo(60) },
-    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1单元1103', certified: 1, orders: 12, unsettled_amount: '150.00', settled_amount: '6890.00', status: 1, create_time: daysAgo(30) },
+    { id: 1, nickname: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001', community: '颐景园·江南里', room: '1栋101', certified: 0, orders: 23, unsettled_amount: '316.00', settled_amount: '18650.00', status: 1, create_time: daysAgo(180) },
+    { id: 2, nickname: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002', community: '颐景园·江南里', room: '1栋102', certified: 1, orders: 15, unsettled_amount: '28.00', settled_amount: '9420.00', status: 1, create_time: daysAgo(165) },
+    { id: 3, nickname: '王强', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003', community: '颐景园·江南里', room: '1栋201', certified: 0, orders: 8, unsettled_amount: '0.00', settled_amount: '3280.00', status: 1, create_time: daysAgo(120) },
+    { id: 4, nickname: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004', community: '绿城·桂语江南', room: '2栋301', certified: 0, orders: 3, unsettled_amount: '0.00', settled_amount: '1180.00', status: 1, create_time: daysAgo(90) },
+    { id: 5, nickname: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005', community: '保利·天悦湾', room: '3栋502', certified: 1, orders: 46, unsettled_amount: '540.00', settled_amount: '32140.00', status: 0, create_time: daysAgo(60) },
+    { id: 6, nickname: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006', community: '万科·未来城三期', room: '5栋1103', certified: 1, orders: 12, unsettled_amount: '150.00', settled_amount: '6890.00', status: 1, create_time: daysAgo(30) },
 ]
 
 // ==================== 员工 ====================
@@ -352,25 +280,25 @@ export const dailyMenus = [
 
 // ==================== 订单 ====================
 export const nursingOrders = [
-    { id: 1001, sn: 'TG20260908001', service: '日托·9月第一期', type: '日托', price: '80.00', amount: '80.00', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋1单元101', need_pickup: 1, pickup_time: '每日 08:00 上门接', contact_name: '张伟', contact_mobile: '13812341001', address: '颐景园·江南里 1栋1单元101', payer_name: '张伟', payer_mobile: '13812341001', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 09:13:05'), status: 2, create_time: daysAgo(0, ' 09:12:00'), staff: '周建国', staff_id: 1, logs: [ { time: daysAgo(0, ' 09:12:00'), content: '用户提交托管订单', operator: '张伟' }, { time: daysAgo(0, ' 09:13:05'), content: '微信支付成功 ¥80.00', operator: '系统' }, { time: daysAgo(0, ' 09:25:00'), content: '已派单给托管员 周建国', operator: '物业管理员' } ] },
-    { id: 1002, sn: 'TG20260907002', service: '日托·9月第一期', type: '日托', price: '80.00', amount: '80.00', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋1单元102', need_pickup: 1, pickup_time: '每日 08:10 上门接', contact_name: '李娜', contact_mobile: '13812341002', address: '颐景园·江南里 1栋1单元102', payer_name: '李娜', payer_mobile: '13812341002', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 08:41:12'), status: 3, create_time: daysAgo(1, ' 08:40:00'), staff: '周建国', staff_id: 1, logs: [ { time: daysAgo(1, ' 08:40:00'), content: '用户提交托管订单', operator: '李娜' }, { time: daysAgo(1, ' 08:41:12'), content: '微信支付成功 ¥80.00', operator: '系统' }, { time: daysAgo(1, ' 18:05:00'), content: '托管员 周建国 完成服务，订单完成', operator: '周建国' } ] },
-    { id: 1003, sn: 'TG20260906003', service: '学期每日托·2026秋季', type: '学期每日托', price: '2600.00', amount: '2600.00', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋2单元502', need_pickup: 1, pickup_time: '工作日 07:40 上门接', contact_name: '陈晨', contact_mobile: '13812341005', address: '保利·天悦湾 3栋2单元502', payer_name: '陈晨', payer_mobile: '13812341005', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(2, ' 16:06:30'), status: 2, create_time: daysAgo(2, ' 16:05:00'), staff: '陈美玲', staff_id: 6, logs: [ { time: daysAgo(2, ' 16:05:00'), content: '用户提交托管订单', operator: '陈晨' }, { time: daysAgo(2, ' 16:06:30'), content: '支付宝支付成功 ¥2600.00', operator: '系统' }, { time: daysAgo(2, ' 16:30:00'), content: '已派单给托管员 陈美玲', operator: '物业管理员' } ] },
-    { id: 1004, sn: 'TG20260905004', service: '日托·9月第一期', type: '日托', price: '80.00', amount: '80.00', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', mobile: '13812341006', community: '万科·未来城三期', building: '5栋1单元1103', need_pickup: 0, pickup_time: '', contact_name: '刘洋', contact_mobile: '13812341006', address: '万科·未来城三期 5栋1单元1103', payer_name: '刘洋', payer_mobile: '13812341006', payer_relation: '本人', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(3, ' 11:30:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(3, ' 11:30:00'), content: '用户提交托管订单，等待支付', operator: '刘洋' } ] },
-    { id: 1005, sn: 'TG20260904005', service: '学期周末托·周六班', type: '学期周末托', price: '1200.00', amount: '1200.00', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王强', mobile: '13812341003', community: '颐景园·江南里', building: '1栋1单元201', need_pickup: 1, pickup_time: '每周六 08:30 上门接', contact_name: '王强', contact_mobile: '13812341003', address: '颐景园·江南里 1栋1单元201', payer_name: '王强', payer_mobile: '13812341003', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(4, ' 10:01:20'), status: 1, create_time: daysAgo(4, ' 10:00:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(4, ' 10:00:00'), content: '用户提交托管订单', operator: '王强' }, { time: daysAgo(4, ' 10:01:20'), content: '微信支付成功 ¥1200.00', operator: '系统' } ] },
-    { id: 1006, sn: 'TG20260903006', service: '日托·暑期托管班', type: '日托', price: '90.00', amount: '90.00', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋1单元301', need_pickup: 0, pickup_time: '', contact_name: '赵敏', contact_mobile: '13812341004', address: '绿城·桂语江南 2栋1单元301', payer_name: '赵敏', payer_mobile: '13812341004', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(5, ' 09:05:10'), status: 3, create_time: daysAgo(5, ' 09:02:00'), staff: '徐国强', staff_id: 7, logs: [ { time: daysAgo(5, ' 09:02:00'), content: '用户提交托管订单', operator: '赵敏' }, { time: daysAgo(5, ' 09:05:10'), content: '支付宝支付成功 ¥90.00', operator: '系统' }, { time: daysAgo(5, ' 18:20:00'), content: '托管员 徐国强 完成服务，订单完成', operator: '徐国强' } ] },
-    { id: 1007, sn: 'TG20260902007', service: '学期每日托·江南里专属班', type: '学期每日托', price: '2400.00', amount: '2400.00', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋1单元101', need_pickup: 0, pickup_time: '', contact_name: '张伟', contact_mobile: '13812341001', address: '颐景园·江南里 1栋1单元101', payer_name: '张伟', payer_mobile: '13812341001', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(6, ' 20:12:00'), status: 4, create_time: daysAgo(6, ' 20:10:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(6, ' 20:10:00'), content: '用户提交托管订单', operator: '张伟' }, { time: daysAgo(6, ' 20:12:00'), content: '微信支付成功 ¥2400.00', operator: '系统' }, { time: daysAgo(5, ' 09:00:00'), content: '用户申请取消，费用已原路退回', operator: '物业管理员' } ] },
-    { id: 1008, sn: 'TG20260901008', service: '学期周末托·周日班', type: '学期周末托', price: '1200.00', amount: '1200.00', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋1单元102', need_pickup: 1, pickup_time: '每周日 08:30 上门接', contact_name: '李娜', contact_mobile: '13812341002', address: '颐景园·江南里 1栋1单元102', payer_name: '李娜', payer_mobile: '13812341002', payer_relation: '为家人下单', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(7, ' 15:20:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(7, ' 15:20:00'), content: '用户提交托管订单，等待支付', operator: '李娜' } ] },
+    { id: 1001, sn: 'TG20260908001', service: '日托·9月第一期', type: '托管', price: '80.00', amount: '80.00', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋101', need_pickup: 1, pickup_time: '每日 08:00 上门接', contact_name: '张伟', contact_mobile: '13812341001', address: '颐景园·江南里 1栋101', payer_name: '张伟', payer_mobile: '13812341001', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 09:13:05'), status: 2, create_time: daysAgo(0, ' 09:12:00'), staff: '周建国', staff_id: 1, logs: [ { time: daysAgo(0, ' 09:12:00'), content: '用户提交托管订单', operator: '张伟' }, { time: daysAgo(0, ' 09:13:05'), content: '微信支付成功 ¥80.00', operator: '系统' }, { time: daysAgo(0, ' 09:25:00'), content: '已派单给托管员 周建国', operator: '物业管理员' } ] },
+    { id: 1002, sn: 'TG20260907002', service: '日托·9月第一期', type: '接', price: '80.00', amount: '80.00', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋102', need_pickup: 1, pickup_time: '每日 08:10 上门接', contact_name: '李娜', contact_mobile: '13812341002', address: '颐景园·江南里 1栋102', payer_name: '李娜', payer_mobile: '13812341002', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 08:41:12'), status: 3, create_time: daysAgo(1, ' 08:40:00'), staff: '周建国', staff_id: 1, logs: [ { time: daysAgo(1, ' 08:40:00'), content: '用户提交托管订单', operator: '李娜' }, { time: daysAgo(1, ' 08:41:12'), content: '微信支付成功 ¥80.00', operator: '系统' }, { time: daysAgo(1, ' 18:05:00'), content: '托管员 周建国 完成服务，订单完成', operator: '周建国' } ] },
+    { id: 1003, sn: 'TG20260906003', service: '学期每日托·2026秋季', type: '托管', price: '2600.00', amount: '2600.00', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋502', need_pickup: 1, pickup_time: '工作日 07:40 上门接', contact_name: '陈晨', contact_mobile: '13812341005', address: '保利·天悦湾 3栋502', payer_name: '陈晨', payer_mobile: '13812341005', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(2, ' 16:06:30'), status: 2, create_time: daysAgo(2, ' 16:05:00'), staff: '陈美玲', staff_id: 6, logs: [ { time: daysAgo(2, ' 16:05:00'), content: '用户提交托管订单', operator: '陈晨' }, { time: daysAgo(2, ' 16:06:30'), content: '支付宝支付成功 ¥2600.00', operator: '系统' }, { time: daysAgo(2, ' 16:30:00'), content: '已派单给托管员 陈美玲', operator: '物业管理员' } ] },
+    { id: 1004, sn: 'TG20260905004', service: '日托·9月第一期', type: '送', price: '80.00', amount: '80.00', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', mobile: '13812341006', community: '万科·未来城三期', building: '5栋1103', need_pickup: 0, pickup_time: '', contact_name: '刘洋', contact_mobile: '13812341006', address: '万科·未来城三期 5栋1103', payer_name: '刘洋', payer_mobile: '13812341006', payer_relation: '本人', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(3, ' 11:30:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(3, ' 11:30:00'), content: '用户提交托管订单，等待支付', operator: '刘洋' } ] },
+    { id: 1005, sn: 'TG20260904005', service: '学期周末托·周六班', type: '用餐', price: '1200.00', amount: '1200.00', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王强', mobile: '13812341003', community: '颐景园·江南里', building: '1栋201', need_pickup: 1, pickup_time: '每周六 08:30 上门接', contact_name: '王强', contact_mobile: '13812341003', address: '颐景园·江南里 1栋201', payer_name: '王强', payer_mobile: '13812341003', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(4, ' 10:01:20'), status: 1, create_time: daysAgo(4, ' 10:00:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(4, ' 10:00:00'), content: '用户提交托管订单', operator: '王强' }, { time: daysAgo(4, ' 10:01:20'), content: '微信支付成功 ¥1200.00', operator: '系统' } ] },
+    { id: 1006, sn: 'TG20260903006', service: '日托·暑期托管班', type: '托管', price: '90.00', amount: '90.00', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋301', need_pickup: 0, pickup_time: '', contact_name: '赵敏', contact_mobile: '13812341004', address: '绿城·桂语江南 2栋301', payer_name: '赵敏', payer_mobile: '13812341004', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(5, ' 09:05:10'), status: 3, create_time: daysAgo(5, ' 09:02:00'), staff: '徐国强', staff_id: 7, logs: [ { time: daysAgo(5, ' 09:02:00'), content: '用户提交托管订单', operator: '赵敏' }, { time: daysAgo(5, ' 09:05:10'), content: '支付宝支付成功 ¥90.00', operator: '系统' }, { time: daysAgo(5, ' 18:20:00'), content: '托管员 徐国强 完成服务，订单完成', operator: '徐国强' } ] },
+    { id: 1007, sn: 'TG20260902007', service: '学期每日托·江南里专属班', type: '接', price: '2400.00', amount: '2400.00', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋101', need_pickup: 0, pickup_time: '', contact_name: '张伟', contact_mobile: '13812341001', address: '颐景园·江南里 1栋101', payer_name: '张伟', payer_mobile: '13812341001', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(6, ' 20:12:00'), status: 4, create_time: daysAgo(6, ' 20:10:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(6, ' 20:10:00'), content: '用户提交托管订单', operator: '张伟' }, { time: daysAgo(6, ' 20:12:00'), content: '微信支付成功 ¥2400.00', operator: '系统' }, { time: daysAgo(5, ' 09:00:00'), content: '用户申请取消，费用已原路退回', operator: '物业管理员' } ] },
+    { id: 1008, sn: 'TG20260901008', service: '学期周末托·周日班', type: '送', price: '1200.00', amount: '1200.00', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋102', need_pickup: 1, pickup_time: '每周日 08:30 上门接', contact_name: '李娜', contact_mobile: '13812341002', address: '颐景园·江南里 1栋102', payer_name: '李娜', payer_mobile: '13812341002', payer_relation: '为家人下单', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(7, ' 15:20:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(7, ' 15:20:00'), content: '用户提交托管订单，等待支付', operator: '李娜' } ] },
 ]
 
 export const mealOrders = [
-    { id: 2001, sn: 'SC20260908001', combo: 'ABC 经典午餐组合', dishes: '红烧狮子头套餐、清蒸鲈鱼套餐、香菇滑鸡粥', quantity: 1, price: '55.00', amount: '55.00', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋1单元101', need_delivery: 1, delivery_time: '11:30 前送达', contact_name: '张伟', contact_mobile: '13812341001', address: '颐景园·江南里 1栋1单元101', payer_name: '张伟', payer_mobile: '13812341001', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 10:46:08'), status: 2, create_time: daysAgo(0, ' 10:45:00'), staff: '吴秀兰', staff_id: 2, logs: [ { time: daysAgo(0, ' 10:45:00'), content: '用户提交膳食订单', operator: '张伟' }, { time: daysAgo(0, ' 10:46:08'), content: '微信支付成功 ¥55.00', operator: '系统' }, { time: daysAgo(0, ' 10:52:00'), content: '已派单给配送员 吴秀兰', operator: '物业管理员' } ] },
-    { id: 2002, sn: 'SC20260907002', combo: '双荤商务午餐组合', dishes: '红烧狮子头套餐、清蒸鲈鱼套餐', quantity: 1, price: '45.00', amount: '45.00', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋1单元102', need_delivery: 1, delivery_time: '11:45 前送达', contact_name: '李娜', contact_mobile: '13812341002', address: '颐景园·江南里 1栋1单元102', payer_name: '李娜', payer_mobile: '13812341002', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 11:21:33'), status: 3, create_time: daysAgo(1, ' 11:20:00'), staff: '吴秀兰', staff_id: 2, logs: [ { time: daysAgo(1, ' 11:20:00'), content: '用户提交膳食订单', operator: '李娜' }, { time: daysAgo(1, ' 11:21:33'), content: '微信支付成功 ¥45.00', operator: '系统' }, { time: daysAgo(1, ' 11:48:00'), content: '配送员 吴秀兰 已送达，订单完成', operator: '吴秀兰' } ] },
-    { id: 2003, sn: 'SC20260906003', combo: '清淡养身晚餐组合', dishes: '香菇滑鸡粥、杂粮饭套餐', quantity: 1, price: '28.00', amount: '28.00', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋1单元301', need_delivery: 1, delivery_time: '17:50 前送达', contact_name: '赵敏', contact_mobile: '13812341004', address: '绿城·桂语江南 2栋1单元301', payer_name: '赵敏', payer_mobile: '13812341004', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 17:36:10'), status: 1, create_time: daysAgo(2, ' 17:35:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(2, ' 17:35:00'), content: '用户提交膳食订单', operator: '赵敏' }, { time: daysAgo(2, ' 17:36:10'), content: '微信支付成功 ¥28.00', operator: '系统' } ] },
-    { id: 2004, sn: 'SC20260905004', combo: '全日三餐组合', dishes: '低糖营养早餐、清蒸鲈鱼套餐、杂粮饭套餐', quantity: 1, price: '52.00', amount: '52.00', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋2单元502', need_delivery: 1, delivery_time: '按餐点分批送达', contact_name: '陈晨', contact_mobile: '13812341005', address: '保利·天悦湾 3栋2单元502', payer_name: '陈晨', payer_mobile: '13812341005', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(3, ' 12:01:45'), status: 3, create_time: daysAgo(3, ' 12:00:00'), staff: '何秀芳', staff_id: 8, logs: [ { time: daysAgo(3, ' 12:00:00'), content: '用户提交膳食订单', operator: '陈晨' }, { time: daysAgo(3, ' 12:01:45'), content: '支付宝支付成功 ¥52.00', operator: '系统' }, { time: daysAgo(3, ' 18:30:00'), content: '配送员 何秀芳 已送达，订单完成', operator: '何秀芳' } ] },
-    { id: 2005, sn: 'SC20260904005', combo: '低糖轻食组合', dishes: '杂粮饭套餐、低糖营养早餐', quantity: 2, price: '24.00', amount: '48.00', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', mobile: '13812341006', community: '万科·未来城三期', building: '5栋1单元1103', need_delivery: 0, delivery_time: '到食堂自取', contact_name: '刘洋', contact_mobile: '13812341006', address: '万科·未来城三期 社区食堂自取点', payer_name: '刘洋', payer_mobile: '13812341006', payer_relation: '本人', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(4, ' 07:50:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(4, ' 07:50:00'), content: '用户提交膳食订单，等待支付', operator: '刘洋' } ] },
-    { id: 2006, sn: 'SC20260903006', combo: '早餐 + 午餐全天组合', dishes: '低糖营养早餐、红烧狮子头套餐', quantity: 1, price: '29.00', amount: '29.00', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王强', mobile: '13812341003', community: '颐景园·江南里', building: '1栋1单元201', need_delivery: 1, delivery_time: '07:20 早餐 / 11:40 午餐', contact_name: '王强', contact_mobile: '13812341003', address: '颐景园·江南里 1栋1单元201', payer_name: '王强', payer_mobile: '13812341003', payer_relation: '为家人下单', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(5, ' 20:16:22'), status: 2, create_time: daysAgo(5, ' 20:15:00'), staff: '吴秀兰', staff_id: 2, logs: [ { time: daysAgo(5, ' 20:15:00'), content: '用户提交膳食订单', operator: '王强' }, { time: daysAgo(5, ' 20:16:22'), content: '微信支付成功 ¥29.00', operator: '系统' }, { time: daysAgo(5, ' 20:30:00'), content: '已派单给配送员 吴秀兰', operator: '物业管理员' } ] },
-    { id: 2007, sn: 'SC20260902007', combo: 'ABC 经典午餐组合', dishes: '红烧狮子头套餐、清蒸鲈鱼套餐、香菇滑鸡粥', quantity: 3, price: '55.00', amount: '165.00', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋2单元502', need_delivery: 0, delivery_time: '到食堂自取', contact_name: '陈晨', contact_mobile: '13812341005', address: '保利·天悦湾 社区食堂自取点', payer_name: '陈晨', payer_mobile: '13812341005', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(6, ' 11:02:40'), status: 4, create_time: daysAgo(6, ' 11:00:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(6, ' 11:00:00'), content: '用户提交膳食订单', operator: '陈晨' }, { time: daysAgo(6, ' 11:02:40'), content: '支付宝支付成功 ¥165.00', operator: '系统' }, { time: daysAgo(6, ' 14:20:00'), content: '用户申请取消，费用已原路退回', operator: '物业管理员' } ] },
-    { id: 2008, sn: 'SC20260901008', combo: '清淡养身晚餐组合', dishes: '香菇滑鸡粥、杂粮饭套餐', quantity: 2, price: '28.00', amount: '56.00', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋1单元301', need_delivery: 1, delivery_time: '18:00 前送达', contact_name: '赵敏', contact_mobile: '13812341004', address: '绿城·桂语江南 2栋1单元301', payer_name: '赵敏', payer_mobile: '13812341004', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(7, ' 16:41:05'), status: 3, create_time: daysAgo(7, ' 16:40:00'), staff: '李文斌', staff_id: 9, logs: [ { time: daysAgo(7, ' 16:40:00'), content: '用户提交膳食订单', operator: '赵敏' }, { time: daysAgo(7, ' 16:41:05'), content: '微信支付成功 ¥56.00', operator: '系统' }, { time: daysAgo(7, ' 17:55:00'), content: '配送员 李文斌 已送达，订单完成', operator: '李文斌' } ] },
+    { id: 2001, sn: 'SC20260908001', combo: 'ABC 经典午餐组合', dishes: '红烧狮子头套餐、清蒸鲈鱼套餐、香菇滑鸡粥', quantity: 1, price: '55.00', amount: '55.00', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', mobile: '13812341001', community: '颐景园·江南里', building: '1栋101', need_delivery: 1, delivery_time: '11:30 前送达', contact_name: '张伟', contact_mobile: '13812341001', address: '颐景园·江南里 1栋101', payer_name: '张伟', payer_mobile: '13812341001', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(0, ' 10:46:08'), status: 2, create_time: daysAgo(0, ' 10:45:00'), staff: '吴秀兰', staff_id: 2, logs: [ { time: daysAgo(0, ' 10:45:00'), content: '用户提交膳食订单', operator: '张伟' }, { time: daysAgo(0, ' 10:46:08'), content: '微信支付成功 ¥55.00', operator: '系统' }, { time: daysAgo(0, ' 10:52:00'), content: '已派单给配送员 吴秀兰', operator: '物业管理员' } ] },
+    { id: 2002, sn: 'SC20260907002', combo: '双荤商务午餐组合', dishes: '红烧狮子头套餐、清蒸鲈鱼套餐', quantity: 1, price: '45.00', amount: '45.00', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', mobile: '13812341002', community: '颐景园·江南里', building: '1栋102', need_delivery: 1, delivery_time: '11:45 前送达', contact_name: '李娜', contact_mobile: '13812341002', address: '颐景园·江南里 1栋102', payer_name: '李娜', payer_mobile: '13812341002', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(1, ' 11:21:33'), status: 3, create_time: daysAgo(1, ' 11:20:00'), staff: '吴秀兰', staff_id: 2, logs: [ { time: daysAgo(1, ' 11:20:00'), content: '用户提交膳食订单', operator: '李娜' }, { time: daysAgo(1, ' 11:21:33'), content: '微信支付成功 ¥45.00', operator: '系统' }, { time: daysAgo(1, ' 11:48:00'), content: '配送员 吴秀兰 已送达，订单完成', operator: '吴秀兰' } ] },
+    { id: 2003, sn: 'SC20260906003', combo: '清淡养身晚餐组合', dishes: '香菇滑鸡粥、杂粮饭套餐', quantity: 1, price: '28.00', amount: '28.00', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋301', need_delivery: 1, delivery_time: '17:50 前送达', contact_name: '赵敏', contact_mobile: '13812341004', address: '绿城·桂语江南 2栋301', payer_name: '赵敏', payer_mobile: '13812341004', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(2, ' 17:36:10'), status: 1, create_time: daysAgo(2, ' 17:35:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(2, ' 17:35:00'), content: '用户提交膳食订单', operator: '赵敏' }, { time: daysAgo(2, ' 17:36:10'), content: '微信支付成功 ¥28.00', operator: '系统' } ] },
+    { id: 2004, sn: 'SC20260905004', combo: '全日三餐组合', dishes: '低糖营养早餐、清蒸鲈鱼套餐、杂粮饭套餐', quantity: 1, price: '52.00', amount: '52.00', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋502', need_delivery: 1, delivery_time: '按餐点分批送达', contact_name: '陈晨', contact_mobile: '13812341005', address: '保利·天悦湾 3栋502', payer_name: '陈晨', payer_mobile: '13812341005', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(3, ' 12:01:45'), status: 3, create_time: daysAgo(3, ' 12:00:00'), staff: '何秀芳', staff_id: 8, logs: [ { time: daysAgo(3, ' 12:00:00'), content: '用户提交膳食订单', operator: '陈晨' }, { time: daysAgo(3, ' 12:01:45'), content: '支付宝支付成功 ¥52.00', operator: '系统' }, { time: daysAgo(3, ' 18:30:00'), content: '配送员 何秀芳 已送达，订单完成', operator: '何秀芳' } ] },
+    { id: 2005, sn: 'SC20260904005', combo: '低糖轻食组合', dishes: '杂粮饭套餐、低糖营养早餐', quantity: 2, price: '24.00', amount: '48.00', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', mobile: '13812341006', community: '万科·未来城三期', building: '5栋1103', need_delivery: 0, delivery_time: '到食堂自取', contact_name: '刘洋', contact_mobile: '13812341006', address: '万科·未来城三期 社区食堂自取点', payer_name: '刘洋', payer_mobile: '13812341006', payer_relation: '本人', pay_status: 0, pay_type: '', pay_time: '', status: 0, create_time: daysAgo(4, ' 07:50:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(4, ' 07:50:00'), content: '用户提交膳食订单，等待支付', operator: '刘洋' } ] },
+    { id: 2006, sn: 'SC20260903006', combo: '早餐 + 午餐全天组合', dishes: '低糖营养早餐、红烧狮子头套餐', quantity: 1, price: '29.00', amount: '29.00', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王强', mobile: '13812341003', community: '颐景园·江南里', building: '1栋201', need_delivery: 1, delivery_time: '07:20 早餐 / 11:40 午餐', contact_name: '王强', contact_mobile: '13812341003', address: '颐景园·江南里 1栋201', payer_name: '王强', payer_mobile: '13812341003', payer_relation: '为家人下单', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(5, ' 20:16:22'), status: 2, create_time: daysAgo(5, ' 20:15:00'), staff: '吴秀兰', staff_id: 2, logs: [ { time: daysAgo(5, ' 20:15:00'), content: '用户提交膳食订单', operator: '王强' }, { time: daysAgo(5, ' 20:16:22'), content: '微信支付成功 ¥29.00', operator: '系统' }, { time: daysAgo(5, ' 20:30:00'), content: '已派单给配送员 吴秀兰', operator: '物业管理员' } ] },
+    { id: 2007, sn: 'SC20260902007', combo: 'ABC 经典午餐组合', dishes: '红烧狮子头套餐、清蒸鲈鱼套餐、香菇滑鸡粥', quantity: 3, price: '55.00', amount: '165.00', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', mobile: '13812341005', community: '保利·天悦湾', building: '3栋502', need_delivery: 0, delivery_time: '到食堂自取', contact_name: '陈晨', contact_mobile: '13812341005', address: '保利·天悦湾 社区食堂自取点', payer_name: '陈晨', payer_mobile: '13812341005', payer_relation: '本人', pay_status: 1, pay_type: '支付宝', pay_time: daysAgo(6, ' 11:02:40'), status: 4, create_time: daysAgo(6, ' 11:00:00'), staff: '', staff_id: 0, logs: [ { time: daysAgo(6, ' 11:00:00'), content: '用户提交膳食订单', operator: '陈晨' }, { time: daysAgo(6, ' 11:02:40'), content: '支付宝支付成功 ¥165.00', operator: '系统' }, { time: daysAgo(6, ' 14:20:00'), content: '用户申请取消，费用已原路退回', operator: '物业管理员' } ] },
+    { id: 2008, sn: 'SC20260901008', combo: '清淡养身晚餐组合', dishes: '香菇滑鸡粥、杂粮饭套餐', quantity: 2, price: '28.00', amount: '56.00', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', mobile: '13812341004', community: '绿城·桂语江南', building: '2栋301', need_delivery: 1, delivery_time: '18:00 前送达', contact_name: '赵敏', contact_mobile: '13812341004', address: '绿城·桂语江南 2栋301', payer_name: '赵敏', payer_mobile: '13812341004', payer_relation: '本人', pay_status: 1, pay_type: '微信支付', pay_time: daysAgo(7, ' 16:41:05'), status: 3, create_time: daysAgo(7, ' 16:40:00'), staff: '李文斌', staff_id: 9, logs: [ { time: daysAgo(7, ' 16:40:00'), content: '用户提交膳食订单', operator: '赵敏' }, { time: daysAgo(7, ' 16:41:05'), content: '微信支付成功 ¥56.00', operator: '系统' }, { time: daysAgo(7, ' 17:55:00'), content: '配送员 李文斌 已送达，订单完成', operator: '李文斌' } ] },
 ]
 
 export const escortOrders = [
@@ -447,103 +375,7 @@ export const hrList = [
  * audit 帖子状态：0=待审核 1=已通过 2=已驳回
  * status：1=显示 0=隐藏
  */
-export const barList = [
-    {
-        id: 1001, title: '小区门口的路灯坏了三天了，谁来管管？', author: '张伟', avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', mobile: '13812341001',
-        community: '颐景园·江南里', views: 356, replies: 28, collects: 45, cover: 'https://picsum.photos/seed/ghj-bar-1/400/300',
-        status: 1, create_time: daysAgo(1, ' 20:12:00'), audit: 0, audit_reason: '', audit_time: '',
-        content: '小区南门口的三盏路灯从上周五开始就不亮了，晚上回家那段路完全漆黑，已经有老人在台阶上差点摔倒。家里老人小孩每天出入都很不安全，希望物业尽快安排维修，也请大家留意出行安全。附上现场照片，位置就在南门岗亭到3号楼之间的路段。',
-        logs: [
-            { time: daysAgo(1, ' 20:12:00'), content: '用户「张伟」发布帖子', operator: '张伟' },
-            { time: daysAgo(1, ' 20:12:05'), content: '进入待审核队列，等待物业审核', operator: '系统' },
-        ],
-    },
-    {
-        id: 1002, title: '周末亲子活动照片分享，孩子们玩得很开心！', author: '李娜', avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', mobile: '13812341002',
-        community: '颐景园·江南里', views: 892, replies: 65, collects: 132, cover: 'https://picsum.photos/seed/ghj-bar-2/400/300',
-        status: 1, create_time: daysAgo(3, ' 15:30:00'), audit: 1, audit_reason: '', audit_time: daysAgo(3, ' 16:05:00'),
-        content: '上周六物业组织的亲子运动会太有意思了！拔河、两人三足、套圈圈，孩子们玩得不亦乐乎，我家娃回家路上一直念叨下次还要参加。感谢物业的精心组织，也谢谢各位志愿者业主的帮忙，照片分享给大家，欢迎下期多多报名~',
-        logs: [
-            { time: daysAgo(3, ' 15:30:00'), content: '用户「李娜」发布帖子', operator: '李娜' },
-            { time: daysAgo(3, ' 16:05:00'), content: '物业审核通过，帖子对外展示', operator: 'admin' },
-            { time: daysAgo(2, ' 09:20:00'), content: '帖子被 132 位邻居收藏', operator: '系统' },
-        ],
-    },
-    {
-        id: 1003, title: '求推荐靠谱的家政保洁阿姨', author: '赵敏', avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', mobile: '13812341003',
-        community: '绿城·桂语江南', views: 234, replies: 41, collects: 18, cover: 'https://picsum.photos/seed/ghj-bar-3/400/300',
-        status: 0, create_time: daysAgo(2, ' 10:45:00'), audit: 2, audit_reason: '内容涉及外部广告联系方式，不符合社区发帖规范', audit_time: daysAgo(2, ' 14:20:00'),
-        content: '最近工作太忙，想找一位固定的家政保洁阿姨，每周来打扫两到三次，最好有经验、手脚麻利的。有推荐的朋友可以联系我，微信在此……',
-        logs: [
-            { time: daysAgo(2, ' 10:45:00'), content: '用户「赵敏」发布帖子', operator: '赵敏' },
-            { time: daysAgo(2, ' 14:20:00'), content: '物业审核驳回：内容涉及外部广告联系方式，不符合社区发帖规范', operator: 'admin' },
-        ],
-    },
-    {
-        id: 1004, title: '5号楼电梯按钮面板脱落，已拍照报修', author: '王强', avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', mobile: '13812341004',
-        community: '颐景园·江南里', views: 128, replies: 12, collects: 7, cover: 'https://picsum.photos/seed/ghj-bar-4/400/300',
-        status: 1, create_time: daysAgo(0, ' 08:20:00'), audit: 0, audit_reason: '', audit_time: '',
-        content: '今天早上发现5号楼2单元的电梯按钮面板整个脱落挂在半空，小孩路过容易碰到，比较危险。已经拍照发到了物业报修群，请物业尽快派人来处理，也提醒邻居们乘坐电梯时注意安全。',
-        logs: [
-            { time: daysAgo(0, ' 08:20:00'), content: '用户「王强」发布帖子', operator: '王强' },
-            { time: daysAgo(0, ' 08:20:03'), content: '进入待审核队列，等待物业审核', operator: '系统' },
-        ],
-    },
-    {
-        id: 1005, title: '转让九成新婴儿床，同小区自提', author: '陈晨', avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', mobile: '13812341005',
-        community: '保利·天悦湾', views: 86, replies: 9, collects: 5, cover: 'https://picsum.photos/seed/ghj-bar-5/400/300',
-        status: 1, create_time: daysAgo(0, ' 19:40:00'), audit: 0, audit_reason: '', audit_time: '',
-        content: '孩子长大了用不上，出一台九成新实木婴儿床，带床垫和蚊帐，原价1200元现400元转让，仅限同小区业主自提，可以先上门看货。有意向的邻居评论区留言或私信我。',
-        logs: [
-            { time: daysAgo(0, ' 19:40:00'), content: '用户「陈晨」发布帖子', operator: '陈晨' },
-        ],
-    },
-    {
-        id: 1006, title: '地下车库充电桩建议增加两个', author: '刘洋', avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', mobile: '13812341006',
-        community: '万科·未来城三期', views: 312, replies: 37, collects: 66, cover: 'https://picsum.photos/seed/ghj-bar-6/400/300',
-        status: 1, create_time: daysAgo(4, ' 12:10:00'), audit: 1, audit_reason: '', audit_time: daysAgo(4, ' 14:35:00'),
-        content: '小区新能源车越来越多，地下车库现有 4 个充电桩经常排不上队，建议物业在 B1 层再增设 2 个快充桩，能够扫码支付最好。',
-        logs: [
-            { time: daysAgo(4, ' 12:10:00'), content: '用户「刘洋」发布帖子', operator: '刘洋' },
-            { time: daysAgo(4, ' 14:35:00'), content: '物业审核通过，帖子对外展示', operator: 'jingli01' },
-        ],
-    },
-    {
-        id: 1007, title: '【拼团】阳澄湖大闸蟹团购，10 只 188 元', author: '周杰', avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', mobile: '13812341008',
-        community: '颐景园·江南里', views: 41, replies: 3, collects: 0, cover: 'https://picsum.photos/seed/ghj-bar-7/400/300',
-        status: 0, create_time: daysAgo(1, ' 13:05:00'), audit: 2, audit_reason: '未经物业备案的商业团购推广，予以驳回', audit_time: daysAgo(1, ' 15:30:00'),
-        content: '阳澄湖大闸蟹产地直发，4 对 8 只礼盒装只要 188 元，加微信 xxxx 下单，满 20 单发车。',
-        logs: [
-            { time: daysAgo(1, ' 13:05:00'), content: '用户「周杰」发布帖子', operator: '周杰' },
-            { time: daysAgo(1, ' 15:30:00'), content: '物业审核驳回：未经物业备案的商业团购推广', operator: 'admin' },
-        ],
-    },
-    {
-        id: 1008, title: '感谢保洁阿姨帮我把掉落阳台的被子捡回来', author: '孙德福', avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', mobile: '13312346612',
-        community: '颐景园·江南里', views: 520, replies: 58, collects: 89, cover: 'https://picsum.photos/seed/ghj-bar-8/400/300',
-        status: 1, create_time: daysAgo(6, ' 09:00:00'), audit: 1, audit_reason: '', audit_time: daysAgo(6, ' 10:20:00'),
-        content: '昨天风大，晒在阳台的被子被吹到了楼下绿化带，3 栋的保洁吴阿姨看到后主动帮忙捡回来还送到家门口，真的非常感谢，为物业的贴心服务点赞！',
-        logs: [
-            { time: daysAgo(6, ' 09:00:00'), content: '用户「孙德福」发布帖子', operator: '孙德福' },
-            { time: daysAgo(6, ' 10:20:00'), content: '物业审核通过，帖子对外展示', operator: 'admin' },
-        ],
-    },
-]
-
 /** 社区贴吧-帖子评论 */
-export const barComments = [
-    { id: 1, post_id: 1001, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', content: '确实，我昨晚带娃走那边差点摔跤，希望能尽快修好。', create_time: daysAgo(1, ' 20:35:00') },
-    { id: 2, post_id: 1001, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '王强', content: '已经报修了，物业说明天上午安排电工来换灯管。', create_time: daysAgo(1, ' 21:02:00') },
-    { id: 3, post_id: 1001, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', content: '南门那段路确实该加两盏灯了，建议一并反映。', create_time: daysAgo(0, ' 08:15:00') },
-    { id: 4, post_id: 1002, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', content: '照片拍得真好，我家娃也上镜啦！', create_time: daysAgo(3, ' 16:40:00') },
-    { id: 5, post_id: 1002, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', content: '下期什么时候报名？我们也想参加。', create_time: daysAgo(2, ' 10:05:00') },
-    { id: 6, post_id: 1002, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', content: '物业这次活动组织得很用心，点赞。', create_time: daysAgo(2, ' 11:30:00') },
-    { id: 7, post_id: 1004, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', content: '刚才经过看了一下，已经贴上警示胶带了。', create_time: daysAgo(0, ' 09:12:00') },
-    { id: 8, post_id: 1006, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '赵敏', content: '同意，B1 层空位还很多，装两个不难。', create_time: daysAgo(4, ' 13:20:00') },
-    { id: 9, post_id: 1006, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周杰', content: '希望支持扫码支付，现在那个 APP 太难用了。', create_time: daysAgo(3, ' 19:45:00') },
-    { id: 10, post_id: 1008, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', content: '吴阿姨确实是热心人，上次也帮我收过快递。', create_time: daysAgo(6, ' 10:50:00') },
-]
-
 export const wonderfulList = [
     {
         id: 1,
@@ -705,147 +537,32 @@ export const activityList = [
 // ==================== 社区活动报名列表（按活动分组的报名用户） ====================
 export const activitySignupList = [
     // 活动 1：中秋游园会
-    { id: 101, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', phone: '13812341001', room: '1栋1单元101', signup_count: 3, signup_time: daysAgo(2, ' 09:12:00'), remark: '一家三口参加' },
-    { id: 102, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', phone: '13812341002', room: '2栋1单元802', signup_count: 2, signup_time: daysAgo(2, ' 10:35:00'), remark: '' },
-    { id: 103, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王强', phone: '13812341003', room: '1栋1单元201', signup_count: 4, signup_time: daysAgo(1, ' 14:20:00'), remark: '带父母一起参加' },
-    { id: 104, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', phone: '13812341004', room: '2栋2单元1103', signup_count: 2, signup_time: daysAgo(1, ' 16:48:00'), remark: '' },
-    { id: 105, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈明辉', phone: '13512348890', room: '5栋1单元201', signup_count: 1, signup_time: daysAgo(0, ' 08:05:00'), remark: '' },
-    { id: 106, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '赵秀英', phone: '13412343327', room: '4栋2单元604', signup_count: 2, signup_time: daysAgo(0, ' 11:30:00'), remark: '希望安排靠前座位' },
+    { id: 101, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-1/100/100', nickname: '张伟', phone: '13812341001', room: '1栋101', signup_count: 3, signup_time: daysAgo(2, ' 09:12:00'), remark: '一家三口参加' },
+    { id: 102, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-2/100/100', nickname: '李娜', phone: '13812341002', room: '2栋802', signup_count: 2, signup_time: daysAgo(2, ' 10:35:00'), remark: '' },
+    { id: 103, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-3/100/100', nickname: '王强', phone: '13812341003', room: '1栋201', signup_count: 4, signup_time: daysAgo(1, ' 14:20:00'), remark: '带父母一起参加' },
+    { id: 104, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-4/100/100', nickname: '赵敏', phone: '13812341004', room: '2栋1103', signup_count: 2, signup_time: daysAgo(1, ' 16:48:00'), remark: '' },
+    { id: 105, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈明辉', phone: '13512348890', room: '5栋201', signup_count: 1, signup_time: daysAgo(0, ' 08:05:00'), remark: '' },
+    { id: 106, activity_id: 1, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '赵秀英', phone: '13412343327', room: '4栋604', signup_count: 2, signup_time: daysAgo(0, ' 11:30:00'), remark: '希望安排靠前座位' },
     // 活动 2：老年健康义诊
-    { id: 201, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', phone: '13312346612', room: '2栋1单元301', signup_count: 1, signup_time: daysAgo(4, ' 09:40:00'), remark: '68岁，需测血糖' },
-    { id: 202, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周桂兰', phone: '13212349045', room: '3栋2单元1502', signup_count: 2, signup_time: daysAgo(4, ' 10:15:00'), remark: '' },
-    { id: 203, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', phone: '13812341005', room: '3栋2单元502', signup_count: 1, signup_time: daysAgo(3, ' 15:22:00'), remark: '颈肩腰腿痛咨询' },
-    { id: 204, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '13012342265', room: '5栋2单元903', signup_count: 3, signup_time: daysAgo(3, ' 17:50:00'), remark: '替父母报名' },
+    { id: 201, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-7/100/100', nickname: '孙德福', phone: '13312346612', room: '2栋301', signup_count: 1, signup_time: daysAgo(4, ' 09:40:00'), remark: '68岁，需测血糖' },
+    { id: 202, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-8/100/100', nickname: '周桂兰', phone: '13212349045', room: '3栋1502', signup_count: 2, signup_time: daysAgo(4, ' 10:15:00'), remark: '' },
+    { id: 203, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-5/100/100', nickname: '陈晨', phone: '13812341005', room: '3栋502', signup_count: 1, signup_time: daysAgo(3, ' 15:22:00'), remark: '颈肩腰腿痛咨询' },
+    { id: 204, activity_id: 2, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '13012342265', room: '5栋903', signup_count: 3, signup_time: daysAgo(3, ' 17:50:00'), remark: '替父母报名' },
     // 活动 3：周末亲子手工课
-    { id: 301, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', phone: '13812341006', room: '5栋1单元1103', signup_count: 2, signup_time: daysAgo(15, ' 20:10:00'), remark: '孩子5岁' },
-    { id: 302, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-12/100/100', nickname: '郑凯', phone: '15812343856', room: '2栋2单元1104', signup_count: 2, signup_time: daysAgo(14, ' 12:45:00'), remark: '' },
-    { id: 303, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(12, ' 18:30:00'), remark: '希望多开自然主题' },
-    { id: 304, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-14/100/100', nickname: '罗文杰', phone: '15612345033', room: '6栋2单元1301', signup_count: 2, signup_time: daysAgo(10, ' 09:55:00'), remark: '' },
+    { id: 301, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-6/100/100', nickname: '刘洋', phone: '13812341006', room: '5栋1103', signup_count: 2, signup_time: daysAgo(15, ' 20:10:00'), remark: '孩子5岁' },
+    { id: 302, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-12/100/100', nickname: '郑凯', phone: '15812343856', room: '2栋1104', signup_count: 2, signup_time: daysAgo(14, ' 12:45:00'), remark: '' },
+    { id: 303, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋702', signup_count: 1, signup_time: daysAgo(12, ' 18:30:00'), remark: '希望多开自然主题' },
+    { id: 304, activity_id: 3, avatar: 'https://picsum.photos/seed/ghj-user-14/100/100', nickname: '罗文杰', phone: '15612345033', room: '6栋1301', signup_count: 2, signup_time: daysAgo(10, ' 09:55:00'), remark: '' },
     // 活动 4：邻里跳蚤市场
-    { id: 401, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-9/100/100', nickname: '吴秀兰', phone: '13912342218', room: '1栋2单元601', signup_count: 1, signup_time: daysAgo(1, ' 10:20:00'), remark: '转让儿童绘本' },
-    { id: 402, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '13012342265', room: '5栋2单元903', signup_count: 2, signup_time: daysAgo(1, ' 15:40:00'), remark: '要一个靠边摊位' },
-    { id: 403, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-11/100/100', nickname: '刘阿姨', phone: '13912342011', room: '3栋1单元202', signup_count: 1, signup_time: daysAgo(0, ' 09:05:00'), remark: '' },
+    { id: 401, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-9/100/100', nickname: '吴秀兰', phone: '13912342218', room: '1栋601', signup_count: 1, signup_time: daysAgo(1, ' 10:20:00'), remark: '转让儿童绘本' },
+    { id: 402, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-10/100/100', nickname: '郑爽', phone: '13012342265', room: '5栋903', signup_count: 2, signup_time: daysAgo(1, ' 15:40:00'), remark: '要一个靠边摊位' },
+    { id: 403, activity_id: 4, avatar: 'https://picsum.photos/seed/ghj-user-11/100/100', nickname: '刘阿姨', phone: '13912342011', room: '3栋202', signup_count: 1, signup_time: daysAgo(0, ' 09:05:00'), remark: '' },
     // 活动 5：羽毛球友谊赛
-    { id: 501, activity_id: 5, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋1单元702', signup_count: 1, signup_time: daysAgo(38, ' 19:20:00'), remark: '混双报名' },
-    { id: 502, activity_id: 5, avatar: 'https://picsum.photos/seed/ghj-user-15/100/100', nickname: '孙悦', phone: '13812341007', room: '2栋2单元801', signup_count: 2, signup_time: daysAgo(37, ' 20:05:00'), remark: '' },
+    { id: 501, activity_id: 5, avatar: 'https://picsum.photos/seed/ghj-user-13/100/100', nickname: '何雪', phone: '15712346690', room: '4栋702', signup_count: 1, signup_time: daysAgo(38, ' 19:20:00'), remark: '混双报名' },
+    { id: 502, activity_id: 5, avatar: 'https://picsum.photos/seed/ghj-user-15/100/100', nickname: '孙悦', phone: '13812341007', room: '2栋801', signup_count: 2, signup_time: daysAgo(37, ' 20:05:00'), remark: '' },
 ]
 
 // ==================== 生活帮手（用户提交的生活帮助表单） ====================
-export const helperList = [
-    {
-        id: 1,
-        type: '家电维修',
-        avatar: 'https://picsum.photos/seed/ghj-user-1/100/100',
-        nickname: '张伟',
-        phone: '13812341001',
-        building: '1栋1单元101',
-        status: 0,
-        handler: '',
-        create_time: daysAgo(1, ' 09:15:00'),
-        handle_time: '',
-        images: ['https://picsum.photos/seed/ghj-helper-1a/600/400', 'https://picsum.photos/seed/ghj-helper-1b/600/400'],
-        content: '<h4>求助描述</h4><p>家里客厅空调最近制冷效果很差，开机运行半小时出风口只有自然风，遥控器调到 16 度也没有变化。空调是格力挂机，购于 2019 年，平时使用正常，怀疑缺氟或者滤网堵塞，希望师傅尽快上门检查。</p><h4>期望上门时间</h4><p>工作日晚上 18:00 以后，或周末全天均可。</p><h4>备注</h4><p>家中有 3 岁小孩，天气热实在扛不住，麻烦物业尽快安排，谢谢！</p>',
-    },
-    {
-        id: 2,
-        type: '管道疏通',
-        avatar: 'https://picsum.photos/seed/ghj-user-2/100/100',
-        nickname: '李娜',
-        phone: '13812341002',
-        building: '1栋1单元102',
-        status: 1,
-        handler: 'admin（物业管理员）',
-        create_time: daysAgo(3, ' 14:40:00'),
-        handle_time: daysAgo(2, ' 16:20:00'),
-        images: ['https://picsum.photos/seed/ghj-helper-2a/600/400'],
-        content: '<h4>求助描述</h4><p>厨房下水道排水非常缓慢，洗菜盆积水下不去，还往上返味。已经尝试用管道疏通剂没有效果，怀疑主管道有油污堆积，需要专业师傅上门疏通。</p><h4>期望上门时间</h4><p>明天上午 9:00 - 11:00 之间。</p><h4>处理情况</h4><p>已联系物业安排疏通师傅上门处理，更换了存水弯并清理主管油污，排水恢复正常。</p>',
-    },
-    {
-        id: 3,
-        type: '开锁换锁',
-        avatar: 'https://picsum.photos/seed/ghj-user-3/100/100',
-        nickname: '王强',
-        phone: '13812341003',
-        building: '1栋1单元201',
-        status: 1,
-        handler: 'jingli01（王经理）',
-        create_time: daysAgo(5, ' 20:05:00'),
-        handle_time: daysAgo(5, ' 21:10:00'),
-        images: [],
-        content: '<h4>求助描述</h4><p>晚上回家发现入户门智能锁没电了，机械钥匙也一时找不到，被锁在门外。着急求助物业协调开锁师傅，本人可以提供房产证明和身份证核验身份。</p><h4>期望上门时间</h4><p>越快越好，人正在楼道里等。</p><h4>处理情况</h4><p>物业核实业主身份后联系合作开锁公司，师傅 40 分钟内到场开锁，已完成。</p>',
-    },
-    {
-        id: 4,
-        type: '保洁清洗',
-        avatar: 'https://picsum.photos/seed/ghj-user-4/100/100',
-        nickname: '赵敏',
-        phone: '13812341004',
-        building: '2栋1单元301',
-        status: 0,
-        handler: '',
-        create_time: daysAgo(2, ' 11:30:00'),
-        handle_time: '',
-        images: ['https://picsum.photos/seed/ghj-helper-4a/600/400'],
-        content: '<h4>求助描述</h4><p>想预约一次家里的深度保洁，重点清洁厨房重油污（灶台、油烟机）和卫生间水垢，三室两厅约 120 平，家里常驻 4 口人，希望安排 2 位保洁阿姨，一次做完。</p><h4>期望上门时间</h4><p>本周六或周日，上午开始。</p><h4>备注</h4><p>如价格合适，后续想固定每两周一次日常保洁。</p>',
-    },
-    {
-        id: 5,
-        type: '代买代办',
-        avatar: 'https://picsum.photos/seed/ghj-user-5/100/100',
-        nickname: '陈晨',
-        phone: '13812341005',
-        building: '3栋2单元502',
-        status: 1,
-        handler: 'admin（物业管理员）',
-        create_time: daysAgo(7, ' 08:50:00'),
-        handle_time: daysAgo(7, ' 10:05:00'),
-        images: ['https://picsum.photos/seed/ghj-helper-5a/600/400'],
-        content: '<h4>求助描述</h4><p>家中老人刚出院行动不便，需要帮忙去社区卫生服务中心代取慢性病药品（有处方单），并顺路在超市代买一些生活用品，费用可以线上支付或货到付款。</p><h4>期望上门时间</h4><p>今天下午 14:00 之后送到即可。</p><h4>处理情况</h4><p>已安排管家上门取处方单并代取代送，药品与生活用品已送达，费用已结算。</p>',
-    },
-    {
-        id: 6,
-        type: '家电维修',
-        avatar: 'https://picsum.photos/seed/ghj-user-6/100/100',
-        nickname: '刘洋',
-        phone: '13812341006',
-        building: '5栋1单元1103',
-        status: 0,
-        handler: '',
-        create_time: daysAgo(1, ' 19:20:00'),
-        handle_time: '',
-        images: ['https://picsum.photos/seed/ghj-helper-6a/600/400', 'https://picsum.photos/seed/ghj-helper-6b/600/400'],
-        content: '<h4>求助描述</h4><p>洗衣机脱水时噪音巨大且机身剧烈晃动，怀疑是减震器坏了或者衣物放置不平衡。已经重新放置衣物试过两次，问题依旧，需要师傅上门检修，可能需要更换配件。</p><h4>期望上门时间</h4><p>工作日白天都可以在家。</p><h4>备注</h4><p>洗衣机是小天鹅滚筒 10KG，购买超过 3 年，已过保。</p>',
-    },
-    {
-        id: 7,
-        type: '其他',
-        avatar: 'https://picsum.photos/seed/ghj-user-7/100/100',
-        nickname: '孙悦',
-        phone: '13812341007',
-        building: '2栋2单元801',
-        status: 0,
-        handler: '',
-        create_time: daysAgo(1, ' 21:45:00'),
-        handle_time: '',
-        images: ['https://picsum.photos/seed/ghj-helper-7a/600/400'],
-        content: '<h4>求助描述</h4><p>晚上发现阳台窗户密封条老化脱落，下雨天往屋里渗水，窗框边缘墙面已经出现水渍。自己暂时用胶带应急封堵，但担心周末有台风降雨，需要物业安排维修师傅更换密封条。</p><h4>期望上门时间</h4><p>本周内任何时间，越早越好。</p>',
-    },
-    {
-        id: 8,
-        type: '管道疏通',
-        avatar: 'https://picsum.photos/seed/ghj-user-8/100/100',
-        nickname: '周杰',
-        phone: '13812341008',
-        building: '3栋1单元404',
-        status: 1,
-        handler: 'jingli01（王经理）',
-        create_time: daysAgo(10, ' 16:10:00'),
-        handle_time: daysAgo(9, ' 11:30:00'),
-        images: ['https://picsum.photos/seed/ghj-helper-8a/600/400'],
-        content: '<h4>求助描述</h4><p>卫生间地漏下水缓慢，淋浴时积水没过脚踝，浴缸排水同样不畅，判断可能是毛发堵塞。家里有老人，希望尽快处理避免滑倒风险。</p><h4>期望上门时间</h4><p>上午或傍晚均可，提前电话联系。</p><h4>处理情况</h4><p>师傅上门清理地漏与浴缸下水毛发堆积，并做了管道养护，排水已恢复通畅。</p>',
-    },
-]
-
 export const bannerList = [
     { id: 1, name: '首页-中秋活动推广', image: 'https://picsum.photos/seed/ghj-banner-1/750/300', link: '/pages/activity/detail?id=1', sort: 1, status: 1, create_time: daysAgo(2) },
     { id: 2, name: '首页-膳食服务上新', image: 'https://picsum.photos/seed/ghj-banner-2/750/300', link: '/pages/meal/index', sort: 2, status: 1, create_time: daysAgo(8) },
@@ -1052,6 +769,10 @@ export const propertyInfo = {
     mobile: '0571-88886666',
     address: '杭州市西湖区文一西路 128 号顾好家大厦 12F',
     license: 'https://picsum.photos/seed/ghj-license/600/400',
+    credit_code: '91330106MA2XXXXX8K',
+    auth_time: '2026-01-01 09:00:00',
+    community_count: 5,
+    status: 1,
     create_time: '2026-01-01 09:00:00',
 }
 

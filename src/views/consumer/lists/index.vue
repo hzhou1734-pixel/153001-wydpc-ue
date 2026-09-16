@@ -2,20 +2,15 @@
     <div>
         <el-card class="!border-none" shadow="never">
             <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
-                <el-form-item class="w-[280px]" label="用户信息">
+                <el-form-item class="w-[280px]" label="关键词">
                     <el-input
                         v-model="queryParams.keyword"
-                        placeholder="昵称/手机号码/所属小区"
+                        placeholder="用户ID / 昵称 / 手机号码"
                         clearable
                         @keyup.enter="resetPage"
                     />
                 </el-form-item>
-                <el-form-item label="所属小区">
-                    <el-select v-model="queryParams.community" class="w-[200px]" clearable placeholder="全部小区">
-                        <el-option v-for="item in communityOptions" :key="item" :label="item" :value="item" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="账户状态">
+                <el-form-item label="账号状态">
                     <el-select v-model="queryParams.status" class="w-[140px]" clearable placeholder="全部状态">
                         <el-option label="正常" :value="1" />
                         <el-option label="已禁用" :value="0" />
@@ -28,42 +23,30 @@
             </el-form>
         </el-card>
         <el-card class="!border-none mt-4" shadow="never">
+            <template #header><span class="card-title">用户列表</span></template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
+                <el-table-column label="用户ID" prop="id" width="80" show-overflow-tooltip />
                 <el-table-column label="头像" width="86">
                     <template #default="{ row }">
                         <el-avatar :src="row.avatar" :size="44" />
                     </template>
                 </el-table-column>
-                <el-table-column label="ID" prop="id" width="70" show-overflow-tooltip />
-                <el-table-column label="用户昵称" prop="nickname" min-width="110" />
-                <el-table-column label="手机号码" prop="mobile" min-width="130" />
-                <el-table-column label="所属小区" prop="community" min-width="150" />
-                <el-table-column label="房屋信息" prop="room" min-width="150" />
-                <el-table-column label="业主认证" min-width="100">
-                    <template #default="{ row }">
-                        <el-tag :type="row.certified ? 'success' : 'info'" effect="light">
-                            {{ row.certified ? '已认证' : '未认证' }}
-                        </el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="未结算金额" min-width="120" align="right">
+                <el-table-column label="昵称" prop="nickname" min-width="110" />
+                <el-table-column label="手机号码" prop="mobile" width="120" />
+                <el-table-column label="未结算账单总额" min-width="140" align="right">
                     <template #default="{ row }">¥{{ row.unsettled_amount || '0.00' }}</template>
                 </el-table-column>
-                <el-table-column label="已结算金额" min-width="120" align="right">
+                <el-table-column label="已结算账单总额" min-width="140" align="right">
                     <template #default="{ row }">¥{{ row.settled_amount || '0.00' }}</template>
                 </el-table-column>
-                <el-table-column label="服务订单" min-width="100" align="center">
-                    <template #default="{ row }">{{ row.orders }} 单</template>
-                </el-table-column>
-                <el-table-column label="账户状态" min-width="100">
+                <el-table-column label="账号状态" width="90">
                     <template #default="{ row }">
                         <el-tag :type="row.status ? 'success' : 'danger'" effect="light">
                             {{ row.status ? '正常' : '已禁用' }}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="注册时间" prop="create_time" min-width="170" />
-                <el-table-column label="操作" width="120" fixed="right">
+                <el-table-column label="操作" width="90" fixed="right">
                     <template #default="{ row }">
                         <el-button type="primary" link>
                             <router-link
@@ -87,14 +70,11 @@
 
 <script lang="ts" setup name="consumerLists">
 import { getConsumerList } from '@/mock/api'
-import { consumerList } from '@/mock/data'
 import { usePaging } from '@/hooks/usePaging'
 import { getRoutePath } from '@/router'
 
-const communityOptions = [...new Set(consumerList.map((item) => item.community))]
 const queryParams = reactive({
     keyword: '',
-    community: '',
     status: '',
 })
 

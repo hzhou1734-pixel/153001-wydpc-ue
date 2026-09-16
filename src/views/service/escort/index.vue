@@ -3,47 +3,240 @@
         <el-card class="!border-none" shadow="never">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <span class="card-title">陪诊服务单价</span>
-                    <el-button type="primary" :loading="priceSaving" @click="savePrice">保存设置</el-button>
+                    <span class="card-title">陪诊服务</span>
+                    <el-button type="primary" @click="openAdd">
+                        <el-icon class="mr-1"><Plus /></el-icon>添加陪诊
+                    </el-button>
                 </div>
             </template>
-            <el-form :model="priceForm" label-width="130px" class="max-w-[720px]">
-                <el-form-item label="服务单价" required>
-                    <el-input-number v-model="priceForm.hour_price" :min="0" :precision="2" class="!w-[220px]" />
-                    <span class="ml-2 text-tx-secondary">元 / 小时</span>
+
+            <!-- 筛选搜索 -->
+            <el-form inline class="mb-2">
+                <el-form-item label="服务标题">
+                    <el-input v-model="queryParams.keyword" placeholder="请输入陪诊服务标题" clearable class="!w-60"
+                        :prefix-icon="Search" @keyup.enter="onSearch" />
                 </el-form-item>
-                <el-form-item label="最低计费时长">
-                    <el-input-number v-model="priceForm.min_hours" :min="1" :precision="0" class="!w-[220px]" />
-                    <span class="ml-2 text-tx-secondary">小时（不足按最低时长计费）</span>
+                <el-form-item label="状态">
+                    <el-select v-model="queryParams.status" placeholder="全部状态" clearable class="!w-32">
+                        <el-option label="显示" :value="1" />
+                        <el-option label="隐藏" :value="0" />
+                    </el-select>
                 </el-form-item>
-                <el-form-item label="计费说明">
-                    <el-input v-model="priceForm.remark" placeholder="请输入计费说明" />
+                <el-form-item label="添加时间">
+                    <el-date-picker v-model="createRange" type="daterange" range-separator="至" start-placeholder="开始日期"
+                        end-placeholder="结束日期" value-format="YYYY-MM-DD" class="!w-60" />
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="resetQuery">重置</el-button>
+                    <el-button type="primary" @click="onSearch">查询</el-button>
                 </el-form-item>
             </el-form>
+
+            <el-table :data="pager.lists" stripe v-loading="pager.loading">
+                <el-table-column label="陪诊服务标题" min-width="220" show-overflow-tooltip>
+                    <template #default="{ row }">
+                        <div>{{ row.name }}</div>
+                        <div v-if="row.sub_title" class="text-xs text-tx-secondary">{{ row.sub_title }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="半天价格" width="110" align="right">
+                    <template #default="{ row }">
+                        <span v-if="hasPrice(row.half_price)" class="text-orange-500 font-bold">¥{{ money(row.half_price) }}</span>
+                        <span v-else class="text-tx-secondary">—</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="整天价格" width="110" align="right">
+                    <template #default="{ row }">
+                        <span v-if="hasPrice(row.day_price)" class="text-orange-500 font-bold">¥{{ money(row.day_price) }}</span>
+                        <span v-else class="text-tx-secondary">—</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="状态" width="90">
+                    <template #default="{ row }">
+                        <el-switch :model-value="row.status" :active-value="1" :inactive-value="0"
+                            @change="toggleShow(row)" />
+                    </template>
+                </el-table-column>
+                <el-table-column prop="sort" label="排序" width="80" show-overflow-tooltip />
+                <el-table-column prop="create_time" label="添加时间" width="160" show-overflow-tooltip />
+                <el-table-column label="操作" width="130" fixed="right">
+                    <template #default="{ row }">
+                        <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
+                        <el-button link type="danger" @click="delRow(row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="flex justify-end mt-4">
+                <el-pagination v-model:current-page="pager.page" v-model:page-size="pager.size" :total="pager.count"
+                    layout="total, prev, pager, next" @current-change="getLists" />
+            </div>
         </el-card>
+
+        <!-- 添加 / 编辑弹窗 -->
+        <el-dialog v-model="editVisible" :title="editForm.id ? '编辑陪诊' : '添加陪诊'" width="720px" top="5vh"
+            destroy-on-close>
+            <el-form :model="editForm" label-width="110px">
+                <el-form-item label="服务标题" required>
+                    <el-input v-model="editForm.name" placeholder="请输入陪诊服务标题" maxlength="30" show-word-limit />
+                </el-form-item>
+                <el-form-item label="副标题">
+                    <el-input v-model="editForm.sub_title" placeholder="如：全程陪同 · 代排队取号" maxlength="30" show-word-limit />
+                </el-form-item>
+                <el-form-item label="服务封面图">
+                    <ImageUpload v-model="editForm.cover" :width="160" :height="100"
+                        tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
+                </el-form-item>
+                <el-form-item label="半天价格">
+                    <el-input-number v-model="editForm.half_price" :min="0" :precision="2" :step="1" />
+                    <span class="ml-2 text-xs text-tx-secondary">元，留空则前端不显示半天选项</span>
+                </el-form-item>
+                <el-form-item label="整天价格">
+                    <el-input-number v-model="editForm.day_price" :min="0" :precision="2" :step="1" />
+                    <span class="ml-2 text-xs text-tx-secondary">元，留空则前端不显示整天选项</span>
+                </el-form-item>
+                <el-form-item label="详情介绍">
+                    <Editor v-model="editForm.detail" height="300px" class="!w-full" />
+                </el-form-item>
+                <el-form-item label="排序">
+                    <el-input-number v-model="editForm.sort" :min="0" :max="9999" />
+                    <span class="ml-2 text-xs text-tx-secondary">数值越小越靠前</span>
+                </el-form-item>
+                <el-form-item label="状态">
+                    <el-radio-group v-model="editForm.status">
+                        <el-radio :value="1">显示</el-radio>
+                        <el-radio :value="0">隐藏</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="editVisible = false">取消</el-button>
+                <el-button type="primary" @click="submitEdit">保存</el-button>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts" name="serviceEscort">
-import { getEscortPriceSetting, saveEscortPriceSetting } from '@/mock/api'
+import { escortServices } from '@/mock/data_service'
+import { usePaging } from '@/hooks/usePaging'
+import { Search, Plus } from '@element-plus/icons-vue'
+import Editor from '@/components/editor/index.vue'
+import ImageUpload from '@/components/image-upload/index.vue'
 
-const priceForm = reactive({ hour_price: 0, min_hours: 2, remark: '' })
-const priceSaving = ref(false)
+const money = (val: any) => Number(val || 0).toFixed(2)
+const hasPrice = (val: any) => val !== null && val !== undefined && val !== '' && Number(val) > 0
 
-const getPrice = async () => {
-    const res: any = await getEscortPriceSetting()
-    Object.assign(priceForm, { ...res, hour_price: Number(res.hour_price) || 0 })
+const nowTimeStr = () => {
+    const d = new Date()
+    const p = (n: number) => String(n).padStart(2, '0')
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`
 }
 
-const savePrice = async () => {
-    if (!priceForm.hour_price) return ElMessage.warning('请设置陪诊服务单价')
-    priceSaving.value = true
-    await saveEscortPriceSetting({ ...priceForm, hour_price: Number(priceForm.hour_price).toFixed(2) })
-    priceSaving.value = false
-    ElMessage.success('单价设置已保存')
+// ==================== 列表 ====================
+const queryParams = reactive({ keyword: '', status: '' as '' | 0 | 1, start_time: '', end_time: '' })
+const createRange = ref<string[]>([])
+
+const getEscortList = (params: any = {}) => {
+    const { page_no = 1, page_size = 15, keyword = '', status = '', start_time = '', end_time = '' } = params
+    let lists: any[] = [...escortServices]
+    if (keyword) lists = lists.filter((i) => i.name.includes(keyword))
+    if (status !== '' && status !== undefined && status !== null) {
+        lists = lists.filter((i) => i.status === Number(status))
+    }
+    if (start_time) lists = lists.filter((i) => String(i.create_time).slice(0, 10) >= start_time)
+    if (end_time) lists = lists.filter((i) => String(i.create_time).slice(0, 10) <= end_time)
+    const start = (Number(page_no) - 1) * Number(page_size)
+    return Promise.resolve({ count: lists.length, lists: lists.slice(start, start + Number(page_size)) })
 }
 
-onMounted(() => {
-    getPrice()
+const { pager, getLists } = usePaging({ fetchFun: getEscortList, params: queryParams, firstLoading: true })
+
+const onSearch = () => {
+    queryParams.start_time = createRange.value?.[0] || ''
+    queryParams.end_time = createRange.value?.[1] || ''
+    pager.page = 1
+    getLists()
+}
+const resetQuery = () => {
+    queryParams.keyword = ''
+    queryParams.status = ''
+    createRange.value = []
+    onSearch()
+}
+
+// ==================== 添加 / 编辑 ====================
+const editVisible = ref(false)
+const editForm = reactive({
+    id: 0, name: '', sub_title: '', cover: '', half_price: undefined as number | undefined,
+    day_price: undefined as number | undefined,
+    detail: '', sort: 0, status: 1
 })
+
+const openAdd = () => {
+    Object.assign(editForm, {
+        id: 0, name: '', sub_title: '', cover: '', half_price: undefined, day_price: undefined,
+        detail: '', sort: escortServices.length + 1, status: 1
+    })
+    editVisible.value = true
+}
+const openEdit = (row: any) => {
+    Object.assign(editForm, {
+        id: row.id,
+        name: row.name,
+        sub_title: row.sub_title || '',
+        cover: row.cover || '',
+        half_price: hasPrice(row.half_price) ? Number(row.half_price) : undefined,
+        day_price: hasPrice(row.day_price) ? Number(row.day_price) : undefined,
+        detail: row.detail || '',
+        sort: row.sort ?? 0,
+        status: row.status
+    })
+    editVisible.value = true
+}
+const submitEdit = () => {
+    if (!editForm.name.trim()) return ElMessage.warning('请输入陪诊服务标题')
+    if (!hasPrice(editForm.half_price) && !hasPrice(editForm.day_price)) {
+        return ElMessage.warning('半天价格与整天价格至少填写一项')
+    }
+    const payload = {
+        name: editForm.name.trim(),
+        sub_title: editForm.sub_title.trim(),
+        cover: editForm.cover || `https://picsum.photos/seed/ghj-escort-${Date.now() % 1000}/400/300`,
+        half_price: hasPrice(editForm.half_price) ? Number(editForm.half_price) : null,
+        day_price: hasPrice(editForm.day_price) ? Number(editForm.day_price) : null,
+        detail: editForm.detail,
+        sort: Number(editForm.sort) || 0,
+        status: editForm.status
+    }
+    if (editForm.id) {
+        const row = escortServices.find((i: any) => i.id === editForm.id)
+        if (row) Object.assign(row, payload)
+        ElMessage.success('保存成功')
+    } else {
+        escortServices.unshift({ id: Date.now(), ...payload, create_time: nowTimeStr() })
+        ElMessage.success('添加成功')
+    }
+    editVisible.value = false
+    getLists()
+}
+
+// ==================== 显示 / 隐藏 ====================
+const toggleShow = (row: any) => {
+    row.status = row.status === 1 ? 0 : 1
+    ElMessage.success(row.status === 1 ? '已显示，前端可查看该陪诊服务' : '已隐藏，前端不再显示该陪诊服务')
+}
+
+// ==================== 删除 ====================
+const delRow = (row: any) => {
+    ElMessageBox.confirm(`确定删除陪诊服务「${row.name}」吗？删除后前端不再显示。`, '删除确认', { type: 'warning' })
+        .then(() => {
+            const idx = escortServices.findIndex((i: any) => i.id === row.id)
+            if (idx > -1) escortServices.splice(idx, 1)
+            ElMessage.success('删除成功')
+            getLists()
+        })
+        .catch(() => { })
+}
+
+onMounted(getLists)
 </script>
