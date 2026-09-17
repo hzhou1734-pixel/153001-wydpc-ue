@@ -41,8 +41,7 @@ export const permModules: PermModule[] = [
         name: '数据台',
         pages: [
             { name: '数据总览', perms: 'dashboard.overview', ops: VIEW_ONLY },
-            { name: '业务总览', perms: 'dashboard.business', ops: VIEW_ONLY },
-            { name: '待处理事项', perms: 'dashboard.todo', ops: VIEW_ONLY }
+            { name: '业务总览', perms: 'dashboard.business', ops: VIEW_ONLY }
         ]
     },
     {
@@ -279,7 +278,6 @@ export const rolePerms: Record<number, string[]> = {
     2: [
         'dashboard.overview/lists',
         'dashboard.business/lists',
-        'dashboard.todo/lists',
         'community.lists/lists',
         'community.lists/add',
         'community.lists/edit',

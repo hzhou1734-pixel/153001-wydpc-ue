@@ -23,7 +23,6 @@ const mockUser = {
 const mockPermissions = [
     'dashboard.overview/lists',
     'dashboard.business/lists',
-    'dashboard.todo/lists',
     'community.lists/lists',
     'community.lists/add',
     'community.lists/edit',
@@ -90,15 +89,6 @@ const mockMenu = [
                 paths: 'business',
                 component: 'dashboard/business/index',
                 perms: 'dashboard.business/lists',
-                type: 'C',
-                is_show: 1,
-                is_cache: 0,
-            },
-            {
-                name: '待处理事项',
-                paths: 'todo',
-                component: 'dashboard/todo/index',
-                perms: 'dashboard.todo/lists',
                 type: 'C',
                 is_show: 1,
                 is_cache: 0,
