@@ -1,1 +1,0 @@
-import{d as e,c as t,o}from"./@vue-ygbFPFRc.js";const r=e({__name:"attr",props:{content:{type:Object,default:()=>({})},styles:{type:Object,default:()=>({})}},setup(c){return(n,a)=>(o(),t("div"))}});export{r as _};

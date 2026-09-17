@@ -37,3 +37,6 @@ components.d.ts
 
 # 需求文档临时文件
 .tmp-req.txt
+
+# 构建临时产物
+.tmp-dist/

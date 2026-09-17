@@ -1,3 +1,0 @@
-import{m as l}from"./element-plus-BoClYrT4.js";const s=t=>{const e=t==null?"":String(t);return/[",\n\r]/.test(e)?`"${e.replace(/"/g,'""')}"`:e};function b(t,e,n){if(!(n!=null&&n.length))return l.warning("暂无可导出的数据"),!1;const d=e.map(o=>s(o.label)).join(","),p=n.map((o,m)=>e.map(c=>s(c.formatter?c.formatter(o,m):o[c.prop])).join(",")).join(`\r
-`),i=new Blob([`\uFEFF${d}\r
-${p}`],{type:"text/csv;charset=utf-8;"}),a=URL.createObjectURL(i),r=document.createElement("a");return r.href=a,r.download=`${t}.csv`,document.body.appendChild(r),r.click(),document.body.removeChild(r),URL.revokeObjectURL(a),l.success(`已导出 ${n.length} 条记录`),!0}export{b as e};
