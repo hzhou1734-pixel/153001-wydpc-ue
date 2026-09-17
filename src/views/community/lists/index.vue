@@ -156,8 +156,7 @@ const overview = computed(() => [
     { label: '总户数', value: `${rooms.length} 套` },
     { label: '已认证户数', value: `${rooms.filter((r: any) => r.certified === 1).length} 户` },
     { label: '待审核认证', value: `${certifies.filter((c: any) => c.status === 0).length} 条` },
-    { label: '员工总数', value: `${staffs.length} 人` },
-    { label: '小区状态', value: community.status === 1 ? '启用' : '已停用' }
+    { label: '员工总数', value: `${staffs.length} 人` }
 ])
 
 interface BizStat {
@@ -233,12 +232,6 @@ const goDetail = () => router.push({ path: '/community/detail', query: { id: com
                         <div>
                             <div class="text-xs text-tx-secondary mb-1">添加时间</div>
                             <div class="text-base">{{ community.create_time }}</div>
-                        </div>
-                        <div>
-                            <div class="text-xs text-tx-secondary mb-1">小区状态</div>
-                            <el-tag :type="community.status === 1 ? 'success' : 'info'" size="small">
-                                {{ community.status === 1 ? '启用' : '已停用' }}
-                            </el-tag>
                         </div>
                     </div>
                 </div>

@@ -60,7 +60,6 @@
                         <el-descriptions-item label="陪诊单总金额">¥{{ sum(communityEscort) }}</el-descriptions-item>
                         <el-descriptions-item label="未结算账单总金额">¥{{ unsettledBillAmount }}</el-descriptions-item>
                         <el-descriptions-item label="已结算账单总金额">¥{{ settledBillAmount }}</el-descriptions-item>
-                        <el-descriptions-item label="小区状态">{{ detail.status === 1 ? '启用' : '已停用' }}</el-descriptions-item>
                     </el-descriptions>
                 </el-tab-pane>
 
