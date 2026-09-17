@@ -24,7 +24,6 @@ const mockPermissions = [
     'dashboard.overview/lists',
     'dashboard.business/lists',
     'community.lists/lists',
-    'community.lists/add',
     'community.lists/edit',
     'community.lists/detail',
     'community.building/lists',
@@ -105,7 +104,7 @@ const mockMenu = [
         is_cache: 0,
         children: [
             {
-                name: '小区列表',
+                name: '小区信息',
                 paths: 'lists',
                 component: 'community/lists/index',
                 perms: 'community.lists/lists',

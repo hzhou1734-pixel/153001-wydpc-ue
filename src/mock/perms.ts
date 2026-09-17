@@ -48,9 +48,9 @@ export const permModules: PermModule[] = [
         name: '小区管理',
         pages: [
             {
-                name: '小区列表',
+                name: '小区信息',
                 perms: 'community.lists',
-                ops: [OP_ADD('新增小区'), OP_EDIT(), OP_DELETE(), OP_STATUS('启用/停用')]
+                ops: [OP_EDIT('编辑资料')]
             },
             {
                 name: '楼栋房号',
@@ -279,9 +279,7 @@ export const rolePerms: Record<number, string[]> = {
         'dashboard.overview/lists',
         'dashboard.business/lists',
         'community.lists/lists',
-        'community.lists/add',
         'community.lists/edit',
-        'community.lists/status',
         'community.building/lists',
         'community.building/add',
         'community.building/edit',

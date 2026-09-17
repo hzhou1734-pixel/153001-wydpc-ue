@@ -1,46 +1,28 @@
 <script setup lang="ts" name="communityLists">
-import { getCommunityList } from '@/mock/api'
-import { usePaging } from '@/hooks/usePaging'
-import { useRouter } from 'vue-router'
+/**
+ * 小区信息（单小区）
+ * 一个物业后台仅管理一个小区，本页为该小区的资料编辑 + 运营数据概览
+ * 资料：门头照 / 名称 / 省市区 / 详细地址（可编辑保存）
+ * 运营数据：总户数 / 已认证 / 待审核 / 员工总数 + 托管·膳食·陪诊订单总数与金额 + 结算账单总额
+ * 明细请前往「小区详情」「楼栋房号」「认证列表」及各订单管理页面
+ */
 import ImageUpload from '@/components/image-upload/index.vue'
+import {
+    buildingTree,
+    certifyList,
+    communityList,
+    escortOrders,
+    mealOrders,
+    nursingOrders,
+    roomList,
+    staffList
+} from '@/mock/data'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// 搜索参数（与 usePaging 联动，getCommunityList 支持 keyword/address 过滤）
-const searchParams = reactive({
-    keyword: '',
-    address: ''
-})
-
-const { pager, getLists, resetPage } = usePaging({
-    fetchFun: getCommunityList,
-    params: searchParams,
-    firstLoading: true
-})
-
-const handleSearch = () => {
-    resetPage()
-}
-
-const handleReset = () => {
-    searchParams.keyword = ''
-    searchParams.address = ''
-    resetPage()
-}
-
-// 新增/编辑弹窗
-const showEdit = ref(false)
-const editTitle = ref('新增小区')
-const editForm = reactive({
-    id: 0,
-    name: '',
-    cover: '',
-    region: [] as string[],
-    address: '',
-    buildings: 0,
-    houses: 0,
-    status: 1
-})
+/** 当前物业后台所管理的小区（唯一） */
+const community = reactive({ ...communityList[0] })
 
 // 省市区精简数据（模拟）
 const regionOptions = [
@@ -93,219 +75,230 @@ const regionOptions = [
     }
 ]
 
-const openAdd = () => {
-    editTitle.value = '新增小区'
-    Object.assign(editForm, {
-        id: 0,
-        name: '',
-        cover: '',
-        region: [],
-        address: '',
-        buildings: 0,
-        houses: 0,
-        status: 1
-    })
-    showEdit.value = true
-}
+/** 编辑表单（资料） */
+const editForm = reactive({
+    cover: community.cover,
+    name: community.name,
+    region: [] as string[],
+    address: community.address
+})
 
-const openEdit = (row: any) => {
-    editTitle.value = '编辑小区'
-    Object.assign(editForm, {
-        id: row.id,
-        name: row.name,
-        cover: row.cover,
-        region: [],
-        address: row.address,
-        buildings: row.buildings,
-        houses: row.houses,
-        status: row.status
-    })
+/** 从地址中拆出省市区（仅展示用，编辑时以级联选择为准） */
+const regionText = computed(() => {
+    const addr = community.address || ''
+    const m = addr.match(/(浙江省|江苏省)(.+?区|.+?市)/)
+    return m ? [m[1], m[2]].join(' / ') : '—'
+})
+
+const showEdit = ref(false)
+const openEdit = () => {
+    editForm.cover = community.cover
+    editForm.name = community.name
+    editForm.region = []
+    editForm.address = community.address
     showEdit.value = true
 }
 
 const submitEdit = () => {
-    if (!editForm.name) {
-        ElMessage.warning('请输入小区名称')
-        return
-    }
-    if (editForm.id === 0 && editForm.region.length !== 3) {
-        ElMessage.warning('请选择省市区')
-        return
-    }
-    if (!editForm.address) {
-        ElMessage.warning('请输入详细位置')
-        return
-    }
-    const row = pager.lists.find((item: any) => item.id === editForm.id)
-    if (row) {
-        // 楼栋数/房屋数由系统数据自动生成，编辑时不覆盖
-        Object.assign(row, {
-            name: editForm.name,
-            cover: editForm.cover,
-            address: editForm.address,
-            status: editForm.status
-        })
-    } else {
-        pager.lists.unshift({
-            id: Date.now(),
-            name: editForm.name,
-            address: editForm.region.join('') + editForm.address,
-            cover: editForm.cover,
-            buildings: editForm.buildings,
-            houses: editForm.houses,
-            certified: 0,
-            users: 0,
-            staff_count: 0,
-            tuoguan_orders: 0,
-            shanshi_orders: 0,
-            peizhen_orders: 0,
-            status: editForm.status,
-            create_time: '2026-09-09 10:30:00'
-        })
-        pager.count++
-    }
+    if (!editForm.name) return ElMessage.warning('请输入小区名称')
+    if (!editForm.address) return ElMessage.warning('请输入详细位置')
+    Object.assign(community, {
+        cover: editForm.cover,
+        name: editForm.name,
+        address: editForm.region.length ? editForm.region.join('') + editForm.address : editForm.address
+    })
+    // 同步回 mock 数据源
+    Object.assign(communityList[0], community)
     ElMessage.success('保存成功')
     showEdit.value = false
 }
 
-// 启用/停用
-const toggleStatus = (row: any) => {
-    row.status = row.status === 1 ? 0 : 1
-    ElMessage.success(row.status === 1 ? '已启用' : '已停用')
+// ==================== 运营数据（实时统计） ====================
+const cid = community.id
+const buildingIds = buildingTree.filter((b: any) => b.community_id === cid).map((b: any) => b.id)
+const rooms = roomList.filter((r: any) => buildingIds.includes(r.building_id))
+const staffs = staffList.filter((s: any) => s.community === community.name)
+const certifies = certifyList.filter((c: any) => c.community === community.name)
+
+/** 金额求和 */
+const sum = (list: any[]) => list.reduce((s, i) => s + (Number(i.amount) || 0), 0)
+const money = (v: number) => `¥${Number(v || 0).toFixed(2)}`
+
+/** 单类订单统计：总数 / 有效金额 / 未结算 / 已结算 / 取消数 / 取消金额 */
+const buildOrderStat = (orders: any[]) => {
+    const valid = orders.filter((o: any) => o.pay_status === 1 && o.status !== 4)
+    const unpaid = orders.filter((o: any) => o.pay_status !== 1)
+    const settled = valid.filter((o: any) => o.status === 3)
+    const unsettled = valid.filter((o: any) => o.status !== 3)
+    const canceled = orders.filter((o: any) => o.status === 4)
+    return {
+        count: orders.length,
+        amount: sum(valid),
+        unpaid_count: unpaid.length,
+        settled_amount: sum(settled),
+        unsettled_amount: sum(unsettled),
+        cancel_count: canceled.length,
+        cancel_amount: sum(canceled)
+    }
 }
 
-const goDetail = (row: any) => {
-    router.push({ path: '/community/detail', query: { id: row.id } })
-}
+const nursingOrdersOf = nursingOrders.filter((o: any) => o.community === community.name)
+const mealOrdersOf = mealOrders.filter((o: any) => o.community === community.name)
+const escortOrdersOf = escortOrders.filter((o: any) => o.community === community.name)
 
-const handleDelete = (row: any) => {
-    ElMessageBox.confirm('删除后不可恢复，确认删除该小区吗？', '提示', { type: 'warning' })
-        .then(() => {
-            const index = pager.lists.findIndex((item: any) => item.id === row.id)
-            if (index > -1) {
-                pager.lists.splice(index, 1)
-                pager.count--
-            }
-            ElMessage.success('删除成功')
-        })
-        .catch(() => {})
-}
+const nursingStat = buildOrderStat(nursingOrdersOf)
+const mealStat = buildOrderStat(mealOrdersOf)
+const escortStat = buildOrderStat(escortOrdersOf)
 
-onMounted(getLists)
+/** 概览卡片 */
+const overview = computed(() => [
+    { label: '楼栋总数', value: `${buildingIds.length} 栋` },
+    { label: '总户数', value: `${rooms.length} 套` },
+    { label: '已认证户数', value: `${rooms.filter((r: any) => r.certified === 1).length} 户` },
+    { label: '待审核认证', value: `${certifies.filter((c: any) => c.status === 0).length} 条` },
+    { label: '员工总数', value: `${staffs.length} 人` },
+    { label: '小区状态', value: community.status === 1 ? '启用' : '已停用' }
+])
+
+interface BizStat {
+    name: string
+    count: number
+    amount: number
+    unsettled: number
+    settled: number
+    cancelCount: number
+    cancelAmount: number
+}
+const bizRows = computed<BizStat[]>(() => [
+    { name: '托管业务', ...nursingStat },
+    { name: '膳食业务', ...mealStat },
+    { name: '陪诊业务', ...escortStat }
+])
+const bizTotal = computed(() => ({
+    count: bizRows.value.reduce((s, r) => s + r.count, 0),
+    amount: bizRows.value.reduce((s, r) => s + r.amount, 0),
+    unsettled: bizRows.value.reduce((s, r) => s + r.unsettled, 0),
+    settled: bizRows.value.reduce((s, r) => s + r.settled, 0),
+    cancelCount: bizRows.value.reduce((s, r) => s + r.cancelCount, 0),
+    cancelAmount: bizRows.value.reduce((s, r) => s + r.cancelAmount, 0)
+}))
+
+const goDetail = () => router.push({ path: '/community/detail', query: { id: community.id } })
 </script>
 
 <template>
-    <div class="community-lists" v-loading="pager.loading">
+    <div class="community-lists">
+        <!-- 小区资料 -->
         <el-card class="!border-none" shadow="never">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <span class="card-title">小区列表</span>
-                    <el-button type="primary" @click="openAdd">
-                        <icon name="el-icon-Plus" :size="14" class="mr-1" />
-                        新增小区
+                    <span class="card-title">小区资料</span>
+                    <el-button type="primary" @click="openEdit">
+                        <icon name="el-icon-Edit" :size="14" class="mr-1" />
+                        编辑资料
                     </el-button>
                 </div>
             </template>
-
-            <!-- 搜索区 -->
-            <div class="flex flex-wrap items-center gap-3 mb-4">
-                <el-input
-                    v-model="searchParams.keyword"
-                    placeholder="请输入小区名称"
-                    clearable
-                    class="!w-56"
-                    @keyup.enter="handleSearch"
-                    @clear="handleSearch"
-                />
-                <el-input
-                    v-model="searchParams.address"
-                    placeholder="请输入详细地址"
-                    clearable
-                    class="!w-56"
-                    @keyup.enter="handleSearch"
-                    @clear="handleSearch"
-                />
-                <el-button type="primary" @click="handleSearch">
-                    <icon name="el-icon-Search" :size="14" class="mr-1" />
-                    查询
-                </el-button>
-                <el-button @click="handleReset">重置</el-button>
-            </div>
-
-            <!-- 列表 -->
-            <el-table :data="pager.lists">
-                <el-table-column label="小区门头" width="100">
-                    <template #default="{ row }">
-                        <el-image
-                            v-if="row.cover"
-                            :src="row.cover"
-                            :preview-src-list="[row.cover]"
-                            preview-teleported
-                            fit="cover"
-                            class="w-16 h-11 rounded"
-                        />
-                        <div
-                            v-else
-                            class="w-16 h-11 rounded flex items-center justify-center text-xs text-tx-secondary bg-fill-light"
-                        >
-                            暂无门头照
+            <div class="flex flex-wrap gap-6">
+                <div class="flex-shrink-0">
+                    <el-image
+                        v-if="community.cover"
+                        :src="community.cover"
+                        :preview-src-list="[community.cover]"
+                        preview-teleported
+                        fit="cover"
+                        class="w-[240px] h-[160px] rounded-lg"
+                    />
+                    <div
+                        v-else
+                        class="w-[240px] h-[160px] rounded-lg flex items-center justify-center text-sm text-tx-secondary bg-fill-light"
+                    >
+                        暂无门头照
+                    </div>
+                </div>
+                <div class="flex-1 min-w-[320px]">
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+                        <div>
+                            <div class="text-xs text-tx-secondary mb-1">小区名称</div>
+                            <div class="text-base font-medium">{{ community.name }}</div>
                         </div>
-                    </template>
-                </el-table-column>
-                <el-table-column label="小区名称" prop="name" min-width="150" show-overflow-tooltip>
-                    <template #default="{ row }">
-                        <span class="font-bold">{{ row.name }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="位置" prop="address" min-width="220" show-overflow-tooltip />
-                <el-table-column label="楼栋总数" prop="buildings" min-width="90" align="center" />
-                <el-table-column label="总户数" prop="houses" min-width="90" align="center" />
-                <el-table-column label="已认证户数" prop="certified" min-width="100" align="center" />
-                <el-table-column label="员工总数" prop="staff_count" min-width="90" align="center" />
-                <el-table-column label="托管单总数" prop="tuoguan_orders" min-width="100" align="center" />
-                <el-table-column label="膳食单总数" prop="shanshi_orders" min-width="100" align="center" />
-                <el-table-column label="陪诊单总数" prop="peizhen_orders" min-width="100" align="center" />
-                <el-table-column label="状态" width="80" align="center">
-                    <template #default="{ row }">
-                        <el-tag :type="row.status === 1 ? 'success' : 'info'" size="small">
-                            {{ row.status === 1 ? '启用' : '已停用' }}
-                        </el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="240" fixed="right" align="center">
-                    <template #default="{ row }">
-                        <el-button link type="primary" @click="goDetail(row)">详情</el-button>
-                        <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
-                        <el-button link :type="row.status === 1 ? 'warning' : 'success'" @click="toggleStatus(row)">
-                            {{ row.status === 1 ? '停用' : '启用' }}
-                        </el-button>
-                        <el-button link type="danger" @click="handleDelete(row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-
-            <div class="flex justify-end mt-4">
-                <el-pagination
-                    v-model:current-page="pager.page"
-                    v-model:page-size="pager.size"
-                    :total="pager.count"
-                    :page-sizes="[10, 15, 20]"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    @current-change="getLists"
-                    @size-change="resetPage"
-                />
+                        <div>
+                            <div class="text-xs text-tx-secondary mb-1">省市区</div>
+                            <div class="text-base">{{ regionText }}</div>
+                        </div>
+                        <div class="col-span-2">
+                            <div class="text-xs text-tx-secondary mb-1">详细地址</div>
+                            <div class="text-base">{{ community.address }}</div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-tx-secondary mb-1">添加时间</div>
+                            <div class="text-base">{{ community.create_time }}</div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-tx-secondary mb-1">小区状态</div>
+                            <el-tag :type="community.status === 1 ? 'success' : 'info'" size="small">
+                                {{ community.status === 1 ? '启用' : '已停用' }}
+                            </el-tag>
+                        </div>
+                    </div>
+                </div>
             </div>
         </el-card>
 
-        <el-dialog v-model="showEdit" :title="editTitle" width="560px">
+        <!-- 运营数据 -->
+        <el-card class="!border-none mt-4" shadow="never">
+            <template #header>
+                <div class="flex items-center justify-between">
+                    <span class="card-title">运营数据</span>
+                    <el-button link type="primary" @click="goDetail">查看明细</el-button>
+                </div>
+            </template>
+            <el-row :gutter="16">
+                <el-col v-for="item in overview" :key="item.label" :span="12" :sm="8" :lg="4" class="mb-4">
+                    <div class="p-4 rounded-lg border border-br-light">
+                        <div class="text-xs text-tx-secondary mb-1">{{ item.label }}</div>
+                        <div class="text-2xl font-medium text-primary">{{ item.value }}</div>
+                    </div>
+                </el-col>
+            </el-row>
+
+            <!-- 各类业务订单统计 -->
+            <el-table :data="[...bizRows, { name: '合计', ...bizTotal, isTotal: true }]" border stripe class="mt-2">
+                <el-table-column label="业务类型" prop="name" min-width="110" />
+                <el-table-column label="订单总数" prop="count" min-width="90" align="center" />
+                <el-table-column label="有效总金额" min-width="120" align="right">
+                    <template #default="{ row }">
+                        <span class="text-success font-medium">¥{{ Number(row.amount).toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="未结算金额" min-width="120" align="right">
+                    <template #default="{ row }">¥{{ Number(row.unsettled).toFixed(2) }}</template>
+                </el-table-column>
+                <el-table-column label="已结算金额" min-width="120" align="right">
+                    <template #default="{ row }">¥{{ Number(row.settled).toFixed(2) }}</template>
+                </el-table-column>
+                <el-table-column label="取消订单" prop="cancelCount" min-width="90" align="center" />
+                <el-table-column label="取消金额" min-width="120" align="right">
+                    <template #default="{ row }">
+                        <span class="text-danger">¥{{ Number(row.cancelAmount).toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="text-xs text-tx-secondary mt-2">
+                统计口径：有效订单 = 已支付且未取消；未结算 = 有效且未完成；已结算 = 有效且已完成；取消订单 = status 4
+            </div>
+        </el-card>
+
+        <!-- 编辑资料弹窗 -->
+        <el-dialog v-model="showEdit" title="编辑小区资料" width="560px">
             <el-form label-width="90px">
                 <el-form-item label="小区门头照">
-                    <ImageUpload v-model="editForm.cover" :width="160" :height="100" text="上传门头照" tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
+                    <ImageUpload v-model="editForm.cover" :width="240" :height="160" text="上传门头照" tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
                 <el-form-item label="小区名称" required>
                     <el-input v-model="editForm.name" placeholder="请输入小区名称" />
                 </el-form-item>
-                <el-form-item label="省市区" :required="editForm.id === 0">
+                <el-form-item label="省市区">
                     <el-cascader
                         v-model="editForm.region"
                         :options="regionOptions"
@@ -317,25 +310,10 @@ onMounted(getLists)
                 <el-form-item label="详细位置" required>
                     <el-input v-model="editForm.address" placeholder="请输入小区详细位置" />
                 </el-form-item>
-                <el-form-item label="楼栋数">
-                    <div class="flex items-center">
-                        <span class="font-bold">{{ editForm.buildings }} 栋</span>
-                        <span class="ml-2 text-xs text-tx-secondary">由「楼栋房屋管理」数据自动统计，不可编辑</span>
-                    </div>
-                </el-form-item>
-                <el-form-item label="房屋数">
-                    <div class="flex items-center">
-                        <span class="font-bold">{{ editForm.houses }} 套</span>
-                        <span class="ml-2 text-xs text-tx-secondary">由「楼栋房屋管理」数据自动统计，不可编辑</span>
-                    </div>
-                </el-form-item>
-                <el-form-item label="状态">
-                    <el-switch v-model="editForm.status" :active-value="1" :inactive-value="0" active-text="启用" inactive-text="停用" />
-                </el-form-item>
             </el-form>
             <template #footer>
                 <el-button @click="showEdit = false">取消</el-button>
-                <el-button type="primary" @click="submitEdit">确定</el-button>
+                <el-button type="primary" @click="submitEdit">保存</el-button>
             </template>
         </el-dialog>
     </div>
