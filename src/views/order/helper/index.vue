@@ -74,13 +74,13 @@
                 <el-table-column label="完成时间" width="160">
                     <template #default="{ row }">{{ row.finish_time || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="操作" width="190" fixed="right">
+                <el-table-column label="操作" width="200" fixed="right">
                     <template #default="{ row }">
-                        <el-button size="small" type="primary" :disabled="!canRelate(row)"
+                        <el-button link type="primary" :disabled="!canRelate(row)"
                             @click="openRelate(row)">订单关联</el-button>
-                        <el-button size="small" type="danger" :disabled="!canCancel(row)" plain
+                        <el-button link type="danger" :disabled="!canCancel(row)"
                             @click="handleCancel(row)">取消订单</el-button>
-                        <el-button size="small" plain @click="viewDetail(row)">详情</el-button>
+                        <el-button link type="primary" @click="viewDetail(row)">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
