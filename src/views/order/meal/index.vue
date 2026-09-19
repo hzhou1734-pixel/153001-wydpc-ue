@@ -84,8 +84,8 @@
                 </el-table-column>
                 <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
-                        <el-button size="small" type="primary" :disabled="!canDispatch(row)"
-                            @click="openDispatch(row)">派单</el-button>
+                        <el-button v-if="row.need_delivery === 1" size="small" type="primary"
+                            :disabled="!canDispatch(row)" @click="openDispatch(row)">派单</el-button>
                         <el-button size="small" plain @click="viewDetail(row)">详情</el-button>
                     </template>
                 </el-table-column>
@@ -103,17 +103,12 @@
                     <span class="font-bold">{{ dispatchRow?.sn }}</span>
                 </el-form-item>
                 <el-form-item label="套餐内容">{{ dispatchRow?.combo }} × {{ dispatchRow?.quantity }}</el-form-item>
-                <el-form-item label="配送要求">
-                    {{ dispatchRow?.need_delivery ? dispatchRow?.delivery_time : '到食堂自取，无需配送' }}
-                </el-form-item>
+                <el-form-item label="配送要求">{{ dispatchRow?.delivery_time }}</el-form-item>
                 <el-form-item label="指派员工" required>
                     <el-select v-model="dispatchStaffId" placeholder="请选择员工" class="!w-full">
                         <el-option v-for="s in staffOptions" :key="s.id"
                             :label="`${s.name}（${roleNames[s.role_id] || '员工'}）`" :value="s.id" :disabled="s.status === 0" />
                     </el-select>
-                </el-form-item>
-                <el-form-item v-if="!dispatchRow?.need_delivery" label="">
-                    <el-alert type="warning" :closable="false" title="该订单无需配送，仅需要配送的订单才需派单。" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -192,7 +187,7 @@ import { dispatchOrder } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 
 type TagType = 'info' | 'warning' | 'primary' | 'success' | 'danger'
-const statusMap: Record<number, string> = { 0: '待支付', 1: '待派单', 2: '服务中', 3: '已完成', 4: '已取消' }
+const statusMap: Record<number, string> = { 1: '待派单', 2: '服务中', 3: '已完成', 4: '已取消' }
 const statusTag = (s: number): TagType =>
     ({ 0: 'info', 1: 'warning', 2: 'primary', 3: 'success', 4: 'danger' } as Record<number, TagType>)[s] || 'info'
 const buildingOptions = Array.from(new Set(mealOrders.map((i: any) => i.building)))
