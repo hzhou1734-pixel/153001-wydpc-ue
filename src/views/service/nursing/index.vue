@@ -43,14 +43,9 @@
                         <span>{{ row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="半天价格" width="110" align="right">
+                <el-table-column label="价格" width="110" align="right">
                     <template #default="{ row }">
-                        <span class="text-orange-500 font-bold">¥{{ money(row.half_price) }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="整天价格" width="110" align="right">
-                    <template #default="{ row }">
-                        <span class="text-orange-500 font-bold">¥{{ money(row.day_price) }}</span>
+                        <span class="text-orange-500 font-bold">¥{{ money(row.price) }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="状态" width="90">
@@ -86,12 +81,8 @@
                         <el-option v-for="item in nursingTypeOptions" :key="item" :label="item" :value="item" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="半天价格" required>
-                    <el-input-number v-model="editForm.half_price" :min="0" :precision="2" :step="1" />
-                    <span class="ml-2 text-xs text-tx-secondary">元</span>
-                </el-form-item>
-                <el-form-item label="整天价格" required>
-                    <el-input-number v-model="editForm.day_price" :min="0" :precision="2" :step="1" />
+                <el-form-item label="价格" required>
+                    <el-input-number v-model="editForm.price" :min="0" :precision="2" :step="1" />
                     <span class="ml-2 text-xs text-tx-secondary">元</span>
                 </el-form-item>
                 <el-form-item label="描述">
@@ -167,12 +158,12 @@ const resetQuery = () => {
 // ==================== 添加 / 编辑 ====================
 const editVisible = ref(false)
 const editForm = reactive({
-    id: 0, name: '', type: nursingTypeOptions[0], half_price: 0, day_price: 0, desc: '', sort: 0, status: 1
+    id: 0, name: '', type: nursingTypeOptions[0], price: 0, desc: '', sort: 0, status: 1
 })
 
 const openAdd = () => {
     Object.assign(editForm, {
-        id: 0, name: '', type: nursingTypeOptions[0], half_price: 0, day_price: 0,
+        id: 0, name: '', type: nursingTypeOptions[0], price: 0,
         desc: '', sort: nursingServices.length + 1, status: 1
     })
     editVisible.value = true
@@ -182,8 +173,7 @@ const openEdit = (row: any) => {
         id: row.id,
         name: row.name,
         type: row.type,
-        half_price: Number(row.half_price) || 0,
-        day_price: Number(row.day_price) || 0,
+        price: Number(row.price) || 0,
         desc: row.desc || '',
         sort: row.sort ?? 0,
         status: row.status
@@ -196,8 +186,7 @@ const submitEdit = () => {
     const payload = {
         name: editForm.name.trim(),
         type: editForm.type,
-        half_price: Number(editForm.half_price) || 0,
-        day_price: Number(editForm.day_price) || 0,
+        price: Number(editForm.price) || 0,
         desc: editForm.desc,
         sort: Number(editForm.sort) || 0,
         status: editForm.status

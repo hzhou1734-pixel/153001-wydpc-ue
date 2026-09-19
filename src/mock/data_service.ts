@@ -9,8 +9,7 @@ export interface NursingItem {
     id: number
     name: string
     type: string
-    half_price: number
-    day_price: number
+    price: number
     desc: string
     status: number
     sort: number
@@ -25,8 +24,7 @@ export const nursingServices: NursingItem[] = [
         id: 1001,
         name: '幼儿全日托（1.5-3岁）',
         type: '日托',
-        half_price: 98,
-        day_price: 188,
+        price: 188,
         desc: '专业育婴师看护，含上午点心、营养午餐与午睡照护，实时反馈宝宝饮食与作息情况。',
         status: 1,
         sort: 1,
@@ -36,8 +34,7 @@ export const nursingServices: NursingItem[] = [
         id: 1002,
         name: '小学生放学日托',
         type: '日托',
-        half_price: 68,
-        day_price: 128,
+        price: 128,
         desc: '放学接送至服务中心，含作业辅导、营养晚餐，家长下班后接回。',
         status: 1,
         sort: 2,
@@ -47,8 +44,7 @@ export const nursingServices: NursingItem[] = [
         id: 1003,
         name: '幼儿半日托（上午班）',
         type: '日托',
-        half_price: 88,
-        day_price: 158,
+        price: 158,
         desc: '上午 8:30-12:00，含亲子早教游戏、手工课堂与健康早点。',
         status: 1,
         sort: 3,
@@ -58,8 +54,7 @@ export const nursingServices: NursingItem[] = [
         id: 1004,
         name: '学期每日托·标准班',
         type: '学期每日托',
-        half_price: 45,
-        day_price: 80,
+        price: 80,
         desc: '按学期报名，周一至周五每日托管，含作业辅导与晚餐，寒暑假顺延。',
         status: 1,
         sort: 4,
@@ -69,8 +64,7 @@ export const nursingServices: NursingItem[] = [
         id: 1005,
         name: '学期每日托·晚托班',
         type: '学期每日托',
-        half_price: 55,
-        day_price: 95,
+        price: 95,
         desc: '放学后至 20:00，含晚餐与作业辅导，适合双职工家庭。',
         status: 1,
         sort: 5,
@@ -80,8 +74,7 @@ export const nursingServices: NursingItem[] = [
         id: 1006,
         name: '学期周末托·兴趣班',
         type: '学期周末托',
-        half_price: 78,
-        day_price: 138,
+        price: 138,
         desc: '周六周日开放，含美术、书法、体适能等兴趣课程与营养午餐。',
         status: 1,
         sort: 6,
@@ -91,8 +84,7 @@ export const nursingServices: NursingItem[] = [
         id: 1007,
         name: '学期周末托·研学班',
         type: '学期周末托',
-        half_price: 128,
-        day_price: 228,
+        price: 228,
         desc: '每月两次户外研学活动，含往返接送、保险与午餐，需提前一周预约。',
         status: 0,
         sort: 7,
@@ -102,8 +94,7 @@ export const nursingServices: NursingItem[] = [
         id: 1008,
         name: '暑期临时日托',
         type: '日托',
-        half_price: 60,
-        day_price: 110,
+        price: 110,
         desc: '暑期临时托管，按天计费，需提前一天预约，含午餐与午休。',
         status: 0,
         sort: 8,
