@@ -53,21 +53,24 @@
                         <span v-if="row.type === 'building'">{{ (row.children || []).length }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="认证业主" min-width="250">
+                <el-table-column label="认证业主" min-width="240">
                     <template #default="{ row }">
                         <template v-if="row.type === 'room'">
-                            <div class="flex items-center">
+                            <div class="owner-cert flex items-center gap-2 py-1.5 pl-2 pr-3 rounded-lg border" :class="row.certified ? 'is-yes' : 'is-no'">
+                                <span class="cert-bar" :class="row.certified ? 'yes' : 'no'"></span>
                                 <el-image
                                     v-if="row.certified"
                                     :src="row.avatar"
                                     :preview-src-list="[row.avatar]"
                                     preview-teleported
                                     fit="cover"
-                                    class="w-7 h-7 rounded-full mr-2 shrink-0"
+                                    class="w-8 h-8 rounded-full shrink-0"
                                 />
-                                <span class="font-medium">{{ row.owner }}</span>
-                                <span class="text-tx-secondary text-xs ml-2">{{ row.phone }}</span>
-                                <el-tag :type="row.certified ? 'success' : 'info'" size="small" class="ml-2 shrink-0">
+                                <div class="flex-1 min-w-0 leading-tight">
+                                    <div class="text-sm truncate" :class="row.certified ? 'font-medium' : 'text-tx-secondary'">{{ row.owner }}</div>
+                                    <div class="text-xs text-tx-secondary mt-0.5">{{ row.phone }}</div>
+                                </div>
+                                <el-tag :type="row.certified ? 'success' : 'info'" :effect="row.certified ? 'light' : 'plain'" size="small" class="shrink-0">
                                     {{ row.certified ? '已认证' : '未认证' }}
                                 </el-tag>
                             </div>
@@ -319,3 +322,27 @@ const handleDeleteRoom = (row: any) => {
 
 onMounted(getTreeList)
 </script>
+
+<style scoped>
+/* 认证业主状态块：绿底=已认证，灰底=未认证，扫视即可区分 */
+.owner-cert.is-yes {
+    background: var(--el-color-success-light-9);
+    border-color: var(--el-color-success-light-7);
+}
+.owner-cert.is-no {
+    background: var(--el-fill-color-lighter);
+    border-color: var(--el-fill-color);
+}
+.cert-bar {
+    width: 3px;
+    height: 30px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+.cert-bar.yes {
+    background: var(--el-color-success);
+}
+.cert-bar.no {
+    background: var(--el-text-color-placeholder);
+}
+</style>
