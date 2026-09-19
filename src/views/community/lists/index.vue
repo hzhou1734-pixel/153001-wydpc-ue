@@ -86,8 +86,9 @@ const editForm = reactive({
 /** 从地址中拆出省市区（仅展示用，编辑时以级联选择为准） */
 const regionText = computed(() => {
     const addr = community.address || ''
-    const m = addr.match(/(浙江省|江苏省)(.+?区|.+?市)/)
-    return m ? [m[1], m[2]].join(' / ') : '—'
+    const m = addr.match(/(.+?省)?(.+?市)(.+?[区县])/)
+    if (!m) return '—'
+    return [m[1], m[2], m[3]].filter(Boolean).join(' / ')
 })
 
 const showEdit = ref(false)
@@ -127,18 +128,16 @@ const money = (v: number) => `¥${Number(v || 0).toFixed(2)}`
 /** 单类订单统计：总数 / 有效金额 / 未结算 / 已结算 / 取消数 / 取消金额 */
 const buildOrderStat = (orders: any[]) => {
     const valid = orders.filter((o: any) => o.pay_status === 1 && o.status !== 4)
-    const unpaid = orders.filter((o: any) => o.pay_status !== 1)
     const settled = valid.filter((o: any) => o.status === 3)
     const unsettled = valid.filter((o: any) => o.status !== 3)
     const canceled = orders.filter((o: any) => o.status === 4)
     return {
         count: orders.length,
         amount: sum(valid),
-        unpaid_count: unpaid.length,
-        settled_amount: sum(settled),
-        unsettled_amount: sum(unsettled),
-        cancel_count: canceled.length,
-        cancel_amount: sum(canceled)
+        unsettled: sum(unsettled),
+        settled: sum(settled),
+        cancelCount: canceled.length,
+        cancelAmount: sum(canceled)
     }
 }
 
