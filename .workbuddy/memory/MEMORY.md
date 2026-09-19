@@ -5,12 +5,13 @@
 - 技术栈：Vue3 + Vite + TypeScript + Element Plus + Pinia + ECharts + wangEditor
 - GitHub 仓库：https://github.com/hzhou1734-pixel/153001-wydpc-ue（public，main 分支）
 - 远程地址：https://github.com/hzhou1734-pixel/153001-wydpc-ue.git
+- **工作分支（2026-09-19 起，用户要求）**：`dev`（从 main v1.0.56 分出）。后续所有改动默认提交到 dev 分支；main/EdgeOne 线上保持 v1.0.56 状态，用户要求合并时再合
 
 ## Git 提交约定（用户明确要求）
-- **每次功能修改后必须自动执行**：git add → commit → 递增版本号 tag → push
+- **每次功能修改后必须自动执行**：git add → commit → 递增版本号 tag → push（当前均提交到 dev 分支）
 - commit 信息格式：`v1.0.X: <描述>`
 - 版本号 tag：v1.0.X 递增（当前 v1.0.0）
-- 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）
+- 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）；shell PATH 损坏时 git 用绝对路径 `C:/Users/zhou/.workbuddy/binaries/PortableGit/versions/1.2.0/cmd/git.exe`，base64 用 node -e 生成
 - git 身份：hzhou1734-pixel / hzhou1734-pixel@users.noreply.github.com（用 -c 参数传入）
 
 ## 项目结构要点

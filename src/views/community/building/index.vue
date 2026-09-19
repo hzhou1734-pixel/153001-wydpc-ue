@@ -53,15 +53,24 @@
                         <span v-if="row.type === 'building'">{{ (row.children || []).length }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="认证业主" min-width="220">
+                <el-table-column label="认证业主" min-width="250">
                     <template #default="{ row }">
                         <template v-if="row.type === 'room'">
-                            <div v-if="row.certified" class="flex items-center">
-                                <el-image :src="row.avatar" class="w-7 h-7 rounded-full mr-2 shrink-0" />
-                                <span>{{ row.owner }}</span>
+                            <div class="flex items-center">
+                                <el-image
+                                    v-if="row.certified"
+                                    :src="row.avatar"
+                                    :preview-src-list="[row.avatar]"
+                                    preview-teleported
+                                    fit="cover"
+                                    class="w-7 h-7 rounded-full mr-2 shrink-0"
+                                />
+                                <span class="font-medium">{{ row.owner }}</span>
                                 <span class="text-tx-secondary text-xs ml-2">{{ row.phone }}</span>
+                                <el-tag :type="row.certified ? 'success' : 'info'" size="small" class="ml-2 shrink-0">
+                                    {{ row.certified ? '已认证' : '未认证' }}
+                                </el-tag>
                             </div>
-                            <el-tag v-else type="info" size="small">未认证</el-tag>
                         </template>
                     </template>
                 </el-table-column>
