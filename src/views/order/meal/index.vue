@@ -36,7 +36,13 @@
         <el-card class="!border-none mt-4" shadow="never">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <span class="card-title">膳食订单</span>
+                    <el-radio-group v-model="queryParams.status" @change="resetPage()">
+                        <el-radio-button value="">全部</el-radio-button>
+                        <el-radio-button :value="1">待派单</el-radio-button>
+                        <el-radio-button :value="2">进行中</el-radio-button>
+                        <el-radio-button :value="3">已完成</el-radio-button>
+                        <el-radio-button :value="4">已取消</el-radio-button>
+                    </el-radio-group>
                 </div>
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
@@ -196,6 +202,7 @@ const queryParams = reactive({
     keyword: '',
     need_delivery: '' as '' | number,
     building: '',
+    status: '' as '' | number,
     start_time: '',
     end_time: '',
     pay_start: '',
@@ -219,6 +226,9 @@ const doFilter = (data: any[], params: Record<string, any> = {}) => {
         result = result.filter((i: any) => i.need_delivery === Number(params.need_delivery))
     }
     if (params.building) result = result.filter((i: any) => i.building === params.building)
+    if (params.status !== '' && params.status !== undefined && params.status !== null) {
+        result = result.filter((i: any) => i.status === Number(params.status))
+    }
     if (params.start_time) {
         result = result.filter((i: any) => String(i.create_time).slice(0, 10) >= params.start_time)
     }
