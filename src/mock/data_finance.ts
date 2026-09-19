@@ -1,7 +1,7 @@
 /**
  * 财务管理板块模拟数据
  * 账单结算 / 小区钱袋子 / 收益配置 / 员工收益 均在此维护
- * 账单、钱袋子的合计金额由明细自动汇总，避免出现手工录入的对不上账
+ * 账单合计金额由明细自动汇总；钱袋子中仅托管/膳食预收金额自动计算，物业结余金额手工填写
  */
 import { reactive } from 'vue'
 import { staffList } from './data'
@@ -139,19 +139,19 @@ export const billList = [
 ]
 
 // ==================== 小区钱袋子 ====================
-/** 物业钱袋子：结余金额 = 收入金额 - 支出金额 */
+/** 物业钱袋子：结余金额手工填写，不做自动计算 */
 const buildPropertyWallet = (raw: {
     id: number
     title: string
     month: string
     expense_amount: string
     income_amount: string
+    balance_amount: string
     expense_voucher: string
     income_voucher: string
     create_time: string
 }) => ({
     ...raw,
-    balance_amount: fmt(Number(raw.income_amount) - Number(raw.expense_amount)),
 })
 
 export const walletProperty = [
@@ -161,6 +161,7 @@ export const walletProperty = [
         month: '2026-08',
         expense_amount: '12860.00',
         income_amount: '35600.00',
+        balance_amount: '22740.00',
         expense_voucher: voucher('ghj-wallet-exp-1'),
         income_voucher: voucher('ghj-wallet-inc-1'),
         create_time: '2026-09-02 09:30:00',
@@ -171,6 +172,7 @@ export const walletProperty = [
         month: '2026-07',
         expense_amount: '15320.00',
         income_amount: '29800.00',
+        balance_amount: '14480.00',
         expense_voucher: voucher('ghj-wallet-exp-2'),
         income_voucher: voucher('ghj-wallet-inc-2'),
         create_time: '2026-08-02 10:15:00',
@@ -181,6 +183,7 @@ export const walletProperty = [
         month: '2026-06',
         expense_amount: '22600.00',
         income_amount: '33150.00',
+        balance_amount: '10550.00',
         expense_voucher: voucher('ghj-wallet-exp-3'),
         income_voucher: voucher('ghj-wallet-inc-3'),
         create_time: '2026-07-02 14:20:00',
@@ -191,6 +194,7 @@ export const walletProperty = [
         month: '2026-05',
         expense_amount: '9840.00',
         income_amount: '26400.00',
+        balance_amount: '16560.00',
         expense_voucher: voucher('ghj-wallet-exp-4'),
         income_voucher: voucher('ghj-wallet-inc-4'),
         create_time: '2026-06-02 09:05:00',

@@ -211,8 +211,8 @@
                         <span class="ml-2 text-tx-secondary">元</span>
                     </el-form-item>
                     <el-form-item label="结余金额">
-                        <span class="font-medium">¥{{ computedBalance }}</span>
-                        <span class="ml-2 text-xs text-tx-secondary">结余 = 收入金额 - 支出金额，自动计算</span>
+                        <el-input-number v-model="form.balance_amount" :precision="2" class="!w-[220px]" />
+                        <span class="ml-2 text-tx-secondary">元</span>
                     </el-form-item>
                     <el-form-item label="支出凭证">
                         <ImageUpload v-model="form.expense_voucher" :width="160" :height="100" text="上传支出凭证" />
@@ -290,6 +290,7 @@ const form = reactive({
     month: '',
     expense_amount: 0,
     income_amount: 0,
+    balance_amount: 0,
     expense_voucher: '',
     income_voucher: '',
     order_count: 0,
@@ -299,8 +300,6 @@ const form = reactive({
 })
 
 const money = (v: number) => Number(v || 0).toFixed(2)
-/** 结余金额 = 收入金额 - 支出金额 */
-const computedBalance = computed(() => money(Number(form.income_amount) - Number(form.expense_amount)))
 /** 预收金额 = 订单数量 × 每单单价 */
 const computedPrepay = computed(() => money(Number(form.order_count) * Number(form.unit_price)))
 
@@ -316,6 +315,7 @@ const openAdd = (tab: string) => {
         month: '',
         expense_amount: 0,
         income_amount: 0,
+        balance_amount: 0,
         expense_voucher: '',
         income_voucher: '',
         order_count: 0,
@@ -344,7 +344,7 @@ const submitAdd = () => {
                 income_amount: money(form.income_amount),
                 expense_voucher: form.expense_voucher,
                 income_voucher: form.income_voucher,
-                balance_amount: computedBalance.value,
+                balance_amount: money(form.balance_amount),
                 create_time: nowTimeStr()
             })
             propertyGetLists()
