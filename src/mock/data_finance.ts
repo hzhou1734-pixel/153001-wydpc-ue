@@ -303,27 +303,32 @@ export const profitConfig = reactive({
 })
 
 // ==================== 员工收益 ====================
-/** 员工已完成订单数（按结算类型拆分）：托管趟次 / 配送趟次 / 陪诊趟次 */
-const earningBase: { staff_id: number; nursing_count: number; delivery_count: number; escort_count: number }[] = [
-    { staff_id: 1, nursing_count: 42, delivery_count: 0, escort_count: 0 },
-    { staff_id: 2, nursing_count: 0, delivery_count: 156, escort_count: 0 },
-    { staff_id: 3, nursing_count: 0, delivery_count: 0, escort_count: 38 },
-    { staff_id: 4, nursing_count: 0, delivery_count: 0, escort_count: 0 },
-    { staff_id: 5, nursing_count: 58, delivery_count: 0, escort_count: 0 },
-    { staff_id: 6, nursing_count: 27, delivery_count: 0, escort_count: 0 },
-    { staff_id: 7, nursing_count: 21, delivery_count: 0, escort_count: 0 },
-    { staff_id: 8, nursing_count: 0, delivery_count: 93, escort_count: 0 },
-    { staff_id: 9, nursing_count: 0, delivery_count: 74, escort_count: 0 },
-    { staff_id: 10, nursing_count: 0, delivery_count: 0, escort_count: 29 },
-    { staff_id: 11, nursing_count: 0, delivery_count: 0, escort_count: 22 },
+/** 员工已完成订单数（按结算状态拆分）：done=已结算（订单已完成）、pending=待结算（订单进行中）；趟次类型：托管 / 配送 / 陪诊 */
+const earningBase: {
+    staff_id: number
+    nursing_done: number; nursing_pending: number
+    delivery_done: number; delivery_pending: number
+    escort_done: number; escort_pending: number
+}[] = [
+    { staff_id: 1, nursing_done: 38, nursing_pending: 4, delivery_done: 0, delivery_pending: 0, escort_done: 0, escort_pending: 0 },
+    { staff_id: 2, nursing_done: 0, nursing_pending: 0, delivery_done: 148, delivery_pending: 8, escort_done: 0, escort_pending: 0 },
+    { staff_id: 3, nursing_done: 0, nursing_pending: 0, delivery_done: 0, delivery_pending: 0, escort_done: 35, escort_pending: 3 },
+    { staff_id: 4, nursing_done: 0, nursing_pending: 0, delivery_done: 0, delivery_pending: 0, escort_done: 0, escort_pending: 0 },
+    { staff_id: 5, nursing_done: 53, nursing_pending: 5, delivery_done: 0, delivery_pending: 0, escort_done: 0, escort_pending: 0 },
+    { staff_id: 6, nursing_done: 25, nursing_pending: 2, delivery_done: 0, delivery_pending: 0, escort_done: 0, escort_pending: 0 },
+    { staff_id: 7, nursing_done: 19, nursing_pending: 2, delivery_done: 0, delivery_pending: 0, escort_done: 0, escort_pending: 0 },
+    { staff_id: 8, nursing_done: 0, nursing_pending: 0, delivery_done: 87, delivery_pending: 6, escort_done: 0, escort_pending: 0 },
+    { staff_id: 9, nursing_done: 0, nursing_pending: 0, delivery_done: 70, delivery_pending: 4, escort_done: 0, escort_pending: 0 },
+    { staff_id: 10, nursing_done: 0, nursing_pending: 0, delivery_done: 0, delivery_pending: 0, escort_done: 27, escort_pending: 2 },
+    { staff_id: 11, nursing_done: 0, nursing_pending: 0, delivery_done: 0, delivery_pending: 0, escort_done: 20, escort_pending: 2 },
 ]
 
-/** 员工收益基础数据：收益金额由「收益配置金额 × 已完成订单数」自动计算，此处仅提供已完成单量 */
+/** 员工收益基础数据：收益金额由「收益配置金额 × 已完成订单数」自动计算，此处仅提供已完成单量（按结算状态拆分） */
 export const staffEarningRows = staffList.map((item: any) => {
     const base = earningBase.find((b) => b.staff_id === item.id) || {
-        nursing_count: 0,
-        delivery_count: 0,
-        escort_count: 0,
+        nursing_done: 0, nursing_pending: 0,
+        delivery_done: 0, delivery_pending: 0,
+        escort_done: 0, escort_pending: 0,
     }
     return {
         id: item.id,
@@ -333,9 +338,12 @@ export const staffEarningRows = staffList.map((item: any) => {
         mobile: item.mobile,
         role: item.role,
         role_id: item.role_id,
-        nursing_count: base.nursing_count,
-        delivery_count: base.delivery_count,
-        escort_count: base.escort_count,
+        nursing_done: base.nursing_done,
+        nursing_pending: base.nursing_pending,
+        delivery_done: base.delivery_done,
+        delivery_pending: base.delivery_pending,
+        escort_done: base.escort_done,
+        escort_pending: base.escort_pending,
         create_time: item.create_time,
     }
 })

@@ -7,7 +7,7 @@
                 :closable="false"
                 show-icon
                 title="说明"
-                :description="`员工收益由收益配置的金额及已完成的订单自动计算，按员工维度汇总展示。`"
+                :description="`员工收益由收益配置的金额及已完成的订单趟次自动计算，按结算状态拆分展示待结算 / 已结算总收益。`"
             />
             <el-form :model="queryParams" inline class="mb--4">
                 <el-form-item label="角色">
@@ -45,7 +45,7 @@
 
         <el-card class="!border-none mt-4" shadow="never" v-loading="pager.loading">
             <el-table :data="pager.lists" stripe>
-                <el-table-column label="员工名称" min-width="160">
+                <el-table-column label="员工名称" min-width="180">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-avatar :size="32" :src="row.avatar" />
@@ -53,18 +53,23 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号" width="120" />
+                <el-table-column prop="mobile" label="手机号" min-width="140" show-overflow-tooltip />
                 <el-table-column label="角色" min-width="110">
                     <template #default="{ row }">
                         <el-tag size="small" :type="roleTag(row.role_id)">{{ row.role }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="单次收益总金额" min-width="140" align="right">
+                <el-table-column label="待结算总收益" min-width="150" align="right">
                     <template #default="{ row }">
-                        <span class="text-green-600 font-medium">¥{{ row.total_income }}</span>
+                        <span class="text-orange-500 font-medium">¥{{ row.pending_income }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="添加时间" width="160" />
+                <el-table-column label="已结算总收益" min-width="150" align="right">
+                    <template #default="{ row }">
+                        <span class="text-green-600 font-medium">¥{{ row.settled_income }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="create_time" label="添加时间" min-width="160" show-overflow-tooltip />
             </el-table>
             <div class="flex justify-end mt-4">
                 <el-pagination
@@ -97,18 +102,21 @@ const nursingUnit = computed(() => {
     return Math.min(Math.max(price, min), max)
 })
 
-/** 员工收益列表：由收益配置金额 × 已完成订单趟次自动计算（不同角色员工均可参与各类服务） */
+/** 员工收益列表：由收益配置金额 × 已完成订单趟次自动计算，按订单结算状态拆分待结算 / 已结算 */
 const earningLists = computed(() =>
     staffEarningRows.map((item: any) => {
-        const nursing_income = item.nursing_count * nursingUnit.value
-        const delivery_income = item.delivery_count * (Number(profitConfig.meal_price) || 0)
-        const escort_income = item.escort_count * (Number(profitConfig.escort_price) || 0)
+        const pending =
+            item.nursing_pending * nursingUnit.value +
+            item.delivery_pending * (Number(profitConfig.meal_price) || 0) +
+            item.escort_pending * (Number(profitConfig.escort_price) || 0)
+        const settled =
+            item.nursing_done * nursingUnit.value +
+            item.delivery_done * (Number(profitConfig.meal_price) || 0) +
+            item.escort_done * (Number(profitConfig.escort_price) || 0)
         return {
             ...item,
-            nursing_income: money(nursing_income),
-            delivery_income: money(delivery_income),
-            escort_income: money(escort_income),
-            total_income: money(nursing_income + delivery_income + escort_income)
+            pending_income: money(pending),
+            settled_income: money(settled)
         }
     })
 )
@@ -171,7 +179,8 @@ const handleExport = async () => {
             { label: '员工名称', prop: 'name' },
             { label: '手机号', prop: 'mobile' },
             { label: '角色', prop: 'role' },
-            { label: '单次收益总金额', prop: 'total_income' },
+            { label: '待结算总收益', prop: 'pending_income' },
+            { label: '已结算总收益', prop: 'settled_income' },
             { label: '添加时间', prop: 'create_time' }
         ],
         res.lists

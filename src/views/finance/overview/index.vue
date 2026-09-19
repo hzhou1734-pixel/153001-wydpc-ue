@@ -136,9 +136,9 @@ const summary = computed(() => {
     const staffTotal = staffEarningRows.reduce(
         (s, row: any) =>
             s +
-            row.nursing_count * nursingUnit +
-            row.delivery_count * (Number(profitConfig.meal_price) || 0) +
-            row.escort_count * (Number(profitConfig.escort_price) || 0),
+            (row.nursing_done + row.nursing_pending) * nursingUnit +
+            (row.delivery_done + row.delivery_pending) * (Number(profitConfig.meal_price) || 0) +
+            (row.escort_done + row.escort_pending) * (Number(profitConfig.escort_price) || 0),
         0
     )
     return {
