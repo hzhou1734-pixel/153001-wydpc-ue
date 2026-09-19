@@ -11,7 +11,8 @@
 - **每次功能修改后必须自动执行**：git add → commit → 递增版本号 tag → push（当前均提交到 dev 分支）
 - commit 信息格式：`v1.0.X: <描述>`
 - 版本号 tag：v1.0.X 递增（当前 v1.0.0）
-- 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）；shell PATH 损坏时 git 用绝对路径 `C:/Users/zhou/.workbuddy/binaries/PortableGit/versions/1.2.0/cmd/git.exe`，base64 用 node -e 生成
+- 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）；shell PATH 损坏时 git 用绝对路径；base64 用 node -e 生成
+- ⚠️ 推送坑（2026-09-19）：PortableGit 的 mingw64/libexec/git-core 缺失时 push 报 `remote-https is not a git command` → 解决：`git.exe --exec-path="<PortableGit>/mingw64/bin" push ...`（git-remote-https.exe 在 bin 下）；另 PS 5.1 下 `2>&1 |` 管道会中断 vite 构建，直接用 node 运行 node_modules/vite/bin/vite.js 最稳
 - git 身份：hzhou1734-pixel / hzhou1734-pixel@users.noreply.github.com（用 -c 参数传入）
 
 ## 项目结构要点
@@ -43,7 +44,8 @@
 - 支付/财务侧无「余额」概念：不得出现余额支付、余额调整、退款记录等（v1.0.33 起）；**例外**：用户详情「顾好家币」Tab（账户余额 + 账户明细）为文档明确模块，v1.0.51 起恢复
 - 膳食服务计价模式：套餐组合固定价（不同菜品组合对应不同固定价格），非单品累加、非每日统一价（v1.0.35 用户确认）
 - 托管类型固定：日托 / 学期每日托 / 学期周末托；托管状态：显示 / 隐藏（v1.0.34）
-- 订单派单角色约定：托管订单→托管员(role_id=1，且订单需接送)、膳食订单→配送员(role_id=2，且需配送)、陪诊订单→陪诊员(role_id=3)（v1.0.36）
+- **员工角色体系（v1.0.62，用户明确要求）**：仅 3 类——楼栋管理员(role_id=1)/保安(2)/保洁(3)，陪诊员/配送员/托管员已废止；只有楼栋管理员绑定楼栋（同一小区一个楼栋仅一名管理员）；staffList.staffEarnings 仅保留 total_income（api.ts 财务概况汇总同源）
+- 订单派单候选（v1.0.62，取代 v1.0.36 角色绑定约定）：托管/膳食/陪诊订单派单弹窗候选为**全部员工**，选项「姓名（角色 · 小区）」，label「指派员工」；仅需接送/需配送的订单才可派单的限制保留
 - 订单状态枚举：0待支付 1待派单 2服务中 3已完成 4已取消（v1.0.36）
 - 内容管理模块约定(v1.0.37)：帖子/资源状态 0待审核 1已通过 2已驳回；社区活动状态由报名时间范围或「停止报名」推导(报名中/已结束)；v1.0.51 起人力资源只保留用户提交技能认证的审核（通过后进入人才库）
 - **社区贴吧已整体删除（v1.0.51，文档无此模块）**：article/bar 页面、barList/barComments 数据、getBarList 接口全部移除
