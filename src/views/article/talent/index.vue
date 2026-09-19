@@ -107,6 +107,35 @@
             </div>
 
             <div class="drawer-section">
+                <div class="section-title">认证申请信息</div>
+                <div class="text-xs text-tx-secondary !mb-2">用户提交人才认证申请时填写的表单内容（与人力资源页数据同源）</div>
+                <div v-for="cert in talentCerts" :key="cert.id" class="!mb-3">
+                    <el-descriptions :column="2" border>
+                        <el-descriptions-item label="认证技能标题" :span="2">{{ cert.title }}</el-descriptions-item>
+                        <el-descriptions-item label="技能类目">{{ cert.skill }}</el-descriptions-item>
+                        <el-descriptions-item label="审核状态">
+                            <el-tag size="small" :type="certTag(cert.status)">{{ certText(cert.status) }}</el-tag>
+                        </el-descriptions-item>
+                        <el-descriptions-item label="提交时间">{{ cert.submit_time }}</el-descriptions-item>
+                        <el-descriptions-item label="审核时间">{{ cert.audit_time || '—' }}</el-descriptions-item>
+                        <el-descriptions-item v-if="cert.status === 2 && cert.audit_reason" label="驳回备注" :span="2">
+                            {{ cert.audit_reason }}
+                        </el-descriptions-item>
+                        <el-descriptions-item label="详情描述" :span="2">{{ cert.detail }}</el-descriptions-item>
+                        <el-descriptions-item label="认证凭证" :span="2">
+                            <div v-if="cert.cert_images?.length" class="flex flex-wrap">
+                                <el-image v-for="(img, i) in cert.cert_images" :key="i" :src="img"
+                                    :preview-src-list="cert.cert_images" :initial-index="i" preview-teleported fit="cover"
+                                    class="w-24 h-20 rounded !mr-2 !mb-1" />
+                            </div>
+                            <span v-else class="text-tx-secondary">（未上传凭证）</span>
+                        </el-descriptions-item>
+                    </el-descriptions>
+                </div>
+                <div v-if="!talentCerts.length" class="text-tx-secondary text-sm">（该人才暂无认证申请记录）</div>
+            </div>
+
+            <div class="drawer-section">
                 <div class="section-title">订单信息</div>
                 <div class="order-stat">
                     <div class="order-stat__item">
@@ -227,7 +256,7 @@
 </template>
 
 <script setup lang="ts" name="articleTalent">
-import { talentList, talentOrderList, talentOrderStatus, helperCategories } from '@/mock/data_content'
+import { talentList, talentOrderList, talentOrderStatus, helperCategories, hrCertList } from '@/mock/data_content'
 import { helperOrders } from '@/mock/data_order'
 import { usePaging } from '@/hooks/usePaging'
 import { Search } from '@element-plus/icons-vue'
@@ -313,6 +342,10 @@ const relatedCategories = ref<string[]>([])
 const talentOrders = computed(() =>
     talentOrderList.filter((i: any) => i.talent_id === detail.value.id)
 )
+/** 用户提交的人才认证申请（按手机号匹配，与人力资源页数据同源） */
+const talentCerts = computed(() => hrCertList.filter((c: any) => c.mobile === detail.value.mobile))
+const certText = (s: number) => (s === 1 ? '已通过' : s === 2 ? '已驳回' : '待审核')
+const certTag = (s: number) => (s === 1 ? 'success' : s === 2 ? 'danger' : 'warning')
 const openDetail = (row: any) => {
     detail.value = row
     relatedCategories.value = [...(row.categories || [])]

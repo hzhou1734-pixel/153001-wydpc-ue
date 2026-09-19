@@ -88,9 +88,9 @@ export const hrCertList: HrCertItem[] = [
     {
         id: 6002,
         title: '12年经验家电维修师傅',
-        avatar: userImg(12),
+        avatar: talentImg(1),
         nickname: '钱志明',
-        mobile: '13812341012',
+        mobile: '13912343001',
         cert_images: [certImg(3), certImg(4), certImg(5)],
         skill: '家电维修',
         detail:
@@ -103,9 +103,9 @@ export const hrCertList: HrCertItem[] = [
     {
         id: 6003,
         title: '专业管道疏通（含高压清洗）',
-        avatar: userImg(13),
+        avatar: talentImg(3),
         nickname: '赵有发',
-        mobile: '13812341013',
+        mobile: '13912343003',
         cert_images: [certImg(6), certImg(7)],
         skill: '管道疏通',
         detail:
@@ -133,9 +133,9 @@ export const hrCertList: HrCertItem[] = [
     {
         id: 6005,
         title: '持证开锁换锁（公安备案）',
-        avatar: userImg(15),
+        avatar: talentImg(4),
         nickname: '蒋伟',
-        mobile: '13812341015',
+        mobile: '13912343004',
         cert_images: [certImg(9), certImg(10)],
         skill: '开锁换锁',
         detail:
@@ -148,9 +148,9 @@ export const hrCertList: HrCertItem[] = [
     {
         id: 6006,
         title: '6年经验深度保洁阿姨',
-        avatar: userImg(16),
+        avatar: talentImg(2),
         nickname: '王晓梅',
-        mobile: '13812341016',
+        mobile: '13912343002',
         cert_images: [certImg(11), certImg(12)],
         skill: '保洁清洗',
         detail:
@@ -163,9 +163,9 @@ export const hrCertList: HrCertItem[] = [
     {
         id: 6007,
         title: '居家养老照护护理员',
-        avatar: userImg(17),
+        avatar: talentImg(5),
         nickname: '何秀娟',
-        mobile: '13812341017',
+        mobile: '13912343005',
         cert_images: [certImg(13), certImg(14)],
         skill: '居家照护',
         detail:
@@ -188,6 +188,51 @@ export const hrCertList: HrCertItem[] = [
         audit_reason: '暂不收录兼职人员，需提供有效的健康证明与社区居住证明后再申请。',
         submit_time: daysAgo(4, ' 19:05:00'),
         audit_time: daysAgo(3, ' 09:26:00')
+    },
+    {
+        id: 6009,
+        title: '社区跑腿代买代取（全职）',
+        avatar: talentImg(6),
+        nickname: '罗小川',
+        mobile: '13912343006',
+        cert_images: [certImg(16), certImg(17)],
+        skill: '代买代办',
+        detail:
+            '本职物流配送，业余时间全职承接社区跑腿服务，熟悉小区周边商超、菜市场与快递驿站，可代买菜、代取件、代排队缴费，自备保温箱与折叠拖车，全程拍照留证。',
+        status: 1,
+        audit_reason: '',
+        submit_time: daysAgo(150, ' 11:20:00'),
+        audit_time: daysAgo(149, ' 09:10:00')
+    },
+    {
+        id: 6010,
+        title: '家庭保洁与家电清洗（双技能）',
+        avatar: talentImg(7),
+        nickname: '孙丽',
+        mobile: '13912343007',
+        cert_images: [certImg(18)],
+        skill: '保洁清洗',
+        detail:
+            '持家政服务员（四级）证书，同时提供家庭日常保洁与家电清洗服务，擅长玻璃清洁、油烟机与空调深度清洗，自带专业清洗设备，可按次或按小时计费。',
+        status: 1,
+        audit_reason: '',
+        submit_time: daysAgo(126, ' 15:40:00'),
+        audit_time: daysAgo(125, ' 10:26:00')
+    },
+    {
+        id: 6011,
+        title: '家具安装与墙面修补',
+        avatar: talentImg(8),
+        nickname: '邓国平',
+        mobile: '13912343008',
+        cert_images: [certImg(19), certImg(20)],
+        skill: '其他',
+        detail:
+            '从事家具安装与墙面修补行业5年，可安装衣柜、晾衣架、窗帘杆等各类家居用品，修补墙面孔洞与裂缝，工具齐全，收费透明，支持周末上门服务。',
+        status: 1,
+        audit_reason: '',
+        submit_time: daysAgo(96, ' 09:55:00'),
+        audit_time: daysAgo(95, ' 14:12:00')
     }
 ]
 
