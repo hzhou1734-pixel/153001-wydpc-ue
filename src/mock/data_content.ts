@@ -812,7 +812,7 @@ export const contentActivitySignupList = [
     { id: 16, activity_id: 7007, avatar: userImg(8), nickname: '吴芳', phone: '13812341008', signup_time: daysAgo(14, ' 13:35:00') }
 ]
 
-// ==================== Banner 图 ====================
+/** Banner 跳转：link_type 类目（nursing 托管 / escort 陪诊 / helper 生活帮手 / activity 活动 / wallet 钱袋子固定页 / wonderful 精彩内容 / notice 通知公告 / none 不跳转）+ link_id 具体内容 */
 export const contentBannerList = [
     {
         id: 8001,
@@ -820,6 +820,8 @@ export const contentBannerList = [
         image: bannerImg(1),
         sort: 1,
         status: 1,
+        link_type: 'activity',
+        link_id: 7001,
         link: '/pages/activity/detail?id=7001',
         create_time: daysAgo(12, ' 09:00:00')
     },
@@ -829,7 +831,9 @@ export const contentBannerList = [
         image: bannerImg(2),
         sort: 2,
         status: 1,
-        link: '/pages/nursing/index',
+        link_type: 'nursing',
+        link_id: 1001,
+        link: '/pages/nursing/detail?id=1001',
         create_time: daysAgo(20, ' 10:20:00')
     },
     {
@@ -838,7 +842,9 @@ export const contentBannerList = [
         image: bannerImg(3),
         sort: 3,
         status: 1,
-        link: '/pages/escort/index',
+        link_type: 'escort',
+        link_id: 2001,
+        link: '/pages/escort/detail?id=2001',
         create_time: daysAgo(26, ' 15:40:00')
     },
     {
@@ -847,16 +853,20 @@ export const contentBannerList = [
         image: bannerImg(4),
         sort: 4,
         status: 1,
-        link: '/pages/helper/index',
+        link_type: 'helper',
+        link_id: 4001,
+        link: '/pages/helper/detail?id=4001',
         create_time: daysAgo(30, ' 11:10:00')
     },
     {
         id: 8005,
-        name: '首页-社区食堂秋季上新',
+        name: '首页-钱袋子便捷缴费',
         image: bannerImg(5),
         sort: 5,
         status: 0,
-        link: '/pages/meal/index',
+        link_type: 'wallet',
+        link_id: '',
+        link: '/pages/wallet/index',
         create_time: daysAgo(35, ' 09:50:00')
     },
     {
@@ -865,7 +875,31 @@ export const contentBannerList = [
         image: bannerImg(6),
         sort: 6,
         status: 0,
+        link_type: 'none',
+        link_id: '',
         link: '',
         create_time: daysAgo(40, ' 16:30:00')
+    },
+    {
+        id: 8007,
+        name: '首页-邻里节精彩回顾',
+        image: bannerImg(7),
+        sort: 7,
+        status: 1,
+        link_type: 'wonderful',
+        link_id: 2001,
+        link: '/pages/article/detail?id=2001',
+        create_time: daysAgo(8, ' 14:20:00')
+    },
+    {
+        id: 8008,
+        name: '首页-中秋活动安排通知',
+        image: bannerImg(8),
+        sort: 8,
+        status: 0,
+        link_type: 'notice',
+        link_id: 3001,
+        link: '/pages/notice/detail?id=3001',
+        create_time: daysAgo(6, ' 11:05:00')
     }
 ]

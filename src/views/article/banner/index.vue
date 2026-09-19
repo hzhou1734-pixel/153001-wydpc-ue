@@ -33,11 +33,17 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column prop="name" label="Banner图标题" min-width="220" show-overflow-tooltip />
-                <el-table-column label="封面图" min-width="220">
+                <el-table-column prop="name" label="Banner图标题" min-width="180" show-overflow-tooltip />
+                <el-table-column label="封面图" min-width="180">
                     <template #default="{ row }">
                         <el-image :src="row.image" :preview-src-list="[row.image]" preview-teleported fit="cover"
                             class="w-40 h-14 rounded" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="跳转设置" min-width="200" show-overflow-tooltip>
+                    <template #default="{ row }">
+                        <span v-if="row.link">{{ linkDesc(row) }}</span>
+                        <span v-else class="text-tx-secondary">不跳转</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="sort" label="排序" width="80" sortable  show-overflow-tooltip />
@@ -79,24 +85,21 @@
                         <el-radio :value="0">隐藏</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="跳转设置">
+                <el-form-item label="跳转类目">
                     <el-select v-model="editForm.link_type" class="!w-full" @change="onTypeChange">
                         <el-option v-for="t in linkTypes" :key="t.value" :label="t.label" :value="t.value" />
                     </el-select>
-                    <div class="text-xs text-tx-secondary mt-1">选填，设置用户点击 Banner 后打开的页面</div>
+                    <div class="text-xs text-tx-secondary mt-1">选填，设置用户点击 Banner 后打开的内容或页面</div>
                 </el-form-item>
-                <el-form-item v-if="editForm.link_type === 'activity'" label="关联活动">
-                    <el-select v-model="editForm.link_id" placeholder="请选择要推广的活动" class="!w-full">
-                        <el-option v-for="a in activityOptions" :key="a.id" :label="`#${a.id} ${a.title}`" :value="a.id" />
+                <el-form-item v-if="editForm.link_type === 'wallet'" label="跳转页面">
+                    <el-input model-value="/pages/wallet/index" disabled />
+                    <div class="text-xs text-tx-secondary mt-1">钱袋子为特殊类目：固定跳转 APP 钱袋子页面，无需选择内容</div>
+                </el-form-item>
+                <el-form-item v-else-if="linkContentMap[editForm.link_type]" :label="linkContentMap[editForm.link_type].label" required>
+                    <el-select v-model="editForm.link_id" placeholder="请选择" class="!w-full">
+                        <el-option v-for="o in linkContentMap[editForm.link_type].options" :key="o.id"
+                            :label="`#${o.id} ${o.name}`" :value="o.id" />
                     </el-select>
-                </el-form-item>
-                <el-form-item v-if="editForm.link_type === 'page'" label="选择页面">
-                    <el-select v-model="editForm.link_id" placeholder="请选择 APP 内置页面" class="!w-full">
-                        <el-option v-for="p in builtinPages" :key="p.value" :label="p.label" :value="p.value" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item v-if="editForm.link_type === 'custom'" label="自定义路径">
-                    <el-input v-model="editForm.link" placeholder="如：/pages/xxx/index 或 https://..." />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -108,7 +111,8 @@
 </template>
 
 <script setup lang="ts" name="articleBanner">
-import { contentBannerList, contentActivityList } from '@/mock/data_content'
+import { contentBannerList, contentActivityList, contentWonderfulList, contentNoticeList } from '@/mock/data_content'
+import { escortServices, helperServices, nursingServices } from '@/mock/data_service'
 import { usePaging } from '@/hooks/usePaging'
 import { Search, Plus } from '@element-plus/icons-vue'
 import ImageUpload from '@/components/image-upload/index.vue'
@@ -168,69 +172,106 @@ const nowTimeStr = () => {
     return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`
 }
 
-// ============ 跳转类型 ============
+// ============ 跳转类目与内容（先选类目，再选具体内容；钱袋子为固定页面） ============
 const linkTypes = [
     { value: 'none', label: '不跳转' },
-    { value: 'activity', label: '社区活动详情' },
-    { value: 'page', label: '内置页面（膳食/陪诊/家政等）' },
-    { value: 'custom', label: '自定义链接' },
+    { value: 'nursing', label: '托管服务' },
+    { value: 'escort', label: '陪诊服务' },
+    { value: 'helper', label: '生活帮手' },
+    { value: 'activity', label: '社区活动' },
+    { value: 'wallet', label: '钱袋子' },
+    { value: 'wonderful', label: '精彩内容' },
+    { value: 'notice', label: '通知公告' },
 ]
-const builtinPages = [
-    { value: '/pages/meal/index', label: '膳食服务' },
-    { value: '/pages/escort/index', label: '陪诊服务' },
-    { value: '/pages/nursing/index', label: '托管服务' },
-    { value: '/pages/housekeeping/index', label: '家政服务' },
-    { value: '/pages/helper/index', label: '生活帮手' },
-    { value: '/pages/article/list', label: '精彩内容列表' },
-]
-const activityOptions = contentActivityList
+
+/** 钱袋子为特殊类目：固定跳转 APP 钱袋子页面，无二级内容选择 */
+const WALLET_LINK = '/pages/wallet/index'
+
+/** 类目 → 前端跳转链接前缀（拼接内容 id） */
+const linkPathMap: Record<string, string> = {
+    nursing: '/pages/nursing/detail',
+    escort: '/pages/escort/detail',
+    helper: '/pages/helper/detail',
+    activity: '/pages/activity/detail',
+    wonderful: '/pages/article/detail',
+    notice: '/pages/notice/detail',
+}
+
+/** 类目 → 二级内容可选项（数据与对应管理页同源） */
+const linkContentMap: Record<string, { label: string; options: { id: number; name: string }[] }> = {
+    nursing: { label: '选择托管服务', options: nursingServices.map((s: any) => ({ id: s.id, name: `${s.name}（${s.type}）` })) },
+    escort: { label: '选择陪诊服务', options: escortServices.map((s: any) => ({ id: s.id, name: s.name })) },
+    helper: { label: '选择生活帮手服务', options: helperServices.map((s: any) => ({ id: s.id, name: s.title })) },
+    activity: { label: '选择社区活动', options: contentActivityList.map((s: any) => ({ id: s.id, name: s.title })) },
+    wonderful: { label: '选择精彩内容', options: contentWonderfulList.map((s: any) => ({ id: s.id, name: s.title })) },
+    notice: { label: '选择通知公告', options: contentNoticeList.map((s: any) => ({ id: s.id, name: s.title })) },
+}
 
 const onTypeChange = () => {
-    editForm.link = ''
     editForm.link_id = ''
 }
+
+/** 按类目生成跳转链接 */
 const buildLink = () => {
     if (editForm.link_type === 'none') return ''
-    if (editForm.link_type === 'activity') return editForm.link_id ? `/pages/activity/detail?id=${editForm.link_id}` : ''
-    if (editForm.link_type === 'page') return editForm.link_id || ''
-    return String(editForm.link || '').trim()
+    if (editForm.link_type === 'wallet') return WALLET_LINK
+    const base = linkPathMap[editForm.link_type]
+    return base && editForm.link_id ? `${base}?id=${editForm.link_id}` : ''
+}
+
+/** 反向解析已保存链接 → 类目 + 内容 id */
+const parseLink = (link: string) => {
+    if (!link) return { type: 'none', id: '' as any }
+    if (link === WALLET_LINK) return { type: 'wallet', id: '' as any }
+    for (const [type, base] of Object.entries(linkPathMap)) {
+        if (link.startsWith(base)) {
+            const m = link.match(/[?&]id=(\d+)/)
+            return { type, id: m ? Number(m[1]) : ('' as any) }
+        }
+    }
+    return { type: 'none', id: '' as any }
+}
+
+/** 列表「跳转设置」列描述 */
+const linkDesc = (row: any) => {
+    if (!row.link) return '不跳转'
+    if (row.link_type === 'wallet' || row.link === WALLET_LINK) return '钱袋子 · APP 钱袋子页面'
+    const conf = linkContentMap[row.link_type]
+    const label = linkTypes.find((t) => t.value === row.link_type)?.label
+    if (!conf || !label) return row.link
+    const item = conf.options.find((o) => o.id === Number(row.link_id))
+    return item ? `${label} · ${item.name}` : `${label} · ${row.link}`
 }
 
 // ============ 添加 / 编辑 ============
 const editVisible = ref(false)
-const editForm = reactive({ id: 0, name: '', image: '', sort: 0, status: 1, link: '', link_type: 'none', link_id: '' as any })
+const editForm = reactive({ id: 0, name: '', image: '', sort: 0, status: 1, link_type: 'none', link_id: '' as any })
 const openAdd = () => {
-    Object.assign(editForm, { id: 0, name: '', image: '', sort: (pager.lists.length || 0) + 1, status: 1, link: '', link_type: 'none', link_id: '' })
+    Object.assign(editForm, { id: 0, name: '', image: '', sort: (pager.lists.length || 0) + 1, status: 1, link_type: 'none', link_id: '' })
     editVisible.value = true
 }
 const openEdit = (row: any) => {
+    const parsed = parseLink(row.link || '')
     Object.assign(editForm, {
         id: row.id, name: row.name, image: row.image, sort: row.sort, status: row.status,
-        link: row.link || '', link_type: 'none', link_id: ''
+        link_type: parsed.type, link_id: parsed.id
     })
-    if (row.link?.startsWith('/pages/activity/detail')) {
-        editForm.link_type = 'activity'
-        const m = row.link.match(/[?&]id=(\d+)/)
-        editForm.link_id = m ? Number(m[1]) : ''
-    } else if (builtinPages.some((p) => p.value === row.link)) {
-        editForm.link_type = 'page'
-        editForm.link_id = row.link
-    } else if (row.link) {
-        editForm.link_type = 'custom'
-    }
     editVisible.value = true
 }
 const submitEdit = () => {
     if (!editForm.name.trim()) return ElMessage.warning('请输入Banner图标题')
     if (!editForm.image) return ElMessage.warning('请上传Banner图')
+    const conf = linkContentMap[editForm.link_type]
+    if (conf && !editForm.link_id) return ElMessage.warning(`请${conf.label}`)
     const image = editForm.image
     const link = buildLink()
+    const linkData = { link, link_type: editForm.link_type, link_id: editForm.link_type === 'none' ? '' : editForm.link_id }
     if (editForm.id) {
         const row = pager.lists.find((i: any) => i.id === editForm.id)
-        if (row) Object.assign(row, { name: editForm.name, image, sort: editForm.sort, status: editForm.status, link })
+        if (row) Object.assign(row, { name: editForm.name, image, sort: editForm.sort, status: editForm.status, ...linkData })
         ElMessage.success('保存成功')
     } else {
-        pager.lists.unshift({ id: Date.now(), name: editForm.name, image, sort: editForm.sort, status: editForm.status, link, create_time: nowTimeStr() })
+        pager.lists.unshift({ id: Date.now(), name: editForm.name, image, sort: editForm.sort, status: editForm.status, create_time: nowTimeStr(), ...linkData })
         pager.count += 1
         ElMessage.success('添加成功')
     }
