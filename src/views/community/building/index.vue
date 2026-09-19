@@ -139,6 +139,12 @@
                 <el-form-item label="房号" required>
                     <el-input v-model="roomForm.name" placeholder="如：101" />
                 </el-form-item>
+                <el-form-item label="业主姓名">
+                    <el-input v-model="roomForm.owner" placeholder="请输入业主姓名（未登记可留空）" maxlength="20" />
+                </el-form-item>
+                <el-form-item label="手机号码">
+                    <el-input v-model="roomForm.phone" placeholder="请输入业主手机号码（未登记可留空）" maxlength="11" />
+                </el-form-item>
                 <el-form-item label="排序">
                     <el-input-number v-model="roomForm.sort" :min="0" />
                 </el-form-item>
@@ -287,12 +293,14 @@ const handleDeleteBuilding = (row: any) => {
 
 // ============ 房号 ============
 const showRoom = ref(false)
-const roomForm = reactive({ id: 0 as any, building_id: '' as any, name: '', sort: 0 })
+const roomForm = reactive({ id: 0 as any, building_id: '' as any, name: '', owner: '', phone: '', sort: 0 })
 
 const openAddRoom = () => {
     roomForm.id = 0
     roomForm.building_id = ''
     roomForm.name = ''
+    roomForm.owner = ''
+    roomForm.phone = ''
     roomForm.sort = 0
     showRoom.value = true
 }
@@ -300,25 +308,30 @@ const openEditRoom = (row: any) => {
     roomForm.id = row.raw_id
     roomForm.building_id = row.building_id
     roomForm.name = row.name
+    roomForm.owner = row.owner === '-' ? '' : row.owner || ''
+    roomForm.phone = row.phone === '-' ? '' : row.phone || ''
     roomForm.sort = row.sort
     showRoom.value = true
 }
 const submitRoom = () => {
     if (!roomForm.building_id) return ElMessage.warning('请选择所属楼栋')
     if (!roomForm.name) return ElMessage.warning('请输入房号')
+    if (roomForm.phone && !/^1\d{10}$/.test(roomForm.phone)) return ElMessage.warning('请输入正确的 11 位手机号码')
     if (roomForm.id) {
         const target = roomList.find((item: any) => item.id === roomForm.id)
         if (target) {
             target.name = roomForm.name
             target.building_id = roomForm.building_id
+            target.owner = roomForm.owner || '-'
+            target.phone = roomForm.phone || '-'
         }
     } else {
         roomList.push({
             id: Date.now(),
             name: roomForm.name,
             building_id: roomForm.building_id,
-            owner: '-',
-            phone: '-',
+            owner: roomForm.owner || '-',
+            phone: roomForm.phone || '-',
             certified: 0
         } as any)
     }
