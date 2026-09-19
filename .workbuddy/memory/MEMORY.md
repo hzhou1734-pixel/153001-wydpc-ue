@@ -11,7 +11,7 @@
 - **每次功能修改后必须自动执行**：git add → commit → 递增版本号 tag → push（当前均提交到 dev 分支）
 - commit 信息格式：`v1.0.X: <描述>`
 - 版本号 tag：v1.0.X 递增（当前 v1.0.0）
-- 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）；shell PATH 损坏时 git 用绝对路径；base64 用 node -e 生成
+- 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）；shell PATH 损坏时 git 用绝对路径；base64 用 node -e 生成；推送被代理 502 阻塞时本地积压（commit+tag 均安全），代理恢复后 `push origin dev --tags` 一次性补推
 - ⚠️ 推送坑（2026-09-19）：PortableGit 的 mingw64/libexec/git-core 缺失时 push 报 `remote-https is not a git command` → 解决：`git.exe --exec-path="<PortableGit>/mingw64/bin" push ...`（git-remote-https.exe 在 bin 下）；另 PS 5.1 下 `2>&1 |` 管道会中断 vite 构建，直接用 node 运行 node_modules/vite/bin/vite.js 最稳
 - git 身份：hzhou1734-pixel / hzhou1734-pixel@users.noreply.github.com（用 -c 参数传入）
 
@@ -46,7 +46,7 @@
 - 托管类型固定：日托 / 学期每日托 / 学期周末托；托管状态：显示 / 隐藏（v1.0.34）
 - **员工角色体系（v1.0.62，用户明确要求）**：仅 3 类——楼栋管理员(role_id=1)/保安(2)/保洁(3)，陪诊员/配送员/托管员已废止；只有楼栋管理员绑定楼栋（同一小区一个楼栋仅一名管理员）；staffList.staffEarnings 仅保留 total_income（api.ts 财务概况汇总同源）
 - **托管服务计价（v1.0.64，用户明确要求）**：无「半天价格/整天价格」说法，单一 price 字段（NursingItem，取值原整天价）；**陪诊服务仍保留半天/整天价格**（预约口径为仅支持半天/整天预约）；data_service.ts 的 nursingServices 是托管服务页面数据源，data.ts 的 nursingServices 是旧接口数据（getNursingServiceList 无页面引用），两者同名不同文件
-- **物业钱袋子结余金额（v1.0.65，用户明确要求）**：手工输入，不自动计算（允许负数）；托管/膳食钱袋子的预收金额仍自动计算（订单数量×每单单价）
+- **钱袋子计算口径（v1.0.65/66，用户明确要求）**：物业钱袋子——收入/支出/结余全部手工输入；托管/膳食钱袋子——订单数量/预收金额/成本手工输入，**每单单价自动计算 = 预收金额 ÷ 订单数量**（不允许手工输）
 - 添加/编辑员工弹窗（v1.0.63）：无「所属小区」字段，负责楼栋为按小区分组级联多选（值路径 [小区名, 楼栋名]），community 由所选楼栋推导
 - 订单派单候选（v1.0.62，取代 v1.0.36 角色绑定约定）：托管/膳食/陪诊订单派单弹窗候选为**全部员工**，选项「姓名（角色 · 小区）」，label「指派员工」；仅需接送/需配送的订单才可派单的限制保留
 - 订单状态枚举：0待支付 1待派单 2服务中 3已完成 4已取消（v1.0.36）
