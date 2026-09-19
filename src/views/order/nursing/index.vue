@@ -32,12 +32,13 @@
         <el-card class="!border-none mt-4" shadow="never">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center flex-1 mr-4">
-                        <span class="card-title">托管订单</span>
-                        <span class="ml-3 text-xs text-tx-secondary">
-                            说明：用户可能提前多天下单，届时膳食菜单尚未发布、取不到单价，托管服务中的「用餐」按服务里提前定义好的单价计费
-                        </span>
-                    </div>
+                    <el-radio-group v-model="queryParams.status" class="mr-4" @change="resetPage()">
+                        <el-radio-button value="">全部</el-radio-button>
+                        <el-radio-button :value="1">待派单</el-radio-button>
+                        <el-radio-button :value="2">进行中</el-radio-button>
+                        <el-radio-button :value="3">已完成</el-radio-button>
+                        <el-radio-button :value="4">已取消</el-radio-button>
+                    </el-radio-group>
                     <el-button type="success" @click="handleExport">导出Excel</el-button>
                 </div>
             </template>
