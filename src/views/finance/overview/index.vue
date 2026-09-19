@@ -6,7 +6,7 @@
                 <div class="flex items-center justify-between">
                     <span class="card-title">订单金额</span>
                     <span class="text-xs text-tx-secondary">
-                        有效订单 = 已支付且未取消；退款订单 = 已取消订单；数据由订单实时汇总
+                        有效订单 = 已支付且未取消（生活帮手单平台不做支付，由用户线下支付，按未取消订单计）；退款订单 = 已取消订单；数据由订单实时汇总
                     </span>
                 </div>
             </template>
@@ -26,7 +26,12 @@
             </div>
 
             <el-table :data="typeRows" border stripe class="mt-4">
-                <el-table-column prop="name" label="订单类型" min-width="120" />
+                <el-table-column label="订单类型" min-width="150">
+                    <template #default="{ row }">
+                        {{ row.name }}
+                        <el-tag v-if="row.offline" size="small" type="warning" effect="plain">线下支付</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="订单总金额" min-width="140">
                     <template #default="{ row }">
                         <span class="font-medium">¥{{ row.total }}</span>
@@ -50,7 +55,7 @@
             <template #header>
                 <div class="flex items-center justify-between">
                     <span class="card-title">结算金额</span>
-                    <span class="text-xs text-tx-secondary">待结算 = 有效且未完成；已结算 = 有效且已完成</span>
+                    <span class="text-xs text-tx-secondary">待结算 = 有效且未完成；已结算 = 有效且已完成；生活帮手单平台不做支付，由用户线下支付</span>
                 </div>
             </template>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -64,7 +69,12 @@
                 </div>
             </div>
             <el-table :data="typeRows" border stripe>
-                <el-table-column prop="name" label="订单类型" min-width="120" />
+                <el-table-column label="订单类型" min-width="150">
+                    <template #default="{ row }">
+                        {{ row.name }}
+                        <el-tag v-if="row.offline" size="small" type="warning" effect="plain">线下支付</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="待结算金额" min-width="140">
                     <template #default="{ row }">
                         <span class="text-orange-500 font-medium">¥{{ row.pending }}</span>
@@ -95,6 +105,7 @@
 
 <script setup lang="ts" name="financeOverview">
 import { escortOrders, mealOrders, nursingOrders } from '@/mock/data'
+import { helperOrders } from '@/mock/data_order'
 import { profitConfig, staffEarningRows } from '@/mock/data_finance'
 
 /** 金额汇总：兼容 amount 为字符串或数字 */
@@ -114,19 +125,40 @@ const buildTypeStat = (list: any[]) => {
     }
 }
 
+/** 生活帮手单：平台不做支付，由用户线下支付，不校验支付状态，仅按订单状态统计 */
+const buildHelperStat = (list: any[]) => {
+    const valid = list.filter((o: any) => o.status !== 4)
+    const canceled = list.filter((o: any) => o.status === 4)
+    return {
+        total: money(sumAmount(list)),
+        valid: money(sumAmount(valid)),
+        cancel: money(sumAmount(canceled)),
+        pending: money(sumAmount(valid.filter((o: any) => o.status !== 3))),
+        settled: money(sumAmount(valid.filter((o: any) => o.status === 3))),
+    }
+}
+
 const allOrders = [
     ...nursingOrders.map((o: any) => ({ ...o, _type: '托管单' })),
     ...mealOrders.map((o: any) => ({ ...o, _type: '膳食单' })),
     ...escortOrders.map((o: any) => ({ ...o, _type: '陪诊单' })),
+    ...helperOrders.map((o: any) => ({ ...o, _type: '生活帮手单', _offline: true })),
 ]
 const pick = (type: string) => allOrders.filter((o: any) => o._type === type)
 
 const typeRows = computed(() =>
-    ['托管单', '膳食单', '陪诊单'].map((name) => ({ name, ...buildTypeStat(pick(name)) }))
+    ['托管单', '膳食单', '陪诊单', '生活帮手单'].map((name) => ({
+        name,
+        offline: name === '生活帮手单',
+        ...(name === '生活帮手单' ? buildHelperStat(pick(name)) : buildTypeStat(pick(name))),
+    }))
 )
 
 const summary = computed(() => {
-    const valid = allOrders.filter((o: any) => o.pay_status === 1 && o.status !== 4)
+    // 生活帮手单平台不做支付，由用户线下支付，按未取消订单计入有效
+    const valid = allOrders.filter((o: any) =>
+        o._offline ? o.status !== 4 : o.pay_status === 1 && o.status !== 4
+    )
     const canceled = allOrders.filter((o: any) => o.status === 4)
     // 员工收益 = 已完成单量 × 收益配置金额（托管单次收益受最低/最高限制）
     const nursingUnit = Math.min(
