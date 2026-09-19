@@ -41,7 +41,13 @@
         <el-card class="!border-none mt-4" shadow="never">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <span class="card-title">陪诊订单</span>
+                    <el-radio-group v-model="queryParams.status" @change="resetPage()">
+                        <el-radio-button value="">全部</el-radio-button>
+                        <el-radio-button :value="1">待派单</el-radio-button>
+                        <el-radio-button :value="2">进行中</el-radio-button>
+                        <el-radio-button :value="3">已完成</el-radio-button>
+                        <el-radio-button :value="4">已取消</el-radio-button>
+                    </el-radio-group>
                 </div>
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
