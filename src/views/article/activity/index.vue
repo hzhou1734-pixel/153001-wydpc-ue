@@ -50,10 +50,10 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="activity_time" label="活动时间" min-width="180" show-overflow-tooltip />
-                <el-table-column label="报名人数/总人数" width="140">
+                <el-table-column label="报名人数" width="100">
                     <template #default="{ row }">
                         <span class="font-medium">{{ row.signup }}</span>
-                        <span class="text-tx-secondary"> / {{ row.limit }}</span>
+                        <span class="text-tx-secondary"> 人</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="sort" label="排序" width="80" sortable  show-overflow-tooltip />
@@ -88,7 +88,7 @@
                 </el-descriptions-item>
                 <el-descriptions-item label="活动时间">{{ detail.activity_time }}</el-descriptions-item>
                 <el-descriptions-item label="报名时间">{{ detail.signup_start }} 至 {{ detail.signup_end }}</el-descriptions-item>
-                <el-descriptions-item label="报名人数">{{ detail.signup }} / {{ detail.limit }} 人</el-descriptions-item>
+                <el-descriptions-item label="报名人数">{{ detail.signup }} 人</el-descriptions-item>
                 <el-descriptions-item label="活动地点">{{ detail.address }}</el-descriptions-item>
                 <el-descriptions-item label="排序">{{ detail.sort }}</el-descriptions-item>
                 <el-descriptions-item label="显示状态">
@@ -127,9 +127,6 @@
                 </el-form-item>
                 <el-form-item label="活动地点">
                     <el-input v-model="editForm.address" placeholder="请输入活动地点" maxlength="50" />
-                </el-form-item>
-                <el-form-item label="报名总人数" required>
-                    <el-input-number v-model="editForm.limit" :min="1" :max="9999" />
                 </el-form-item>
                 <el-form-item label="排序">
                     <el-input-number v-model="editForm.sort" :min="0" :max="9999" />
@@ -257,12 +254,12 @@ const editVisible = ref(false)
 const signupRange = ref<string[]>([])
 const editForm = reactive({
     id: 0, title: '', cover: '', activity_time: '', address: '',
-    signup_start: '', signup_end: '', limit: 100, sort: 0, status: 1, content: ''
+    signup_start: '', signup_end: '', sort: 0, status: 1, content: ''
 })
 const openAdd = () => {
     Object.assign(editForm, {
         id: 0, title: '', cover: '', activity_time: '', address: '',
-        signup_start: '', signup_end: '', limit: 100, sort: (pager.lists.length || 0) + 1, status: 1, content: ''
+        signup_start: '', signup_end: '', sort: (pager.lists.length || 0) + 1, status: 1, content: ''
     })
     signupRange.value = []
     editVisible.value = true
@@ -270,7 +267,7 @@ const openAdd = () => {
 const openEdit = (row: any) => {
     Object.assign(editForm, {
         id: row.id, title: row.title, cover: row.cover, activity_time: row.activity_time, address: row.address,
-        signup_start: row.signup_start, signup_end: row.signup_end, limit: row.limit,
+        signup_start: row.signup_start, signup_end: row.signup_end,
         sort: row.sort ?? 0, status: row.status, content: row.content || ''
     })
     signupRange.value = [row.signup_start, row.signup_end].filter(Boolean)
@@ -280,7 +277,6 @@ const submitEdit = () => {
     if (!editForm.title.trim()) return ElMessage.warning('请输入活动标题')
     if (!editForm.activity_time.trim()) return ElMessage.warning('请输入活动时间')
     if (!signupRange.value?.length) return ElMessage.warning('请选择报名时间范围')
-    if (!editForm.limit) return ElMessage.warning('请设置报名总人数')
     if (!editForm.content.trim()) return ElMessage.warning('请输入详情介绍')
     if (!editForm.cover) return ElMessage.warning('请上传活动封面图')
     const cover = editForm.cover.trim() || `https://picsum.photos/seed/ghj-activity-${Date.now() % 1000}/400/300`
