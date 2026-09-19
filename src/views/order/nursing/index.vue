@@ -187,7 +187,7 @@ import { dispatchOrder } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 import { exportCsv } from '@/utils/export'
 
-const statusMap: Record<number, string> = { 0: '待支付', 1: '待派单', 2: '服务中', 3: '已完成', 4: '已取消' }
+const statusMap: Record<number, string> = { 1: '待派单', 2: '服务中', 3: '已完成', 4: '已取消' }
 type TagType = 'info' | 'warning' | 'primary' | 'success' | 'danger'
 const statusTag = (s: number): TagType =>
     ({ 0: 'info', 1: 'warning', 2: 'primary', 3: 'success', 4: 'danger' } as Record<number, TagType>)[s] || 'info'
