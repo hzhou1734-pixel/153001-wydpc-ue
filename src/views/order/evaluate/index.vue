@@ -12,6 +12,12 @@
                             :value="item.value" />
                     </el-select>
                 </el-form-item>
+                <el-form-item label="显示状态">
+                    <el-select v-model="queryParams.status" class="w-[110px]" clearable placeholder="全部状态">
+                        <el-option label="显示" :value="1" />
+                        <el-option label="隐藏" :value="0" />
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="评价时间">
                     <el-date-picker v-model="createRange" type="daterange" value-format="YYYY-MM-DD"
                         range-separator="~" start-placeholder="开始" end-placeholder="结束" class="!w-[240px]" />
@@ -47,6 +53,12 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="create_time" label="评价时间" width="160" show-overflow-tooltip />
+                <el-table-column label="显示状态" width="90">
+                    <template #default="{ row }">
+                        <el-switch :model-value="row.status" :active-value="1" :inactive-value="0"
+                            @change="toggleShow(row)" />
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" width="90" fixed="right">
                     <template #default="{ row }">
                         <el-button size="small" plain @click="viewDetail(row)">详情</el-button>
@@ -99,6 +111,7 @@ const starOptions = [
 const queryParams = reactive({
     keyword: '',
     stars: '' as '' | number,
+    status: '' as '' | number,
     start_time: '',
     end_time: ''
 })
@@ -118,6 +131,9 @@ const doFilter = (data: any[], params: Record<string, any> = {}) => {
     }
     if (params.stars !== '' && params.stars !== undefined && params.stars !== null) {
         result = result.filter((i: any) => i.stars === Number(params.stars))
+    }
+    if (params.status !== '' && params.status !== undefined && params.status !== null) {
+        result = result.filter((i: any) => i.status === Number(params.status))
     }
     if (params.start_time) {
         result = result.filter((i: any) => String(i.create_time).slice(0, 10) >= params.start_time)
@@ -153,6 +169,12 @@ const handleReset = () => {
     queryParams.start_time = ''
     queryParams.end_time = ''
     resetParams()
+}
+
+// ---- 显示 / 隐藏 ----
+const toggleShow = (row: any) => {
+    row.status = row.status === 1 ? 0 : 1
+    ElMessage.success(row.status === 1 ? '已设置为显示' : '已隐藏，前端不再显示该评价')
 }
 
 // ---- 详情 ----
