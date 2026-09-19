@@ -33,11 +33,11 @@
                 </el-table-column>
                 <el-table-column label="昵称" prop="nickname" min-width="110" />
                 <el-table-column label="手机号码" prop="mobile" width="120" />
-                <el-table-column label="未结算账单总额" min-width="140" align="right">
-                    <template #default="{ row }">¥{{ row.unsettled_amount || '0.00' }}</template>
+                <el-table-column label="顾好家币" min-width="110" align="right">
+                    <template #default="{ row }">¥{{ coinBalance(row.id) }}</template>
                 </el-table-column>
-                <el-table-column label="已结算账单总额" min-width="140" align="right">
-                    <template #default="{ row }">¥{{ row.settled_amount || '0.00' }}</template>
+                <el-table-column label="已完成订单总金额" min-width="150" align="right">
+                    <template #default="{ row }">¥{{ completedAmount(row.mobile) }}</template>
                 </el-table-column>
                 <el-table-column label="账号状态" width="90">
                     <template #default="{ row }">
@@ -70,8 +70,22 @@
 
 <script lang="ts" setup name="consumerLists">
 import { getConsumerList } from '@/mock/api'
+import { escortOrders, mealOrders, nursingOrders } from '@/mock/data'
+import { coinAccounts } from '@/mock/data_user'
 import { usePaging } from '@/hooks/usePaging'
 import { getRoutePath } from '@/router'
+
+/** 顾好家币余额（取自顾好家币账户） */
+const coinBalance = (id: number) => coinAccounts[id]?.balance || '0.00'
+
+/** 已完成订单总金额：三类订单中已完成（status=3）且已支付订单金额合计，实时统计 */
+const completedAmount = (mobile: string) => {
+    const all = [...nursingOrders, ...mealOrders, ...escortOrders] as any[]
+    const total = all
+        .filter((o: any) => o.mobile === mobile && o.status === 3 && o.pay_status === 1)
+        .reduce((s, o: any) => s + (Number(o.amount) || 0), 0)
+    return total.toFixed(2)
+}
 
 const queryParams = reactive({
     keyword: '',
