@@ -120,7 +120,6 @@
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="community" label="所属小区" min-width="150" show-overflow-tooltip />
                 <el-table-column label="接单量" width="90" align="right" prop="orders" />
             </el-table>
             <template #footer>
@@ -280,10 +279,12 @@ const handleReset = () => {
     resetParams()
 }
 
-// ---- 订单关联：待派单且未关联的订单可关联人才库用户 ----
-const talentOptions = talentList.filter((t: any) => t.status === 1)
+// ---- 订单关联：待派单且未关联的订单可关联人才库用户，仅可选订单所属小区的人才 ----
 const showRelate = ref(false)
 const relateRow = ref<any>(null)
+const talentOptions = computed(() =>
+    talentList.filter((t: any) => t.status === 1 && t.community === relateRow.value?.community)
+)
 const relateTalentId = ref<number | undefined>()
 
 const canRelate = (row: any) => row.status === 1 && !row.staff

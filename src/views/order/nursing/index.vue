@@ -99,7 +99,7 @@
                 <el-form-item label="指派员工" required>
                     <el-select v-model="dispatchStaffId" placeholder="请选择员工" class="!w-full">
                         <el-option v-for="s in staffOptions" :key="s.id"
-                            :label="`${s.name}（${roleNames[s.role_id] || '员工'} · ${s.community}）`" :value="s.id" :disabled="s.status === 0" />
+                            :label="`${s.name}（${roleNames[s.role_id] || '员工'}）`" :value="s.id" :disabled="s.status === 0" />
                     </el-select>
                 </el-form-item>
                 <el-form-item v-if="!dispatchRow?.need_pickup" label="">
@@ -276,7 +276,8 @@ const showDispatch = ref(false)
 const dispatchRow = ref<any>(null)
 const dispatchStaffId = ref<number | undefined>()
 const roleNames: Record<number, string> = { 1: '楼栋管理员', 2: '保安', 3: '保洁' }
-const staffOptions = staffList
+// 派单仅可选本订单所属小区的员工
+const staffOptions = computed(() => staffList.filter((s: any) => s.community === dispatchRow.value?.community))
 
 const canDispatch = (row: any) => row.need_pickup === 1 && row.status === 1
 const openDispatch = (row: any) => {

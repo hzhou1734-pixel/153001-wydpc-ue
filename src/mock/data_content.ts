@@ -243,6 +243,8 @@ export interface TalentItem {
     avatar: string
     nickname: string
     mobile: string
+    /** 所属小区 */
+    community: string
     /** 认证技能 */
     skill: string
     /** 可服务类目 */
@@ -263,6 +265,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(1),
         nickname: '钱志明',
         mobile: '13912343001',
+        community: '颐景园·江南里',
         skill: '家电维修',
         categories: ['家电维修', '其他'],
         order_total: 128,
@@ -278,6 +281,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(2),
         nickname: '王晓梅',
         mobile: '13912343002',
+        community: '颐景园·江南里',
         skill: '保洁清洗',
         categories: ['保洁清洗'],
         order_total: 203,
@@ -293,6 +297,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(3),
         nickname: '赵有发',
         mobile: '13912343003',
+        community: '绿城·桂语江南',
         skill: '管道疏通',
         categories: ['管道疏通', '其他'],
         order_total: 176,
@@ -308,6 +313,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(4),
         nickname: '蒋伟',
         mobile: '13912343004',
+        community: '万科·未来城三期',
         skill: '开锁换锁',
         categories: ['开锁换锁'],
         order_total: 96,
@@ -323,6 +329,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(5),
         nickname: '何秀娟',
         mobile: '13912343005',
+        community: '保利·天悦湾',
         skill: '居家照护',
         categories: ['居家照护', '代买代办'],
         order_total: 142,
@@ -338,6 +345,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(6),
         nickname: '罗小川',
         mobile: '13912343006',
+        community: '万科·未来城三期',
         skill: '代买代办',
         categories: ['代买代办', '其他'],
         order_total: 87,
@@ -353,6 +361,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(7),
         nickname: '孙丽',
         mobile: '13912343007',
+        community: '保利·天悦湾',
         skill: '保洁清洗',
         categories: ['保洁清洗', '家电维修'],
         order_total: 65,
@@ -368,6 +377,7 @@ export const talentList: TalentItem[] = [
         avatar: talentImg(8),
         nickname: '邓国平',
         mobile: '13912343008',
+        community: '绿城·桂语江南',
         skill: '其他',
         categories: ['其他'],
         order_total: 38,
