@@ -36,9 +36,13 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center flex-1 mr-4">
                         <span class="card-title">生活帮手订单</span>
-                        <span class="ml-3 text-xs text-tx-secondary">
-                            说明：生活帮手订单无需线上派单，选择人才库用户关联后，由该用户与业主线下对接完成
-                        </span>
+                        <el-radio-group v-model="queryParams.status" class="ml-4" @change="resetPage()">
+                            <el-radio-button value="">全部</el-radio-button>
+                            <el-radio-button :value="1">待派单</el-radio-button>
+                            <el-radio-button :value="2">进行中</el-radio-button>
+                            <el-radio-button :value="3">已完成</el-radio-button>
+                            <el-radio-button :value="4">已取消</el-radio-button>
+                        </el-radio-group>
                     </div>
                 </div>
             </template>
