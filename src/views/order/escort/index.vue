@@ -95,9 +95,9 @@
                 <el-form-item label="陪诊服务">{{ dispatchRow?.service }}</el-form-item>
                 <el-form-item label="就诊医院" :span="2">{{ dispatchRow?.hospital }}</el-form-item>
                 <el-form-item label="陪诊时间">{{ dispatchRow?.escort_date }}</el-form-item>
-                <el-form-item label="指派陪诊员" required>
-                    <el-select v-model="dispatchStaffId" placeholder="请选择小区陪诊员" class="!w-full">
-                        <el-option v-for="s in staffOptions" :key="s.id" :label="`${s.name}（${s.community}）`"
+                <el-form-item label="指派员工" required>
+                    <el-select v-model="dispatchStaffId" placeholder="请选择员工" class="!w-full">
+                        <el-option v-for="s in staffOptions" :key="s.id" :label="`${s.name}（${roleNames[s.role_id] || '员工'} · ${s.community}）`"
                             :value="s.id" :disabled="s.status === 0" />
                     </el-select>
                 </el-form-item>
@@ -273,11 +273,12 @@ const handleReset = () => {
     resetParams()
 }
 
-// ---- 派单：小区陪诊员 ----
+// ---- 派单：派单给员工 ----
 const showDispatch = ref(false)
 const dispatchRow = ref<any>(null)
 const dispatchStaffId = ref<number | undefined>()
-const staffOptions = staffList.filter((s: any) => s.role_id === 3)
+const roleNames: Record<number, string> = { 1: '楼栋管理员', 2: '保安', 3: '保洁' }
+const staffOptions = staffList
 
 const canDispatch = (row: any) => row.status === 1
 const openDispatch = (row: any) => {
@@ -286,7 +287,7 @@ const openDispatch = (row: any) => {
     showDispatch.value = true
 }
 const submitDispatch = async () => {
-    if (!dispatchStaffId.value) return ElMessage.warning('请选择指派的陪诊员')
+    if (!dispatchStaffId.value) return ElMessage.warning('请选择指派的员工')
     await dispatchOrder({ type: 'escort', id: dispatchRow.value.id, staff_id: dispatchStaffId.value })
     ElMessage.success('派单成功，订单已进入服务中')
     showDispatch.value = false

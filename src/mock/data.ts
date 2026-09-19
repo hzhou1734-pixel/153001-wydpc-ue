@@ -214,17 +214,17 @@ export const consumerList = [
 
 // ==================== 员工 ====================
 export const staffList = [
-    { id: 1, name: '周建国', avatar: 'https://picsum.photos/seed/ghj-staff-1/100/100', mobile: '13912342001', role: '托管员', role_id: 1, community: '颐景园·江南里', buildings: '1栋、2栋', orders: 156, earnings: '8632.00', status: 1, create_time: daysAgo(200) },
-    { id: 2, name: '吴秀兰', avatar: 'https://picsum.photos/seed/ghj-staff-2/100/100', mobile: '13912342002', role: '配送员', role_id: 2, community: '颐景园·江南里', buildings: '-', orders: 342, earnings: '10240.50', status: 1, create_time: daysAgo(190) },
-    { id: 3, name: '郑海涛', avatar: 'https://picsum.photos/seed/ghj-staff-3/100/100', mobile: '13912342003', role: '陪诊员', role_id: 3, community: '绿城·桂语江南', buildings: '-', orders: 87, earnings: '6976.00', status: 1, create_time: daysAgo(150) },
-    { id: 4, name: '孙丽华', avatar: 'https://picsum.photos/seed/ghj-staff-4/100/100', mobile: '13912342004', role: '楼栋管理员', role_id: 4, community: '保利·天悦湾', buildings: '3栋', orders: 0, earnings: '4200.00', status: 1, create_time: daysAgo(100) },
-    { id: 5, name: '马长顺', avatar: 'https://picsum.photos/seed/ghj-staff-5/100/100', mobile: '13912342005', role: '托管员', role_id: 1, community: '万科·未来城三期', buildings: '5栋、6栋', orders: 203, earnings: '11218.00', status: 0, create_time: daysAgo(80) },
-    { id: 6, name: '陈美玲', avatar: 'https://picsum.photos/seed/ghj-staff-6/100/100', mobile: '13912342006', role: '托管员', role_id: 1, community: '保利·天悦湾', buildings: '3栋、4栋', orders: 96, earnings: '5480.00', status: 1, create_time: daysAgo(120) },
-    { id: 7, name: '徐国强', avatar: 'https://picsum.photos/seed/ghj-staff-7/100/100', mobile: '13912342007', role: '托管员', role_id: 1, community: '绿城·桂语江南', buildings: '2栋', orders: 74, earnings: '4320.00', status: 1, create_time: daysAgo(95) },
-    { id: 8, name: '何秀芳', avatar: 'https://picsum.photos/seed/ghj-staff-8/100/100', mobile: '13912342008', role: '配送员', role_id: 2, community: '保利·天悦湾', buildings: '-', orders: 210, earnings: '7320.00', status: 1, create_time: daysAgo(110) },
-    { id: 9, name: '李文斌', avatar: 'https://picsum.photos/seed/ghj-staff-9/100/100', mobile: '13912342009', role: '配送员', role_id: 2, community: '万科·未来城三期', buildings: '-', orders: 168, earnings: '6210.00', status: 1, create_time: daysAgo(88) },
-    { id: 10, name: '郭敏', avatar: 'https://picsum.photos/seed/ghj-staff-10/100/100', mobile: '13912342010', role: '陪诊员', role_id: 3, community: '万科·未来城三期', buildings: '-', orders: 65, earnings: '5200.00', status: 1, create_time: daysAgo(76) },
-    { id: 11, name: '田雅静', avatar: 'https://picsum.photos/seed/ghj-staff-11/100/100', mobile: '13912342011', role: '陪诊员', role_id: 3, community: '保利·天悦湾', buildings: '-', orders: 48, earnings: '4320.00', status: 1, create_time: daysAgo(64) },
+    { id: 1, name: '周建国', avatar: 'https://picsum.photos/seed/ghj-staff-1/100/100', mobile: '13912342001', role: '楼栋管理员', role_id: 1, community: '颐景园·江南里', buildings: '1栋、2栋', orders: 156, earnings: '8632.00', status: 1, create_time: daysAgo(200) },
+    { id: 2, name: '吴秀兰', avatar: 'https://picsum.photos/seed/ghj-staff-2/100/100', mobile: '13912342002', role: '保洁', role_id: 3, community: '颐景园·江南里', buildings: '-', orders: 342, earnings: '10240.50', status: 1, create_time: daysAgo(190) },
+    { id: 3, name: '郑海涛', avatar: 'https://picsum.photos/seed/ghj-staff-3/100/100', mobile: '13912342003', role: '保安', role_id: 2, community: '绿城·桂语江南', buildings: '-', orders: 87, earnings: '6976.00', status: 1, create_time: daysAgo(150) },
+    { id: 4, name: '孙丽华', avatar: 'https://picsum.photos/seed/ghj-staff-4/100/100', mobile: '13912342004', role: '楼栋管理员', role_id: 1, community: '保利·天悦湾', buildings: '3栋', orders: 0, earnings: '4200.00', status: 1, create_time: daysAgo(100) },
+    { id: 5, name: '马长顺', avatar: 'https://picsum.photos/seed/ghj-staff-5/100/100', mobile: '13912342005', role: '楼栋管理员', role_id: 1, community: '万科·未来城三期', buildings: '5栋、6栋', orders: 203, earnings: '11218.00', status: 0, create_time: daysAgo(80) },
+    { id: 6, name: '陈美玲', avatar: 'https://picsum.photos/seed/ghj-staff-6/100/100', mobile: '13912342006', role: '楼栋管理员', role_id: 1, community: '保利·天悦湾', buildings: '2栋', orders: 96, earnings: '5480.00', status: 1, create_time: daysAgo(120) },
+    { id: 7, name: '徐国强', avatar: 'https://picsum.photos/seed/ghj-staff-7/100/100', mobile: '13912342007', role: '楼栋管理员', role_id: 1, community: '绿城·桂语江南', buildings: '2栋', orders: 74, earnings: '4320.00', status: 1, create_time: daysAgo(95) },
+    { id: 8, name: '何秀芳', avatar: 'https://picsum.photos/seed/ghj-staff-8/100/100', mobile: '13912342008', role: '保安', role_id: 2, community: '保利·天悦湾', buildings: '-', orders: 210, earnings: '7320.00', status: 1, create_time: daysAgo(110) },
+    { id: 9, name: '李文斌', avatar: 'https://picsum.photos/seed/ghj-staff-9/100/100', mobile: '13912342009', role: '保安', role_id: 2, community: '万科·未来城三期', buildings: '-', orders: 168, earnings: '6210.00', status: 1, create_time: daysAgo(88) },
+    { id: 10, name: '郭敏', avatar: 'https://picsum.photos/seed/ghj-staff-10/100/100', mobile: '13912342010', role: '保洁', role_id: 3, community: '万科·未来城三期', buildings: '-', orders: 65, earnings: '5200.00', status: 1, create_time: daysAgo(76) },
+    { id: 11, name: '田雅静', avatar: 'https://picsum.photos/seed/ghj-staff-11/100/100', mobile: '13912342011', role: '保洁', role_id: 3, community: '保利·天悦湾', buildings: '-', orders: 48, earnings: '4320.00', status: 1, create_time: daysAgo(64) },
 ]
 
 // ==================== 服务 ====================
@@ -743,7 +743,7 @@ export const financeBill = [
     },
 ]
 
-/** 员工收益：按员工维度统计陪诊 / 配送 / 托管三类收益 */
+/** 员工收益：员工维度总收益（收益金额 = 收益配置 × 已完成订单数） */
 export const staffEarnings = staffList.map((item: any) => {
     const total = Number(item.earnings) || 0
     return {
@@ -754,9 +754,7 @@ export const staffEarnings = staffList.map((item: any) => {
         mobile: item.mobile,
         role: item.role,
         role_id: item.role_id,
-        escort_income: item.role_id === 3 ? total.toFixed(2) : '0.00',
-        delivery_income: item.role_id === 2 ? total.toFixed(2) : '0.00',
-        nursing_income: item.role_id === 1 || item.role_id === 4 ? total.toFixed(2) : '0.00',
+        total_income: total.toFixed(2),
         create_time: item.create_time,
     }
 })

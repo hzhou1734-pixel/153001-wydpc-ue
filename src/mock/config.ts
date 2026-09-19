@@ -39,10 +39,9 @@ export function mockDictData(type: string) {
             { name: '已驳回', value: 2 },
         ],
         staff_role: [
-            { name: '托管员', value: 1 },
-            { name: '配送员', value: 2 },
-            { name: '陪诊员', value: 3 },
-            { name: '楼栋管理员', value: 4 },
+            { name: '楼栋管理员', value: 1 },
+            { name: '保安', value: 2 },
+            { name: '保洁', value: 3 },
         ],
     }
     return Promise.resolve(dictMap[type] || [])

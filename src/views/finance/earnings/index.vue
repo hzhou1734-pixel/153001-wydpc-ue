@@ -1,13 +1,13 @@
 <template>
     <div class="finance-earnings">
         <el-card class="!border-none" shadow="never">
-            <el-alert
+                <el-alert
                 class="mb-4"
                 type="info"
                 :closable="false"
                 show-icon
                 title="说明"
-                :description="`所有的收益由收益配置的金额及完成的订单自动计算：托管收益 = 已完成托管趟次 × 托管接送单价（受单次最低 / 最高收益限制），配送收益 = 已完成配送趟次 × 膳食配送单价，陪诊收益 = 已完成陪诊趟次 × 陪诊接送单价。`"
+                :description="`员工收益由收益配置的金额及已完成的订单自动计算，按员工维度汇总展示。`"
             />
             <el-form :model="queryParams" inline class="mb--4">
                 <el-form-item label="角色">
@@ -64,15 +64,6 @@
                         <span class="text-green-600 font-medium">¥{{ row.total_income }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="陪诊收益" min-width="120" align="right">
-                    <template #default="{ row }">¥{{ row.escort_income }}</template>
-                </el-table-column>
-                <el-table-column label="配送收益" min-width="120" align="right">
-                    <template #default="{ row }">¥{{ row.delivery_income }}</template>
-                </el-table-column>
-                <el-table-column label="托管收益" min-width="120" align="right">
-                    <template #default="{ row }">¥{{ row.nursing_income }}</template>
-                </el-table-column>
                 <el-table-column prop="create_time" label="添加时间" width="160" />
             </el-table>
             <div class="flex justify-end mt-4">
@@ -98,7 +89,7 @@ const timeRange = ref<any[]>([])
 
 const money = (v: number) => Number(v || 0).toFixed(2)
 
-/** 单次托管收益：取托管接送单价，并限制在单次最低 / 最高收益金额之间 */
+/** 单次托管服务收益：取托管服务单价，并限制在单次最低 / 最高收益金额之间 */
 const nursingUnit = computed(() => {
     const price = Number(profitConfig.nursing_price) || 0
     const min = Number(profitConfig.nursing_min) || 0
@@ -106,7 +97,7 @@ const nursingUnit = computed(() => {
     return Math.min(Math.max(price, min), max)
 })
 
-/** 员工收益列表：由收益配置金额 × 已完成订单趟次自动计算 */
+/** 员工收益列表：由收益配置金额 × 已完成订单趟次自动计算（不同角色员工均可参与各类服务） */
 const earningLists = computed(() =>
     staffEarningRows.map((item: any) => {
         const nursing_income = item.nursing_count * nursingUnit.value
@@ -150,10 +141,9 @@ const { pager, getLists, resetPage } = usePaging({
 })
 
 const roleOptions = [
-    { label: '托管员', value: 1 },
-    { label: '配送员', value: 2 },
-    { label: '陪诊员', value: 3 },
-    { label: '楼栋管理员', value: 4 }
+    { label: '楼栋管理员', value: 1 },
+    { label: '保安', value: 2 },
+    { label: '保洁', value: 3 }
 ]
 
 watch(timeRange, () => {
@@ -170,7 +160,7 @@ const resetParamsHandler = () => {
 }
 
 const roleTag = (roleId: number) =>
-    roleId === 1 ? 'success' : roleId === 2 ? 'warning' : roleId === 3 ? 'primary' : 'info'
+    roleId === 1 ? 'primary' : roleId === 2 ? 'success' : 'warning'
 
 /** 收益导出：导出当前筛选结果下的全部数据 */
 const handleExport = async () => {
@@ -182,9 +172,6 @@ const handleExport = async () => {
             { label: '手机号', prop: 'mobile' },
             { label: '角色', prop: 'role' },
             { label: '单次收益总金额', prop: 'total_income' },
-            { label: '陪诊收益', prop: 'escort_income' },
-            { label: '配送收益', prop: 'delivery_income' },
-            { label: '托管收益', prop: 'nursing_income' },
             { label: '添加时间', prop: 'create_time' }
         ],
         res.lists

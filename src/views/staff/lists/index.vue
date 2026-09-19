@@ -3,10 +3,9 @@ import { getStaffList, getBuildingTree } from '@/mock/api'
 import { usePaging } from '@/hooks/usePaging'
 
 const roleOptions = [
-    { value: 1, label: '托管员' },
-    { value: 2, label: '配送员' },
-    { value: 3, label: '陪诊员' },
-    { value: 4, label: '楼栋管理员' }
+    { value: 1, label: '楼栋管理员' },
+    { value: 2, label: '保安' },
+    { value: 3, label: '保洁' }
 ]
 const communityOptions = ['颐景园·江南里', '绿城·桂语江南', '保利·天悦湾', '万科·未来城三期', '融创·金成府']
 // 社区名 → 小区ID 映射（用于负责楼栋联动过滤）
@@ -49,7 +48,7 @@ const editForm = reactive({
     name: '',
     avatar: '',
     mobile: '',
-    role_id: 1,
+    role_id: 2,
     community: '',
     buildings: [] as string[],
     status: 1
@@ -113,7 +112,7 @@ function onAvatarFileChange(e: Event) {
 function openAdd() {
     editTitle.value = '添加员工'
     editingId.value = null
-    Object.assign(editForm, { name: '', avatar: '', mobile: '', role_id: 1, community: '', buildings: [], status: 1 })
+    Object.assign(editForm, { name: '', avatar: '', mobile: '', role_id: 2, community: '', buildings: [], status: 1 })
     showEdit.value = true
 }
 
@@ -135,22 +134,23 @@ function openEdit(row: any) {
 function submitEdit() {
     if (!editForm.name) return ElMessage.warning('请输入员工姓名')
     if (!editForm.mobile) return ElMessage.warning('请输入手机号码（登录账号）')
-    if (editForm.role_id === 4 && !editForm.buildings.length) return ElMessage.warning('楼栋管理员必须选择负责楼栋')
-    // 一个楼栋只能有一个管理员
-    if (editForm.role_id === 4) {
+    if (editForm.role_id === 1 && !editForm.buildings.length) return ElMessage.warning('楼栋管理员必须选择负责楼栋')
+    // 同一小区内一个楼栋只能有一个管理员
+    if (editForm.role_id === 1) {
         const conflict = (pager.lists as any[]).find(
             (item: any) =>
-                item.role_id === 4 &&
+                item.role_id === 1 &&
+                item.community === editForm.community &&
                 item.id !== editingId.value &&
                 item.buildings &&
                 item.buildings !== '-' &&
                 item.buildings.split('、').some((b: string) => editForm.buildings.includes(b))
         )
-        if (conflict) return ElMessage.warning(`楼栋已被管理员「${conflict.name}」负责，请重新选择`)
+        if (conflict) return ElMessage.warning(`该小区楼栋已被管理员「${conflict.name}」负责，请重新选择`)
     }
     const list = pager.lists as any[]
     const roleName = roleOptions.find((r) => r.value === editForm.role_id)?.label || ''
-    const buildingStr = editForm.role_id === 4 ? editForm.buildings.join('、') || '-' : '-'
+    const buildingStr = editForm.role_id === 1 ? editForm.buildings.join('、') || '-' : '-'
     if (editingId.value === null) {
         list.unshift({
             id: Date.now(),
@@ -197,7 +197,7 @@ const submitRole = () => {
     const row = roleRow.value
     row.role_id = roleForm.role_id
     row.role = roleOptions.find((r) => r.value === roleForm.role_id)?.label || ''
-    if (row.role_id !== 4) row.buildings = '-'
+    if (row.role_id !== 1) row.buildings = '-'
     ElMessage.success('角色修改成功')
     showRole.value = false
 }
@@ -270,7 +270,7 @@ function toggleStatus(row: any) {
                 </el-table-column>
                 <el-table-column label="角色" width="120">
                     <template #default="{ row }">
-                        <el-tag :type="['primary', 'success', 'warning', 'danger'][row.role_id - 1] || 'info'" effect="light">
+                        <el-tag :type="['primary', 'success', 'warning'][row.role_id - 1] || 'info'" effect="light">
                             {{ row.role }}
                         </el-tag>
                     </template>
@@ -345,16 +345,17 @@ function toggleStatus(row: any) {
                         <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="负责楼栋" :required="editForm.role_id === 4">
+                <el-form-item label="负责楼栋" :required="editForm.role_id === 1">
                     <el-select
                         v-model="editForm.buildings"
                         multiple
-                        :placeholder="editForm.role_id === 4 ? '请选择负责楼栋（必选，可多选）' : '选填（可多选）'"
+                        :placeholder="editForm.role_id === 1 ? '请选择负责楼栋（必选，可多选）' : '仅楼栋管理员可绑定楼栋'"
+                        :disabled="editForm.role_id !== 1"
                         class="w-full"
                     >
                         <el-option v-for="item in buildingOptions" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
-                    <div class="text-xs text-tx-secondary mt-1">角色为楼栋管理员时楼栋为必选项；一个楼栋只能有一个管理员</div>
+                    <div class="text-xs text-tx-secondary mt-1">仅楼栋管理员需要绑定楼栋；同一小区内一个楼栋只能有一个管理员</div>
                 </el-form-item>
                 <el-form-item label="账号状态">
                     <el-radio-group v-model="editForm.status">

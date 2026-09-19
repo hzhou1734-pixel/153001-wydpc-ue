@@ -389,11 +389,7 @@ export function getFinanceOverview() {
         settle_pending: money(sum(pending)),
         settle_done: money(sum(settled)),
         staff_earnings_total: money(
-            staffEarnings.reduce(
-                (s, o: any) =>
-                    s + Number(o.escort_income) + Number(o.delivery_income) + Number(o.nursing_income),
-                0
-            )
+            staffEarnings.reduce((s, o: any) => s + Number(o.total_income), 0)
         ),
     })
 }
@@ -436,11 +432,7 @@ export function getFinanceBill(params?: Record<string, any>) {
 export function getStaffEarnings(params?: Record<string, any>) {
     let lists: any[] = (staffEarnings as any[]).map((item: any) => ({
         ...item,
-        total_income: (
-            Number(item.escort_income) +
-            Number(item.delivery_income) +
-            Number(item.nursing_income)
-        ).toFixed(2),
+        total_income: item.total_income,
     }))
     if (params?.role_id) lists = lists.filter((o: any) => Number(o.role_id) === Number(params.role_id))
     const result = filterList(lists, params, { keywordFields: ['name', 'mobile'] })
@@ -450,24 +442,6 @@ export function getStaffEarnings(params?: Record<string, any>) {
 export function getStaffEarningsAll(params?: Record<string, any>) {
     return getStaffEarnings({ ...params, page_no: 1, page_size: 9999 }).then((res: any) => res.lists)
 }
-/** 添加员工收益：按员工累加三类收益 */
-export function addStaffEarning(params?: Record<string, any>) {
-    const row: any = (staffEarnings as any[]).find((o: any) => Number(o.staff_id) === Number(params?.staff_id))
-    if (!row) return Promise.reject(new Error('员工不存在'))
-    row.escort_income = (Number(row.escort_income) + (Number(params?.escort_income) || 0)).toFixed(2)
-    row.delivery_income = (Number(row.delivery_income) + (Number(params?.delivery_income) || 0)).toFixed(2)
-    row.nursing_income = (Number(row.nursing_income) + (Number(params?.nursing_income) || 0)).toFixed(2)
-    const staff: any = (staffList as any[]).find((o: any) => Number(o.id) === Number(params?.staff_id))
-    if (staff) {
-        staff.earnings = (
-            Number(row.escort_income) +
-            Number(row.delivery_income) +
-            Number(row.nursing_income)
-        ).toFixed(2)
-    }
-    return Promise.resolve({ ...row })
-}
-
 // ============ 系统设置 ============
 export function getPropertyInfo() {
     return Promise.resolve(propertyInfo)

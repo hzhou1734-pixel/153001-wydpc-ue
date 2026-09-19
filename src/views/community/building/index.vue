@@ -173,8 +173,10 @@ const treeList = computed(() => {
         buildings = buildings.filter((item: any) => item.community_id === queryParams.community_id)
     }
     const result = buildings.map((item: any, index: number) => {
-        // 楼栋管家：楼栋管理员角色且负责楼栋包含该楼栋
-        const keeper = staffList.find((s: any) => s.role_id === 4 && String(s.buildings || '').includes(item.name))
+        // 楼栋管家：同小区的楼栋管理员且负责楼栋包含该楼栋
+        const keeper = staffList.find(
+            (s: any) => s.role_id === 1 && s.community === item.community_name && String(s.buildings || '').includes(item.name)
+        )
         let rooms = roomList.filter((r: any) => r.building_id === item.id)
         if (kw && !item.name.includes(kw)) {
             rooms = rooms.filter((r: any) => String(r.name).includes(kw) || String(r.owner).includes(kw))
