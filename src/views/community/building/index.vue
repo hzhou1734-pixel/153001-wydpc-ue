@@ -20,6 +20,12 @@
                 <el-form-item label="楼栋/房号">
                     <el-input v-model="queryParams.keyword" placeholder="楼栋名称 / 房号" clearable class="!w-[180px]" @keyup.enter="getTreeList" />
                 </el-form-item>
+                <el-form-item label="认证状态">
+                    <el-select v-model="queryParams.certified" placeholder="全部" clearable class="!w-[140px]">
+                        <el-option label="已认证" :value="1" />
+                        <el-option label="未认证" :value="0" />
+                    </el-select>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getTreeList">查询</el-button>
                     <el-button @click="resetQuery">重置</el-button>
@@ -150,11 +156,12 @@ import { buildingTree, certifyList, communityList, roomList, staffList } from '@
 
 const loading = ref(false)
 const communityOptions = communityList
-const queryParams = reactive({ community_id: '' as any, keyword: '' })
+const queryParams = reactive({ community_id: '' as any, keyword: '', certified: '' as any })
 
 /** 楼栋-房号二级树（文档要求：不需要单元，直接楼栋-房号） */
 const treeList = computed(() => {
     const kw = String(queryParams.keyword || '').trim()
+    const st = queryParams.certified
     let buildings = buildingTree as any[]
     if (queryParams.community_id !== '' && queryParams.community_id !== undefined) {
         buildings = buildings.filter((item: any) => item.community_id === queryParams.community_id)
@@ -165,6 +172,10 @@ const treeList = computed(() => {
         let rooms = roomList.filter((r: any) => r.building_id === item.id)
         if (kw && !item.name.includes(kw)) {
             rooms = rooms.filter((r: any) => String(r.name).includes(kw) || String(r.owner).includes(kw))
+        }
+        // 认证状态筛选：仅过滤房号行
+        if (st === 0 || st === 1) {
+            rooms = rooms.filter((r: any) => r.certified === st)
         }
         return {
             id: `b-${item.id}`,
@@ -195,7 +206,10 @@ const treeList = computed(() => {
             })
         }
     })
-    return kw ? result.filter((b: any) => (b.children || []).length > 0 || b.name.includes(kw)) : result
+    // 有筛选条件时隐藏无匹配房号的楼栋
+    let final = st === 0 || st === 1 ? result.filter((b: any) => (b.children || []).length > 0) : result
+    if (kw) final = final.filter((b: any) => (b.children || []).length > 0 || b.name.includes(kw))
+    return final
 })
 
 const buildingOptions = computed(() =>
@@ -209,6 +223,7 @@ const getTreeList = () => {
 const resetQuery = () => {
     queryParams.community_id = ''
     queryParams.keyword = ''
+    queryParams.certified = ''
     getTreeList()
 }
 
