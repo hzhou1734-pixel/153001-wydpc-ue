@@ -162,6 +162,15 @@
                     <el-descriptions-item label="详细地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
                 </el-descriptions>
 
+                <template v-if="detailRow.delivery_imgs && detailRow.delivery_imgs.length">
+                    <div class="section-title">送达确认</div>
+                    <div class="flex flex-wrap mb-4">
+                        <el-image v-for="(img, idx) in detailRow.delivery_imgs" :key="idx" :src="img"
+                            :preview-src-list="detailRow.delivery_imgs" :initial-index="idx" preview-teleported
+                            class="w-24 h-20 rounded mr-2 mb-2" fit="cover" />
+                    </div>
+                </template>
+
                 <div class="section-title">金额信息</div>
                 <el-descriptions :column="2" border class="mb-4">
                     <el-descriptions-item label="套餐单价">¥{{ detailRow.price }}</el-descriptions-item>
