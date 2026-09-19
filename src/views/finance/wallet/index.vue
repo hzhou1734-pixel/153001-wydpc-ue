@@ -227,13 +227,13 @@
                         <el-input-number v-model="form.order_count" :min="0" :precision="0" class="!w-[220px]" />
                         <span class="ml-2 text-tx-secondary">单</span>
                     </el-form-item>
-                    <el-form-item label="每单单价">
-                        <el-input-number v-model="form.unit_price" :min="0" :precision="2" class="!w-[220px]" />
+                    <el-form-item label="预收金额">
+                        <el-input-number v-model="form.prepay_amount" :precision="2" class="!w-[220px]" />
                         <span class="ml-2 text-tx-secondary">元</span>
                     </el-form-item>
-                    <el-form-item label="预收金额">
-                        <span class="font-medium">¥{{ computedPrepay }}</span>
-                        <span class="ml-2 text-xs text-tx-secondary">预收 = 订单数量 × 每单单价，自动计算</span>
+                    <el-form-item label="每单单价">
+                        <span class="font-medium">¥{{ computedUnitPrice }}</span>
+                        <span class="ml-2 text-xs text-tx-secondary">每单单价 = 预收金额 ÷ 订单数量，自动计算</span>
                     </el-form-item>
                     <el-form-item label="成本金额">
                         <el-input-number v-model="form.cost_amount" :min="0" :precision="2" class="!w-[220px]" />
@@ -294,14 +294,16 @@ const form = reactive({
     expense_voucher: '',
     income_voucher: '',
     order_count: 0,
-    unit_price: 0,
+    prepay_amount: 0,
     cost_amount: 0,
     voucher: ''
 })
 
 const money = (v: number) => Number(v || 0).toFixed(2)
-/** 预收金额 = 订单数量 × 每单单价 */
-const computedPrepay = computed(() => money(Number(form.order_count) * Number(form.unit_price)))
+/** 每单单价 = 预收金额 ÷ 订单数量（订单数量为 0 时按 0 处理） */
+const computedUnitPrice = computed(() =>
+    money(Number(form.order_count) > 0 ? Number(form.prepay_amount) / Number(form.order_count) : 0)
+)
 
 const nowTimeStr = () => {
     const d = new Date()
@@ -319,7 +321,7 @@ const openAdd = (tab: string) => {
         expense_voucher: '',
         income_voucher: '',
         order_count: 0,
-        unit_price: 0,
+        prepay_amount: 0,
         cost_amount: 0,
         voucher: ''
     })
@@ -355,10 +357,10 @@ const submitAdd = () => {
                 title: form.title.trim(),
                 month: form.month,
                 order_count: Number(form.order_count) || 0,
-                unit_price: money(form.unit_price),
+                prepay_amount: money(form.prepay_amount),
                 cost_amount: money(form.cost_amount),
                 voucher: form.voucher,
-                prepay_amount: computedPrepay.value,
+                unit_price: computedUnitPrice.value,
                 create_time: nowTimeStr()
             }
             if (addState.tab === 'nursing') {

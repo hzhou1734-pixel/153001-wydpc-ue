@@ -1,7 +1,7 @@
 /**
  * 财务管理板块模拟数据
  * 账单结算 / 小区钱袋子 / 收益配置 / 员工收益 均在此维护
- * 账单合计金额由明细自动汇总；钱袋子中仅托管/膳食预收金额自动计算，物业结余金额手工填写
+ * 账单合计金额由明细自动汇总；钱袋子中仅托管/膳食每单单价自动计算（预收金额 ÷ 订单数量），其余金额手工填写
  */
 import { reactive } from 'vue'
 import { staffList } from './data'
@@ -201,19 +201,19 @@ export const walletProperty = [
     }),
 ]
 
-/** 托管 / 膳食钱袋子：预收金额 = 订单数量 × 每单单价 */
+/** 托管 / 膳食钱袋子：预收金额手工填写，每单单价 = 预收金额 ÷ 订单数量（自动计算） */
 const buildBusinessWallet = (raw: {
     id: number
     title: string
     month: string
     order_count: number
-    unit_price: string
+    prepay_amount: string
     cost_amount: string
     voucher: string
     create_time: string
 }) => ({
     ...raw,
-    prepay_amount: fmt(raw.order_count * Number(raw.unit_price)),
+    unit_price: Number(raw.order_count) > 0 ? fmt(Number(raw.prepay_amount) / raw.order_count) : '0.00',
 })
 
 export const walletNursing = [
@@ -222,7 +222,7 @@ export const walletNursing = [
         title: '托管服务 2026年8月结算',
         month: '2026-08',
         order_count: 186,
-        unit_price: '80.00',
+        prepay_amount: '14880.00',
         cost_amount: '11200.00',
         voucher: voucher('ghj-wallet-nur-1'),
         create_time: '2026-09-02 11:20:00',
@@ -232,7 +232,7 @@ export const walletNursing = [
         title: '托管服务 2026年7月结算',
         month: '2026-07',
         order_count: 214,
-        unit_price: '80.00',
+        prepay_amount: '17120.00',
         cost_amount: '12980.00',
         voucher: voucher('ghj-wallet-nur-2'),
         create_time: '2026-08-02 11:35:00',
@@ -242,7 +242,7 @@ export const walletNursing = [
         title: '托管服务 2026年6月结算',
         month: '2026-06',
         order_count: 132,
-        unit_price: '90.00',
+        prepay_amount: '11880.00',
         cost_amount: '8640.00',
         voucher: voucher('ghj-wallet-nur-3'),
         create_time: '2026-07-02 10:45:00',
@@ -255,7 +255,7 @@ export const walletMeal = [
         title: '膳食服务 2026年8月结算',
         month: '2026-08',
         order_count: 465,
-        unit_price: '32.00',
+        prepay_amount: '14880.00',
         cost_amount: '11620.00',
         voucher: voucher('ghj-wallet-meal-1'),
         create_time: '2026-09-02 15:10:00',
@@ -265,7 +265,7 @@ export const walletMeal = [
         title: '膳食服务 2026年7月结算',
         month: '2026-07',
         order_count: 508,
-        unit_price: '32.00',
+        prepay_amount: '16256.00',
         cost_amount: '12700.00',
         voucher: voucher('ghj-wallet-meal-2'),
         create_time: '2026-08-02 15:25:00',
@@ -275,7 +275,7 @@ export const walletMeal = [
         title: '膳食服务 2026年6月结算',
         month: '2026-06',
         order_count: 396,
-        unit_price: '30.00',
+        prepay_amount: '11880.00',
         cost_amount: '9500.00',
         voucher: voucher('ghj-wallet-meal-3'),
         create_time: '2026-07-02 16:00:00',
