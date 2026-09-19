@@ -8,14 +8,6 @@ const roleOptions = [
     { value: 3, label: '保洁' }
 ]
 const communityOptions = ['颐景园·江南里', '绿城·桂语江南', '保利·天悦湾', '万科·未来城三期', '融创·金成府']
-// 社区名 → 小区ID 映射（用于负责楼栋联动过滤）
-const communityIdMap: Record<string, number> = {
-    '颐景园·江南里': 1,
-    '绿城·桂语江南': 2,
-    '保利·天悦湾': 3,
-    '万科·未来城三期': 4,
-    '融创·金成府': 5
-}
 
 const searchParams = reactive({ keyword: '', role_id: '', status: '', create_time: [] as any })
 const { pager, getLists, resetPage } = usePaging({ fetchFun: getStaffList, params: searchParams, firstLoading: true })
@@ -50,22 +42,23 @@ const editForm = reactive({
     mobile: '',
     role_id: 2,
     community: '',
-    buildings: [] as string[],
+    buildings: [] as string[][],
     status: 1
 })
 
-// 负责楼栋选项：仅取楼栋层级，并按所属社区联动过滤
-const buildingOptions = computed(() => {
-    const cid = communityIdMap[editForm.community]
-    if (!cid) return []
-    return buildingTreeData.value
-        .filter((item: any) => item.community_id === cid)
-        .map((item: any) => ({ value: item.name, label: item.name }))
+// 负责楼栋级联选项：小区 → 楼栋（选中值为路径 [小区名, 楼栋名]）
+const buildingCascaderOptions = computed(() => {
+    const map = new Map<string, string[]>()
+    buildingTreeData.value.forEach((item: any) => {
+        if (!map.has(item.community_name)) map.set(item.community_name, [])
+        map.get(item.community_name)!.push(item.name)
+    })
+    return Array.from(map.entries()).map(([community, buildings]) => ({
+        value: community,
+        label: community,
+        children: buildings.map((b: string) => ({ value: b, label: b }))
+    }))
 })
-
-function onCommunityChange() {
-    editForm.buildings = []
-}
 
 // 头像编辑：本地选择图片 → 居中裁剪为正方形 → 压缩为 200x200 base64
 const avatarInputRef = ref<HTMLInputElement>()
@@ -125,7 +118,9 @@ function openEdit(row: any) {
         mobile: row.mobile,
         role_id: row.role_id,
         community: row.community,
-        buildings: row.buildings && row.buildings !== '-' ? row.buildings.split('、') : [],
+        buildings: row.buildings && row.buildings !== '-' && row.community
+            ? row.buildings.split('、').map((b: string) => [row.community, b])
+            : [],
         status: row.status
     })
     showEdit.value = true
@@ -137,20 +132,25 @@ function submitEdit() {
     if (editForm.role_id === 1 && !editForm.buildings.length) return ElMessage.warning('楼栋管理员必须选择负责楼栋')
     // 同一小区内一个楼栋只能有一个管理员
     if (editForm.role_id === 1) {
-        const conflict = (pager.lists as any[]).find(
-            (item: any) =>
-                item.role_id === 1 &&
-                item.community === editForm.community &&
-                item.id !== editingId.value &&
-                item.buildings &&
-                item.buildings !== '-' &&
-                item.buildings.split('、').some((b: string) => editForm.buildings.includes(b))
-        )
-        if (conflict) return ElMessage.warning(`该小区楼栋已被管理员「${conflict.name}」负责，请重新选择`)
+        for (const [communityName, buildingName] of editForm.buildings) {
+            const conflict = (pager.lists as any[]).find(
+                (item: any) =>
+                    item.role_id === 1 &&
+                    item.id !== editingId.value &&
+                    item.community === communityName &&
+                    item.buildings &&
+                    item.buildings !== '-' &&
+                    item.buildings.split('、').includes(buildingName)
+            )
+            if (conflict) return ElMessage.warning(`${communityName} ${buildingName} 已被管理员「${conflict.name}」负责，请重新选择`)
+        }
     }
     const list = pager.lists as any[]
     const roleName = roleOptions.find((r) => r.value === editForm.role_id)?.label || ''
-    const buildingStr = editForm.role_id === 1 ? editForm.buildings.join('、') || '-' : '-'
+    const buildingStr = editForm.role_id === 1 ? editForm.buildings.map((p: string[]) => p[1]).join('、') || '-' : '-'
+    const communityVal = editForm.role_id === 1 && editForm.buildings.length
+        ? editForm.buildings[0][0]
+        : editForm.community || communityOptions[0]
     if (editingId.value === null) {
         list.unshift({
             id: Date.now(),
@@ -159,7 +159,7 @@ function submitEdit() {
             mobile: editForm.mobile,
             role: roleName,
             role_id: editForm.role_id,
-            community: editForm.community || communityOptions[0],
+            community: communityVal,
             buildings: buildingStr,
             orders: 0,
             earnings: '0.00',
@@ -175,7 +175,7 @@ function submitEdit() {
             row.mobile = editForm.mobile
             row.role = roleName
             row.role_id = editForm.role_id
-            row.community = editForm.community
+            row.community = communityVal
             row.buildings = buildingStr
             row.status = editForm.status
         }
@@ -335,26 +335,23 @@ function toggleStatus(row: any) {
                 <el-form-item label="手机号码" required>
                     <el-input v-model="editForm.mobile" placeholder="请输入手机号码（作为登录账号）" maxlength="11" />
                 </el-form-item>
-                <el-form-item label="所属小区">
-                    <el-select v-model="editForm.community" placeholder="请选择所属小区" class="w-full" @change="onCommunityChange">
-                        <el-option v-for="item in communityOptions" :key="item" :label="item" :value="item" />
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="员工角色" required>
                     <el-select v-model="editForm.role_id" placeholder="请选择角色" class="w-full">
                         <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="负责楼栋" :required="editForm.role_id === 1">
-                    <el-select
+                    <el-cascader
                         v-model="editForm.buildings"
-                        multiple
-                        :placeholder="editForm.role_id === 1 ? '请选择负责楼栋（必选，可多选）' : '仅楼栋管理员可绑定楼栋'"
+                        :options="buildingCascaderOptions"
+                        :props="{ multiple: true }"
+                        :placeholder="editForm.role_id === 1 ? '请选择负责楼栋（按小区分组，必选，可多选）' : '仅楼栋管理员可绑定楼栋'"
                         :disabled="editForm.role_id !== 1"
+                        clearable
+                        collapse-tags
+                        collapse-tags-tooltip
                         class="w-full"
-                    >
-                        <el-option v-for="item in buildingOptions" :key="item.value" :label="item.label" :value="item.value" />
-                    </el-select>
+                    />
                     <div class="text-xs text-tx-secondary mt-1">仅楼栋管理员需要绑定楼栋；同一小区内一个楼栋只能有一个管理员</div>
                 </el-form-item>
                 <el-form-item label="账号状态">
