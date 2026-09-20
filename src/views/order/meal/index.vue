@@ -159,10 +159,9 @@
 
                 <template v-if="detailRow.delivery_imgs && detailRow.delivery_imgs.length">
                     <div class="section-title">送达确认</div>
-                    <div class="flex flex-wrap mb-4">
-                        <el-image v-for="(img, idx) in detailRow.delivery_imgs" :key="idx" :src="img"
-                            :preview-src-list="detailRow.delivery_imgs" :initial-index="idx" preview-teleported
-                            class="w-24 h-20 rounded mr-2 mb-2" fit="cover" />
+                    <div class="mb-4">
+                        <el-image :src="detailRow.delivery_imgs[0]" :preview-src-list="detailRow.delivery_imgs"
+                            preview-teleported class="w-24 h-20 rounded" fit="cover" />
                     </div>
                 </template>
 

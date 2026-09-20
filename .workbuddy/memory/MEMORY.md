@@ -12,7 +12,8 @@
 - commit 信息格式：`v1.0.X: <描述>`
 - 版本号 tag：v1.0.X 递增（当前 v1.0.0）
 - 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）；shell PATH 损坏时 git 用绝对路径；base64 用 node -e 生成；推送被代理 502 阻塞时本地积压（commit+tag 均安全），代理恢复后 `push origin dev --tags` 一次性补推
-- ⚠️ add -A 高危（v1.0.92 实际发生）：项目内 .tmp-* 临时文件（含推送认证头→token 泄漏）会被收录，靠未 push 前 rm --cached + commit --amend + tag 重打补救；.gitignore 已加 `.tmp-*` 通配根治，**push 前必查 `show --stat HEAD`**；vite build 验证优先用 Bash 通道（PS 5.1 不仅 `2>&1 |` 管道中断构建，直接重定向也会把 build 截断在 transforming）
+- ⚠️ add -A 高危（v1.0.92 实际发生）：项目内 .tmp-* 临时文件（含推送认证头→token 泄漏）会被收录，靠未 push 前 rm --cached + commit --amend + tag 重打补救；.gitignore 已加 `.tmp-*` 通配根治，**push 前必查 `show --stat HEAD`**；vite build 验证优先用 Bash 通道（PS 5.1 不仅 `2>&1 |` 管道中断构建，直接重定向也会把 build 截断在 transforming）；成功标记正则用 `/built in [\dhms. ]+s|m/`（整 1 分钟 vite 输出「built in 1m」无秒后缀，纯 `[\d.]+s` 正则会漏报）
+- ⚠️ node -e 组合脚本偶发 SIGTERM exit 1（2026-09-20 多次）：中断点随机导致部分步骤（清理/日志/commit）未执行，原样重跑前先用 node 检查实际状态（.tmp 残留、日志已追加、HEAD 版本），再补齐缺失步骤
 - ⚠️ 推送坑（2026-09-19/20）：PortableGit 的 mingw64/libexec/git-core 缺失时 push 报 `remote-https is not a git command`（git-remote-https.exe 实际在 mingw64/bin 下）→ 解决：`git.exe --exec-path="<PortableGit>/mingw64/bin" push ...` 或设 `GIT_EXEC_PATH` 环境变量（两者均验证有效）；**仅把 mingw64/bin 加进 PATH 无效**（2026-09-20 实测）；另 PS 5.1 下 `2>&1 |` 管道会中断 vite 构建，直接用 node 运行 node_modules/vite/bin/vite.js 最稳；token 不进命令行——node 生成 Basic 头写入临时文件，bash 里用 `$(< 文件)` 运行时替换（规避安全过滤且不依赖 base64/cat）
 - git 身份：hzhou1734-pixel / hzhou1734-pixel@users.noreply.github.com（用 -c 参数传入）
 
