@@ -47,7 +47,7 @@
                 </div>
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
-                <el-table-column label="封面图" width="100">
+                <el-table-column label="封面图" min-width="100">
                     <template #default="{ row }">
                         <el-image :src="row.cover" class="w-16 h-12 rounded" :preview-src-list="[row.cover]"
                             preview-teleported fit="cover" />
@@ -62,20 +62,20 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column label="接单人" width="120" show-overflow-tooltip>
+                <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column label="接单人" min-width="120" show-overflow-tooltip>
                     <template #default="{ row }">
                         <span v-if="row.staff">{{ row.staff }}</span>
                         <el-tag v-else size="small" type="info">未关联</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="订单状态" width="90">
+                <el-table-column label="订单状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="statusTag(row.status)">{{ statusMap[row.status] }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="下单时间" width="160" show-overflow-tooltip />
-                <el-table-column label="完成时间" width="160">
+                <el-table-column prop="create_time" label="下单时间" min-width="170" show-overflow-tooltip />
+                <el-table-column label="完成时间" min-width="170">
                     <template #default="{ row }">{{ row.finish_time || '—' }}</template>
                 </el-table-column>
                 <el-table-column label="操作" width="200" fixed="right">
@@ -99,7 +99,7 @@
             <el-alert type="info" :closable="false" class="mb-4"
                 title="关联后该订单由所选人才库用户与业主线下对接完成，状态更新为服务中。" />
             <el-table :data="talentOptions" size="small" highlight-current-row @current-change="handleTalentChange">
-                <el-table-column label="选择" width="60">
+                <el-table-column label="选择" min-width="60">
                     <template #default="{ row }">
                         <el-radio v-model="relateTalentId" :value="row.id"><span /></el-radio>
                     </template>
@@ -112,7 +112,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" />
+                <el-table-column prop="mobile" label="手机号码" min-width="120" />
                 <el-table-column label="认证技能" min-width="200">
                     <template #default="{ row }">
                         <el-tag v-for="skill in row.skills" :key="skill" size="small" effect="light" class="mr-1">
@@ -120,7 +120,7 @@
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="历史评分" width="160">
+                <el-table-column label="历史评分" min-width="160">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-rate :model-value="Number(row.stars)" disabled allow-half size="small" class="mr-1" />
@@ -128,7 +128,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="接单量" width="90" align="right" prop="orders" />
+                <el-table-column label="接单量" min-width="90" align="right" prop="orders" />
             </el-table>
             <template #footer>
                 <el-button @click="showRelate = false">取消</el-button>

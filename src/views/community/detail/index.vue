@@ -76,7 +76,7 @@
                         </el-card>
                     </div>
                     <el-table :data="communityStaff" border empty-text="暂无绑定员工">
-                        <el-table-column label="头像" width="80" align="center">
+                        <el-table-column label="头像" min-width="80" align="center">
                             <template #default="{ row }"><el-image :src="row.avatar" class="w-8 h-8 rounded-full" /></template>
                         </el-table-column>
                         <el-table-column prop="name" label="昵称" min-width="110" />
@@ -85,12 +85,12 @@
                         <el-table-column label="收益总额" min-width="120" align="right">
                             <template #default="{ row }">¥{{ row.earnings }}</template>
                         </el-table-column>
-                        <el-table-column label="账号状态" width="90">
+                        <el-table-column label="账号状态" min-width="90">
                             <template #default="{ row }">
                                 <el-tag :type="row.status ? 'success' : 'info'" size="small">{{ row.status ? '启用' : '禁用' }}</el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="添加时间" width="160" />
+                        <el-table-column prop="create_time" label="添加时间" min-width="170" />
                     </el-table>
                 </el-tab-pane>
 
@@ -113,7 +113,7 @@
                                 <el-tag v-else-if="row.type === 'room'" type="info" size="small">暂未认证</el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column label="家庭成员数" width="110" align="center">
+                        <el-table-column label="家庭成员数" min-width="110" align="center">
                             <template #default="{ row }">
                                 <span v-if="row.type === 'room' && row.certified">{{ row.family_count }} 人</span>
                             </template>
@@ -123,7 +123,7 @@
                                 <span v-if="row.type === 'room' && row.certified" class="text-tx-secondary text-xs">{{ row.family_info }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="认证时间" width="160">
+                        <el-table-column label="认证时间" min-width="170">
                             <template #default="{ row }">
                                 <span v-if="row.type === 'room'">{{ row.certified ? row.cert_time || '-' : '-' }}</span>
                             </template>
@@ -167,12 +167,12 @@
                                 <div class="flex items-center"><el-image :src="row.avatar" class="w-7 h-7 rounded-full mr-2 shrink-0" />{{ row.nickname }}</div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="mobile" label="手机号码" width="120" />
+                        <el-table-column prop="mobile" label="手机号码" min-width="120" />
                         <el-table-column label="金额" min-width="110" align="right"><template #default="{ row }">¥{{ row.amount }}</template></el-table-column>
-                        <el-table-column label="订单状态" width="100">
+                        <el-table-column label="订单状态" min-width="100">
                             <template #default="{ row }"><el-tag :type="orderStatusMap[row.status]?.type" size="small">{{ orderStatusMap[row.status]?.label }}</el-tag></template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="下单时间" width="160" />
+                        <el-table-column prop="create_time" label="下单时间" min-width="170" />
                     </el-table>
                 </el-tab-pane>
 
@@ -212,12 +212,12 @@
                                 <div class="flex items-center"><el-image :src="row.avatar" class="w-7 h-7 rounded-full mr-2 shrink-0" />{{ row.nickname }}</div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="mobile" label="手机号码" width="120" />
+                        <el-table-column prop="mobile" label="手机号码" min-width="120" />
                         <el-table-column label="金额" min-width="110" align="right"><template #default="{ row }">¥{{ row.amount }}</template></el-table-column>
-                        <el-table-column label="订单状态" width="100">
+                        <el-table-column label="订单状态" min-width="100">
                             <template #default="{ row }"><el-tag :type="orderStatusMap[row.status]?.type" size="small">{{ orderStatusMap[row.status]?.label }}</el-tag></template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="下单时间" width="160" />
+                        <el-table-column prop="create_time" label="下单时间" min-width="170" />
                     </el-table>
                 </el-tab-pane>
 
@@ -249,12 +249,12 @@
                                 <div class="flex items-center"><el-image :src="row.avatar" class="w-7 h-7 rounded-full mr-2 shrink-0" />{{ row.nickname }}</div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="mobile" label="手机号码" width="120" />
+                        <el-table-column prop="mobile" label="手机号码" min-width="120" />
                         <el-table-column label="金额" min-width="110" align="right"><template #default="{ row }">¥{{ row.amount }}</template></el-table-column>
-                        <el-table-column label="订单状态" width="100">
+                        <el-table-column label="订单状态" min-width="100">
                             <template #default="{ row }"><el-tag :type="orderStatusMap[row.status]?.type" size="small">{{ orderStatusMap[row.status]?.label }}</el-tag></template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="下单时间" width="160" />
+                        <el-table-column prop="create_time" label="下单时间" min-width="170" />
                     </el-table>
                 </el-tab-pane>
 
@@ -278,10 +278,10 @@
                                 <div class="flex items-center"><el-image :src="row.avatar" class="w-7 h-7 rounded-full mr-2 shrink-0" />{{ row.nickname }}</div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="mobile" label="手机号码" width="120" />
-                        <el-table-column label="托管单" width="90" align="center"><template #default="{ row }">{{ row.nursing_count }} 单</template></el-table-column>
+                        <el-table-column prop="mobile" label="手机号码" min-width="120" />
+                        <el-table-column label="托管单" min-width="90" align="center"><template #default="{ row }">{{ row.nursing_count }} 单</template></el-table-column>
                         <el-table-column label="托管金额" min-width="110" align="right"><template #default="{ row }">¥{{ row.nursing_amount }}</template></el-table-column>
-                        <el-table-column label="膳食单" width="90" align="center"><template #default="{ row }">{{ row.meal_count }} 单</template></el-table-column>
+                        <el-table-column label="膳食单" min-width="90" align="center"><template #default="{ row }">{{ row.meal_count }} 单</template></el-table-column>
                         <el-table-column label="膳食金额" min-width="110" align="right"><template #default="{ row }">¥{{ row.meal_amount }}</template></el-table-column>
                         <el-table-column label="未结算金额" min-width="120" align="right"><template #default="{ row }">¥{{ row.unsettled }}</template></el-table-column>
                         <el-table-column label="已结算金额" min-width="120" align="right"><template #default="{ row }">¥{{ row.settled }}</template></el-table-column>

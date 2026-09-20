@@ -48,8 +48,8 @@
                         <el-table-column label="消费金额" min-width="110" align="right">
                             <template #default="{ row }">¥{{ row.amount }}</template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="提交时间" width="160" />
-                        <el-table-column label="订单状态" width="100">
+                        <el-table-column prop="create_time" label="提交时间" min-width="170" />
+                        <el-table-column label="订单状态" min-width="100">
                             <template #default="{ row }">
                                 <el-tag :type="orderStatusMap[row.status]?.type" effect="light">
                                     {{ orderStatusMap[row.status]?.label }}
@@ -77,8 +77,8 @@
                         </el-card>
                     </div>
                     <el-table :data="userCoinLogs">
-                        <el-table-column prop="id" label="流水ID" width="80" />
-                        <el-table-column label="类型" width="90">
+                        <el-table-column prop="id" label="流水ID" min-width="80" />
+                        <el-table-column label="类型" min-width="90">
                             <template #default="{ row }">
                                 <el-tag :type="coinTypeMap[row.type]?.type" size="small">{{ coinTypeMap[row.type]?.label }}</el-tag>
                             </template>
@@ -91,7 +91,7 @@
                             </template>
                         </el-table-column>
                         <el-table-column prop="remark" label="说明" min-width="240" show-overflow-tooltip />
-                        <el-table-column prop="create_time" label="时间" width="160" />
+                        <el-table-column prop="create_time" label="时间" min-width="170" />
                     </el-table>
                     <el-empty v-if="!userCoinLogs.length" description="暂无账户明细记录" />
                 </el-tab-pane>
@@ -114,12 +114,12 @@
                         <el-table-column label="结算金额" min-width="120" align="right">
                             <template #default="{ row }">¥{{ row.amount }}</template>
                         </el-table-column>
-                        <el-table-column label="结算状态" width="100">
+                        <el-table-column label="结算状态" min-width="100">
                             <template #default="{ row }">
                                 <el-tag :type="settleStatusMap[row.status]?.type" size="small">{{ settleStatusMap[row.status]?.label }}</el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column label="结算时间" width="160">
+                        <el-table-column label="结算时间" min-width="170">
                             <template #default="{ row }">{{ row.settle_time || '-' }}</template>
                         </el-table-column>
                         <el-table-column label="操作" width="90" fixed="right">
@@ -136,38 +136,38 @@
                     <el-table :data="userBands" class="mb-4">
                         <el-table-column prop="band_sn" label="设备编号" min-width="160" />
                         <el-table-column prop="nickname" label="绑定人" min-width="110" />
-                        <el-table-column prop="bind_time" label="绑定时间" width="160" />
-                        <el-table-column label="状态" width="90">
+                        <el-table-column prop="bind_time" label="绑定时间" min-width="170" />
+                        <el-table-column label="状态" min-width="90">
                             <template #default="{ row }">
                                 <el-tag :type="row.status ? 'success' : 'info'" size="small">{{ row.status ? '在线' : '离线' }}</el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column label="电量" width="90" align="center">
+                        <el-table-column label="电量" min-width="90" align="center">
                             <template #default="{ row }">{{ row.battery }}%</template>
                         </el-table-column>
-                        <el-table-column label="心率" width="90" align="center">
+                        <el-table-column label="心率" min-width="90" align="center">
                             <template #default="{ row }">{{ row.heart_rate || '-' }}</template>
                         </el-table-column>
-                        <el-table-column label="步数" width="100" align="center">
+                        <el-table-column label="步数" min-width="100" align="center">
                             <template #default="{ row }">{{ row.steps || '-' }}</template>
                         </el-table-column>
                         <el-table-column label="睡眠" min-width="120">
                             <template #default="{ row }">{{ row.sleep || '-' }}</template>
                         </el-table-column>
-                        <el-table-column prop="last_sync" label="最近同步" width="160" />
+                        <el-table-column prop="last_sync" label="最近同步" min-width="160" />
                     </el-table>
                     <div class="font-bold mb-2">检测数据</div>
                     <el-table :data="userHealthData">
                         <el-table-column prop="type" label="检测项" min-width="110" />
                         <el-table-column prop="value" label="检测值" min-width="160" />
-                        <el-table-column label="结果" width="100">
+                        <el-table-column label="结果" min-width="100">
                             <template #default="{ row }">
                                 <el-tag :type="row.level === '正常' || row.level === '良好' || row.level === '达标' ? 'success' : 'warning'" size="small">
                                     {{ row.level }}
                                 </el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="test_time" label="检测时间" width="160" />
+                        <el-table-column prop="test_time" label="检测时间" min-width="170" />
                     </el-table>
                     <el-empty v-if="!userBands.length && !userHealthData.length" description="暂无绑定手环与健康数据" />
                 </el-tab-pane>
@@ -181,8 +181,8 @@
                         <el-table-column label="活动时间" min-width="200">
                             <template #default="{ row }">{{ activityTime(row.activity_id) }}</template>
                         </el-table-column>
-                        <el-table-column prop="signup_time" label="报名时间" width="160" />
-                        <el-table-column label="报名人数" width="100" align="center">
+                        <el-table-column prop="signup_time" label="报名时间" min-width="170" />
+                        <el-table-column label="报名人数" min-width="100" align="center">
                             <template #default="{ row }">{{ row.signup_count }} 人</template>
                         </el-table-column>
                         <el-table-column prop="remark" label="备注" min-width="160" show-overflow-tooltip />
@@ -201,12 +201,12 @@
                 <el-table-column label="金额" min-width="110" align="right">
                     <template #default="{ row }">¥{{ row.amount }}</template>
                 </el-table-column>
-                <el-table-column label="订单状态" width="100">
+                <el-table-column label="订单状态" min-width="100">
                     <template #default="{ row }">
                         <el-tag :type="orderStatusMap[row.status]?.type" size="small">{{ orderStatusMap[row.status]?.label }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="提交时间" width="160" />
+                <el-table-column prop="create_time" label="提交时间" min-width="170" />
             </el-table>
             <el-empty v-if="!settleDetailRows.length" description="该月份暂无结算明细" />
         </el-dialog>

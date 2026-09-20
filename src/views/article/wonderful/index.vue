@@ -33,21 +33,21 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column prop="id" label="文章ID" width="80" show-overflow-tooltip />
-                <el-table-column label="封面图" width="100">
+                <el-table-column prop="id" label="文章ID" min-width="80" show-overflow-tooltip />
+                <el-table-column label="封面图" min-width="100">
                     <template #default="{ row }">
                         <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
                             class="w-14 h-10 rounded" />
                     </template>
                 </el-table-column>
                 <el-table-column prop="title" label="标题" min-width="240" show-overflow-tooltip />
-                <el-table-column label="显示状态" width="90">
+                <el-table-column label="显示状态" min-width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="sort" label="排序" width="80" sortable  show-overflow-tooltip />
-                <el-table-column prop="create_time" label="添加时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="sort" label="排序" min-width="80" sortable  show-overflow-tooltip />
+                <el-table-column prop="create_time" label="添加时间" min-width="170" show-overflow-tooltip />
                 <el-table-column label="操作" width="190" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">详情</el-button>

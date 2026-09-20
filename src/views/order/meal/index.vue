@@ -46,8 +46,8 @@
                 </div>
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
-                <el-table-column prop="sn" label="订单编号" width="170" show-overflow-tooltip />
-                <el-table-column label="支付人" min-width="150">
+                <el-table-column prop="sn" label="订单编号" min-width="170" show-overflow-tooltip />
+                <el-table-column label="支付人" min-width="130">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-image :src="row.avatar" class="w-8 h-8 rounded-full mr-2" />
@@ -55,37 +55,37 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column label="是否需要配送" width="120">
+                <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column label="是否需要配送" min-width="110">
                     <template #default="{ row }">
                         <el-tag size="small" :type="row.need_delivery ? 'warning' : 'info'">
                             {{ row.need_delivery ? '需要配送' : '自取' }}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="building" label="楼栋" min-width="150" show-overflow-tooltip />
-                <el-table-column label="价格" width="110" align="right">
+                <el-table-column prop="building" label="楼栋" min-width="100" show-overflow-tooltip />
+                <el-table-column label="价格" min-width="100" align="right">
                     <template #default="{ row }">
                         <span class="text-orange-500 font-bold">¥{{ row.amount }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="订单状态" width="90">
+                <el-table-column label="订单状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="statusTag(row.status)">{{ statusMap[row.status] }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="支付状态" width="90">
+                <el-table-column label="支付状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="row.pay_status === 1 ? 'success' : 'info'">
                             {{ row.pay_status === 1 ? '已支付' : '未支付' }}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="下单时间" width="160" show-overflow-tooltip />
-                <el-table-column label="支付时间" width="160">
+                <el-table-column prop="create_time" label="下单时间" min-width="170" show-overflow-tooltip />
+                <el-table-column label="支付时间" min-width="170">
                     <template #default="{ row }">{{ row.pay_time || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="支付方式" width="110">
+                <el-table-column label="支付方式" min-width="110">
                     <template #default="{ row }">{{ row.pay_type || '—' }}</template>
                 </el-table-column>
                 <el-table-column label="操作" width="130" fixed="right">

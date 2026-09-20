@@ -36,7 +36,7 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column label="用户" width="160">
+                <el-table-column label="用户" min-width="130">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-avatar :size="28" :src="row.avatar" class="!mr-2" />
@@ -44,9 +44,9 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column prop="skill" label="认证技能" width="120" show-overflow-tooltip />
-                <el-table-column label="可服务类目" min-width="220">
+                <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column prop="skill" label="认证技能" min-width="100" show-overflow-tooltip />
+                <el-table-column label="可服务类目" min-width="200">
                     <template #default="{ row }">
                         <template v-if="row.categories?.length">
                             <el-tag v-for="c in row.categories" :key="c" size="small" class="!mr-1 !mb-1">{{ c }}</el-tag>
@@ -54,21 +54,21 @@
                         <span v-else class="text-tx-secondary">—</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="order_total" label="订单总数" width="90" align="center" show-overflow-tooltip />
-                <el-table-column prop="processing" label="进行中" width="90" align="center" show-overflow-tooltip />
-                <el-table-column prop="done" label="已完成" width="90" align="center" show-overflow-tooltip />
-                <el-table-column prop="canceled" label="已取消" width="90" align="center" show-overflow-tooltip />
-                <el-table-column label="完成订单总金额" width="130" align="right" show-overflow-tooltip>
+                <el-table-column prop="order_total" label="订单总数" min-width="80" align="center" show-overflow-tooltip />
+                <el-table-column prop="processing" label="进行中" min-width="80" align="center" show-overflow-tooltip />
+                <el-table-column prop="done" label="已完成" min-width="80" align="center" show-overflow-tooltip />
+                <el-table-column prop="canceled" label="已取消" min-width="80" align="center" show-overflow-tooltip />
+                <el-table-column label="完成订单总金额" min-width="120" align="right" show-overflow-tooltip>
                     <template #default="{ row }">
                         <span class="font-medium">¥{{ Number(row.done_amount).toFixed(2) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="人才状态" width="90">
+                <el-table-column label="人才状态" min-width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleStatus(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="添加时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="create_time" label="添加时间" min-width="170" show-overflow-tooltip />
                 <el-table-column label="操作" width="180" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openDetail(row)">人才详情</el-button>
@@ -160,23 +160,23 @@
                     </div>
                 </div>
                 <el-table :data="talentOrders" stripe max-height="320">
-                    <el-table-column label="服务封面图" width="100">
+                    <el-table-column label="服务封面图" min-width="100">
                         <template #default="{ row }">
                             <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
                                 class="w-14 h-10 rounded" />
                         </template>
                     </el-table-column>
                     <el-table-column prop="title" label="标题" min-width="160" show-overflow-tooltip />
-                    <el-table-column label="订单金额" width="100" align="right" show-overflow-tooltip>
+                    <el-table-column label="订单金额" min-width="100" align="right" show-overflow-tooltip>
                         <template #default="{ row }">¥{{ row.amount }}</template>
                     </el-table-column>
-                    <el-table-column prop="buyer" label="下单用户" width="110" show-overflow-tooltip />
-                    <el-table-column label="订单状态" width="90">
+                    <el-table-column prop="buyer" label="下单用户" min-width="110" show-overflow-tooltip />
+                    <el-table-column label="订单状态" min-width="90">
                         <template #default="{ row }">
                             <el-tag size="small" :type="orderTag(row.status)">{{ talentOrderStatus[row.status] }}</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column label="订单评价" width="170">
+                    <el-table-column label="订单评价" min-width="170">
                         <template #default="{ row }">
                             <el-tooltip v-if="row.score?.stars" :content="row.score.content || '暂无评语'" placement="top">
                                 <el-rate :model-value="row.score.stars" disabled size="small" />
@@ -184,8 +184,8 @@
                             <span v-else class="text-tx-secondary">未评价</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="submit_time" label="提交时间" width="160" show-overflow-tooltip />
-                    <el-table-column label="完成时间" width="160">
+                    <el-table-column prop="submit_time" label="提交时间" min-width="170" show-overflow-tooltip />
+                    <el-table-column label="完成时间" min-width="170">
                         <template #default="{ row }">{{ row.finish_time || '—' }}</template>
                     </el-table-column>
                 </el-table>
@@ -215,18 +215,18 @@
             <el-table ref="dispatchTableRef" :data="dispatchOrders" stripe max-height="420"
                 @selection-change="onSelectionChange">
                 <el-table-column type="selection" width="50" :selectable="canSelect" />
-                <el-table-column label="服务封面图" width="100">
+                <el-table-column label="服务封面图" min-width="100">
                     <template #default="{ row }">
                         <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
                             class="w-14 h-10 rounded" />
                     </template>
                 </el-table-column>
                 <el-table-column prop="title" label="服务标题" min-width="140" show-overflow-tooltip />
-                <el-table-column prop="spec" label="服务规格" width="150" show-overflow-tooltip />
-                <el-table-column label="订单金额" width="100" align="right" show-overflow-tooltip>
+                <el-table-column prop="spec" label="服务规格" min-width="150" show-overflow-tooltip />
+                <el-table-column label="订单金额" min-width="100" align="right" show-overflow-tooltip>
                     <template #default="{ row }">¥{{ row.amount }}</template>
                 </el-table-column>
-                <el-table-column label="下单用户" width="160">
+                <el-table-column label="下单用户" min-width="160">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-avatar :size="24" :src="row.avatar" class="!mr-2" />
@@ -234,18 +234,18 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="订单状态" width="100">
+                <el-table-column label="订单状态" min-width="100">
                     <template #default="{ row }">
                         <el-tag size="small" :type="orderTag(row.status)">{{ talentOrderStatus[row.status] }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="接单人" width="110">
+                <el-table-column label="接单人" min-width="110">
                     <template #default="{ row }">
                         <span v-if="row.staff">{{ row.staff }}</span>
                         <el-tag v-else size="small" type="warning">待派单</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="提交时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="create_time" label="提交时间" min-width="170" show-overflow-tooltip />
             </el-table>
             <template #footer>
                 <el-button @click="dispatchVisible = false">取消</el-button>

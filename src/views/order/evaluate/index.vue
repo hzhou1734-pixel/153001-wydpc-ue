@@ -36,7 +36,7 @@
                 </div>
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
-                <el-table-column prop="sn" label="订单编号" width="170" show-overflow-tooltip />
+                <el-table-column prop="sn" label="订单编号" min-width="170" show-overflow-tooltip />
                 <el-table-column prop="title" label="订单标题" min-width="180" show-overflow-tooltip />
                 <el-table-column label="用户" min-width="150">
                     <template #default="{ row }">
@@ -46,14 +46,14 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column label="评星" width="160">
+                <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column label="评星" min-width="160">
                     <template #default="{ row }">
                         <el-rate :model-value="row.stars" disabled allow-half size="small" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="评价时间" width="160" show-overflow-tooltip />
-                <el-table-column label="显示状态" width="90">
+                <el-table-column prop="create_time" label="评价时间" min-width="170" show-overflow-tooltip />
+                <el-table-column label="显示状态" min-width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0"
                             @change="toggleShow(row)" />

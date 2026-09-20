@@ -33,14 +33,14 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column label="封面图" width="90">
+                <el-table-column label="封面图" min-width="90">
                     <template #default="{ row }">
                         <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
                             class="w-14 h-10 rounded" />
                     </template>
                 </el-table-column>
                 <el-table-column prop="title" label="生活帮手标题" min-width="200" show-overflow-tooltip />
-                <el-table-column label="价格" width="140" align="right">
+                <el-table-column label="价格" min-width="140" align="right">
                     <template #default="{ row }">
                         <el-popover v-if="(row.specs || []).length > 1" placement="top" width="260" trigger="hover">
                             <template #reference>
@@ -57,17 +57,17 @@
                         <span v-else class="text-orange-500 font-bold">¥{{ minPrice(row) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="销量" width="90" align="center">
+                <el-table-column label="销量" min-width="90" align="center">
                     <template #default="{ row }">{{ row.sales ?? 0 }}</template>
                 </el-table-column>
-                <el-table-column label="状态" width="90">
+                <el-table-column label="状态" min-width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0"
                             @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="sort" label="排序" width="80" show-overflow-tooltip />
-                <el-table-column prop="create_time" label="添加时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="sort" label="排序" min-width="80" show-overflow-tooltip />
+                <el-table-column prop="create_time" label="添加时间" min-width="170" show-overflow-tooltip />
                 <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>

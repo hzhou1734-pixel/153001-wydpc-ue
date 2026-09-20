@@ -13,14 +13,14 @@
                         </div>
                     </template>
                     <el-table :data="propertyPager.lists" stripe>
-                        <el-table-column prop="month" label="所属月份" width="110" />
+                        <el-table-column prop="month" label="所属月份" min-width="110" />
                         <el-table-column prop="title" label="钱袋子标题" min-width="240" show-overflow-tooltip />
                         <el-table-column label="支出金额" min-width="120" align="right">
                             <template #default="{ row }">
                                 <span class="text-red-500 font-medium">¥{{ row.expense_amount }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="支出凭证" width="120" align="center">
+                        <el-table-column label="支出凭证" min-width="120" align="center">
                             <template #default="{ row }">
                                 <el-image
                                     v-if="row.expense_voucher"
@@ -38,7 +38,7 @@
                                 <span class="text-green-600 font-medium">¥{{ row.income_amount }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="收入凭证" width="120" align="center">
+                        <el-table-column label="收入凭证" min-width="120" align="center">
                             <template #default="{ row }">
                                 <el-image
                                     v-if="row.income_voucher"
@@ -56,7 +56,7 @@
                                 <span class="font-medium">¥{{ row.balance_amount }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="上传时间" width="160" />
+                        <el-table-column prop="create_time" label="上传时间" min-width="170" />
                     </el-table>
                     <div class="flex justify-end mt-4">
                         <el-pagination
@@ -82,9 +82,9 @@
                         </div>
                     </template>
                     <el-table :data="nursingPager.lists" stripe>
-                        <el-table-column prop="month" label="所属月份" width="110" />
+                        <el-table-column prop="month" label="所属月份" min-width="110" />
                         <el-table-column prop="title" label="钱袋子标题" min-width="240" show-overflow-tooltip />
-                        <el-table-column label="订单数量" width="100" align="center">
+                        <el-table-column label="订单数量" min-width="100" align="center">
                             <template #default="{ row }">{{ row.order_count }} 单</template>
                         </el-table-column>
                         <el-table-column label="预收金额" min-width="120" align="right">
@@ -100,7 +100,7 @@
                         <el-table-column label="每单单价" min-width="120" align="right">
                             <template #default="{ row }">¥{{ row.unit_price }}</template>
                         </el-table-column>
-                        <el-table-column label="结算凭证" width="120" align="center">
+                        <el-table-column label="结算凭证" min-width="120" align="center">
                             <template #default="{ row }">
                                 <el-image
                                     v-if="row.voucher"
@@ -113,7 +113,7 @@
                                 <span v-else class="text-tx-secondary">-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="上传时间" width="160" />
+                        <el-table-column prop="create_time" label="上传时间" min-width="170" />
                     </el-table>
                     <div class="flex justify-end mt-4">
                         <el-pagination
@@ -139,9 +139,9 @@
                         </div>
                     </template>
                     <el-table :data="mealPager.lists" stripe>
-                        <el-table-column prop="month" label="所属月份" width="110" />
+                        <el-table-column prop="month" label="所属月份" min-width="110" />
                         <el-table-column prop="title" label="钱袋子标题" min-width="240" show-overflow-tooltip />
-                        <el-table-column label="订单数量" width="100" align="center">
+                        <el-table-column label="订单数量" min-width="100" align="center">
                             <template #default="{ row }">{{ row.order_count }} 单</template>
                         </el-table-column>
                         <el-table-column label="预收金额" min-width="120" align="right">
@@ -157,7 +157,7 @@
                         <el-table-column label="每单单价" min-width="120" align="right">
                             <template #default="{ row }">¥{{ row.unit_price }}</template>
                         </el-table-column>
-                        <el-table-column label="结算凭证" width="120" align="center">
+                        <el-table-column label="结算凭证" min-width="120" align="center">
                             <template #default="{ row }">
                                 <el-image
                                     v-if="row.voucher"
@@ -170,7 +170,7 @@
                                 <span v-else class="text-tx-secondary">-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="create_time" label="上传时间" width="160" />
+                        <el-table-column prop="create_time" label="上传时间" min-width="170" />
                     </el-table>
                     <div class="flex justify-end mt-4">
                         <el-pagination

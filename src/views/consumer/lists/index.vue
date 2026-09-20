@@ -25,21 +25,21 @@
         <el-card class="!border-none mt-4" shadow="never">
             <template #header><span class="card-title">用户列表</span></template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
-                <el-table-column label="用户ID" prop="id" width="80" show-overflow-tooltip />
-                <el-table-column label="头像" width="86">
+                <el-table-column label="用户ID" prop="id" min-width="80" show-overflow-tooltip />
+                <el-table-column label="头像" min-width="86">
                     <template #default="{ row }">
                         <el-avatar :src="row.avatar" :size="44" />
                     </template>
                 </el-table-column>
                 <el-table-column label="昵称" prop="nickname" min-width="110" />
-                <el-table-column label="手机号码" prop="mobile" width="120" />
+                <el-table-column label="手机号码" prop="mobile" min-width="120" />
                 <el-table-column label="顾好家币" min-width="110" align="right">
                     <template #default="{ row }">¥{{ coinBalance(row.id) }}</template>
                 </el-table-column>
                 <el-table-column label="已完成订单总金额" min-width="150" align="right">
                     <template #default="{ row }">¥{{ completedAmount(row.mobile) }}</template>
                 </el-table-column>
-                <el-table-column label="账号状态" width="90">
+                <el-table-column label="账号状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag :type="row.status ? 'success' : 'danger'" effect="light">
                             {{ row.status ? '正常' : '已禁用' }}

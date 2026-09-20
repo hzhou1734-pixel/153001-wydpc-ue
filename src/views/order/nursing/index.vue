@@ -43,14 +43,14 @@
                 </div>
             </template>
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
-                <el-table-column prop="sn" label="订单编号" width="170" show-overflow-tooltip />
-                <el-table-column prop="service" label="托管名称" min-width="170" show-overflow-tooltip />
-                <el-table-column label="托管类型" width="170">
+                <el-table-column prop="sn" label="订单编号" min-width="170" show-overflow-tooltip />
+                <el-table-column prop="service" label="托管名称" min-width="150" show-overflow-tooltip />
+                <el-table-column label="托管类型" min-width="160">
                     <template #default="{ row }">
                         <el-tag v-for="t in row.type" :key="t" size="small" effect="light" :type="typeTag(t)" class="mr-1">{{ t }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="价格" width="110" align="right">
+                <el-table-column label="价格" min-width="110" align="right">
                     <template #default="{ row }">
                         <span class="text-orange-500 font-bold">¥{{ row.price }}</span>
                     </template>
@@ -63,14 +63,14 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column prop="building" label="所属楼栋" min-width="150" show-overflow-tooltip />
-                <el-table-column label="订单状态" width="90">
+                <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column prop="building" label="所属楼栋" min-width="100" show-overflow-tooltip />
+                <el-table-column label="订单状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="statusTag(row.status)">{{ statusMap[row.status] }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="下单时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="create_time" label="下单时间" min-width="170" show-overflow-tooltip />
                 <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button size="small" type="primary" :disabled="!canDispatch(row)"

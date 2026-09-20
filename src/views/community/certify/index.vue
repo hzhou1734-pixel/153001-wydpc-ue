@@ -57,31 +57,31 @@
             </el-form>
 
             <el-table :data="pager.lists" border>
-                <el-table-column prop="user_id" label="用户ID" width="80" />
-                <el-table-column label="头像" width="80" align="center">
+                <el-table-column prop="user_id" label="用户ID" min-width="80" />
+                <el-table-column label="头像" min-width="80" align="center">
                     <template #default="{ row }">
                         <el-image :src="row.avatar" class="w-8 h-8 rounded-full" :preview-src-list="[row.avatar]" preview-teleported />
                     </template>
                 </el-table-column>
                 <el-table-column prop="nickname" label="昵称" min-width="100" show-overflow-tooltip />
-                <el-table-column prop="mobile" label="手机号码" width="120" />
-                <el-table-column prop="community" label="小区" min-width="150" show-overflow-tooltip />
-                <el-table-column prop="building" label="楼栋" width="90" />
-                <el-table-column prop="room" label="房号" width="90" />
-                <el-table-column prop="job" label="职业" min-width="110" show-overflow-tooltip />
-                <el-table-column label="家庭人口" width="100" align="center">
+                <el-table-column prop="mobile" label="手机号码" min-width="120" />
+                <el-table-column prop="community" label="小区" min-width="130" show-overflow-tooltip />
+                <el-table-column prop="building" label="楼栋" min-width="90" />
+                <el-table-column prop="room" label="房号" min-width="90" />
+                <el-table-column prop="job" label="职业" min-width="100" show-overflow-tooltip />
+                <el-table-column label="家庭人口" min-width="90" align="center">
                     <template #default="{ row }">{{ row.family_count }} 人</template>
                 </el-table-column>
-                <el-table-column prop="hobby" label="兴趣爱好" min-width="140" show-overflow-tooltip />
-                <el-table-column label="审核状态" width="90">
+                <el-table-column prop="hobby" label="兴趣爱好" min-width="120" show-overflow-tooltip />
+                <el-table-column label="审核状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag :type="row.status === 0 ? 'warning' : row.status === 1 ? 'success' : 'danger'" size="small">
                             {{ row.status === 0 ? '待审核' : row.status === 1 ? '已通过' : '已驳回' }}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="提交时间" width="160" />
-                <el-table-column label="审核时间" width="160">
+                <el-table-column prop="create_time" label="提交时间" min-width="170" />
+                <el-table-column label="审核时间" min-width="170">
                     <template #default="{ row }">{{ row.audit_time || '-' }}</template>
                 </el-table-column>
                 <el-table-column label="操作" width="150" fixed="right">

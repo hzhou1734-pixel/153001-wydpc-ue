@@ -41,7 +41,7 @@
                         <span>{{ row.title }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="提交用户" width="170">
+                <el-table-column label="提交用户" min-width="170">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-avatar :size="28" :src="row.avatar" class="!mr-2" />
@@ -49,8 +49,8 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column label="认证凭证" width="160">
+                <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column label="认证凭证" min-width="160">
                     <template #default="{ row }">
                         <div class="flex items-center">
                             <el-image v-for="(img, i) in row.cert_images.slice(0, 3)" :key="i" :src="img"
@@ -60,13 +60,13 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="submit_time" label="提交时间" width="160" show-overflow-tooltip />
-                <el-table-column label="审核状态" width="100">
+                <el-table-column prop="submit_time" label="提交时间" min-width="170" show-overflow-tooltip />
+                <el-table-column label="审核状态" min-width="100">
                     <template #default="{ row }">
                         <el-tag size="small" :type="statusTag(row.status)">{{ statusText(row.status) }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="审核时间" width="160">
+                <el-table-column label="审核时间" min-width="170">
                     <template #default="{ row }">{{ row.audit_time || '—' }}</template>
                 </el-table-column>
                 <el-table-column label="操作" width="200" fixed="right">

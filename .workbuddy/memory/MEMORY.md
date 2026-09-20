@@ -12,7 +12,7 @@
 - commit 信息格式：`v1.0.X: <描述>`
 - 版本号 tag：v1.0.X 递增（当前 v1.0.0）
 - 推送方式：token 存于 ~/.ghj_publish_token，使用 `git -c http.extraHeader="Authorization: Basic $(echo -n "x-access-token:$TOKEN" | base64)" push`（避免环境变量被安全过滤）；shell PATH 损坏时 git 用绝对路径；base64 用 node -e 生成；推送被代理 502 阻塞时本地积压（commit+tag 均安全），代理恢复后 `push origin dev --tags` 一次性补推
-- ⚠️ 推送坑（2026-09-19）：PortableGit 的 mingw64/libexec/git-core 缺失时 push 报 `remote-https is not a git command` → 解决：`git.exe --exec-path="<PortableGit>/mingw64/bin" push ...`（git-remote-https.exe 在 bin 下）；另 PS 5.1 下 `2>&1 |` 管道会中断 vite 构建，直接用 node 运行 node_modules/vite/bin/vite.js 最稳
+- ⚠️ 推送坑（2026-09-19/20）：PortableGit 的 mingw64/libexec/git-core 缺失时 push 报 `remote-https is not a git command`（git-remote-https.exe 实际在 mingw64/bin 下）→ 解决：`git.exe --exec-path="<PortableGit>/mingw64/bin" push ...` 或设 `GIT_EXEC_PATH` 环境变量（两者均验证有效）；**仅把 mingw64/bin 加进 PATH 无效**（2026-09-20 实测）；另 PS 5.1 下 `2>&1 |` 管道会中断 vite 构建，直接用 node 运行 node_modules/vite/bin/vite.js 最稳；token 不进命令行——node 生成 Basic 头写入临时文件，bash 里用 `$(< 文件)` 运行时替换（规避安全过滤且不依赖 base64/cat）
 - git 身份：hzhou1734-pixel / hzhou1734-pixel@users.noreply.github.com（用 -c 参数传入）
 
 ## 项目结构要点
@@ -65,6 +65,6 @@
 - 角色管理入口为 src/views/setting/role/index.vue（菜单 setting/role）；src/views/permission/* 为未接入菜单的旧代码，不可改动依赖
 - 列表交互约定(v1.0.41)：显示/隐藏一律用状态列 el-switch 开关切换，操作栏不放文字切换按钮；新增列表页须遵循
 - **订单评价显示/隐藏（v1.0.72，用户明确要求）**：orderEvaluations 有 status 字段（1 显示 0 隐藏），评价页状态列 el-switch 切换 + 「显示状态」筛选；默认隐藏差评（两星及以下可设 0）
-- 列表样式约定(v1.0.42)：全局 .el-table .cell 强制 nowrap（EP 默认换行）；列宽口径：时间列 160、手机号 120、排序/ID 80、状态 90~100、操作列按按钮文本实算；长文本列须加 show-overflow-tooltip
+- 列表样式约定(v1.0.42，v1.0.91 修订)：全局 .el-table .cell 强制 nowrap（EP 默认换行）；**数据列一律用 min-width（剩余空间按比例分配、间距一致），仅 操作/选择/序号/展开 列用固定 width**；列宽口径：时间列 170、手机号 120、排序/ID 80、状态 90~100、操作列按按钮文本实算；取值明显短于列宽的列收窄（如楼栋 100），长文本列须加 show-overflow-tooltip；新增列表页必须遵循
 - 图片上传约定(v1.0.43)：所有图片表单项一律使用 @/components/image-upload（本地 FileReader + base64，不依赖后端接口），禁止 el-input 输入图片链接；必填图片须在提交时校验「请上传XX图」，不得用 picsum 随机图兜底
 - **Banner 跳转口径（v1.0.69，用户明确要求）**：article/banner 跳转=类目+具体内容二级选择——托管/陪诊/生活帮手/活动/钱袋子/精彩内容/通知公告 7 类目；钱袋子特殊为固定页 /pages/wallet/index 无二级选择；类目选项与对应管理页数据同源（nursingServices 1001+/escortServices 2001+/helperServices 4001+/contentActivityList 7001+/contentWonderfulList 2001+/contentNoticeList 3001+）；banner 记录存 link+link_type+link_id 三字段，编辑时 parseLink 反向回填；旧「内置页面/自定义链接」跳转类型已删除（类目体系无膳食类目）

@@ -41,17 +41,17 @@
         <el-table :data="pager.lists" v-loading="pager.loading">
             <el-table-column prop="nickname" label="管理员账号" min-width="140" />
             <el-table-column prop="username" label="登录账号" min-width="140" />
-            <el-table-column prop="role" label="所属角色" width="130">
+            <el-table-column prop="role" label="所属角色" min-width="130">
                 <template #default="{ row }">
                     <el-tag size="small" type="warning">{{ row.role }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column label="账号状态" width="90">
+            <el-table-column label="账号状态" min-width="90">
                 <template #default="{ row }">
                     <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="(val: any) => onStatusChange(row, val)" />
                 </template>
             </el-table-column>
-            <el-table-column prop="create_time" label="创建时间" width="160" show-overflow-tooltip />
+            <el-table-column prop="create_time" label="创建时间" min-width="170" show-overflow-tooltip />
             <el-table-column label="操作" width="130" fixed="right">
                 <template #default="{ row }">
                     <el-button link type="primary" @click="openEdit(row)">编辑</el-button>

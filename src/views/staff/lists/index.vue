@@ -258,17 +258,17 @@ function toggleStatus(row: any) {
             </el-form>
 
             <el-table :data="pager.lists">
-                <el-table-column prop="id" label="员工ID" width="80" />
-                <el-table-column label="头像" width="80" align="center">
+                <el-table-column prop="id" label="员工ID" min-width="80" />
+                <el-table-column label="头像" min-width="80" align="center">
                     <template #default="{ row }"><el-avatar :size="36" :src="row.avatar" /></template>
                 </el-table-column>
                 <el-table-column prop="name" label="姓名" min-width="110" />
-                <el-table-column prop="mobile" label="登录账号" width="120">
+                <el-table-column prop="mobile" label="登录账号" min-width="120">
                     <template #default="{ row }">
                         <span>{{ row.mobile }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="角色" width="120">
+                <el-table-column label="角色" min-width="120">
                     <template #default="{ row }">
                         <el-tag :type="['primary', 'success', 'warning'][row.role_id - 1] || 'info'" effect="light">
                             {{ row.role }}
@@ -284,12 +284,12 @@ function toggleStatus(row: any) {
                 <el-table-column label="累计收益" min-width="140" align="right">
                     <template #default="{ row }">¥{{ row.earnings }}</template>
                 </el-table-column>
-                <el-table-column label="账号状态" width="90" align="center">
+                <el-table-column label="账号状态" min-width="90" align="center">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status === 1" @change="toggleStatus(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="添加时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="create_time" label="添加时间" min-width="170" show-overflow-tooltip />
                 <el-table-column label="操作" width="190" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>

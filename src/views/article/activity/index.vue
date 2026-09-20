@@ -33,32 +33,32 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column label="封面图" width="100">
+                <el-table-column label="封面图" min-width="90">
                     <template #default="{ row }">
                         <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
                             class="w-14 h-10 rounded" />
                     </template>
                 </el-table-column>
-                <el-table-column label="标题" min-width="200" show-overflow-tooltip>
+                <el-table-column label="标题" min-width="180" show-overflow-tooltip>
                     <template #default="{ row }">
                         <span>{{ row.title }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="活动状态" width="100">
+                <el-table-column label="活动状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag size="small" :type="isEnded(row) ? 'info' : 'success'">{{ isEnded(row) ? '已结束' : '报名中' }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="activity_time" label="活动时间" min-width="180" show-overflow-tooltip />
-                <el-table-column label="报名人数" width="100">
+                <el-table-column label="报名人数" min-width="90">
                     <template #default="{ row }">
                         <span class="font-medium">{{ row.signup }}</span>
                         <span class="text-tx-secondary"> 人</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="sort" label="排序" width="80" sortable  show-overflow-tooltip />
-                <el-table-column prop="create_time" label="发布时间" width="160" show-overflow-tooltip />
-                <el-table-column label="显示状态" width="90">
+                <el-table-column prop="sort" label="排序" min-width="80" sortable  show-overflow-tooltip />
+                <el-table-column prop="create_time" label="发布时间" min-width="170" show-overflow-tooltip />
+                <el-table-column label="显示状态" min-width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0" @change="toggleShow(row)" />
                     </template>
@@ -159,8 +159,8 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="phone" label="手机号码" width="120" show-overflow-tooltip />
-                <el-table-column prop="signup_time" label="报名时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="phone" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column prop="signup_time" label="报名时间" min-width="170" show-overflow-tooltip />
             </el-table>
             <template #footer>
                 <el-button @click="signupVisible = false">关闭</el-button>

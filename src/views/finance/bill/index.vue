@@ -51,7 +51,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="手机号码" width="120" />
+                <el-table-column prop="mobile" label="手机号码" min-width="120" />
                 <el-table-column label="预付金额" min-width="120" align="right">
                     <template #default="{ row }">
                         <span class="font-medium">¥{{ row.prepay_amount }}</span>
@@ -62,7 +62,7 @@
                         <span class="text-red-500 font-medium">¥{{ row.refund_amount }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="settle_time" label="结算时间" width="160">
+                <el-table-column prop="settle_time" label="结算时间" min-width="170">
                     <template #default="{ row }">{{ row.settle_time || '-' }}</template>
                 </el-table-column>
                 <el-table-column label="操作" width="90" fixed="right">
@@ -103,7 +103,7 @@
 
             <div class="section-title">账单明细</div>
             <el-table :data="detailState.row.items || []" border stripe size="small">
-                <el-table-column label="订单类型" width="100">
+                <el-table-column label="订单类型" min-width="100">
                     <template #default="{ row }">
                         <el-tag size="small" :type="row.type === '托管' ? 'success' : 'warning'">
                             {{ row.type }}
@@ -112,13 +112,13 @@
                 </el-table-column>
                 <el-table-column prop="sn" label="订单编号" min-width="160" show-overflow-tooltip />
                 <el-table-column prop="service" label="服务名称" min-width="200" show-overflow-tooltip />
-                <el-table-column label="预付金额" width="120" align="right">
+                <el-table-column label="预付金额" min-width="120" align="right">
                     <template #default="{ row }">¥{{ row.prepay_amount }}</template>
                 </el-table-column>
-                <el-table-column label="退还金额" width="120" align="right">
+                <el-table-column label="退还金额" min-width="120" align="right">
                     <template #default="{ row }">¥{{ row.refund_amount }}</template>
                 </el-table-column>
-                <el-table-column prop="create_time" label="下单时间" width="160" />
+                <el-table-column prop="create_time" label="下单时间" min-width="170" />
             </el-table>
         </el-dialog>
     </div>

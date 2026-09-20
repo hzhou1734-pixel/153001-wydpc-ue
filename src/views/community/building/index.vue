@@ -33,13 +33,13 @@
             </el-form>
 
             <el-table :data="treeList" v-loading="loading" row-key="id" default-expand-all border :tree-props="{ children: 'children' }">
-                <el-table-column label="楼栋 / 房号" min-width="180">
+                <el-table-column label="楼栋 / 房号" min-width="150">
                     <template #default="{ row }">
                         <span v-if="row.type === 'building'" class="font-bold">{{ row.name }}</span>
                         <span v-else>房号 {{ row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="小区名称" min-width="160">
+                <el-table-column label="小区名称" min-width="140">
                     <template #default="{ row }">
                         <span v-if="row.type === 'building'">{{ row.community_name }}</span>
                     </template>
@@ -49,17 +49,17 @@
                         <span v-if="row.type === 'building'">{{ row.keeper_name || '未设置' }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="管家电话" width="120">
+                <el-table-column label="管家电话" min-width="120">
                     <template #default="{ row }">
                         <span v-if="row.type === 'building'">{{ row.keeper_mobile || '-' }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="房数" width="80" align="center">
+                <el-table-column label="房数" min-width="80" align="center">
                     <template #default="{ row }">
                         <span v-if="row.type === 'building'">{{ (row.children || []).length }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="认证业主" min-width="240">
+                <el-table-column label="认证业主" min-width="120">
                     <template #default="{ row }">
                         <template v-if="row.type === 'room'">
                             <div class="owner-cert flex items-center gap-2 py-1.5 pl-2 pr-3 rounded-lg border" :class="row.certified ? 'is-yes' : 'is-no'">
@@ -83,17 +83,17 @@
                         </template>
                     </template>
                 </el-table-column>
-                <el-table-column label="家庭成员数" width="110" align="center">
+                <el-table-column label="家庭成员数" min-width="110" align="center">
                     <template #default="{ row }">
                         <span v-if="row.type === 'room'">{{ row.certified ? `${row.family_count} 人` : '-' }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="认证时间" width="160">
+                <el-table-column label="认证时间" min-width="170">
                     <template #default="{ row }">
                         <span v-if="row.type === 'room'">{{ row.certified ? row.cert_time || '-' : '-' }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="排序" width="80" align="center">
+                <el-table-column label="排序" min-width="80" align="center">
                     <template #default="{ row }">
                         <span v-if="row.type === 'building'">{{ row.sort }}</span>
                     </template>

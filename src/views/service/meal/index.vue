@@ -32,14 +32,14 @@
                     </div>
                 </template>
                 <el-table :data="currentMenu[meal.key]" stripe>
-                    <el-table-column label="图片" width="100">
+                    <el-table-column label="图片" min-width="100">
                         <template #default="{ row }">
                             <el-image :src="row.image" :preview-src-list="[row.image]" preview-teleported fit="cover"
                                 class="w-14 h-10 rounded" />
                         </template>
                     </el-table-column>
                     <el-table-column prop="text" label="菜品名称" min-width="260" show-overflow-tooltip />
-                    <el-table-column label="价格" width="120" align="right">
+                    <el-table-column label="价格" min-width="120" align="right">
                         <template #default="{ row }">
                             <span class="text-orange-500 font-bold">¥{{ money(row.price) }}</span>
                         </template>

@@ -18,19 +18,19 @@
             </div>
         </template>
         <el-table :data="filteredList">
-            <el-table-column prop="id" label="角色ID" width="80" />
+            <el-table-column prop="id" label="角色ID" min-width="80" />
             <el-table-column prop="name" label="角色名称" min-width="140">
                 <template #default="{ row }">
                     <el-tag size="small" type="primary">{{ row.name }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column prop="desc" label="角色说明" min-width="300" show-overflow-tooltip />
-            <el-table-column label="权限数量" width="100">
+            <el-table-column label="权限数量" min-width="100">
                 <template #default="{ row }">
                     <span>{{ permCountMap[row.id] ?? 0 }} 项</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="create_time" label="创建时间" width="160" show-overflow-tooltip />
+            <el-table-column prop="create_time" label="创建时间" min-width="170" show-overflow-tooltip />
             <el-table-column label="操作" width="210" fixed="right">
                 <template #default="{ row }">
                     <el-button link type="primary" @click="openEdit(row)">编辑</el-button>

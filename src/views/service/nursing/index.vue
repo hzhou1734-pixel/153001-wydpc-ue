@@ -43,19 +43,19 @@
                         <span>{{ row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="价格" width="110" align="right">
+                <el-table-column label="价格" min-width="110" align="right">
                     <template #default="{ row }">
                         <span class="text-orange-500 font-bold">¥{{ money(row.price) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="状态" width="90">
+                <el-table-column label="状态" min-width="90">
                     <template #default="{ row }">
                         <el-switch :model-value="row.status" :active-value="1" :inactive-value="0"
                             @change="toggleShow(row)" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="sort" label="排序" width="80" show-overflow-tooltip />
-                <el-table-column prop="create_time" label="添加时间" width="160" show-overflow-tooltip />
+                <el-table-column prop="sort" label="排序" min-width="80" show-overflow-tooltip />
+                <el-table-column prop="create_time" label="添加时间" min-width="170" show-overflow-tooltip />
                 <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button link type="primary" @click="openEdit(row)">编辑</el-button>
