@@ -49,7 +49,7 @@ export const settleDetails: Record<string, any[]> = {
         { id: 5, sn: 'SC20260828004', type: '膳食单', title: '早餐 + 午餐全天组合', amount: '382.00', status: 3, create_time: '2026-08-28 07:50:00' },
     ],
     '3': [
-        { id: 6, sn: 'PZ20260809001', type: '陪诊单', title: '专家门诊陪诊（时价）', amount: '368.00', status: 3, create_time: '2026-08-09 08:30:00' },
+        { id: 6, sn: 'PZ20260809001', type: '陪诊单', title: '专家门诊陪诊', amount: '198.00', status: 3, create_time: '2026-08-09 08:30:00' },
     ],
     '4': [
         { id: 7, sn: 'TG20260815002', type: '托管单', title: '日托·8月第二期', amount: '960.00', status: 3, create_time: '2026-08-15 09:00:00' },
@@ -64,7 +64,7 @@ export const settleDetails: Record<string, any[]> = {
         { id: 10, sn: 'TG20260822002', type: '托管单', title: '学期每日托·2026秋季', amount: '2160.00', status: 3, create_time: '2026-08-22 16:20:00' },
     ],
     '8': [
-        { id: 11, sn: 'PZ20260825001', type: '陪诊单', title: '住院陪护（时价）', amount: '540.00', status: 2, create_time: '2026-08-25 19:00:00' },
+        { id: 11, sn: 'PZ20260825001', type: '陪诊单', title: '老人专属陪诊', amount: '268.00', status: 2, create_time: '2026-08-25 19:00:00' },
     ],
     '9': [
         { id: 12, sn: 'SC20260811001', type: '膳食单', title: '全日三餐组合', amount: '150.00', status: 3, create_time: '2026-08-11 12:00:00' },

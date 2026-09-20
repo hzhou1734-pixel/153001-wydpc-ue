@@ -142,7 +142,7 @@ export function getNursingServiceList(params?: Record<string, any>) {
 export function getEscortServiceList(params?: Record<string, any>) {
     return page(escortServices, params)
 }
-/** 陪诊服务单价设置（元/小时） */
+/** 陪诊服务计价设置（仅支持半天 / 整天，不按小时计费） */
 export function getEscortPriceSetting() {
     return Promise.resolve({ ...escortPriceSetting })
 }

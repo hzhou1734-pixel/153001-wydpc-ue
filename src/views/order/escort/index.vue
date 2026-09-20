@@ -61,6 +61,11 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <el-table-column label="计费方式" min-width="90">
+                    <template #default="{ row }">
+                        <el-tag size="small" :type="row.charge_type === '整天' ? 'warning' : 'info'">{{ row.charge_type }}</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="金额" min-width="110" align="right">
                     <template #default="{ row }">
                         <span class="text-orange-500 font-bold">¥{{ row.amount }}</span>
@@ -124,8 +129,8 @@
                     <el-descriptions-item label="就诊医院" :span="2">{{ detailRow.hospital }}</el-descriptions-item>
                     <el-descriptions-item label="就诊科室" :span="2">{{ detailRow.department }}</el-descriptions-item>
                     <el-descriptions-item label="陪诊时间" :span="2">{{ detailRow.escort_date }}</el-descriptions-item>
-                    <el-descriptions-item label="陪诊时长">{{ detailRow.hours }} 小时</el-descriptions-item>
-                    <el-descriptions-item label="时薪标准">¥{{ detailRow.hour_price }} / 小时</el-descriptions-item>
+                    <el-descriptions-item label="计费方式">{{ detailRow.charge_type }}</el-descriptions-item>
+                    <el-descriptions-item label="服务单价">¥{{ detailRow.price }}</el-descriptions-item>
                     <el-descriptions-item label="被陪诊人">{{ detailRow.patient_name }}（{{ detailRow.patient_mobile }}）
                     </el-descriptions-item>
                     <el-descriptions-item label="陪诊员工">{{ detailRow.staff || '未派单' }}</el-descriptions-item>
@@ -154,8 +159,8 @@
 
                 <div class="section-title">金额信息</div>
                 <el-descriptions :column="2" border class="mb-4">
-                    <el-descriptions-item label="陪诊时长">{{ detailRow.hours }} 小时</el-descriptions-item>
-                    <el-descriptions-item label="时薪标准">¥{{ detailRow.hour_price }}</el-descriptions-item>
+                    <el-descriptions-item label="计费方式">{{ detailRow.charge_type }}</el-descriptions-item>
+                    <el-descriptions-item label="服务单价">¥{{ detailRow.price }}</el-descriptions-item>
                     <el-descriptions-item label="服务金额">
                         <span class="text-orange-500 font-bold">¥{{ detailRow.amount }}</span>
                     </el-descriptions-item>
