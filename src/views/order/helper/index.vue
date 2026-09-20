@@ -95,7 +95,7 @@
         </el-card>
 
         <!-- 订单关联：从人才库选择接单人 -->
-        <el-dialog v-model="showRelate" title="订单关联" width="720px">
+        <el-dialog v-model="showRelate" title="订单关联" width="820px">
             <el-alert type="info" :closable="false" class="mb-4"
                 title="关联后该订单由所选人才库用户与业主线下对接完成，状态更新为服务中。" />
             <el-table :data="talentOptions" size="small" highlight-current-row @current-change="handleTalentChange">
@@ -118,6 +118,14 @@
                         <el-tag v-for="skill in row.skills" :key="skill" size="small" effect="light" class="mr-1">
                             {{ skill }}
                         </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="历史评分" width="160">
+                    <template #default="{ row }">
+                        <div class="flex items-center">
+                            <el-rate :model-value="Number(row.stars)" disabled allow-half size="small" class="mr-1" />
+                            <span class="text-orange-500 font-bold">{{ row.stars }}</span>
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column label="接单量" width="90" align="right" prop="orders" />
