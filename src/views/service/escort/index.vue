@@ -33,7 +33,13 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column label="陪诊服务标题" min-width="220" show-overflow-tooltip>
+                <el-table-column label="封面图" min-width="90">
+                    <template #default="{ row }">
+                        <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
+                            class="w-14 h-10 rounded" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="陪诊服务标题" min-width="200" show-overflow-tooltip>
                     <template #default="{ row }">
                         <div>{{ row.name }}</div>
                         <div v-if="row.sub_title" class="text-xs text-tx-secondary">{{ row.sub_title }}</div>
@@ -82,7 +88,7 @@
                 <el-form-item label="副标题">
                     <el-input v-model="editForm.sub_title" placeholder="如：全程陪同 · 代排队取号" maxlength="30" show-word-limit />
                 </el-form-item>
-                <el-form-item label="服务封面图">
+                <el-form-item label="服务封面图" required>
                     <ImageUpload v-model="editForm.cover" :width="160" :height="100"
                         tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
@@ -195,13 +201,14 @@ const openEdit = (row: any) => {
 }
 const submitEdit = () => {
     if (!editForm.name.trim()) return ElMessage.warning('请输入陪诊服务标题')
+    if (!editForm.cover) return ElMessage.warning('请上传封面图')
     if (!hasPrice(editForm.half_price) && !hasPrice(editForm.day_price)) {
         return ElMessage.warning('半天价格与整天价格至少填写一项')
     }
     const payload = {
         name: editForm.name.trim(),
         sub_title: editForm.sub_title.trim(),
-        cover: editForm.cover || `https://picsum.photos/seed/ghj-escort-${Date.now() % 1000}/400/300`,
+        cover: editForm.cover,
         half_price: hasPrice(editForm.half_price) ? Number(editForm.half_price) : null,
         day_price: hasPrice(editForm.day_price) ? Number(editForm.day_price) : null,
         detail: editForm.detail,

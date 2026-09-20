@@ -33,7 +33,13 @@
             </el-form>
 
             <el-table :data="pager.lists" stripe v-loading="pager.loading">
-                <el-table-column label="托管服务标题" min-width="220" show-overflow-tooltip>
+                <el-table-column label="封面图" min-width="90">
+                    <template #default="{ row }">
+                        <el-image :src="row.cover" :preview-src-list="[row.cover]" preview-teleported fit="cover"
+                            class="w-14 h-10 rounded" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="托管服务标题" min-width="190" show-overflow-tooltip>
                     <template #default="{ row }">
                         <span>{{ row.name }}</span>
                     </template>
@@ -70,6 +76,10 @@
             <el-form :model="editForm" label-width="110px">
                 <el-form-item label="托管服务标题" required>
                     <el-input v-model="editForm.name" placeholder="请输入托管服务标题" maxlength="30" show-word-limit />
+                </el-form-item>
+                <el-form-item label="封面图" required>
+                    <ImageUpload v-model="editForm.cover" :width="160" :height="100"
+                        tip="建议尺寸 400×300，支持 jpg/png/webp，5MB 以内" />
                 </el-form-item>
                 <el-form-item label="接单价">
                     <el-input-number v-model="editForm.price_pickup" :min="0" :precision="2" :step="1" />
@@ -114,6 +124,7 @@
 import { nursingServices } from '@/mock/data_service'
 import { usePaging } from '@/hooks/usePaging'
 import { Search, Plus } from '@element-plus/icons-vue'
+import ImageUpload from '@/components/image-upload/index.vue'
 
 const money = (val: any) => Number(val || 0).toFixed(2)
 
@@ -158,12 +169,12 @@ const resetQuery = () => {
 // ==================== 添加 / 编辑 ====================
 const editVisible = ref(false)
 const editForm = reactive({
-    id: 0, name: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0, desc: '', sort: 0, status: 1
+    id: 0, name: '', cover: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0, desc: '', sort: 0, status: 1
 })
 
 const openAdd = () => {
     Object.assign(editForm, {
-        id: 0, name: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0,
+        id: 0, name: '', cover: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0,
         desc: '', sort: nursingServices.length + 1, status: 1
     })
     editVisible.value = true
@@ -172,6 +183,7 @@ const openEdit = (row: any) => {
     Object.assign(editForm, {
         id: row.id,
         name: row.name,
+        cover: row.cover || '',
         price_pickup: Number(row.price_pickup) || 0,
         price_send: Number(row.price_send) || 0,
         price_meal: Number(row.price_meal) || 0,
@@ -184,8 +196,10 @@ const openEdit = (row: any) => {
 }
 const submitEdit = () => {
     if (!editForm.name.trim()) return ElMessage.warning('请输入托管服务标题')
+    if (!editForm.cover) return ElMessage.warning('请上传封面图')
     const payload = {
         name: editForm.name.trim(),
+        cover: editForm.cover,
         price_pickup: Number(editForm.price_pickup) || 0,
         price_send: Number(editForm.price_send) || 0,
         price_meal: Number(editForm.price_meal) || 0,

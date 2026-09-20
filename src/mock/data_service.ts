@@ -8,6 +8,8 @@
 export interface NursingItem {
     id: number
     name: string
+    /** 封面图 */
+    cover: string
     /** 上门接单价（0 表示不提供） */
     price_pickup: number
     /** 送回单价（0 表示不提供） */
@@ -26,6 +28,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1001,
         name: '幼儿全日托（1.5-3岁）',
+        cover: 'https://picsum.photos/seed/ghj-nursing-1/400/300',
         price_pickup: 15,
         price_send: 15,
         price_meal: 25,
@@ -38,6 +41,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1002,
         name: '小学生放学日托',
+        cover: 'https://picsum.photos/seed/ghj-nursing-2/400/300',
         price_pickup: 10,
         price_send: 10,
         price_meal: 18,
@@ -50,6 +54,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1003,
         name: '幼儿半日托（上午班）',
+        cover: 'https://picsum.photos/seed/ghj-nursing-3/400/300',
         price_pickup: 15,
         price_send: 15,
         price_meal: 20,
@@ -62,6 +67,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1004,
         name: '学期每日托·标准班',
+        cover: 'https://picsum.photos/seed/ghj-nursing-4/400/300',
         price_pickup: 8,
         price_send: 8,
         price_meal: 15,
@@ -74,6 +80,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1005,
         name: '学期每日托·晚托班',
+        cover: 'https://picsum.photos/seed/ghj-nursing-5/400/300',
         price_pickup: 8,
         price_send: 8,
         price_meal: 15,
@@ -86,6 +93,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1006,
         name: '学期周末托·兴趣班',
+        cover: 'https://picsum.photos/seed/ghj-nursing-6/400/300',
         price_pickup: 12,
         price_send: 12,
         price_meal: 20,
@@ -98,6 +106,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1007,
         name: '学期周末托·研学班',
+        cover: 'https://picsum.photos/seed/ghj-nursing-7/400/300',
         price_pickup: 20,
         price_send: 20,
         price_meal: 25,
@@ -110,6 +119,7 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1008,
         name: '暑期临时日托',
+        cover: 'https://picsum.photos/seed/ghj-nursing-8/400/300',
         price_pickup: 10,
         price_send: 10,
         price_meal: 18,
