@@ -135,7 +135,6 @@
                     </el-descriptions-item>
                     <el-descriptions-item label="陪诊员工">{{ detailRow.staff || '未派单' }}</el-descriptions-item>
                     <el-descriptions-item label="订单状态">{{ statusMap[detailRow.status] }}</el-descriptions-item>
-                    <el-descriptions-item label="所属小区">{{ detailRow.community }}</el-descriptions-item>
                 </el-descriptions>
 
                 <div class="section-title">支付人信息</div>
@@ -178,6 +177,19 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="extra_remark" label="费用说明" min-width="220" show-overflow-tooltip />
+                    <el-table-column label="凭证图片" min-width="100" align="center">
+                        <template #default="{ row }">
+                            <el-image
+                                v-if="row.voucher"
+                                :src="row.voucher"
+                                :preview-src-list="[row.voucher]"
+                                preview-teleported
+                                fit="cover"
+                                class="w-16 h-10 rounded"
+                            />
+                            <span v-else class="text-tx-secondary">-</span>
+                        </template>
+                    </el-table-column>
                 </el-table>
                 <div v-else class="mb-4 text-tx-secondary">无附加费用</div>
 
