@@ -5,7 +5,7 @@
 - 技术栈：Vue3 + Vite + TypeScript + Element Plus + Pinia + ECharts + wangEditor
 - GitHub 仓库：https://github.com/hzhou1734-pixel/153001-wydpc-ue（public，main 分支）
 - 远程地址：https://github.com/hzhou1734-pixel/153001-wydpc-ue.git
-- **工作分支（2026-09-19 起，用户要求）**：`dev`（从 main v1.0.56 分出）。后续所有改动默认提交到 dev 分支；main/EdgeOne 线上保持 v1.0.56 状态，用户要求合并时再合
+- **工作分支（2026-09-19 起，用户要求）**：`dev`（从 main v1.0.56 分出）。后续所有改动默认提交到 dev 分支；**2026-09-20 用户要求同步 main：dev 已 fast-forward 合并至 main（v1.0.99，103 个提交），`--tags` 确认全部 v1.0.0~v1.0.99 tag 均在远程，main/dev 同点 bcc84bb**；EdgeOne 线上部署将随 main 自动更新；后续功能仍在 dev 开发，同步 main 时 `git push origin dev:main`（fast-forward）+ `git push origin --tags`
 
 ## Git 提交约定（用户明确要求）
 - **每次功能修改后必须自动执行**：git add → commit → 递增版本号 tag → push（当前均提交到 dev 分支）
