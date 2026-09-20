@@ -155,7 +155,6 @@
                     <el-descriptions-item label="支付人">{{ detailRow.payer_name }}</el-descriptions-item>
                     <el-descriptions-item label="支付人手机">{{ detailRow.payer_mobile }}</el-descriptions-item>
                     <el-descriptions-item label="与下单人关系">{{ detailRow.payer_relation }}</el-descriptions-item>
-                    <el-descriptions-item label="所属小区">{{ detailRow.community }}</el-descriptions-item>
                 </el-descriptions>
 
                 <div class="section-title">金额信息</div>
