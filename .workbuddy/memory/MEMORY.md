@@ -52,14 +52,19 @@
 - 订单派单候选（v1.0.62，取代 v1.0.36 角色绑定约定）：托管/膳食/陪诊订单派单弹窗候选为**全部员工**，选项「姓名（角色 · 小区）」，label「指派员工」；仅需接送/需配送的订单才可派单的限制保留
 - 订单状态枚举：0待支付 1待派单 2服务中 3已完成 4已取消（v1.0.36）
 - 内容管理模块约定(v1.0.37)：帖子/资源状态 0待审核 1已通过 2已驳回；社区活动状态由报名时间范围或「停止报名」推导(报名中/已结束)；v1.0.51 起人力资源只保留用户提交技能认证的审核（通过后进入人才库）
+- **社区活动无「报名总人数」概念（v1.0.70，用户明确要求）**：添加/编辑活动表单无 limit 设置项，列表只显示「报名人数」，contentActivityList 无 limit 字段（旧 data.ts activityList 未清理但无页面使用）
+- **人才库-认证申请关联（v1.0.71，用户明确要求）**：人才详情抽屉含「认证申请信息」区块，按手机号从 hrCertList 匹配申请记录（可多条），展示申请表单全量内容（标题/类目/状态/时间/驳回备注/描述/凭证图）；hrCertList 与 talentList 同人手机号/头像必须一致（钱志明等 5 人用 1391234300x 号段 + talentImg 头像，非人才的申请者用 138123410xx 号段 + userImg 头像）
 - **社区贴吧已整体删除（v1.0.51，文档无此模块）**：article/bar 页面、barList/barComments 数据、getBarList 接口全部移除
 - **生活帮手 = 服务管理下的服务项（v1.0.51，文档为准）**：service/helper（封面/标题/多规格价格/销量/状态/排序）+ order/helper（生活帮手订单）；旧的「生活帮手工单」(article/helper、helperList) 已删除；人才库(article/talent)承接技能认证通过后的服务者，可关联生活帮手服务类目并派单
 - 托管订单「托管类型」取值为：接 / 送 / 用餐 / 托管（文档口径）；托管服务「托管类型」仍为 日托/学期每日托/学期周末托
 - 财务概况所有金额由订单数据实时计算，禁止硬编码统计值（v1.0.38）
 - 订单金额口径(v1.0.38)：有效订单=已支付(pay_status=1)且未取消(status≠4)；待结算=有效且未完成；已结算=有效且已完成(status=3)
+- **生活帮手单财务口径（v1.0.68，用户明确要求）**：平台不做支付，由用户线下支付——财务概况订单金额/结算金额表含「生活帮手单」行（带橙色「线下支付」标签），该类订单不校验 pay_status（helperOrders 无此字段），有效=未取消；计入顶部汇总（口径文案已注明），不计入员工收益
 - 前端导出统一使用 src/utils/export.ts 的 exportCsv（CSV + BOM，兼容 Excel 中文）（v1.0.38）
 - 权限配置约定(v1.0.39)：权限目录集中在 src/mock/perms.ts 的 permModules，页面节点=查看权限(perms/lists)，操作权限=perms/<action>；新增功能页面时必须同步在 permModules 中登记其实际操作
 - 角色管理入口为 src/views/setting/role/index.vue（菜单 setting/role）；src/views/permission/* 为未接入菜单的旧代码，不可改动依赖
 - 列表交互约定(v1.0.41)：显示/隐藏一律用状态列 el-switch 开关切换，操作栏不放文字切换按钮；新增列表页须遵循
+- **订单评价显示/隐藏（v1.0.72，用户明确要求）**：orderEvaluations 有 status 字段（1 显示 0 隐藏），评价页状态列 el-switch 切换 + 「显示状态」筛选；默认隐藏差评（两星及以下可设 0）
 - 列表样式约定(v1.0.42)：全局 .el-table .cell 强制 nowrap（EP 默认换行）；列宽口径：时间列 160、手机号 120、排序/ID 80、状态 90~100、操作列按按钮文本实算；长文本列须加 show-overflow-tooltip
 - 图片上传约定(v1.0.43)：所有图片表单项一律使用 @/components/image-upload（本地 FileReader + base64，不依赖后端接口），禁止 el-input 输入图片链接；必填图片须在提交时校验「请上传XX图」，不得用 picsum 随机图兜底
+- **Banner 跳转口径（v1.0.69，用户明确要求）**：article/banner 跳转=类目+具体内容二级选择——托管/陪诊/生活帮手/活动/钱袋子/精彩内容/通知公告 7 类目；钱袋子特殊为固定页 /pages/wallet/index 无二级选择；类目选项与对应管理页数据同源（nursingServices 1001+/escortServices 2001+/helperServices 4001+/contentActivityList 7001+/contentWonderfulList 2001+/contentNoticeList 3001+）；banner 记录存 link+link_type+link_id 三字段，编辑时 parseLink 反向回填；旧「内置页面/自定义链接」跳转类型已删除（类目体系无膳食类目）

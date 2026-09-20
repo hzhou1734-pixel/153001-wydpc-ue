@@ -175,7 +175,6 @@
                 <el-descriptions :column="2" border class="mb-4">
                     <el-descriptions-item label="套餐单价">¥{{ detailRow.price }}</el-descriptions-item>
                     <el-descriptions-item label="购买份数">{{ detailRow.quantity }}</el-descriptions-item>
-                    <el-descriptions-item label="优惠金额">¥0.00</el-descriptions-item>
                     <el-descriptions-item label="订单金额">
                         <span class="text-orange-500 font-bold">¥{{ detailRow.amount }}</span>
                     </el-descriptions-item>

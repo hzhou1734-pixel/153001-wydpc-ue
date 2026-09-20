@@ -157,11 +157,9 @@
                 <div class="section-title">金额信息</div>
                 <el-descriptions :column="2" border class="mb-4">
                     <el-descriptions-item label="托管单价">¥{{ detailRow.price }}</el-descriptions-item>
-                    <el-descriptions-item label="优惠金额">¥0.00</el-descriptions-item>
                     <el-descriptions-item label="订单金额">
                         <span class="text-orange-500 font-bold">¥{{ detailRow.amount }}</span>
                     </el-descriptions-item>
-                    <el-descriptions-item label="实付金额">¥{{ detailRow.amount }}</el-descriptions-item>
                     <el-descriptions-item label="支付方式">{{ detailRow.pay_type || '—' }}</el-descriptions-item>
                     <el-descriptions-item label="支付状态">
                         <el-tag size="small" :type="detailRow.pay_status === 1 ? 'success' : 'info'">
