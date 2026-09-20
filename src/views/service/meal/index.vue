@@ -22,39 +22,38 @@
                 <el-tab-pane :label="`明日菜单（${menus.tomorrow.date}）`" name="tomorrow" />
             </el-tabs>
 
-            <el-card v-for="meal in mealTypes" :key="meal.key" class="!border-none mt-4" shadow="never">
-                <template #header>
-                    <div class="flex items-center justify-between">
-                        <span class="card-title">{{ meal.label }}</span>
-                        <el-button type="primary" @click="openAdd(meal.key)">
-                            <el-icon class="mr-1"><Plus /></el-icon>添加
-                        </el-button>
-                    </div>
-                </template>
-                <el-table :data="currentMenu[meal.key]" stripe>
-                    <el-table-column label="图片" min-width="100">
-                        <template #default="{ row }">
-                            <el-image :src="row.image" :preview-src-list="[row.image]" preview-teleported fit="cover"
-                                class="w-14 h-10 rounded" />
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="text" label="菜品名称" min-width="260" show-overflow-tooltip />
-                    <el-table-column label="价格" min-width="120" align="right">
-                        <template #default="{ row }">
-                            <span class="text-orange-500 font-bold">¥{{ money(row.price) }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="操作" width="130" fixed="right">
-                        <template #default="{ row }">
-                            <el-button link type="primary" @click="openEdit(meal.key, row)">编辑</el-button>
-                            <el-button link type="danger" @click="delRow(meal.key, row)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                    <template #empty>
-                        <span class="text-tx-secondary">暂无{{ meal.label }}内容，点击右上角「添加」上传</span>
+            <div class="flex items-end justify-between">
+                <el-tabs v-model="activeMeal" class="flex-1">
+                    <el-tab-pane v-for="meal in mealTypes" :key="meal.key" :label="meal.label" :name="meal.key" />
+                </el-tabs>
+                <el-button type="primary" class="!mb-[9px] ml-4" @click="openAdd(activeMeal)">
+                    <el-icon class="mr-1"><Plus /></el-icon>添加
+                </el-button>
+            </div>
+
+            <el-table :data="currentMealList" stripe>
+                <el-table-column label="图片" min-width="100">
+                    <template #default="{ row }">
+                        <el-image :src="row.image" :preview-src-list="[row.image]" preview-teleported fit="cover"
+                            class="w-14 h-10 rounded" />
                     </template>
-                </el-table>
-            </el-card>
+                </el-table-column>
+                <el-table-column prop="text" label="菜品名称" min-width="260" show-overflow-tooltip />
+                <el-table-column label="价格" min-width="120" align="right">
+                    <template #default="{ row }">
+                        <span class="text-orange-500 font-bold">¥{{ money(row.price) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="130" fixed="right">
+                    <template #default="{ row }">
+                        <el-button link type="primary" @click="openEdit(activeMeal, row)">编辑</el-button>
+                        <el-button link type="danger" @click="delRow(activeMeal, row)">删除</el-button>
+                    </template>
+                </el-table-column>
+                <template #empty>
+                    <span class="text-tx-secondary">暂无{{ activeMealLabel }}内容，点击右上角「添加」上传</span>
+                </template>
+            </el-table>
         </el-card>
 
         <!-- 添加 / 编辑弹窗 -->
@@ -93,6 +92,7 @@ const money = (val: any) => Number(val || 0).toFixed(2)
 
 const menus = reactive(mealMenus)
 const activeTab = ref<DayKey>('today')
+const activeMeal = ref<MealKey>('breakfast')
 const mealTypes: { key: MealKey; label: string }[] = [
     { key: 'breakfast', label: '早餐' },
     { key: 'lunch', label: '午餐' },
@@ -100,6 +100,10 @@ const mealTypes: { key: MealKey; label: string }[] = [
 ]
 
 const currentMenu = computed(() => menus[activeTab.value])
+const activeMealLabel = computed(
+    () => mealTypes.find((i) => i.key === activeMeal.value)?.label || ''
+)
+const currentMealList = computed(() => currentMenu.value[activeMeal.value] as any[])
 const currentMealLabel = computed(
     () => mealTypes.find((i) => i.key === form.meal)?.label || ''
 )
