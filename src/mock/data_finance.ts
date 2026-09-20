@@ -1,7 +1,7 @@
 /**
  * 财务管理板块模拟数据
  * 账单结算 / 小区钱袋子 / 收益配置 / 员工收益 均在此维护
- * 账单合计金额由明细自动汇总；钱袋子中仅托管/膳食每单单价自动计算（预收金额 ÷ 订单数量），其余金额手工填写
+ * 账单合计金额由明细自动汇总；钱袋子的收支金额由其下收支明细自动汇总（每条明细可单独编辑名称/金额/凭证），托管/膳食每单单价 = 预收金额 ÷ 订单数量
  */
 import { reactive } from 'vue'
 import { staffList } from './data'
@@ -139,82 +139,108 @@ export const billList = [
 ]
 
 // ==================== 小区钱袋子 ====================
-/** 物业钱袋子：结余金额手工填写，不做自动计算 */
+/** 钱袋子收支明细项：type 1=收入 2=支出，每条明细可单独编辑名称/金额/凭证 */
+export interface WalletItem {
+    id: number
+    name: string
+    type: 1 | 2
+    amount: string
+    voucher: string
+}
+
+/** 物业钱袋子：收入/支出/结余金额均由其下收支明细自动汇总（结余 = 收入 - 支出） */
 const buildPropertyWallet = (raw: {
     id: number
     title: string
     month: string
-    expense_amount: string
-    income_amount: string
-    balance_amount: string
-    expense_voucher: string
-    income_voucher: string
+    items: WalletItem[]
     create_time: string
-}) => ({
-    ...raw,
-})
+}) => {
+    const income = raw.items.filter((i) => i.type === 1).reduce((s, i) => s + (Number(i.amount) || 0), 0)
+    const expense = raw.items.filter((i) => i.type === 2).reduce((s, i) => s + (Number(i.amount) || 0), 0)
+    return {
+        ...raw,
+        income_amount: fmt(income),
+        expense_amount: fmt(expense),
+        balance_amount: fmt(income - expense),
+    }
+}
 
 export const walletProperty = [
     buildPropertyWallet({
         id: 1,
         title: '颐景园·江南里 物业服务项目支出',
         month: '2026-08',
-        expense_amount: '12860.00',
-        income_amount: '35600.00',
-        balance_amount: '22740.00',
-        expense_voucher: voucher('ghj-wallet-exp-1'),
-        income_voucher: voucher('ghj-wallet-inc-1'),
+        items: [
+            { id: 1, name: '物业费收缴', type: 1, amount: '26800.00', voucher: voucher('ghj-wallet-inc-1') },
+            { id: 2, name: '车位管理费收入', type: 1, amount: '6300.00', voucher: voucher('ghj-wallet-inc-1b') },
+            { id: 3, name: '公共区域广告位租金', type: 1, amount: '2500.00', voucher: voucher('ghj-wallet-inc-1c') },
+            { id: 4, name: '保洁外包费用', type: 2, amount: '7600.00', voucher: voucher('ghj-wallet-exp-1') },
+            { id: 5, name: '绿化养护费用', type: 2, amount: '3200.00', voucher: voucher('ghj-wallet-exp-1b') },
+            { id: 6, name: '公共区域电费', type: 2, amount: '2060.00', voucher: voucher('ghj-wallet-exp-1c') },
+        ],
         create_time: '2026-09-02 09:30:00',
     }),
     buildPropertyWallet({
         id: 2,
         title: '颐景园·江南里 公共收益入账',
         month: '2026-07',
-        expense_amount: '15320.00',
-        income_amount: '29800.00',
-        balance_amount: '14480.00',
-        expense_voucher: voucher('ghj-wallet-exp-2'),
-        income_voucher: voucher('ghj-wallet-inc-2'),
+        items: [
+            { id: 1, name: '物业费收缴', type: 1, amount: '21400.00', voucher: voucher('ghj-wallet-inc-2') },
+            { id: 2, name: '停车费收入', type: 1, amount: '5400.00', voucher: voucher('ghj-wallet-inc-2b') },
+            { id: 3, name: '场地租赁收入', type: 1, amount: '3000.00', voucher: voucher('ghj-wallet-inc-2c') },
+            { id: 4, name: '电梯年检费', type: 2, amount: '6800.00', voucher: voucher('ghj-wallet-exp-2') },
+            { id: 5, name: '安防外包费用', type: 2, amount: '5900.00', voucher: voucher('ghj-wallet-exp-2b') },
+            { id: 6, name: '垃圾清运费', type: 2, amount: '2620.00', voucher: voucher('ghj-wallet-exp-2c') },
+        ],
         create_time: '2026-08-02 10:15:00',
     }),
     buildPropertyWallet({
         id: 3,
         title: '颐景园·江南里 电梯维保专项支出',
         month: '2026-06',
-        expense_amount: '22600.00',
-        income_amount: '33150.00',
-        balance_amount: '10550.00',
-        expense_voucher: voucher('ghj-wallet-exp-3'),
-        income_voucher: voucher('ghj-wallet-inc-3'),
+        items: [
+            { id: 1, name: '物业费收缴', type: 1, amount: '24600.00', voucher: voucher('ghj-wallet-inc-3') },
+            { id: 2, name: '停车费收入', type: 1, amount: '5850.00', voucher: voucher('ghj-wallet-inc-3b') },
+            { id: 3, name: '广告位收入', type: 1, amount: '2700.00', voucher: voucher('ghj-wallet-inc-3c') },
+            { id: 4, name: '电梯维保专项支出', type: 2, amount: '15800.00', voucher: voucher('ghj-wallet-exp-3') },
+            { id: 5, name: '二次供水泵维修', type: 2, amount: '4300.00', voucher: voucher('ghj-wallet-exp-3b') },
+            { id: 6, name: '门禁系统维护', type: 2, amount: '2500.00', voucher: voucher('ghj-wallet-exp-3c') },
+        ],
         create_time: '2026-07-02 14:20:00',
     }),
     buildPropertyWallet({
         id: 4,
         title: '颐景园·江南里 上半年结余结转',
         month: '2026-05',
-        expense_amount: '9840.00',
-        income_amount: '26400.00',
-        balance_amount: '16560.00',
-        expense_voucher: voucher('ghj-wallet-exp-4'),
-        income_voucher: voucher('ghj-wallet-inc-4'),
+        items: [
+            { id: 1, name: '物业费收缴', type: 1, amount: '19800.00', voucher: voucher('ghj-wallet-inc-4') },
+            { id: 2, name: '停车费收入', type: 1, amount: '6600.00', voucher: voucher('ghj-wallet-inc-4b') },
+            { id: 3, name: '消防设施检测费', type: 2, amount: '4900.00', voucher: voucher('ghj-wallet-exp-4') },
+            { id: 4, name: '化粪池清理费', type: 2, amount: '4940.00', voucher: voucher('ghj-wallet-exp-4b') },
+        ],
         create_time: '2026-06-02 09:05:00',
     }),
 ]
 
-/** 托管 / 膳食钱袋子：预收金额手工填写，每单单价 = 预收金额 ÷ 订单数量（自动计算） */
+/** 托管 / 膳食钱袋子：预收/成本金额由收支明细自动汇总，每单单价 = 预收汇总 ÷ 订单数量 */
 const buildBusinessWallet = (raw: {
     id: number
     title: string
     month: string
     order_count: number
-    prepay_amount: string
-    cost_amount: string
-    voucher: string
+    items: WalletItem[]
     create_time: string
-}) => ({
-    ...raw,
-    unit_price: Number(raw.order_count) > 0 ? fmt(Number(raw.prepay_amount) / raw.order_count) : '0.00',
-})
+}) => {
+    const prepay = raw.items.filter((i) => i.type === 1).reduce((s, i) => s + (Number(i.amount) || 0), 0)
+    const cost = raw.items.filter((i) => i.type === 2).reduce((s, i) => s + (Number(i.amount) || 0), 0)
+    return {
+        ...raw,
+        prepay_amount: fmt(prepay),
+        cost_amount: fmt(cost),
+        unit_price: Number(raw.order_count) > 0 ? fmt(prepay / raw.order_count) : '0.00',
+    }
+}
 
 export const walletNursing = [
     buildBusinessWallet({
@@ -222,9 +248,12 @@ export const walletNursing = [
         title: '托管服务 2026年8月结算',
         month: '2026-08',
         order_count: 186,
-        prepay_amount: '14880.00',
-        cost_amount: '11200.00',
-        voucher: voucher('ghj-wallet-nur-1'),
+        items: [
+            { id: 1, name: '早托班预收', type: 1, amount: '8200.00', voucher: voucher('ghj-wallet-nur-1') },
+            { id: 2, name: '晚托班预收', type: 1, amount: '6680.00', voucher: voucher('ghj-wallet-nur-1b') },
+            { id: 3, name: '托管老师课时费', type: 2, amount: '8600.00', voucher: voucher('ghj-wallet-nur-exp-1') },
+            { id: 4, name: '接送车辆费用', type: 2, amount: '2600.00', voucher: voucher('ghj-wallet-nur-exp-1b') },
+        ],
         create_time: '2026-09-02 11:20:00',
     }),
     buildBusinessWallet({
@@ -232,9 +261,12 @@ export const walletNursing = [
         title: '托管服务 2026年7月结算',
         month: '2026-07',
         order_count: 214,
-        prepay_amount: '17120.00',
-        cost_amount: '12980.00',
-        voucher: voucher('ghj-wallet-nur-2'),
+        items: [
+            { id: 1, name: '早托班预收', type: 1, amount: '9400.00', voucher: voucher('ghj-wallet-nur-2') },
+            { id: 2, name: '晚托班预收', type: 1, amount: '7720.00', voucher: voucher('ghj-wallet-nur-2b') },
+            { id: 3, name: '托管老师课时费', type: 2, amount: '9800.00', voucher: voucher('ghj-wallet-nur-exp-2') },
+            { id: 4, name: '接送车辆费用', type: 2, amount: '3180.00', voucher: voucher('ghj-wallet-nur-exp-2b') },
+        ],
         create_time: '2026-08-02 11:35:00',
     }),
     buildBusinessWallet({
@@ -242,9 +274,12 @@ export const walletNursing = [
         title: '托管服务 2026年6月结算',
         month: '2026-06',
         order_count: 132,
-        prepay_amount: '11880.00',
-        cost_amount: '8640.00',
-        voucher: voucher('ghj-wallet-nur-3'),
+        items: [
+            { id: 1, name: '早托班预收', type: 1, amount: '6520.00', voucher: voucher('ghj-wallet-nur-3') },
+            { id: 2, name: '晚托班预收', type: 1, amount: '5360.00', voucher: voucher('ghj-wallet-nur-3b') },
+            { id: 3, name: '托管老师课时费', type: 2, amount: '6600.00', voucher: voucher('ghj-wallet-nur-exp-3') },
+            { id: 4, name: '接送车辆费用', type: 2, amount: '2040.00', voucher: voucher('ghj-wallet-nur-exp-3b') },
+        ],
         create_time: '2026-07-02 10:45:00',
     }),
 ]
@@ -255,9 +290,11 @@ export const walletMeal = [
         title: '膳食服务 2026年8月结算',
         month: '2026-08',
         order_count: 465,
-        prepay_amount: '14880.00',
-        cost_amount: '11620.00',
-        voucher: voucher('ghj-wallet-meal-1'),
+        items: [
+            { id: 1, name: '月度套餐预收', type: 1, amount: '14880.00', voucher: voucher('ghj-wallet-meal-1') },
+            { id: 2, name: '食材采购支出', type: 2, amount: '9200.00', voucher: voucher('ghj-wallet-meal-exp-1') },
+            { id: 3, name: '厨房人工费用', type: 2, amount: '2420.00', voucher: voucher('ghj-wallet-meal-exp-1b') },
+        ],
         create_time: '2026-09-02 15:10:00',
     }),
     buildBusinessWallet({
@@ -265,9 +302,11 @@ export const walletMeal = [
         title: '膳食服务 2026年7月结算',
         month: '2026-07',
         order_count: 508,
-        prepay_amount: '16256.00',
-        cost_amount: '12700.00',
-        voucher: voucher('ghj-wallet-meal-2'),
+        items: [
+            { id: 1, name: '月度套餐预收', type: 1, amount: '16256.00', voucher: voucher('ghj-wallet-meal-2') },
+            { id: 2, name: '食材采购支出', type: 2, amount: '9900.00', voucher: voucher('ghj-wallet-meal-exp-2') },
+            { id: 3, name: '厨房人工费用', type: 2, amount: '2800.00', voucher: voucher('ghj-wallet-meal-exp-2b') },
+        ],
         create_time: '2026-08-02 15:25:00',
     }),
     buildBusinessWallet({
@@ -275,9 +314,11 @@ export const walletMeal = [
         title: '膳食服务 2026年6月结算',
         month: '2026-06',
         order_count: 396,
-        prepay_amount: '11880.00',
-        cost_amount: '9500.00',
-        voucher: voucher('ghj-wallet-meal-3'),
+        items: [
+            { id: 1, name: '月度套餐预收', type: 1, amount: '11880.00', voucher: voucher('ghj-wallet-meal-3') },
+            { id: 2, name: '食材采购支出', type: 2, amount: '7300.00', voucher: voucher('ghj-wallet-meal-exp-3') },
+            { id: 3, name: '厨房人工费用', type: 2, amount: '2200.00', voucher: voucher('ghj-wallet-meal-exp-3b') },
+        ],
         create_time: '2026-07-02 16:00:00',
     }),
 ]

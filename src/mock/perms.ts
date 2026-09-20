@@ -207,7 +207,7 @@ export const permModules: PermModule[] = [
             {
                 name: '小区钱袋子',
                 perms: 'finance.wallet',
-                ops: [OP_ADD('添加数据')]
+                ops: [OP_ADD('添加数据'), OP_EDIT('编辑明细')]
             },
             {
                 name: '收益配置',
@@ -364,6 +364,7 @@ export const rolePerms: Record<number, string[]> = {
         'finance.earnings/export',
         'finance.wallet/lists',
         'finance.wallet/add',
+        'finance.wallet/edit',
         'finance.profit/lists',
         'finance.profit/setting',
         'order.nursing/lists',

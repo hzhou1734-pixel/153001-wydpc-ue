@@ -38,5 +38,8 @@ components.d.ts
 # 需求文档临时文件
 .tmp-req.txt
 
+# 本地临时文件（验证截图 / 推送认证头等）
+.tmp-*
+
 # 构建临时产物
 .tmp-dist/
