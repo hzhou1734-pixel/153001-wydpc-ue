@@ -85,9 +85,6 @@
                 <el-table-column label="支付时间" min-width="170">
                     <template #default="{ row }">{{ row.pay_time || '—' }}</template>
                 </el-table-column>
-                <el-table-column label="支付方式" min-width="110">
-                    <template #default="{ row }">{{ row.pay_type || '—' }}</template>
-                </el-table-column>
                 <el-table-column label="操作" width="130" fixed="right">
                     <template #default="{ row }">
                         <el-button v-if="row.need_delivery === 1" size="small" type="primary"
@@ -133,7 +130,7 @@
                     <el-descriptions-item label="包含菜品" :span="2">{{ detailRow.dishes }}</el-descriptions-item>
                     <el-descriptions-item label="购买份数">{{ detailRow.quantity }}</el-descriptions-item>
                     <el-descriptions-item label="是否需要配送">
-                        {{ detailRow.need_delivery ? `需要（${detailRow.delivery_time}）` : '自取' }}
+                        {{ detailRow.need_delivery ? '需要' : '自取' }}
                     </el-descriptions-item>
                     <el-descriptions-item label="配送员工">{{ detailRow.staff || '未派单' }}</el-descriptions-item>
                     <el-descriptions-item label="订单状态">{{ statusMap[detailRow.status] }}</el-descriptions-item>
@@ -150,7 +147,6 @@
                     <el-descriptions-item label="手机号码">{{ detailRow.mobile }}</el-descriptions-item>
                     <el-descriptions-item label="支付人">{{ detailRow.payer_name }}</el-descriptions-item>
                     <el-descriptions-item label="支付人手机">{{ detailRow.payer_mobile }}</el-descriptions-item>
-                    <el-descriptions-item label="与下单人关系">{{ detailRow.payer_relation }}</el-descriptions-item>
                 </el-descriptions>
 
                 <div class="section-title">地址信息</div>
