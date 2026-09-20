@@ -44,7 +44,7 @@
                     <template #default="{ row }">
                         <el-popover v-if="(row.specs || []).length > 1" placement="top" width="260" trigger="hover">
                             <template #reference>
-                                <span class="text-orange-500 font-bold cursor-pointer">¥{{ minPrice(row) }} 起</span>
+                                <span class="text-orange-500 font-bold cursor-pointer">¥{{ minPrice(row) }}</span>
                             </template>
                             <div class="text-xs">
                                 <div v-for="spec in row.specs" :key="spec.name"
@@ -115,7 +115,7 @@
                         <el-button link type="primary" @click="addSpec">
                             <el-icon class="mr-1"><Plus /></el-icon>添加规格
                         </el-button>
-                        <div class="text-xs text-tx-secondary mt-1">至少保留 1 个规格，多个规格时列表价格展示为「最低价 起」</div>
+                        <div class="text-xs text-tx-secondary mt-1">至少保留 1 个规格，多个规格时列表价格展示为最低价</div>
                     </div>
                 </el-form-item>
                 <el-form-item label="详情介绍">
