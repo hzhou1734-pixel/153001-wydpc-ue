@@ -131,6 +131,18 @@
                     <el-descriptions-item label="下单时间">{{ detailRow.create_time }}</el-descriptions-item>
                 </el-descriptions>
 
+                <div class="section-title">地址信息</div>
+                <el-descriptions :column="2" border class="mb-4">
+                    <el-descriptions-item label="联系人">{{ detailRow.contact_name }}</el-descriptions-item>
+                    <el-descriptions-item label="联系电话">{{ detailRow.contact_mobile }}</el-descriptions-item>
+                    <el-descriptions-item label="所属楼栋">{{ detailRow.building }}</el-descriptions-item>
+                    <el-descriptions-item v-if="hasType('接') && hasType('送')" label="接的地址">{{ detailRow.address }}</el-descriptions-item>
+                    <el-descriptions-item v-if="hasType('接') && hasType('送')" label="送的地址">{{ detailRow.address }}</el-descriptions-item>
+                    <el-descriptions-item v-else-if="hasType('接')" label="接的地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
+                    <el-descriptions-item v-else-if="hasType('送')" label="送的地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
+                    <el-descriptions-item v-else label="详细地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
+                </el-descriptions>
+
                 <div class="section-title">支付人信息</div>
                 <el-descriptions :column="2" border class="mb-4">
                     <el-descriptions-item label="下单人">
@@ -144,14 +156,6 @@
                     <el-descriptions-item label="支付人手机">{{ detailRow.payer_mobile }}</el-descriptions-item>
                     <el-descriptions-item label="与下单人关系">{{ detailRow.payer_relation }}</el-descriptions-item>
                     <el-descriptions-item label="所属小区">{{ detailRow.community }}</el-descriptions-item>
-                </el-descriptions>
-
-                <div class="section-title">地址信息</div>
-                <el-descriptions :column="2" border class="mb-4">
-                    <el-descriptions-item label="联系人">{{ detailRow.contact_name }}</el-descriptions-item>
-                    <el-descriptions-item label="联系电话">{{ detailRow.contact_mobile }}</el-descriptions-item>
-                    <el-descriptions-item label="所属楼栋">{{ detailRow.building }}</el-descriptions-item>
-                    <el-descriptions-item label="详细地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
                 </el-descriptions>
 
                 <div class="section-title">金额信息</div>
@@ -301,6 +305,8 @@ const viewDetail = (row: any) => {
     detailRow.value = row
     showDetail.value = true
 }
+/** 托管类型是否包含某项（接/送/用餐/托管） */
+const hasType = (t: string) => ((detailRow.value?.type as string[]) || []).includes(t)
 
 onMounted(getLists)
 </script>
