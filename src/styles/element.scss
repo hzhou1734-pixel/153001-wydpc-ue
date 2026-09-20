@@ -128,6 +128,13 @@
         }
     }
 
+    .el-select {
+        // 修复筛选下拉塌陷：EP 组件样式后加载，.el-select{width:100%} 会覆盖 Tailwind
+        // 非 important 宽度类，在 el-form inline 收缩容器中塌陷为 44px，
+        // placeholder（absolute 定位不占宽）随之不可见。min-width 兜底保证可见。
+        min-width: 100px;
+    }
+
     .el-input,
     .el-select,
     .el-textarea {

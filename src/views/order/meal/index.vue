@@ -7,13 +7,13 @@
                         @keyup.enter="handleQuery" />
                 </el-form-item>
                 <el-form-item label="是否需要配送">
-                    <el-select v-model="queryParams.need_delivery" class="w-[130px]" clearable placeholder="请选择">
+                    <el-select v-model="queryParams.need_delivery" class="!w-[130px]" clearable placeholder="请选择">
                         <el-option label="需要配送" :value="1" />
                         <el-option label="无需配送" :value="0" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="楼栋">
-                    <el-select v-model="queryParams.building" class="w-[170px]" clearable placeholder="请选择"
+                    <el-select v-model="queryParams.building" class="!w-[170px]" clearable placeholder="请选择"
                         filterable>
                         <el-option v-for="item in buildingOptions" :key="item" :label="item" :value="item" />
                     </el-select>

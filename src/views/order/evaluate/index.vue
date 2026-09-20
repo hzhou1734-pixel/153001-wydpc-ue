@@ -7,13 +7,13 @@
                         @keyup.enter="handleQuery" />
                 </el-form-item>
                 <el-form-item label="评星">
-                    <el-select v-model="queryParams.stars" class="w-[130px]" clearable placeholder="请选择">
+                    <el-select v-model="queryParams.stars" class="!w-[130px]" clearable placeholder="请选择">
                         <el-option v-for="item in starOptions" :key="item.value" :label="item.label"
                             :value="item.value" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="显示状态">
-                    <el-select v-model="queryParams.status" class="w-[110px]" clearable placeholder="请选择">
+                    <el-select v-model="queryParams.status" class="!w-[110px]" clearable placeholder="请选择">
                         <el-option label="显示" :value="1" />
                         <el-option label="隐藏" :value="0" />
                     </el-select>
