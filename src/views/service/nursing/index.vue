@@ -16,11 +16,6 @@
                     <el-input v-model="queryParams.keyword" placeholder="请输入托管服务标题" clearable class="!w-60"
                         :prefix-icon="Search" @keyup.enter="onSearch" />
                 </el-form-item>
-                <el-form-item label="托管类型">
-                    <el-select v-model="queryParams.type" placeholder="请选择" clearable class="!w-36">
-                        <el-option v-for="item in nursingTypeOptions" :key="item" :label="item" :value="item" />
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="托管状态">
                     <el-select v-model="queryParams.status" placeholder="请选择" clearable class="!w-32">
                         <el-option label="显示" :value="1" />
@@ -43,9 +38,9 @@
                         <span>{{ row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="价格" min-width="110" align="right">
+                <el-table-column label="单价（接 / 送 / 用餐 / 托管）" min-width="250" show-overflow-tooltip>
                     <template #default="{ row }">
-                        <span class="text-orange-500 font-bold">¥{{ money(row.price) }}</span>
+                        <span class="text-orange-500 font-bold">接 ¥{{ money(row.price_pickup) }} · 送 ¥{{ money(row.price_send) }} · 用餐 ¥{{ money(row.price_meal) }} · 托管 ¥{{ money(row.price_care) }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="状态" min-width="90">
@@ -76,13 +71,20 @@
                 <el-form-item label="托管服务标题" required>
                     <el-input v-model="editForm.name" placeholder="请输入托管服务标题" maxlength="30" show-word-limit />
                 </el-form-item>
-                <el-form-item label="托管类型" required>
-                    <el-select v-model="editForm.type" placeholder="请选择托管类型" class="!w-full">
-                        <el-option v-for="item in nursingTypeOptions" :key="item" :label="item" :value="item" />
-                    </el-select>
+                <el-form-item label="接单价">
+                    <el-input-number v-model="editForm.price_pickup" :min="0" :precision="2" :step="1" />
+                    <span class="ml-2 text-xs text-tx-secondary">元</span>
                 </el-form-item>
-                <el-form-item label="价格" required>
-                    <el-input-number v-model="editForm.price" :min="0" :precision="2" :step="1" />
+                <el-form-item label="送单价">
+                    <el-input-number v-model="editForm.price_send" :min="0" :precision="2" :step="1" />
+                    <span class="ml-2 text-xs text-tx-secondary">元</span>
+                </el-form-item>
+                <el-form-item label="用餐单价">
+                    <el-input-number v-model="editForm.price_meal" :min="0" :precision="2" :step="1" />
+                    <span class="ml-2 text-xs text-tx-secondary">元</span>
+                </el-form-item>
+                <el-form-item label="托管单价">
+                    <el-input-number v-model="editForm.price_care" :min="0" :precision="2" :step="1" />
                     <span class="ml-2 text-xs text-tx-secondary">元</span>
                 </el-form-item>
                 <el-form-item label="描述">
@@ -109,7 +111,7 @@
 </template>
 
 <script setup lang="ts" name="serviceNursing">
-import { nursingServices, nursingTypeOptions } from '@/mock/data_service'
+import { nursingServices } from '@/mock/data_service'
 import { usePaging } from '@/hooks/usePaging'
 import { Search, Plus } from '@element-plus/icons-vue'
 
@@ -122,14 +124,13 @@ const nowTimeStr = () => {
 }
 
 // ==================== 列表 ====================
-const queryParams = reactive({ keyword: '', type: '', status: '' as '' | 0 | 1, start_time: '', end_time: '' })
+const queryParams = reactive({ keyword: '', status: '' as '' | 0 | 1, start_time: '', end_time: '' })
 const createRange = ref<string[]>([])
 
 const getNursingList = (params: any = {}) => {
-    const { page_no = 1, page_size = 15, keyword = '', type = '', status = '', start_time = '', end_time = '' } = params
+    const { page_no = 1, page_size = 15, keyword = '', status = '', start_time = '', end_time = '' } = params
     let lists: any[] = [...nursingServices]
     if (keyword) lists = lists.filter((i) => i.name.includes(keyword))
-    if (type) lists = lists.filter((i) => i.type === type)
     if (status !== '' && status !== undefined && status !== null) {
         lists = lists.filter((i) => i.status === Number(status))
     }
@@ -149,7 +150,6 @@ const onSearch = () => {
 }
 const resetQuery = () => {
     queryParams.keyword = ''
-    queryParams.type = ''
     queryParams.status = ''
     createRange.value = []
     onSearch()
@@ -158,12 +158,12 @@ const resetQuery = () => {
 // ==================== 添加 / 编辑 ====================
 const editVisible = ref(false)
 const editForm = reactive({
-    id: 0, name: '', type: nursingTypeOptions[0], price: 0, desc: '', sort: 0, status: 1
+    id: 0, name: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0, desc: '', sort: 0, status: 1
 })
 
 const openAdd = () => {
     Object.assign(editForm, {
-        id: 0, name: '', type: nursingTypeOptions[0], price: 0,
+        id: 0, name: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0,
         desc: '', sort: nursingServices.length + 1, status: 1
     })
     editVisible.value = true
@@ -172,8 +172,10 @@ const openEdit = (row: any) => {
     Object.assign(editForm, {
         id: row.id,
         name: row.name,
-        type: row.type,
-        price: Number(row.price) || 0,
+        price_pickup: Number(row.price_pickup) || 0,
+        price_send: Number(row.price_send) || 0,
+        price_meal: Number(row.price_meal) || 0,
+        price_care: Number(row.price_care) || 0,
         desc: row.desc || '',
         sort: row.sort ?? 0,
         status: row.status
@@ -182,11 +184,12 @@ const openEdit = (row: any) => {
 }
 const submitEdit = () => {
     if (!editForm.name.trim()) return ElMessage.warning('请输入托管服务标题')
-    if (!editForm.type) return ElMessage.warning('请选择托管类型')
     const payload = {
         name: editForm.name.trim(),
-        type: editForm.type,
-        price: Number(editForm.price) || 0,
+        price_pickup: Number(editForm.price_pickup) || 0,
+        price_send: Number(editForm.price_send) || 0,
+        price_meal: Number(editForm.price_meal) || 0,
+        price_care: Number(editForm.price_care) || 0,
         desc: editForm.desc,
         sort: Number(editForm.sort) || 0,
         status: editForm.status

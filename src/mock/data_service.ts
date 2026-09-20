@@ -8,23 +8,28 @@
 export interface NursingItem {
     id: number
     name: string
-    type: string
-    price: number
+    /** 上门接单价（0 表示不提供） */
+    price_pickup: number
+    /** 送回单价（0 表示不提供） */
+    price_send: number
+    /** 用餐单价 */
+    price_meal: number
+    /** 托管单价 */
+    price_care: number
     desc: string
     status: number
     sort: number
     create_time: string
 }
 
-/** 托管类型枚举 */
-export const nursingTypeOptions = ['日托', '学期每日托', '学期周末托']
-
 export const nursingServices: NursingItem[] = [
     {
         id: 1001,
         name: '幼儿全日托（1.5-3岁）',
-        type: '日托',
-        price: 188,
+        price_pickup: 15,
+        price_send: 15,
+        price_meal: 25,
+        price_care: 133,
         desc: '专业育婴师看护，含上午点心、营养午餐与午睡照护，实时反馈宝宝饮食与作息情况。',
         status: 1,
         sort: 1,
@@ -33,8 +38,10 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1002,
         name: '小学生放学日托',
-        type: '日托',
-        price: 128,
+        price_pickup: 10,
+        price_send: 10,
+        price_meal: 18,
+        price_care: 90,
         desc: '放学接送至服务中心，含作业辅导、营养晚餐，家长下班后接回。',
         status: 1,
         sort: 2,
@@ -43,8 +50,10 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1003,
         name: '幼儿半日托（上午班）',
-        type: '日托',
-        price: 158,
+        price_pickup: 15,
+        price_send: 15,
+        price_meal: 20,
+        price_care: 108,
         desc: '上午 8:30-12:00，含亲子早教游戏、手工课堂与健康早点。',
         status: 1,
         sort: 3,
@@ -53,8 +62,10 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1004,
         name: '学期每日托·标准班',
-        type: '学期每日托',
-        price: 80,
+        price_pickup: 8,
+        price_send: 8,
+        price_meal: 15,
+        price_care: 49,
         desc: '按学期报名，周一至周五每日托管，含作业辅导与晚餐，寒暑假顺延。',
         status: 1,
         sort: 4,
@@ -63,8 +74,10 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1005,
         name: '学期每日托·晚托班',
-        type: '学期每日托',
-        price: 95,
+        price_pickup: 8,
+        price_send: 8,
+        price_meal: 15,
+        price_care: 64,
         desc: '放学后至 20:00，含晚餐与作业辅导，适合双职工家庭。',
         status: 1,
         sort: 5,
@@ -73,8 +86,10 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1006,
         name: '学期周末托·兴趣班',
-        type: '学期周末托',
-        price: 138,
+        price_pickup: 12,
+        price_send: 12,
+        price_meal: 20,
+        price_care: 94,
         desc: '周六周日开放，含美术、书法、体适能等兴趣课程与营养午餐。',
         status: 1,
         sort: 6,
@@ -83,8 +98,10 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1007,
         name: '学期周末托·研学班',
-        type: '学期周末托',
-        price: 228,
+        price_pickup: 20,
+        price_send: 20,
+        price_meal: 25,
+        price_care: 163,
         desc: '每月两次户外研学活动，含往返接送、保险与午餐，需提前一周预约。',
         status: 0,
         sort: 7,
@@ -93,8 +110,10 @@ export const nursingServices: NursingItem[] = [
     {
         id: 1008,
         name: '暑期临时日托',
-        type: '日托',
-        price: 110,
+        price_pickup: 10,
+        price_send: 10,
+        price_meal: 18,
+        price_care: 72,
         desc: '暑期临时托管，按天计费，需提前一天预约，含午餐与午休。',
         status: 0,
         sort: 8,

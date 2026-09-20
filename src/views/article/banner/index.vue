@@ -199,7 +199,7 @@ const linkPathMap: Record<string, string> = {
 
 /** 类目 → 二级内容可选项（数据与对应管理页同源） */
 const linkContentMap: Record<string, { label: string; options: { id: number; name: string }[] }> = {
-    nursing: { label: '选择托管服务', options: nursingServices.map((s: any) => ({ id: s.id, name: `${s.name}（${s.type}）` })) },
+    nursing: { label: '选择托管服务', options: nursingServices.map((s: any) => ({ id: s.id, name: s.name })) },
     escort: { label: '选择陪诊服务', options: escortServices.map((s: any) => ({ id: s.id, name: s.name })) },
     helper: { label: '选择生活帮手服务', options: helperServices.map((s: any) => ({ id: s.id, name: s.title })) },
     activity: { label: '选择社区活动', options: contentActivityList.map((s: any) => ({ id: s.id, name: s.title })) },
