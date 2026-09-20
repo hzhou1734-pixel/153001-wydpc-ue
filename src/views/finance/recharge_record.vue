@@ -25,13 +25,13 @@
                     />
                 </el-form-item>
                 <el-form-item class="w-[280px]" label="支付方式">
-                    <el-select v-model="queryParams.pay_way">
+                    <el-select v-model="queryParams.pay_way" placeholder="请选择">
                         <el-option label="全部" value />
                         <el-option label="微信支付" :value="2" />
                     </el-select>
                 </el-form-item>
                 <el-form-item class="w-[280px]" label="支付状态">
-                    <el-select v-model="queryParams.pay_status">
+                    <el-select v-model="queryParams.pay_status" placeholder="请选择">
                         <el-option label="全部" value />
                         <el-option label="未支付" :value="0" />
                         <el-option label="已支付" :value="1" />

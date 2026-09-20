@@ -4,7 +4,7 @@
             <el-page-header class="mb-4" content="数据管理" @back="$router.back()" />
             <el-form ref="formRef" class="mb-[-16px]" :model="queryParams" inline>
                 <el-form-item class="w-[280px]" label="字典名称">
-                    <el-select v-model="queryParams.type_id" @change="getLists">
+                    <el-select v-model="queryParams.type_id" @change="getLists" placeholder="请选择">
                         <el-option
                             v-for="item in optionsData.dict_type"
                             :label="item.name"
@@ -17,7 +17,7 @@
                     <el-input v-model="queryParams.name" clearable @keyup.enter="resetPage" />
                 </el-form-item>
                 <el-form-item class="w-[280px]" label="数据状态">
-                    <el-select v-model="queryParams.status">
+                    <el-select v-model="queryParams.status" placeholder="请选择">
                         <el-option label="全部" value />
                         <el-option label="正常" :value="1" />
                         <el-option label="停用" :value="0" />

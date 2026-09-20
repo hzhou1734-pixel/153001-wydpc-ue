@@ -231,12 +231,12 @@ function toggleStatus(row: any) {
                     />
                 </el-form-item>
                 <el-form-item label="角色">
-                    <el-select v-model="searchParams.role_id" placeholder="全部角色" clearable class="!w-[130px]">
+                    <el-select v-model="searchParams.role_id" placeholder="请选择" clearable class="!w-[130px]">
                         <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="账号状态">
-                    <el-select v-model="searchParams.status" placeholder="全部状态" clearable class="!w-[120px]">
+                    <el-select v-model="searchParams.status" placeholder="请选择" clearable class="!w-[120px]">
                         <el-option label="启用" :value="1" />
                         <el-option label="停用" :value="0" />
                     </el-select>

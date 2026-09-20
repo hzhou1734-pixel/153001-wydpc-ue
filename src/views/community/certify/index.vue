@@ -14,17 +14,17 @@
                     />
                 </el-form-item>
                 <el-form-item label="小区">
-                    <el-select v-model="searchParams.community" placeholder="全部小区" clearable class="!w-[160px]">
+                    <el-select v-model="searchParams.community" placeholder="请选择" clearable class="!w-[160px]">
                         <el-option v-for="item in communityOptions" :key="item" :label="item" :value="item" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="楼栋">
-                    <el-select v-model="searchParams.building" placeholder="全部楼栋" clearable class="!w-[120px]">
+                    <el-select v-model="searchParams.building" placeholder="请选择" clearable class="!w-[120px]">
                         <el-option v-for="item in buildingOptions" :key="item" :label="item" :value="item" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="审核状态">
-                    <el-select v-model="searchParams.status" placeholder="全部状态" clearable class="!w-[120px]">
+                    <el-select v-model="searchParams.status" placeholder="请选择" clearable class="!w-[120px]">
                         <el-option label="待审核" :value="0" />
                         <el-option label="已通过" :value="1" />
                         <el-option label="已驳回" :value="2" />

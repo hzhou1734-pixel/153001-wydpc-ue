@@ -12,12 +12,12 @@
                 <el-input v-model="searchParams.keyword" placeholder="管理员账号 / 登录账号" clearable class="!w-[240px]" />
             </el-form-item>
             <el-form-item label="所属角色">
-                <el-select v-model="searchParams.role" placeholder="全部角色" clearable class="!w-[150px]">
+                <el-select v-model="searchParams.role" placeholder="请选择" clearable class="!w-[150px]">
                     <el-option v-for="item in roleOptions" :key="item" :label="item" :value="item" />
                 </el-select>
             </el-form-item>
             <el-form-item label="账号状态">
-                <el-select v-model="searchParams.status" placeholder="全部状态" clearable class="!w-[120px]">
+                <el-select v-model="searchParams.status" placeholder="请选择" clearable class="!w-[120px]">
                     <el-option label="启用" :value="1" />
                     <el-option label="禁用" :value="0" />
                 </el-select>

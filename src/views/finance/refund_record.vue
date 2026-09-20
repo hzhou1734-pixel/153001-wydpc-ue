@@ -47,7 +47,7 @@
                     />
                 </el-form-item>
                 <el-form-item class="w-[280px]" label="退款类型">
-                    <el-select v-model="queryParams.refund_type">
+                    <el-select v-model="queryParams.refund_type" placeholder="请选择">
                         <el-option label="全部" value />
                         <el-option label="后台退款" :value="1" />
                     </el-select>

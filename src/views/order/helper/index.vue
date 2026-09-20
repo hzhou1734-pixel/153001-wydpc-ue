@@ -11,7 +11,7 @@
                         @keyup.enter="handleQuery" />
                 </el-form-item>
                 <el-form-item label="订单状态">
-                    <el-select v-model="queryParams.status" class="w-[140px]" clearable placeholder="全部状态">
+                    <el-select v-model="queryParams.status" class="w-[140px]" clearable placeholder="请选择">
                         <el-option v-for="(label, value) in statusMap" :key="value" :label="label"
                             :value="Number(value)" />
                     </el-select>

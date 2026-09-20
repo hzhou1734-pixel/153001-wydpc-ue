@@ -13,7 +13,7 @@
 
             <el-form :model="queryParams" inline class="mb-2">
                 <el-form-item label="所属小区">
-                    <el-select v-model="queryParams.community_id" placeholder="全部小区" clearable class="!w-[180px]">
+                    <el-select v-model="queryParams.community_id" placeholder="请选择" clearable class="!w-[180px]">
                         <el-option v-for="item in communityOptions" :key="item.id" :label="item.name" :value="item.id" />
                     </el-select>
                 </el-form-item>
@@ -21,7 +21,7 @@
                     <el-input v-model="queryParams.keyword" placeholder="楼栋名称 / 房号" clearable class="!w-[180px]" @keyup.enter="getTreeList" />
                 </el-form-item>
                 <el-form-item label="认证状态">
-                    <el-select v-model="queryParams.certified" placeholder="全部" clearable class="!w-[140px]">
+                    <el-select v-model="queryParams.certified" placeholder="请选择" clearable class="!w-[140px]">
                         <el-option label="已认证" :value="1" />
                         <el-option label="未认证" :value="0" />
                     </el-select>

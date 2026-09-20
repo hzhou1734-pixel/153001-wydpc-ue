@@ -11,7 +11,7 @@
             />
             <el-form :model="queryParams" inline class="mb--4">
                 <el-form-item label="角色">
-                    <el-select v-model="queryParams.role_id" placeholder="全部" clearable class="!w-[150px]">
+                    <el-select v-model="queryParams.role_id" placeholder="请选择" clearable class="!w-[150px]">
                         <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                 </el-form-item>

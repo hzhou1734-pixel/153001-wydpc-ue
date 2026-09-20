@@ -17,7 +17,7 @@
                         :prefix-icon="Search" @keyup.enter="onSearch" />
                 </el-form-item>
                 <el-form-item label="活动状态">
-                    <el-select v-model="queryParams.activity_status" placeholder="全部状态" clearable class="!w-32">
+                    <el-select v-model="queryParams.activity_status" placeholder="请选择" clearable class="!w-32">
                         <el-option label="报名中" :value="1" />
                         <el-option label="已结束" :value="2" />
                     </el-select>

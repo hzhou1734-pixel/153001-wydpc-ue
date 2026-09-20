@@ -15,12 +15,12 @@
                         :prefix-icon="Search" @keyup.enter="onSearch" />
                 </el-form-item>
                 <el-form-item label="服务类目">
-                    <el-select v-model="queryParams.category" placeholder="全部类目" clearable class="!w-36">
+                    <el-select v-model="queryParams.category" placeholder="请选择" clearable class="!w-36">
                         <el-option v-for="c in helperCategories" :key="c" :label="c" :value="c" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="人才状态">
-                    <el-select v-model="queryParams.status" placeholder="全部状态" clearable class="!w-32">
+                    <el-select v-model="queryParams.status" placeholder="请选择" clearable class="!w-32">
                         <el-option label="启用" :value="1" />
                         <el-option label="禁用" :value="0" />
                     </el-select>

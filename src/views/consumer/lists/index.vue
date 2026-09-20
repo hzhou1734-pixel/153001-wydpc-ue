@@ -11,7 +11,7 @@
                     />
                 </el-form-item>
                 <el-form-item label="账号状态">
-                    <el-select v-model="queryParams.status" class="w-[140px]" clearable placeholder="全部状态">
+                    <el-select v-model="queryParams.status" class="w-[140px]" clearable placeholder="请选择">
                         <el-option label="正常" :value="1" />
                         <el-option label="已禁用" :value="0" />
                     </el-select>

@@ -9,7 +9,7 @@
                     <el-input v-model="queryParams.type" clearable @keyup.enter="resetPage" />
                 </el-form-item>
                 <el-form-item class="w-[280px]" label="状态">
-                    <el-select v-model="queryParams.status">
+                    <el-select v-model="queryParams.status" placeholder="请选择">
                         <el-option label="全部" value />
                         <el-option label="正常" :value="1" />
                         <el-option label="停用" :value="0" />

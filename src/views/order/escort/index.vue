@@ -7,19 +7,19 @@
                         @keyup.enter="handleQuery" />
                 </el-form-item>
                 <el-form-item label="订单状态">
-                    <el-select v-model="queryParams.status" class="w-[140px]" clearable placeholder="全部状态">
+                    <el-select v-model="queryParams.status" class="w-[140px]" clearable placeholder="请选择">
                         <el-option v-for="(label, value) in statusMap" :key="value" :label="label"
                             :value="Number(value)" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="支付状态">
-                    <el-select v-model="queryParams.pay_status" class="w-[120px]" clearable placeholder="全部">
+                    <el-select v-model="queryParams.pay_status" class="w-[120px]" clearable placeholder="请选择">
                         <el-option label="已支付" :value="1" />
                         <el-option label="未支付" :value="0" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="支付方式">
-                    <el-select v-model="queryParams.pay_type" class="w-[130px]" clearable placeholder="全部方式">
+                    <el-select v-model="queryParams.pay_type" class="w-[130px]" clearable placeholder="请选择">
                         <el-option v-for="item in payTypeOptions" :key="item" :label="item" :value="item" />
                     </el-select>
                 </el-form-item>

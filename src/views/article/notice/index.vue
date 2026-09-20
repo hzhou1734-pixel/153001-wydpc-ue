@@ -17,7 +17,7 @@
                         :prefix-icon="Search" @keyup.enter="onSearch" />
                 </el-form-item>
                 <el-form-item label="显示状态">
-                    <el-select v-model="queryParams.status" placeholder="全部状态" clearable class="!w-32">
+                    <el-select v-model="queryParams.status" placeholder="请选择" clearable class="!w-32">
                         <el-option label="显示" :value="1" />
                         <el-option label="隐藏" :value="0" />
                     </el-select>
