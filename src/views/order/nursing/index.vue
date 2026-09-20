@@ -45,9 +45,9 @@
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
                 <el-table-column prop="sn" label="订单编号" width="170" show-overflow-tooltip />
                 <el-table-column prop="service" label="托管名称" min-width="170" show-overflow-tooltip />
-                <el-table-column label="托管类型" width="120">
+                <el-table-column label="托管类型" width="170">
                     <template #default="{ row }">
-                        <el-tag size="small" effect="light" :type="typeTag(row.type)">{{ row.type }}</el-tag>
+                        <el-tag v-for="t in row.type" :key="t" size="small" effect="light" :type="typeTag(t)" class="mr-1">{{ t }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="价格" width="110" align="right">
@@ -120,7 +120,9 @@
                 <el-descriptions :column="2" border class="mb-4">
                     <el-descriptions-item label="订单编号">{{ detailRow.sn }}</el-descriptions-item>
                     <el-descriptions-item label="托管名称">{{ detailRow.service }}</el-descriptions-item>
-                    <el-descriptions-item label="托管类型">{{ detailRow.type }}</el-descriptions-item>
+                    <el-descriptions-item label="托管类型">
+                        <el-tag v-for="t in detailRow.type" :key="t" size="small" effect="light" :type="typeTag(t)" class="mr-1">{{ t }}</el-tag>
+                    </el-descriptions-item>
                     <el-descriptions-item label="托管状态">{{ statusMap[detailRow.status] }}</el-descriptions-item>
                     <el-descriptions-item label="是否需要接送">
                         {{ detailRow.need_pickup ? `需要（${detailRow.pickup_time}）` : '不需要' }}
@@ -262,7 +264,7 @@ const handleExport = () => {
     exportCsv('托管订单', [
         { label: '订单编号', prop: 'sn' },
         { label: '托管名称', prop: 'service' },
-        { label: '托管类型', prop: 'type' },
+        { label: '托管类型', formatter: (row: any) => (row.type || []).join('、') },
         { label: '价格', formatter: (row: any) => row.price },
         { label: '下单人', prop: 'nickname' },
         { label: '手机号码', prop: 'mobile' },
