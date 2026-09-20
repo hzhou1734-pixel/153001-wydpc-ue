@@ -199,7 +199,7 @@ type TagType = 'info' | 'warning' | 'primary' | 'success' | 'danger'
 const statusMap: Record<number, string> = { 0: '待支付', 1: '待派单', 2: '服务中', 3: '已完成', 4: '已取消' }
 const statusTag = (s: number): TagType =>
     ({ 0: 'info', 1: 'warning', 2: 'primary', 3: 'success', 4: 'danger' } as Record<number, TagType>)[s] || 'info'
-const payTypeOptions = ['微信支付', '支付宝', '银行卡']
+const payTypeOptions = ['微信支付', '支付宝支付']
 
 const queryParams = reactive({
     keyword: '',

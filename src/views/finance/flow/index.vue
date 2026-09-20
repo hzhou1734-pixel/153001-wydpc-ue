@@ -13,7 +13,8 @@
                 <el-form-item label="支付方式">
                     <el-select v-model="queryParams.pay_type" placeholder="全部" clearable class="!w-[130px]">
                         <el-option label="微信支付" value="微信支付" />
-                        <el-option label="支付宝" value="支付宝" />
+                        <el-option label="支付宝支付" value="支付宝支付" />
+                        <el-option label="顾好家币" value="顾好家币" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="提交时间">
