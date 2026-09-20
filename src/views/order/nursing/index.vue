@@ -94,7 +94,7 @@
                 <el-form-item label="托管名称">{{ dispatchRow?.service }}</el-form-item>
                 <el-form-item label="是否需要接送">
                     <el-tag size="small" :type="dispatchRow?.need_pickup ? 'warning' : 'info'">
-                        {{ dispatchRow?.need_pickup ? `需要接送（${dispatchRow?.pickup_time}）` : '无需接送' }}
+                        {{ dispatchRow?.need_pickup ? '需要接送' : '无需接送' }}
                     </el-tag>
                 </el-form-item>
                 <el-form-item label="指派员工" required>
@@ -125,7 +125,7 @@
                     </el-descriptions-item>
                     <el-descriptions-item label="托管状态">{{ statusMap[detailRow.status] }}</el-descriptions-item>
                     <el-descriptions-item label="是否需要接送">
-                        {{ detailRow.need_pickup ? `需要（${detailRow.pickup_time}）` : '不需要' }}
+                        {{ detailRow.need_pickup ? '需要' : '不需要' }}
                     </el-descriptions-item>
                     <el-descriptions-item label="服务员工">{{ detailRow.staff || '未派单' }}</el-descriptions-item>
                     <el-descriptions-item label="下单时间">{{ detailRow.create_time }}</el-descriptions-item>
