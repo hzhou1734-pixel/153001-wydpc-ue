@@ -39,7 +39,7 @@
                         <span v-else>房号 {{ row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="小区名称" min-width="140">
+                <el-table-column label="小区名称" min-width="120">
                     <template #default="{ row }">
                         <span v-if="row.type === 'building'">{{ row.community_name }}</span>
                     </template>
@@ -59,10 +59,10 @@
                         <span v-if="row.type === 'building'">{{ (row.children || []).length }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="认证业主" min-width="120">
+                <el-table-column label="认证业主" min-width="230">
                     <template #default="{ row }">
                         <template v-if="row.type === 'room'">
-                            <div class="owner-cert flex items-center gap-2 py-1.5 pl-2 pr-3 rounded-lg border" :class="row.certified ? 'is-yes' : 'is-no'">
+                            <div class="owner-cert flex items-center gap-2 py-1.5 pl-2 pr-3 rounded-lg border whitespace-nowrap" :class="row.certified ? 'is-yes' : 'is-no'">
                                 <span class="cert-bar" :class="row.certified ? 'yes' : 'no'"></span>
                                 <el-image
                                     v-if="row.certified"
@@ -83,7 +83,7 @@
                         </template>
                     </template>
                 </el-table-column>
-                <el-table-column label="家庭成员数" min-width="110" align="center">
+                <el-table-column label="家庭成员数" min-width="90" align="center">
                     <template #default="{ row }">
                         <span v-if="row.type === 'room'">{{ row.certified ? `${row.family_count} 人` : '-' }}</span>
                     </template>
@@ -93,17 +93,17 @@
                         <span v-if="row.type === 'room'">{{ row.certified ? row.cert_time || '-' : '-' }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="顾好家币额度" min-width="120" align="right">
+                <el-table-column label="顾好家币额度" min-width="110" align="right">
                     <template #default="{ row }">
                         <span v-if="row.type === 'room'" class="text-orange-500 font-bold">¥{{ row.coin_quota.toFixed(2) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="待结算额度" min-width="120" align="right">
+                <el-table-column label="待结算额度" min-width="110" align="right">
                     <template #default="{ row }">
                         <span v-if="row.type === 'room'" :class="row.coin_pending > 0 ? 'text-blue-500 font-bold' : 'text-tx-secondary'">¥{{ row.coin_pending.toFixed(2) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="剩余额度" min-width="120" align="right">
+                <el-table-column label="剩余额度" min-width="110" align="right">
                     <template #default="{ row }">
                         <span v-if="row.type === 'room'" class="text-green-600 font-bold">¥{{ row.coin_remaining.toFixed(2) }}</span>
                     </template>
