@@ -172,6 +172,12 @@
                     <el-descriptions-item label="订单金额">
                         <span class="text-orange-500 font-bold">¥{{ detailRow.amount }}</span>
                     </el-descriptions-item>
+                    <el-descriptions-item label="配送费">
+                        <template v-if="detailRow.need_delivery === 1">
+                            <span class="text-orange-500 font-bold">¥{{ detailRow.delivery_fee || '0.00' }}</span>
+                        </template>
+                        <span v-else class="text-tx-secondary">自取（免配送费）</span>
+                    </el-descriptions-item>
                     <el-descriptions-item label="支付方式">{{ detailRow.pay_type || '—' }}</el-descriptions-item>
                     <el-descriptions-item label="支付时间">{{ detailRow.pay_time || '—' }}</el-descriptions-item>
                 </el-descriptions>
