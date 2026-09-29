@@ -283,6 +283,7 @@ export interface HelperItem {
     cover: string
     title: string
     specs: HelperSpec[]
+    is_health_hut: number // 是否健康小屋服务：0 否 1 是（勾选后为免费服务）
     sales: number
     status: number
     sort: number
@@ -303,6 +304,7 @@ export const helperServices: HelperItem[] = [
             { name: '洗衣机维修', price: 100 },
             { name: '冰箱维修', price: 130 }
         ],
+        is_health_hut: 0,
         sales: 326,
         status: 1,
         sort: 1,
@@ -318,6 +320,7 @@ export const helperServices: HelperItem[] = [
             { name: '马桶疏通', price: 80 },
             { name: '主管道疏通', price: 180 }
         ],
+        is_health_hut: 0,
         sales: 258,
         status: 1,
         sort: 2,
@@ -333,6 +336,7 @@ export const helperServices: HelperItem[] = [
             { name: '防盗门开锁', price: 120 },
             { name: '更换锁芯', price: 160 }
         ],
+        is_health_hut: 0,
         sales: 176,
         status: 1,
         sort: 3,
@@ -349,6 +353,7 @@ export const helperServices: HelperItem[] = [
             { name: '油烟机清洗', price: 150 },
             { name: '空调清洗', price: 120 }
         ],
+        is_health_hut: 0,
         sales: 512,
         status: 1,
         sort: 4,
@@ -364,6 +369,7 @@ export const helperServices: HelperItem[] = [
             { name: '5公里内代买', price: 25 },
             { name: '政务代办', price: 60 }
         ],
+        is_health_hut: 0,
         sales: 143,
         status: 1,
         sort: 5,
@@ -378,6 +384,7 @@ export const helperServices: HelperItem[] = [
             { name: '半天照护', price: 150 },
             { name: '全天照护', price: 260 }
         ],
+        is_health_hut: 0,
         sales: 98,
         status: 1,
         sort: 6,
@@ -389,6 +396,7 @@ export const helperServices: HelperItem[] = [
         cover: helpImg('7'),
         title: '衣物洗护',
         specs: [{ name: '上门取送洗护', price: 45 }],
+        is_health_hut: 0,
         sales: 87,
         status: 0,
         sort: 7,
@@ -404,10 +412,23 @@ export const helperServices: HelperItem[] = [
             { name: '一室一厅搬家', price: 380 },
             { name: '两室一厅搬家', price: 580 }
         ],
+        is_health_hut: 0,
         sales: 64,
         status: 0,
         sort: 8,
         detail: '<p>提供打包、搬运、拆装与还原服务，车辆齐全，全程物品清点，损坏照价赔偿。</p>',
         create_time: '2026-09-13 13:26:48'
+    },
+    {
+        id: 4009,
+        cover: helpImg('9'),
+        title: '健康小屋',
+        specs: [{ name: '免费服务', price: 0 }],
+        is_health_hut: 1,
+        sales: 210,
+        status: 1,
+        sort: 9,
+        detail: '<p>社区健康小屋免费开放，提供血压、血糖、体脂等基础健康自测服务，检测报告实时生成，可到店领取健康指导建议。</p>',
+        create_time: '2026-09-18 10:12:40'
     }
 ]

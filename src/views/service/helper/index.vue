@@ -42,7 +42,8 @@
                 <el-table-column prop="title" label="生活帮手标题" min-width="200" show-overflow-tooltip />
                 <el-table-column label="价格" min-width="140" align="right">
                     <template #default="{ row }">
-                        <el-popover v-if="(row.specs || []).length > 1" placement="top" width="260" trigger="hover">
+                        <el-tag v-if="row.is_health_hut === 1" type="success" effect="plain">免费</el-tag>
+                        <el-popover v-else-if="(row.specs || []).length > 1" placement="top" width="260" trigger="hover">
                             <template #reference>
                                 <span class="text-orange-500 font-bold cursor-pointer">¥{{ minPrice(row) }}</span>
                             </template>
@@ -98,11 +99,17 @@
                         <el-radio :value="2">多规格</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item v-if="editForm.spec_type === 1" label="服务价格" required>
+                <el-form-item label="健康小屋服务">
+                    <div>
+                        <el-checkbox v-model="isHealthHut">健康小屋服务</el-checkbox>
+                        <div class="text-xs text-tx-secondary mt-1">勾选后为免费服务，用户无需支付费用</div>
+                    </div>
+                </el-form-item>
+                <el-form-item v-if="!isHealthHut && editForm.spec_type === 1" label="服务价格" required>
                     <el-input-number v-model="editForm.single_price" :min="0" :precision="2" :step="1" />
                     <span class="ml-2 text-xs text-tx-secondary">元</span>
                 </el-form-item>
-                <el-form-item v-else label="多规格价格" required>
+                <el-form-item v-if="!isHealthHut && editForm.spec_type === 2" label="多规格价格" required>
                     <div class="w-full">
                         <div v-for="(spec, index) in editForm.specs" :key="index" class="flex items-center mb-2">
                             <el-input v-model="spec.name" placeholder="规格名称，如：空调维修" class="!w-56 mr-2"
@@ -194,6 +201,7 @@ const resetQuery = () => {
 
 // ==================== 添加 / 编辑 ====================
 const editVisible = ref(false)
+const isHealthHut = ref(false)
 const editForm = reactive({
     id: 0,
     title: '',
@@ -219,6 +227,7 @@ const openAdd = () => {
         id: 0, title: '', cover: '', spec_type: 1, single_price: 0,
         specs: [{ name: '', price: 0 }], detail: '', sort: helperServices.length + 1, status: 1
     })
+    isHealthHut.value = false
     editVisible.value = true
 }
 const openEdit = (row: any) => {
@@ -234,13 +243,16 @@ const openEdit = (row: any) => {
         sort: row.sort ?? 0,
         status: row.status
     })
+    isHealthHut.value = row.is_health_hut === 1
     editVisible.value = true
 }
 const submitEdit = () => {
     if (!editForm.title.trim()) return ElMessage.warning('请输入生活帮手标题')
     if (!editForm.cover) return ElMessage.warning('请上传封面图')
     let specs: { name: string; price: number }[] = []
-    if (editForm.spec_type === 1) {
+    if (isHealthHut.value) {
+        specs = [{ name: '免费服务', price: 0 }]
+    } else if (editForm.spec_type === 1) {
         if (!(Number(editForm.single_price) > 0)) return ElMessage.warning('请设置服务价格')
         specs = [{ name: '单规格', price: Number(editForm.single_price) }]
     } else {
@@ -253,6 +265,7 @@ const submitEdit = () => {
         title: editForm.title.trim(),
         cover: editForm.cover,
         specs,
+        is_health_hut: isHealthHut.value ? 1 : 0,
         detail: editForm.detail,
         sort: Number(editForm.sort) || 0,
         status: editForm.status
@@ -262,7 +275,7 @@ const submitEdit = () => {
         if (row) Object.assign(row, payload)
         ElMessage.success('保存成功')
     } else {
-        helperServices.unshift({ id: Date.now(), ...payload, sales: 0, create_time: nowTimeStr() })
+        helperServices.unshift({ id: Date.now(), ...payload, is_health_hut: payload.is_health_hut, sales: 0, create_time: nowTimeStr() })
         ElMessage.success('添加成功')
     }
     editVisible.value = false
