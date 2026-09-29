@@ -192,27 +192,27 @@ export const talentList = [
 ]
 
 // ==================== 陪诊订单附加费用 ====================
-/** 按陪诊订单 id 归档：extra_fee 金额 + extra_remark 说明 + voucher 凭证图片，无记录则显示「无附加费用」 */
-export const escortExtraFees: Record<number, { name: string; extra_fee: string; extra_remark: string; voucher: string }[]> = {
+/** 按陪诊订单 id 归档：extra_fee 金额 + created_at 添加时间 + voucher 凭证图片，无记录则显示「无附加费用」 */
+export const escortExtraFees: Record<number, { name: string; extra_fee: string; created_at: string; voucher: string }[]> = {
     3001: [
-        { name: '停车费', extra_fee: '20.00', extra_remark: '医院地下车库 4 小时', voucher: 'https://picsum.photos/seed/ghj-extra-3011/400/300' },
-        { name: '挂号费', extra_fee: '50.00', extra_remark: '专家门诊挂号费，凭票实报实销', voucher: 'https://picsum.photos/seed/ghj-extra-3012/400/300' }
+        { name: '停车费', extra_fee: '20.00', created_at: daysAgo(0, ' 11:30:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3011/400/300' },
+        { name: '挂号费', extra_fee: '50.00', created_at: daysAgo(0, ' 13:05:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3012/400/300' }
     ],
     3002: [
-        { name: '挂号费', extra_fee: '15.00', extra_remark: '普通门诊挂号费，陪诊员代缴', voucher: 'https://picsum.photos/seed/ghj-extra-3021/400/300' }
+        { name: '挂号费', extra_fee: '15.00', created_at: daysAgo(1, ' 14:20:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3021/400/300' }
     ],
     3003: [
-        { name: '停车费', extra_fee: '12.00', extra_remark: '省人民医院路面临时停车', voucher: 'https://picsum.photos/seed/ghj-extra-3031/400/300' }
+        { name: '停车费', extra_fee: '12.00', created_at: daysAgo(1, ' 10:10:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3031/400/300' }
     ],
     3004: [
-        { name: '餐费', extra_fee: '90.00', extra_remark: '住院期间陪护人员三餐，按 30 元/餐计', voucher: 'https://picsum.photos/seed/ghj-extra-3041/400/300' },
-        { name: '停车费', extra_fee: '48.00', extra_remark: '住院部停车场包日计费，共 3 天', voucher: 'https://picsum.photos/seed/ghj-extra-3042/400/300' }
+        { name: '餐费', extra_fee: '90.00', created_at: daysAgo(3, ' 12:00:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3041/400/300' },
+        { name: '停车费', extra_fee: '48.00', created_at: daysAgo(2, ' 17:40:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3042/400/300' }
     ],
     3006: [
-        { name: '挂号费', extra_fee: '15.00', extra_remark: '社区医院普通号，陪诊员代缴', voucher: 'https://picsum.photos/seed/ghj-extra-3061/400/300' }
+        { name: '挂号费', extra_fee: '15.00', created_at: daysAgo(6, ' 11:15:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3061/400/300' }
     ],
     3008: [
-        { name: '停车费', extra_fee: '18.00', extra_remark: '就诊过程中临时停车 2 小时', voucher: 'https://picsum.photos/seed/ghj-extra-3081/400/300' },
-        { name: '餐费', extra_fee: '25.00', extra_remark: '陪诊员午餐，医院食堂就餐', voucher: 'https://picsum.photos/seed/ghj-extra-3082/400/300' }
+        { name: '停车费', extra_fee: '18.00', created_at: daysAgo(8, ' 10:30:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3081/400/300' },
+        { name: '餐费', extra_fee: '25.00', created_at: daysAgo(8, ' 12:20:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3082/400/300' }
     ]
 }

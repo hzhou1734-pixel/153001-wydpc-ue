@@ -176,7 +176,7 @@
                             <span class="text-orange-500">¥{{ row.extra_fee }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="extra_remark" label="费用说明" min-width="220" show-overflow-tooltip />
+                    <el-table-column prop="created_at" label="添加时间" min-width="170" />
                     <el-table-column label="凭证图片" min-width="100" align="center">
                         <template #default="{ row }">
                             <el-image
