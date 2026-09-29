@@ -44,9 +44,9 @@
                         <span>{{ row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="单价（接 / 送 / 用餐 / 托管）" min-width="250" show-overflow-tooltip>
+                <el-table-column label="单价（接 / 送 / 看护）" min-width="230" show-overflow-tooltip>
                     <template #default="{ row }">
-                        <span class="text-orange-500 font-bold">接 ¥{{ money(row.price_pickup) }} · 送 ¥{{ money(row.price_send) }} · 用餐 ¥{{ money(row.price_meal) }} · 托管 ¥{{ money(row.price_care) }}</span>
+                        <span class="text-orange-500 font-bold">接 ¥{{ money(row.price_pickup) }} · 送 ¥{{ money(row.price_send) }} · 看护 ¥{{ money(row.price_care) }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="状态" min-width="90">
@@ -89,11 +89,7 @@
                     <el-input-number v-model="editForm.price_send" :min="0" :precision="2" :step="1" />
                     <span class="ml-2 text-xs text-tx-secondary">元</span>
                 </el-form-item>
-                <el-form-item label="用餐单价">
-                    <el-input-number v-model="editForm.price_meal" :min="0" :precision="2" :step="1" />
-                    <span class="ml-2 text-xs text-tx-secondary">元</span>
-                </el-form-item>
-                <el-form-item label="托管单价">
+                <el-form-item label="看护单价">
                     <el-input-number v-model="editForm.price_care" :min="0" :precision="2" :step="1" />
                     <span class="ml-2 text-xs text-tx-secondary">元</span>
                 </el-form-item>
@@ -169,12 +165,12 @@ const resetQuery = () => {
 // ==================== 添加 / 编辑 ====================
 const editVisible = ref(false)
 const editForm = reactive({
-    id: 0, name: '', cover: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0, desc: '', sort: 0, status: 1
+    id: 0, name: '', cover: '', price_pickup: 0, price_send: 0, price_care: 0, desc: '', sort: 0, status: 1
 })
 
 const openAdd = () => {
     Object.assign(editForm, {
-        id: 0, name: '', cover: '', price_pickup: 0, price_send: 0, price_meal: 0, price_care: 0,
+        id: 0, name: '', cover: '', price_pickup: 0, price_send: 0, price_care: 0,
         desc: '', sort: nursingServices.length + 1, status: 1
     })
     editVisible.value = true
@@ -186,7 +182,6 @@ const openEdit = (row: any) => {
         cover: row.cover || '',
         price_pickup: Number(row.price_pickup) || 0,
         price_send: Number(row.price_send) || 0,
-        price_meal: Number(row.price_meal) || 0,
         price_care: Number(row.price_care) || 0,
         desc: row.desc || '',
         sort: row.sort ?? 0,
@@ -202,7 +197,6 @@ const submitEdit = () => {
         cover: editForm.cover,
         price_pickup: Number(editForm.price_pickup) || 0,
         price_send: Number(editForm.price_send) || 0,
-        price_meal: Number(editForm.price_meal) || 0,
         price_care: Number(editForm.price_care) || 0,
         desc: editForm.desc,
         sort: Number(editForm.sort) || 0,

@@ -14,9 +14,7 @@ export interface NursingItem {
     price_pickup: number
     /** 送回单价（0 表示不提供） */
     price_send: number
-    /** 用餐单价 */
-    price_meal: number
-    /** 托管单价 */
+    /** 看护单价（0 表示不提供） */
     price_care: number
     desc: string
     status: number
@@ -31,7 +29,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-1/400/300',
         price_pickup: 15,
         price_send: 15,
-        price_meal: 25,
         price_care: 133,
         desc: '专业育婴师看护，含上午点心、营养午餐与午睡照护，实时反馈宝宝饮食与作息情况。',
         status: 1,
@@ -44,7 +41,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-2/400/300',
         price_pickup: 10,
         price_send: 10,
-        price_meal: 18,
         price_care: 90,
         desc: '放学接送至服务中心，含作业辅导、营养晚餐，家长下班后接回。',
         status: 1,
@@ -57,7 +53,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-3/400/300',
         price_pickup: 15,
         price_send: 15,
-        price_meal: 20,
         price_care: 108,
         desc: '上午 8:30-12:00，含亲子早教游戏、手工课堂与健康早点。',
         status: 1,
@@ -70,7 +65,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-4/400/300',
         price_pickup: 8,
         price_send: 8,
-        price_meal: 15,
         price_care: 49,
         desc: '按学期报名，周一至周五每日托管，含作业辅导与晚餐，寒暑假顺延。',
         status: 1,
@@ -83,7 +77,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-5/400/300',
         price_pickup: 8,
         price_send: 8,
-        price_meal: 15,
         price_care: 64,
         desc: '放学后至 20:00，含晚餐与作业辅导，适合双职工家庭。',
         status: 1,
@@ -96,7 +89,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-6/400/300',
         price_pickup: 12,
         price_send: 12,
-        price_meal: 20,
         price_care: 94,
         desc: '周六周日开放，含美术、书法、体适能等兴趣课程与营养午餐。',
         status: 1,
@@ -109,7 +101,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-7/400/300',
         price_pickup: 20,
         price_send: 20,
-        price_meal: 25,
         price_care: 163,
         desc: '每月两次户外研学活动，含往返接送、保险与午餐，需提前一周预约。',
         status: 0,
@@ -122,7 +113,6 @@ export const nursingServices: NursingItem[] = [
         cover: 'https://picsum.photos/seed/ghj-nursing-8/400/300',
         price_pickup: 10,
         price_send: 10,
-        price_meal: 18,
         price_care: 72,
         desc: '暑期临时托管，按天计费，需提前一天预约，含午餐与午休。',
         status: 0,

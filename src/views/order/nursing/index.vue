@@ -45,9 +45,9 @@
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
                 <el-table-column prop="sn" label="订单编号" min-width="170" show-overflow-tooltip />
                 <el-table-column prop="service" label="托管名称" min-width="150" show-overflow-tooltip />
-                <el-table-column label="托管类型" min-width="160">
+                <el-table-column label="托管类型" min-width="110">
                     <template #default="{ row }">
-                        <el-tag v-for="t in row.type" :key="t" size="small" effect="light" :type="typeTag(t)" class="mr-1">{{ t }}</el-tag>
+                        <el-tag size="small" effect="light" :type="typeTag(row.type)">{{ row.type }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="价格" min-width="110" align="right">
@@ -121,7 +121,7 @@
                     <el-descriptions-item label="订单编号">{{ detailRow.sn }}</el-descriptions-item>
                     <el-descriptions-item label="托管名称">{{ detailRow.service }}</el-descriptions-item>
                     <el-descriptions-item label="托管类型">
-                        <el-tag v-for="t in detailRow.type" :key="t" size="small" effect="light" :type="typeTag(t)" class="mr-1">{{ t }}</el-tag>
+                        <el-tag size="small" effect="light" :type="typeTag(detailRow.type)">{{ detailRow.type }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item label="托管状态">{{ statusMap[detailRow.status] }}</el-descriptions-item>
                     <el-descriptions-item label="是否需要接送">
@@ -136,9 +136,7 @@
                     <el-descriptions-item label="联系人">{{ detailRow.contact_name }}</el-descriptions-item>
                     <el-descriptions-item label="联系电话">{{ detailRow.contact_mobile }}</el-descriptions-item>
                     <el-descriptions-item label="所属楼栋">{{ detailRow.building }}</el-descriptions-item>
-                    <el-descriptions-item v-if="hasType('接') && hasType('送')" label="接的地址">{{ detailRow.address }}</el-descriptions-item>
-                    <el-descriptions-item v-if="hasType('接') && hasType('送')" label="送的地址">{{ detailRow.address }}</el-descriptions-item>
-                    <el-descriptions-item v-else-if="hasType('接')" label="接的地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
+                    <el-descriptions-item v-if="hasType('接')" label="接的地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
                     <el-descriptions-item v-else-if="hasType('送')" label="送的地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
                     <el-descriptions-item v-else label="详细地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
                 </el-descriptions>
@@ -195,7 +193,7 @@ type TagType = 'info' | 'warning' | 'primary' | 'success' | 'danger'
 const statusTag = (s: number): TagType =>
     ({ 0: 'info', 1: 'warning', 2: 'primary', 3: 'success', 4: 'danger' } as Record<number, TagType>)[s] || 'info'
 const typeTag = (t: string): TagType =>
-    ({ 托管: 'success', 接: 'warning', 送: 'primary', 用餐: 'danger' } as Record<string, TagType>)[t] || 'info'
+    ({ 接: 'warning', 送: 'primary', 看护: 'success' } as Record<string, TagType>)[t] || 'info'
 
 const queryParams = reactive({
     keyword: '',
@@ -265,7 +263,7 @@ const handleExport = () => {
     exportCsv('托管订单', [
         { label: '订单编号', prop: 'sn' },
         { label: '托管名称', prop: 'service' },
-        { label: '托管类型', formatter: (row: any) => (row.type || []).join('、') },
+        { label: '托管类型', formatter: (row: any) => row.type },
         { label: '价格', formatter: (row: any) => row.price },
         { label: '下单人', prop: 'nickname' },
         { label: '手机号码', prop: 'mobile' },
@@ -304,7 +302,7 @@ const viewDetail = (row: any) => {
     detailRow.value = row
     showDetail.value = true
 }
-/** 托管类型是否包含某项（接/送/用餐/托管） */
+/** 托管类型是否为某项（接/送/看护，单选） */
 const hasType = (t: string) => ((detailRow.value?.type as string[]) || []).includes(t)
 
 onMounted(getLists)
