@@ -18,21 +18,21 @@ export const coinAccounts: Record<number, any> = {
     6: { balance: '150.00', total_recharge: '500.00', total_consume: '350.00' },
 }
 
-/** 顾好家币明细：type 1=充值 2=消费 3=退款 4=赠送 */
+/** 顾好家币明细：type 1=结算 2=消费 3=退款 4=赠送 */
 export const coinLogs = [
-    { id: 1, user_id: 1, type: 1, amount: '200.00', remark: '微信充值顾好家币', create_time: daysAgo(0, ' 09:20:00') },
+    { id: 1, user_id: 1, type: 1, amount: '200.00', remark: '账单结算返还顾好家币', create_time: daysAgo(0, ' 09:20:00') },
     { id: 2, user_id: 1, type: 2, amount: '-55.00', remark: '膳食订单支付 SC20260908001', create_time: daysAgo(0, ' 10:46:08') },
     { id: 3, user_id: 1, type: 2, amount: '-80.00', remark: '托管订单支付 TG20260908001', create_time: daysAgo(1, ' 08:41:12') },
     { id: 4, user_id: 1, type: 3, amount: '+2400.00', remark: '托管订单取消退款 TG20260902007', create_time: daysAgo(5, ' 09:00:00') },
     { id: 5, user_id: 1, type: 4, amount: '+20.00', remark: '社区活动签到赠送', create_time: daysAgo(6, ' 18:30:00') },
-    { id: 6, user_id: 2, type: 1, amount: '100.00', remark: '支付宝充值顾好家币', create_time: daysAgo(2, ' 12:10:00') },
+    { id: 6, user_id: 2, type: 1, amount: '100.00', remark: '账单结算返还顾好家币', create_time: daysAgo(2, ' 12:10:00') },
     { id: 7, user_id: 2, type: 2, amount: '-45.00', remark: '膳食订单支付 SC20260907002', create_time: daysAgo(1, ' 11:21:33') },
     { id: 8, user_id: 2, type: 2, amount: '-29.00', remark: '膳食订单支付 SC20260903006', create_time: daysAgo(5, ' 20:16:22') },
-    { id: 9, user_id: 4, type: 1, amount: '500.00', remark: '微信充值顾好家币', create_time: daysAgo(3, ' 15:00:00') },
+    { id: 9, user_id: 4, type: 1, amount: '500.00', remark: '账单结算返还顾好家币', create_time: daysAgo(3, ' 15:00:00') },
     { id: 10, user_id: 4, type: 2, amount: '-28.00', remark: '膳食订单支付 SC20260906003', create_time: daysAgo(2, ' 17:36:10') },
-    { id: 11, user_id: 5, type: 1, amount: '300.00', remark: '微信充值顾好家币', create_time: daysAgo(4, ' 09:05:00') },
+    { id: 11, user_id: 5, type: 1, amount: '300.00', remark: '账单结算返还顾好家币', create_time: daysAgo(4, ' 09:05:00') },
     { id: 12, user_id: 5, type: 2, amount: '-540.00', remark: '陪诊订单支付 PZ20260908001', create_time: daysAgo(0, ' 08:01:25') },
-    { id: 13, user_id: 6, type: 1, amount: '200.00', remark: '微信充值顾好家币', create_time: daysAgo(6, ' 20:00:00') },
+    { id: 13, user_id: 6, type: 1, amount: '200.00', remark: '账单结算返还顾好家币', create_time: daysAgo(6, ' 20:00:00') },
     { id: 14, user_id: 6, type: 2, amount: '-165.00', remark: '膳食订单支付 SC20260902007', create_time: daysAgo(6, ' 11:02:40') },
     { id: 15, user_id: 3, type: 4, amount: '+50.00', remark: '新用户注册赠送', create_time: daysAgo(60, ' 10:00:00') },
 ]

@@ -68,7 +68,7 @@
                             <div class="text-2xl font-bold mt-1">¥{{ coin.balance || '0.00' }}</div>
                         </el-card>
                         <el-card class="!border-none flex-1" shadow="never">
-                            <div class="text-tx-secondary text-xs">累计充值</div>
+                            <div class="text-tx-secondary text-xs">累计结算</div>
                             <div class="text-2xl font-bold mt-1">¥{{ coin.total_recharge || '0.00' }}</div>
                         </el-card>
                         <el-card class="!border-none flex-1" shadow="never">
@@ -253,7 +253,7 @@ const consumeTotal = computed(() =>
 const coin = computed(() => coinAccounts[userId] || {})
 const userCoinLogs = computed(() => coinLogs.filter((item: any) => item.user_id === userId))
 const coinTypeMap: Record<number, any> = {
-    1: { label: '充值', type: 'success' },
+    1: { label: '结算', type: 'success' },
     2: { label: '消费', type: 'warning' },
     3: { label: '退款', type: 'primary' },
     4: { label: '赠送', type: 'info' },
