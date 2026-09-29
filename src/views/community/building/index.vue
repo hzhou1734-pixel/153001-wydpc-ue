@@ -59,10 +59,10 @@
                         <span v-if="row.type === 'building'">{{ (row.children || []).length }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="认证业主" min-width="230">
+                <el-table-column label="认证业主" width="250">
                     <template #default="{ row }">
                         <template v-if="row.type === 'room'">
-                            <div class="owner-cert flex items-center gap-2 py-1.5 pl-2 pr-3 rounded-lg border whitespace-nowrap" :class="row.certified ? 'is-yes' : 'is-no'">
+                            <div class="owner-cert flex items-center gap-1.5 py-1 pl-2 pr-2 rounded-lg border whitespace-nowrap" :class="row.certified ? 'is-yes' : 'is-no'">
                                 <span class="cert-bar" :class="row.certified ? 'yes' : 'no'"></span>
                                 <el-image
                                     v-if="row.certified"
@@ -70,7 +70,7 @@
                                     :preview-src-list="[row.avatar]"
                                     preview-teleported
                                     fit="cover"
-                                    class="w-8 h-8 rounded-full shrink-0"
+                                    class="w-7 h-7 rounded-full shrink-0"
                                 />
                                 <div class="flex-1 min-w-0 leading-tight">
                                     <div class="text-sm truncate" :class="row.certified ? 'font-medium' : 'text-tx-secondary'">{{ row.owner }}</div>
