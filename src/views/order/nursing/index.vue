@@ -136,10 +136,37 @@
                     <el-descriptions-item label="联系人">{{ detailRow.contact_name }}</el-descriptions-item>
                     <el-descriptions-item label="联系电话">{{ detailRow.contact_mobile }}</el-descriptions-item>
                     <el-descriptions-item label="所属楼栋">{{ detailRow.building }}</el-descriptions-item>
-                    <el-descriptions-item v-if="hasType('接')" label="接的地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
-                    <el-descriptions-item v-else-if="hasType('送')" label="送的地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
-                    <el-descriptions-item v-else label="详细地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
+                    <el-descriptions-item label="详细地址" :span="2">{{ detailRow.address }}</el-descriptions-item>
                 </el-descriptions>
+
+                <!-- 接：显示接的时间、接的地点 -->
+                <template v-if="hasType('接')">
+                    <div class="section-title">接送安排</div>
+                    <el-descriptions :column="2" border class="mb-4">
+                        <el-descriptions-item label="接的时间">{{ detailRow.pickup_time }}</el-descriptions-item>
+                        <el-descriptions-item label="接的地点" :span="2">{{ detailRow.pickup_addr }}</el-descriptions-item>
+                    </el-descriptions>
+                </template>
+
+                <!-- 送：显示送的时间、送的地点 -->
+                <template v-else-if="hasType('送')">
+                    <div class="section-title">接送安排</div>
+                    <el-descriptions :column="2" border class="mb-4">
+                        <el-descriptions-item label="送的时间">{{ detailRow.send_time }}</el-descriptions-item>
+                        <el-descriptions-item label="送的地点" :span="2">{{ detailRow.send_addr }}</el-descriptions-item>
+                    </el-descriptions>
+                </template>
+
+                <!-- 看护：显示所勾选的看护时间段 -->
+                <template v-else-if="hasType('看护')">
+                    <div class="section-title">看护安排</div>
+                    <el-descriptions :column="1" border class="mb-4">
+                        <el-descriptions-item label="看护时间段">
+                            <el-tag v-for="p in detailRow.care_period || []" :key="p" size="small" effect="light"
+                                type="success" class="mr-1 mb-1">{{ p }}</el-tag>
+                        </el-descriptions-item>
+                    </el-descriptions>
+                </template>
 
                 <div class="section-title">支付人信息</div>
                 <el-descriptions :column="2" border class="mb-4">
@@ -303,7 +330,7 @@ const viewDetail = (row: any) => {
     showDetail.value = true
 }
 /** 托管类型是否为某项（接/送/看护，单选） */
-const hasType = (t: string) => ((detailRow.value?.type as string[]) || []).includes(t)
+const hasType = (t: string) => detailRow.value?.type === t
 
 onMounted(getLists)
 </script>
