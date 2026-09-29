@@ -93,6 +93,21 @@
                         <span v-if="row.type === 'room'">{{ row.certified ? row.cert_time || '-' : '-' }}</span>
                     </template>
                 </el-table-column>
+                <el-table-column label="顾好家币额度" min-width="120" align="right">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'room'" class="text-orange-500 font-bold">¥{{ row.coin_quota.toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="待结算额度" min-width="120" align="right">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'room'" :class="row.coin_pending > 0 ? 'text-blue-500 font-bold' : 'text-tx-secondary'">¥{{ row.coin_pending.toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="剩余额度" min-width="120" align="right">
+                    <template #default="{ row }">
+                        <span v-if="row.type === 'room'" class="text-green-600 font-bold">¥{{ row.coin_remaining.toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="排序" min-width="80" align="center">
                     <template #default="{ row }">
                         <span v-if="row.type === 'building'">{{ row.sort }}</span>
@@ -158,11 +173,26 @@
 </template>
 
 <script setup lang="ts" name="communityBuilding">
-import { buildingTree, certifyList, communityList, roomList, staffList } from '@/mock/data'
+import { basicSetting, buildingTree, certifyList, communityList, escortOrders, mealOrders, nursingOrders, roomList, staffList } from '@/mock/data'
 
 const loading = ref(false)
 const communityOptions = communityList
 const queryParams = reactive({ community_id: '' as any, keyword: '', certified: '' as any })
+
+/** 顾好家币额度（取自系统设置-基础设置的授信额度） */
+const coinQuota = Number(basicSetting.coin_credit_limit) || 0
+
+/** 三类订单（用于实时统计各房号业主的待结算额度） */
+const allOrders = [...nursingOrders, ...mealOrders, ...escortOrders] as any[]
+
+/** 房号业主的顾好家币额度信息：额度 / 待结算额度 / 剩余额度（实时统计） */
+const roomCoinInfo = (phone: string) => {
+    const pending = allOrders
+        .filter((o: any) => o.mobile === phone && o.pay_status === 1 && (o.status === 1 || o.status === 2))
+        .reduce((s: number, o: any) => s + (Number(o.amount) || 0), 0)
+    const remaining = Math.max(coinQuota - pending, 0)
+    return { quota: coinQuota, pending, remaining }
+}
 
 /** 楼栋-房号二级树（文档要求：不需要单元，直接楼栋-房号） */
 const treeList = computed(() => {
@@ -197,6 +227,7 @@ const treeList = computed(() => {
             sort: index + 1,
             children: rooms.map((r: any, i: number) => {
                 const cert: any = certifyList.find((c: any) => c.mobile === r.phone) || {}
+                const coin = roomCoinInfo(r.phone)
                 return {
                     id: `r-${r.id}`,
                     type: 'room',
@@ -209,6 +240,9 @@ const treeList = computed(() => {
                     avatar: `https://picsum.photos/seed/ghj-room-${r.id}/100/100`,
                     family_count: r.certified ? cert.family_count || 3 : 0,
                     cert_time: r.certified ? cert.audit_time || cert.create_time || '-' : '',
+                    coin_quota: coin.quota,
+                    coin_pending: coin.pending,
+                    coin_remaining: coin.remaining,
                     sort: i + 1
                 }
             })
