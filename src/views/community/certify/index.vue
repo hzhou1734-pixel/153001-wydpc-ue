@@ -73,6 +73,13 @@
                     <template #default="{ row }">{{ row.family_count }} 人</template>
                 </el-table-column>
                 <el-table-column prop="hobby" label="兴趣爱好" min-width="120" show-overflow-tooltip />
+                <el-table-column label="资料比对" min-width="90" align="center">
+                    <template #default="{ row }">
+                        <el-tag :type="row.data_compare === 1 ? 'success' : 'danger'" size="small">
+                            {{ row.data_compare === 1 ? '一致' : '不一致' }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="审核状态" min-width="90">
                     <template #default="{ row }">
                         <el-tag :type="row.status === 0 ? 'warning' : row.status === 1 ? 'success' : 'danger'" size="small">
@@ -117,6 +124,11 @@
                 <el-descriptions-item label="职业">{{ current.job || '-' }}</el-descriptions-item>
                 <el-descriptions-item label="家庭人口">{{ current.family_count }} 人</el-descriptions-item>
                 <el-descriptions-item label="兴趣爱好" :span="2">{{ current.hobby || '-' }}</el-descriptions-item>
+                <el-descriptions-item label="资料比对">
+                    <el-tag :type="current.data_compare === 1 ? 'success' : 'danger'" size="small">
+                        {{ current.data_compare === 1 ? '一致' : '不一致' }}
+                    </el-tag>
+                </el-descriptions-item>
                 <el-descriptions-item label="提交时间">{{ current.create_time }}</el-descriptions-item>
                 <el-descriptions-item label="审核时间">{{ current.audit_time || '-' }}</el-descriptions-item>
                 <el-descriptions-item label="审核状态">
