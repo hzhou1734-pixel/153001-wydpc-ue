@@ -35,6 +35,14 @@
                     <span class="card-title">订单评价</span>
                 </div>
             </template>
+
+            <el-tabs v-model="activeType" class="evaluate-tabs" @tab-change="onTabChange">
+                <el-tab-pane label="托管" name="nursing" />
+                <el-tab-pane label="膳食" name="meal" />
+                <el-tab-pane label="陪诊" name="escort" />
+                <el-tab-pane label="生活帮手" name="helper" />
+            </el-tabs>
+
             <el-table size="large" v-loading="pager.loading" :data="pager.lists">
                 <el-table-column prop="sn" label="订单编号" min-width="170" show-overflow-tooltip />
                 <el-table-column prop="title" label="订单标题" min-width="180" show-overflow-tooltip />
@@ -47,6 +55,33 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="mobile" label="手机号码" min-width="120" show-overflow-tooltip />
+                <!-- 陪诊 / 生活帮手：补充服务人员信息 -->
+                <template v-if="isServiceType">
+                    <el-table-column label="服务人员" min-width="150">
+                        <template #default="{ row }">
+                            <div class="flex items-center">
+                                <el-image :src="row.staff_avatar" class="w-8 h-8 rounded-full mr-2" />
+                                <span>{{ row.staff_nickname }}</span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="staff_mobile" label="服务手机" min-width="120" show-overflow-tooltip />
+                    <el-table-column label="评价内容" min-width="240" show-overflow-tooltip>
+                        <template #default="{ row }">
+                            <span class="text-tx-secondary">{{ row.content }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="图片" min-width="120">
+                        <template #default="{ row }">
+                            <div class="flex items-center gap-1 flex-wrap">
+                                <el-image v-for="(img, idx) in (row.images || [])" :key="idx" :src="img"
+                                    class="w-9 h-9 rounded-md" :preview-src-list="row.images" :initial-index="idx"
+                                    fit="cover" />
+                                <span v-if="!(row.images && row.images.length)" class="text-tx-secondary text-xs">—</span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </template>
                 <el-table-column label="评星" min-width="160">
                     <template #default="{ row }">
                         <el-rate :model-value="row.stars" disabled allow-half size="small" />
@@ -72,7 +107,7 @@
         </el-card>
 
         <!-- 详情 -->
-        <el-dialog v-model="showDetail" title="评价详情" width="640px">
+        <el-dialog v-model="showDetail" title="评价详情" width="680px">
             <div v-if="detailRow">
                 <div class="section-title">评价信息</div>
                 <el-descriptions :column="2" border class="mb-4">
@@ -91,12 +126,33 @@
                     <el-descriptions-item label="评价时间">{{ detailRow.create_time }}</el-descriptions-item>
                     <el-descriptions-item label="评价内容" :span="2">{{ detailRow.content }}</el-descriptions-item>
                 </el-descriptions>
+
+                <!-- 陪诊 / 生活帮手：服务人员信息 + 评价图片 -->
+                <template v-if="isServiceRow">
+                    <div class="section-title">服务人员信息</div>
+                    <el-descriptions :column="2" border class="mb-4">
+                        <el-descriptions-item label="头像">
+                            <el-image :src="detailRow.staff_avatar" class="w-10 h-10 rounded-full" />
+                        </el-descriptions-item>
+                        <el-descriptions-item label="昵称">{{ detailRow.staff_nickname }}</el-descriptions-item>
+                        <el-descriptions-item label="手机号码" :span="2">{{ detailRow.staff_mobile }}</el-descriptions-item>
+                    </el-descriptions>
+
+                    <div class="section-title">评价图片</div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <el-image v-for="(img, idx) in (detailRow.images || [])" :key="idx" :src="img"
+                            class="w-20 h-20 rounded-md" :preview-src-list="detailRow.images" :initial-index="idx"
+                            fit="cover" />
+                        <span v-if="!(detailRow.images && detailRow.images.length)" class="text-tx-secondary text-xs">无</span>
+                    </div>
+                </template>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts" name="orderEvaluate">
+import { computed } from 'vue'
 import { orderEvaluations } from '@/mock/data_order'
 import { usePaging } from '@/hooks/usePaging'
 
@@ -108,7 +164,12 @@ const starOptions = [
     { label: '1 星', value: 1 }
 ]
 
+const activeType = ref<'nursing' | 'meal' | 'escort' | 'helper'>('nursing')
+const isServiceType = computed(() => activeType.value === 'escort' || activeType.value === 'helper')
+const isServiceRow = computed(() => detailRow.value?.type === 'escort' || detailRow.value?.type === 'helper')
+
 const queryParams = reactive({
+    type: 'nursing' as string,
     keyword: '',
     stars: '' as '' | number,
     status: '' as '' | number,
@@ -120,6 +181,9 @@ const createRange = ref<string[]>([])
 // 本地筛选：列表分页与数据源保持一致
 const doFilter = (data: any[], params: Record<string, any> = {}) => {
     let result = data
+    if (params.type) {
+        result = result.filter((i: any) => i.type === params.type)
+    }
     if (params.keyword) {
         const kw = String(params.keyword)
         result = result.filter((i: any) =>
@@ -159,6 +223,11 @@ const { pager, getLists, resetPage, resetParams } = usePaging({
     firstLoading: true
 })
 
+const onTabChange = (name: string) => {
+    queryParams.type = name
+    resetPage()
+}
+
 const handleQuery = () => {
     queryParams.start_time = createRange.value?.[0] || ''
     queryParams.end_time = createRange.value?.[1] || ''
@@ -189,6 +258,11 @@ onMounted(getLists)
 </script>
 
 <style lang="scss" scoped>
+.evaluate-tabs {
+    :deep(.el-tabs__header) {
+        margin-bottom: 16px;
+    }
+}
 .section-title {
     font-size: 15px;
     font-weight: 600;
