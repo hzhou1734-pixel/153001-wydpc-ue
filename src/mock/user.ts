@@ -58,6 +58,8 @@ const mockPermissions = [
     'setting.property/detail',
     'setting.role/lists',
     'setting.admin/lists',
+    'setting.basic/detail',
+    'setting.basic/set',
 ]
 
 /**
@@ -455,6 +457,15 @@ const mockMenu = [
                 paths: 'admin',
                 component: 'setting/admin/index',
                 perms: 'setting.admin/lists',
+                type: 'C',
+                is_show: 1,
+                is_cache: 0,
+            },
+            {
+                name: '基础设置',
+                paths: 'basic',
+                component: 'setting/basic/index',
+                perms: 'setting.basic/detail',
                 type: 'C',
                 is_show: 1,
                 is_cache: 0,

@@ -775,6 +775,12 @@ export const propertyInfo = {
     create_time: '2026-01-01 09:00:00',
 }
 
+// ============ 系统设置-基础设置 ============
+export const basicSetting = {
+    /** 顾好家币授信额度（顾好家币） */
+    coin_credit_limit: 2000,
+}
+
 export const roleList = [
     { id: 1, name: '超级管理员', desc: '拥有系统全部权限', members: 1, create_time: daysAgo(300) },
     { id: 2, name: '物业经理', desc: '小区、用户、订单、内容管理', members: 3, create_time: daysAgo(260) },

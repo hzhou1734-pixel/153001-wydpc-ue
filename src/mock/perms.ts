@@ -229,6 +229,11 @@ export const permModules: PermModule[] = [
                 name: '管理员管理',
                 perms: 'setting.admin',
                 ops: [OP_ADD('新增管理员'), OP_EDIT(), OP_DELETE()]
+            },
+            {
+                name: '基础设置',
+                perms: 'setting.basic',
+                ops: [{ key: 'set', name: '保存配置' }]
             }
         ]
     }

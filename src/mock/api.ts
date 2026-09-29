@@ -28,6 +28,7 @@ import {
     financeBill,
     staffEarnings,
     propertyInfo,
+    basicSetting,
     roleList,
     adminList,
     dashboardStats,
@@ -451,4 +452,12 @@ export function getRoleList(params?: Record<string, any>) {
 }
 export function getAdminList(params?: Record<string, any>) {
     return page(adminList, params)
+}
+// 基础设置
+export function getBasicSetting() {
+    return Promise.resolve(basicSetting)
+}
+export function setBasicSetting(data: Record<string, any>) {
+    basicSetting.coin_credit_limit = Number(data.coin_credit_limit) || 0
+    return Promise.resolve({ ...basicSetting })
 }
