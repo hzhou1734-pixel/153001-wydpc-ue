@@ -73,3 +73,5 @@
 - 列表样式约定(v1.0.42，v1.0.91 修订)：全局 .el-table .cell 强制 nowrap（EP 默认换行）；**数据列一律用 min-width（剩余空间按比例分配、间距一致），仅 操作/选择/序号/展开 列用固定 width**；列宽口径：时间列 170、手机号 120、排序/ID 80、状态 90~100、操作列按按钮文本实算；取值明显短于列宽的列收窄（如楼栋 100），长文本列须加 show-overflow-tooltip；新增列表页必须遵循
 - 图片上传约定(v1.0.43)：所有图片表单项一律使用 @/components/image-upload（本地 FileReader + base64，不依赖后端接口），禁止 el-input 输入图片链接；必填图片须在提交时校验「请上传XX图」，不得用 picsum 随机图兜底
 - **Banner 跳转口径（v1.0.69，用户明确要求）**：article/banner 跳转=类目+具体内容二级选择——托管/陪诊/生活帮手/活动/钱袋子/精彩内容/通知公告 7 类目；钱袋子特殊为固定页 /pages/wallet/index 无二级选择；类目选项与对应管理页数据同源（nursingServices 1001+/escortServices 2001+/helperServices 4001+/contentActivityList 7001+/contentWonderfulList 2001+/contentNoticeList 3001+）；banner 记录存 link+link_type+link_id 三字段，编辑时 parseLink 反向回填；旧「内置页面/自定义链接」跳转类型已删除（类目体系无膳食类目）
+- **顾好家币口径（v1.0.109/115，用户明确要求）**：顾好家币以房号共用（同一房号下家庭成员共享额度与明细）；三口径——总额度=系统设置基础授信额度(basicSetting.coin_credit_limit)、待结算=该房号手机号下三类订单(已支付且待派单/服务中)金额合计、可用额度=总额度-待结算；楼栋房号页与用户详情顾好家币Tab 同源同口径
+- **认证业主展示（v1.0.114/116，用户明确要求）**：认证业主列必须用固定 width（当前 250，勿改回 min-width），否则窄屏被压缩导致认证标签遮挡手机号；卡片=左色条+头像28px+姓名/手机号两行+认证标签，单行 nowrap
