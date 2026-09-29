@@ -177,42 +177,10 @@
                     <span class="ml-2 text-tx-secondary">单</span>
                 </el-form-item>
                 <el-form-item label="收支明细">
-                    <div class="w-full">
-                        <div
-                            v-for="(it, idx) in form.items"
-                            :key="it.id"
-                            class="flex items-center gap-2 mb-3"
-                        >
-                            <el-input v-model="it.name" placeholder="明细名称" class="!w-[170px]" />
-                            <el-select v-model="it.type" class="!w-[90px]">
-                                <el-option label="收入" :value="1" />
-                                <el-option label="支出" :value="2" />
-                            </el-select>
-                            <el-input-number
-                                v-model="it.amount"
-                                :min="0"
-                                :precision="2"
-                                :controls="false"
-                                placeholder="金额"
-                                class="!w-[110px]"
-                            />
-                            <ImageUpload v-model="it.voucher" :width="104" :height="72" text="凭证" />
-                            <el-button
-                                type="danger"
-                                link
-                                :disabled="form.items.length <= 1"
-                                @click="form.items.splice(idx, 1)"
-                            >
-                                <el-icon><Delete /></el-icon>
-                            </el-button>
-                        </div>
-                        <el-button type="primary" plain @click="addDetailRow">
-                            <el-icon class="mr-1"><Plus /></el-icon>添加明细
-                        </el-button>
-                    </div>
+                    <ItemsEditor v-model="form.items" />
                 </el-form-item>
             </el-form>
-            <div class="flex items-center gap-6 mt-2 px-1 text-sm">
+            <div class="mt-2 flex items-center gap-6 rounded-lg bg-gray-50 px-4 py-2.5 text-sm">
                 <span>收入合计：<span class="text-green-600 font-medium">¥{{ money(addIncome) }}</span></span>
                 <span>支出合计：<span class="text-red-500 font-medium">¥{{ money(addExpense) }}</span></span>
                 <span v-if="addState.tab === 'property'">
@@ -232,7 +200,7 @@
 
         <!-- 编辑明细：对每一条收支明细单独编辑名称 / 金额 / 凭证图片 -->
         <el-dialog v-model="editState.show" :title="editState.title" width="820px">
-            <div class="flex items-center gap-6 mb-4 px-1 text-sm">
+            <div class="mb-3 flex items-center gap-6 rounded-lg bg-gray-50 px-4 py-2.5 text-sm">
                 <span>收入合计：<span class="text-green-600 font-medium">¥{{ money(editIncome) }}</span></span>
                 <span>支出合计：<span class="text-red-500 font-medium">¥{{ money(editExpense) }}</span></span>
                 <span v-if="editState.tab === 'property'">
@@ -242,32 +210,7 @@
                     每单单价：<span class="font-medium">¥{{ editUnitPrice }}</span>
                 </span>
             </div>
-            <div
-                v-for="(it, idx) in editState.items"
-                :key="it.id"
-                class="flex items-center gap-2 mb-3"
-            >
-                <el-input v-model="it.name" placeholder="明细名称" class="!w-[170px]" />
-                <el-select v-model="it.type" class="!w-[90px]">
-                    <el-option label="收入" :value="1" />
-                    <el-option label="支出" :value="2" />
-                </el-select>
-                <el-input-number
-                    v-model="it.amount"
-                    :min="0"
-                    :precision="2"
-                    :controls="false"
-                    placeholder="金额"
-                    class="!w-[110px]"
-                />
-                <ImageUpload v-model="it.voucher" :width="104" :height="72" text="凭证" />
-                <el-button type="danger" link @click="editState.items.splice(idx, 1)">
-                    <el-icon><Delete /></el-icon>
-                </el-button>
-            </div>
-            <el-button type="primary" plain @click="addEditRow">
-                <el-icon class="mr-1"><Plus /></el-icon>添加明细
-            </el-button>
+            <ItemsEditor v-model="editState.items" />
             <template #footer>
                 <el-button @click="editState.show = false">取消</el-button>
                 <el-button type="primary" :loading="editState.saving" @click="saveEditItems">保存明细</el-button>
@@ -280,8 +223,8 @@
 import { walletMeal, walletNursing, walletProperty } from '@/mock/data_finance'
 import type { WalletItem } from '@/mock/data_finance'
 import { usePaging } from '@/hooks/usePaging'
-import ImageUpload from '@/components/image-upload/index.vue'
-import { Plus, Delete } from '@element-plus/icons-vue'
+import ItemsEditor from './items-editor.vue'
+import { Plus } from '@element-plus/icons-vue'
 
 const activeTab = ref('property')
 
@@ -343,8 +286,6 @@ const addExpense = computed(() => sumItems(form.items, 2))
 const addUnitPrice = computed(() =>
     money(Number(form.order_count) > 0 ? addIncome.value / Number(form.order_count) : 0)
 )
-
-const addDetailRow = () => form.items.push(createRow())
 
 const openAdd = (tab: string) => {
     Object.assign(form, { title: '', month: '', order_count: 0, items: [createRow()] })
@@ -445,8 +386,6 @@ const openEditItems = (row: any, tab: string) => {
     })) as WalletItem[]
     editState.show = true
 }
-
-const addEditRow = () => editState.items.push(createRow())
 
 const saveEditItems = () => {
     const err = validateItems(editState.items)
