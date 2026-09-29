@@ -62,19 +62,23 @@
 
                 <!-- 顾好家币 -->
                 <el-tab-pane label="顾好家币" name="coin">
-                    <div class="flex gap-4 mb-4">
+                    <div class="flex gap-4 mb-3">
                         <el-card class="!border-none flex-1" shadow="never">
-                            <div class="text-tx-secondary text-xs">账户余额</div>
-                            <div class="text-2xl font-bold mt-1">¥{{ coin.balance || '0.00' }}</div>
+                            <div class="text-tx-secondary text-xs">待结算</div>
+                            <div class="text-2xl font-bold mt-1 text-orange-500">¥{{ coinPending }}</div>
                         </el-card>
                         <el-card class="!border-none flex-1" shadow="never">
-                            <div class="text-tx-secondary text-xs">累计结算</div>
-                            <div class="text-2xl font-bold mt-1">¥{{ coin.total_recharge || '0.00' }}</div>
+                            <div class="text-tx-secondary text-xs">总额度</div>
+                            <div class="text-2xl font-bold mt-1">¥{{ coinQuota.toFixed(2) }}</div>
                         </el-card>
                         <el-card class="!border-none flex-1" shadow="never">
-                            <div class="text-tx-secondary text-xs">累计消费</div>
-                            <div class="text-2xl font-bold mt-1">¥{{ coin.total_consume || '0.00' }}</div>
+                            <div class="text-tx-secondary text-xs">可用额度</div>
+                            <div class="text-2xl font-bold mt-1 text-green-600">¥{{ coinRemaining }}</div>
                         </el-card>
+                    </div>
+                    <div class="text-xs text-tx-secondary mb-4 flex items-center gap-1">
+                        <el-icon><InfoFilled /></el-icon>
+                        <span>备注：顾好家币以房号共用，同一房号下的家庭成员共享额度与明细。</span>
                     </div>
                     <el-table :data="userCoinLogs">
                         <el-table-column prop="id" label="流水ID" min-width="80" />
@@ -214,9 +218,9 @@
 </template>
 
 <script setup lang="ts" name="consumerDetail">
-import { ArrowLeft } from '@element-plus/icons-vue'
-import { activityList, activitySignupList, consumerList, escortOrders, healthBandList, mealOrders, nursingOrders, userSettleList } from '@/mock/data'
-import { coinAccounts, coinLogs, healthData, settleDetails } from '@/mock/data_user'
+import { ArrowLeft, InfoFilled } from '@element-plus/icons-vue'
+import { activityList, activitySignupList, basicSetting, consumerList, escortOrders, healthBandList, mealOrders, nursingOrders, userSettleList } from '@/mock/data'
+import { coinLogs, healthData, settleDetails } from '@/mock/data_user'
 
 const route = useRoute()
 const userId = Number(route.query.id)
@@ -249,8 +253,15 @@ const consumeTotal = computed(() =>
         .toFixed(2)
 )
 
-/** 顾好家币 */
-const coin = computed(() => coinAccounts[userId] || {})
+/** 顾好家币（以房号共用：同一房号下家庭成员共享额度，口径与楼栋房号页一致） */
+const coinQuota = Number(basicSetting.coin_credit_limit) || 0
+const coinPending = computed(() =>
+    [...nursingOrders, ...mealOrders, ...escortOrders]
+        .filter((o: any) => o.mobile === detail.value.mobile && o.pay_status === 1 && (o.status === 1 || o.status === 2))
+        .reduce((s: number, o: any) => s + (Number(o.amount) || 0), 0)
+        .toFixed(2)
+)
+const coinRemaining = computed(() => Math.max(coinQuota - Number(coinPending.value), 0).toFixed(2))
 const userCoinLogs = computed(() => coinLogs.filter((item: any) => item.user_id === userId))
 const coinTypeMap: Record<number, any> = {
     1: { label: '结算', type: 'success' },
