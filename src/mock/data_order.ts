@@ -218,3 +218,35 @@ export const escortExtraFees: Record<number, { name: string; extra_fee: string; 
         { name: '餐费', extra_fee: '25.00', created_at: daysAgo(8, ' 12:20:00'), voucher: 'https://picsum.photos/seed/ghj-extra-3082/400/300' }
     ]
 }
+
+// ==================== 陪诊订单附件资料 ====================
+const attachImg = (n: number) => `https://picsum.photos/seed/ghj-escort-attach-${n}/400/400`
+const attachPoster = (n: number) => `https://picsum.photos/seed/ghj-escort-video-${n}/400/300`
+const sampleVideo = 'https://www.w3schools.com/html/mov_bbb.mp4'
+
+/**
+ * 陪诊订单附件资料（随单上传的图片 / 视频）
+ * images：就诊凭证照片；videos：陪诊过程视频（含封面、时长）
+ * 未上传的订单不出现在此表中，详情页展示「暂无」占位
+ */
+export const escortAttachments: Record<number, { images: string[]; videos: { name: string; poster: string; url: string; duration: string; size: string }[] }> = {
+    3001: {
+        images: [attachImg(1), attachImg(2), attachImg(3)],
+        videos: [{ name: '院内陪诊过程记录.mp4', poster: attachPoster(1), url: sampleVideo, duration: '00:42', size: '8.6MB' }]
+    },
+    3002: {
+        images: [attachImg(4), attachImg(5)],
+        videos: [{ name: '取药凭证记录.mp4', poster: attachPoster(2), url: sampleVideo, duration: '00:18', size: '3.2MB' }]
+    },
+    3004: {
+        images: [attachImg(6), attachImg(7), attachImg(8), attachImg(9)],
+        videos: [
+            { name: '入院办理过程.mp4', poster: attachPoster(3), url: sampleVideo, duration: '01:05', size: '12.4MB' },
+            { name: '陪护交班说明.mp4', poster: attachPoster(4), url: sampleVideo, duration: '00:27', size: '5.1MB' }
+        ]
+    },
+    3008: {
+        images: [attachImg(10)],
+        videos: []
+    }
+}
