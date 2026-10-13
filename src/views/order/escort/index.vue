@@ -199,8 +199,7 @@
                                 <el-icon :size="26"><VideoPlay /></el-icon>
                             </div>
                             <div class="video-bar">
-                                <span class="truncate">{{ video.name }}</span>
-                                <span class="shrink-0 ml-2">{{ video.duration }}</span>
+                                <span>{{ video.duration }}</span>
                             </div>
                         </div>
                     </div>
@@ -435,7 +434,7 @@ onMounted(getLists)
         bottom: 0;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         padding: 3px 8px;
         font-size: 12px;
         color: #fff;
