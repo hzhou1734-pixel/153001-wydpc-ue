@@ -250,3 +250,33 @@ export const escortAttachments: Record<number, { images: string[]; videos: { nam
         videos: []
     }
 }
+
+/**
+ * 生活帮手订单附件资料（随单上传的图片 / 视频）
+ * 未上传的订单不出现在此表中，详情页展示「暂无」占位
+ */
+export const helperAttachments: Record<number, { images: string[]; videos: { name: string; poster: string; url: string; duration: string; size: string }[] }> = {
+    4001: {
+        images: [attachImg(11), attachImg(12)],
+        videos: [{ name: '维修前现场记录.mp4', poster: attachPoster(5), url: sampleVideo, duration: '00:35', size: '7.2MB' }]
+    },
+    4002: {
+        images: [attachImg(13), attachImg(14), attachImg(15)],
+        videos: [
+            { name: '疏通前状态.mp4', poster: attachPoster(6), url: sampleVideo, duration: '00:22', size: '4.1MB' },
+            { name: '疏通后验收.mp4', poster: attachPoster(7), url: sampleVideo, duration: '00:30', size: '5.8MB' }
+        ]
+    },
+    4003: {
+        images: [attachImg(16)],
+        videos: []
+    },
+    4005: {
+        images: [attachImg(17), attachImg(18)],
+        videos: [{ name: '保洁前后对比.mp4', poster: attachPoster(8), url: sampleVideo, duration: '01:12', size: '15.3MB' }]
+    },
+    4008: {
+        images: [attachImg(19), attachImg(20), attachImg(21)],
+        videos: [{ name: '搬运过程记录.mp4', poster: attachPoster(9), url: sampleVideo, duration: '02:06', size: '26.7MB' }]
+    }
+}

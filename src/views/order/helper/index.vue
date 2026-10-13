@@ -181,6 +181,44 @@
                     <el-descriptions-item label="联系手机">{{ detailRow.staff_mobile || '—' }}</el-descriptions-item>
                 </el-descriptions>
 
+                <div class="section-title">附件资料</div>
+                <div class="mb-4 rounded-lg border border-[var(--el-border-color-lighter)] p-3">
+                    <div class="text-sm font-medium mb-2">
+                        图片
+                        <span class="text-tx-secondary font-normal">（{{ detailImages.length }} 张）</span>
+                    </div>
+                    <div v-if="detailImages.length" class="flex flex-wrap gap-2">
+                        <el-image
+                            v-for="(img, idx) in detailImages"
+                            :key="idx"
+                            :src="img"
+                            :preview-src-list="detailImages"
+                            :initial-index="idx"
+                            preview-teleported
+                            fit="cover"
+                            class="w-20 h-20 rounded-lg cursor-pointer border border-[var(--el-border-color-lighter)]"
+                        />
+                    </div>
+                    <div v-else class="text-tx-secondary text-sm mb-1">暂无图片</div>
+
+                    <div class="text-sm font-medium mt-4 mb-2">
+                        视频
+                        <span class="text-tx-secondary font-normal">（{{ detailVideos.length }} 个）</span>
+                    </div>
+                    <div v-if="detailVideos.length" class="flex flex-wrap gap-3">
+                        <div v-for="(video, idx) in detailVideos" :key="idx" class="video-card" @click="openVideo(video)">
+                            <el-image :src="video.poster" fit="cover" class="w-full h-full" />
+                            <div class="play-mask">
+                                <el-icon :size="26"><VideoPlay /></el-icon>
+                            </div>
+                            <div class="video-bar">
+                                <span>{{ video.duration }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else class="text-tx-secondary text-sm">暂无视频</div>
+                </div>
+
                 <div class="section-title">订单日志</div>
                 <el-timeline>
                     <el-timeline-item v-for="(log, idx) in detailRow.logs || []" :key="idx" :timestamp="log.time"
@@ -191,11 +229,27 @@
                 </el-timeline>
             </div>
         </el-dialog>
+
+        <!-- 附件视频播放 -->
+        <el-dialog v-model="showVideo" :title="currentVideo.name || '视频播放'" width="640px" append-to-body>
+            <video
+                v-if="currentVideo.url"
+                :src="currentVideo.url"
+                :poster="currentVideo.poster"
+                controls
+                autoplay
+                class="w-full rounded-lg bg-black"
+            />
+            <div class="text-tx-secondary text-xs mt-2">
+                时长 {{ currentVideo.duration || '—' }} · 大小 {{ currentVideo.size || '—' }}
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts" name="orderHelper">
-import { helperOrders, talentList } from '@/mock/data_order'
+import { VideoPlay } from '@element-plus/icons-vue'
+import { helperAttachments, helperOrders, talentList } from '@/mock/data_order'
 import { usePaging } from '@/hooks/usePaging'
 
 /** 当前时间文本 */
@@ -346,6 +400,16 @@ const viewDetail = (row: any) => {
     showDetail.value = true
 }
 
+/** 附件资料：随单上传的图片 / 视频 */
+const detailImages = computed(() => (detailRow.value ? helperAttachments[detailRow.value.id]?.images || [] : []))
+const detailVideos = computed(() => (detailRow.value ? helperAttachments[detailRow.value.id]?.videos || [] : []))
+const showVideo = ref(false)
+const currentVideo = ref<any>({})
+const openVideo = (video: any) => {
+    currentVideo.value = video
+    showVideo.value = true
+}
+
 onMounted(getLists)
 </script>
 
@@ -356,5 +420,40 @@ onMounted(getLists)
     margin-bottom: 10px;
     padding-left: 8px;
     border-left: 3px solid var(--el-color-primary);
+}
+.video-card {
+    position: relative;
+    width: 180px;
+    height: 110px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--el-border-color-lighter);
+    &:hover .play-mask {
+        background-color: rgba(0, 0, 0, 0.32);
+    }
+    .play-mask {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.22);
+        transition: background-color 0.2s;
+    }
+    .video-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 3px 8px;
+        font-size: 12px;
+        color: #fff;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    }
 }
 </style>
