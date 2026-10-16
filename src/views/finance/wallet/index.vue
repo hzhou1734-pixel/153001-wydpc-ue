@@ -176,6 +176,46 @@
                     <el-input-number v-model="form.order_count" :min="0" :precision="0" class="!w-[220px]" />
                     <span class="ml-2 text-tx-secondary">单</span>
                 </el-form-item>
+                <el-form-item v-if="addState.tab === 'property'" label="汇总金额">
+                    <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-tx-secondary whitespace-nowrap">总收入金额</span>
+                            <el-input-number
+                                v-model="form.income_amount"
+                                :min="0"
+                                :precision="2"
+                                :controls="false"
+                                placeholder="0.00"
+                                class="!w-[150px]"
+                                @change="form.incomeTouched = true"
+                            />
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-tx-secondary whitespace-nowrap">总支出金额</span>
+                            <el-input-number
+                                v-model="form.expense_amount"
+                                :min="0"
+                                :precision="2"
+                                :controls="false"
+                                placeholder="0.00"
+                                class="!w-[150px]"
+                                @change="form.expenseTouched = true"
+                            />
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-tx-secondary whitespace-nowrap">结余金额</span>
+                            <el-input-number
+                                v-model="form.balance_amount"
+                                :precision="2"
+                                :controls="false"
+                                placeholder="0.00"
+                                class="!w-[150px]"
+                                @change="form.balanceTouched = true"
+                            />
+                            <span class="text-xs text-tx-secondary whitespace-nowrap">默认取明细汇总，可手动调整</span>
+                        </div>
+                    </div>
+                </el-form-item>
                 <el-form-item label="收支明细">
                     <ItemsEditor v-model="form.items" />
                 </el-form-item>
@@ -185,7 +225,7 @@
                 <span>支出合计：<span class="text-red-500 font-medium">¥{{ money(addExpense) }}</span></span>
                 <span v-if="addState.tab === 'property'">
                     结余金额：<span class="font-medium">¥{{ money(addIncome - addExpense) }}</span>
-                    <span class="ml-1 text-xs text-tx-secondary">自动汇总</span>
+                    <span class="ml-1 text-xs text-tx-secondary">明细自动汇总</span>
                 </span>
                 <span v-else>
                     每单单价：<span class="font-medium">¥{{ addUnitPrice }}</span>
@@ -210,6 +250,48 @@
                     每单单价：<span class="font-medium">¥{{ editUnitPrice }}</span>
                 </span>
             </div>
+            <el-form v-if="editState.tab === 'property'" label-width="120px" class="mt-3">
+                <el-form-item label="汇总金额">
+                    <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-tx-secondary whitespace-nowrap">总收入金额</span>
+                            <el-input-number
+                                v-model="editState.income_amount"
+                                :min="0"
+                                :precision="2"
+                                :controls="false"
+                                placeholder="0.00"
+                                class="!w-[150px]"
+                                @change="editState.incomeTouched = true"
+                            />
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-tx-secondary whitespace-nowrap">总支出金额</span>
+                            <el-input-number
+                                v-model="editState.expense_amount"
+                                :min="0"
+                                :precision="2"
+                                :controls="false"
+                                placeholder="0.00"
+                                class="!w-[150px]"
+                                @change="editState.expenseTouched = true"
+                            />
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-tx-secondary whitespace-nowrap">结余金额</span>
+                            <el-input-number
+                                v-model="editState.balance_amount"
+                                :precision="2"
+                                :controls="false"
+                                placeholder="0.00"
+                                class="!w-[150px]"
+                                @change="editState.balanceTouched = true"
+                            />
+                            <span class="text-xs text-tx-secondary whitespace-nowrap">默认取明细汇总，可手动调整</span>
+                        </div>
+                    </div>
+                </el-form-item>
+            </el-form>
             <ItemsEditor v-model="editState.items" />
             <template #footer>
                 <el-button @click="editState.show = false">取消</el-button>
@@ -278,7 +360,13 @@ const form = reactive({
     title: '',
     month: '',
     order_count: 0,
-    items: [] as WalletItem[]
+    items: [] as WalletItem[],
+    income_amount: 0 as any,
+    expense_amount: 0 as any,
+    balance_amount: 0 as any,
+    incomeTouched: false,
+    expenseTouched: false,
+    balanceTouched: false
 })
 
 const addIncome = computed(() => sumItems(form.items, 1))
@@ -287,8 +375,40 @@ const addUnitPrice = computed(() =>
     money(Number(form.order_count) > 0 ? addIncome.value / Number(form.order_count) : 0)
 )
 
+/** 汇总金额：未手动修改过则跟随明细自动汇总，结余默认 = 总收入 − 总支出 */
+watch(
+    () => sumItems(form.items, 1),
+    (v) => {
+        if (addState.tab === 'property' && !form.incomeTouched) form.income_amount = Number(v.toFixed(2))
+    }
+)
+watch(
+    () => sumItems(form.items, 2),
+    (v) => {
+        if (addState.tab === 'property' && !form.expenseTouched) form.expense_amount = Number(v.toFixed(2))
+    }
+)
+watch(
+    [() => form.income_amount, () => form.expense_amount],
+    ([i, e]) => {
+        if (addState.tab === 'property' && !form.balanceTouched)
+            form.balance_amount = Number(((Number(i) || 0) - (Number(e) || 0)).toFixed(2))
+    }
+)
+
 const openAdd = (tab: string) => {
-    Object.assign(form, { title: '', month: '', order_count: 0, items: [createRow()] })
+    Object.assign(form, {
+        title: '',
+        month: '',
+        order_count: 0,
+        items: [createRow()],
+        income_amount: 0,
+        expense_amount: 0,
+        balance_amount: 0,
+        incomeTouched: false,
+        expenseTouched: false,
+        balanceTouched: false
+    })
     addState.tab = tab
     addState.title = `添加${tabNames[tab]}数据`
     addState.show = true
@@ -318,14 +438,18 @@ const submitAdd = () => {
         const expense = sumItems(items, 2)
         let row: Record<string, any>
         if (addState.tab === 'property') {
+            // 汇总金额：手动修改过用输入值，否则取明细自动汇总
+            const finalIncome = form.incomeTouched ? Number(form.income_amount) || 0 : income
+            const finalExpense = form.expenseTouched ? Number(form.expense_amount) || 0 : expense
+            const finalBalance = form.balanceTouched ? Number(form.balance_amount) || 0 : finalIncome - finalExpense
             row = {
                 id: Date.now(),
                 title: form.title.trim(),
                 month: form.month,
                 items,
-                income_amount: money(income),
-                expense_amount: money(expense),
-                balance_amount: money(income - expense),
+                income_amount: money(finalIncome),
+                expense_amount: money(finalExpense),
+                balance_amount: money(finalBalance),
                 create_time: nowTimeStr()
             }
             walletProperty.unshift(row)
@@ -365,8 +489,36 @@ const editState = reactive({
     title: '',
     saving: false,
     row: null as any,
-    items: [] as WalletItem[]
+    items: [] as WalletItem[],
+    income_amount: 0 as any,
+    expense_amount: 0 as any,
+    balance_amount: 0 as any,
+    incomeTouched: false,
+    expenseTouched: false,
+    balanceTouched: false
 })
+
+watch(
+    () => sumItems(editState.items, 1),
+    (v) => {
+        if (editState.tab === 'property' && !editState.incomeTouched)
+            editState.income_amount = Number(v.toFixed(2))
+    }
+)
+watch(
+    () => sumItems(editState.items, 2),
+    (v) => {
+        if (editState.tab === 'property' && !editState.expenseTouched)
+            editState.expense_amount = Number(v.toFixed(2))
+    }
+)
+watch(
+    [() => editState.income_amount, () => editState.expense_amount],
+    ([i, e]) => {
+        if (editState.tab === 'property' && !editState.balanceTouched)
+            editState.balance_amount = Number(((Number(i) || 0) - (Number(e) || 0)).toFixed(2))
+    }
+)
 
 const editIncome = computed(() => sumItems(editState.items, 1))
 const editExpense = computed(() => sumItems(editState.items, 2))
@@ -384,6 +536,15 @@ const openEditItems = (row: any, tab: string) => {
         ...it,
         amount: Number(it.amount) || 0
     })) as WalletItem[]
+    // 原有记录若为手动调整过的汇总值，保持不覆盖
+    const s1 = Number(sumItems(editState.items, 1).toFixed(2))
+    const s2 = Number(sumItems(editState.items, 2).toFixed(2))
+    editState.income_amount = Number(row.income_amount) || 0
+    editState.expense_amount = Number(row.expense_amount) || 0
+    editState.balance_amount = Number(row.balance_amount) || 0
+    editState.incomeTouched = editState.income_amount !== s1
+    editState.expenseTouched = editState.expense_amount !== s2
+    editState.balanceTouched = editState.balance_amount !== Number((s1 - s2).toFixed(2))
     editState.show = true
 }
 
@@ -404,9 +565,15 @@ const saveEditItems = () => {
         const expense = sumItems(items, 2)
         row.items = items
         if (editState.tab === 'property') {
-            row.income_amount = money(income)
-            row.expense_amount = money(expense)
-            row.balance_amount = money(income - expense)
+            // 汇总金额：手动修改过用输入值，否则取明细自动汇总
+            const finalIncome = editState.incomeTouched ? Number(editState.income_amount) || 0 : income
+            const finalExpense = editState.expenseTouched ? Number(editState.expense_amount) || 0 : expense
+            const finalBalance = editState.balanceTouched
+                ? Number(editState.balance_amount) || 0
+                : finalIncome - finalExpense
+            row.income_amount = money(finalIncome)
+            row.expense_amount = money(finalExpense)
+            row.balance_amount = money(finalBalance)
         } else {
             row.prepay_amount = money(income)
             row.cost_amount = money(expense)
